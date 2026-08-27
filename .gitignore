@@ -1,0 +1,12 @@
+node_modules
+presentation-export/
+.cache/presentation-export/
+app_data
+.venv
+__pycache__
+.pytest_cache
+.env
+.env.*
+!.env.example
+servers/fastapi/.test-data/
+servers/fastapi/*.egg-info/

@@ -1,0 +1,192 @@
+/**
+ * Docker / startup terminal banner for GSlide.
+ * Renders a compact brand logo + startup status.
+ */
+
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const RESET = "\x1b[0m";
+const BOLD = "\x1b[1m";
+const DIM = "\x1b[2m";
+
+function fgRgb(r, g, b, text) {
+  return `\x1b[38;2;${r};${g};${b}m${text}${RESET}`;
+}
+
+function brand(text) {
+  return BOLD + fgRgb(29, 111, 232, text);
+}
+
+function accent(text) {
+  return fgRgb(75, 122, 181, text);
+}
+
+function muted(text) {
+  return DIM + fgRgb(75, 122, 181, text);
+}
+
+function styleAsciiArt(rawAscii) {
+  const lines = rawAscii.replace(/\r/g, "").split("\n");
+  const palette = [
+    [29, 111, 232],
+    [26, 100, 212],
+    [21, 88, 192],
+    [30, 70, 150],
+    [30, 58, 95],
+  ];
+
+  return lines
+    .map((line, lineIdx) => {
+      const [r, g, b] = palette[lineIdx % palette.length];
+      return line.replace(/[^\s]/g, (ch) => fgRgb(r, g, b, ch));
+    })
+    .join("\n");
+}
+
+function loadAsciiBanner() {
+  const thisDir = path.dirname(fileURLToPath(import.meta.url));
+  const asciiPath = path.join(thisDir, "gslide-ascii.txt");
+
+  try {
+    const raw = fs.readFileSync(asciiPath, "utf8").trimEnd();
+    if (!raw) return "";
+    return styleAsciiArt(raw);
+  } catch {
+    return "";
+  }
+}
+
+function loadPackageVersion() {
+  const thisDir = path.dirname(fileURLToPath(import.meta.url));
+  const packageJsonPath = path.join(thisDir, "..", "package.json");
+
+  try {
+    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+    return typeof pkg.version === "string" ? pkg.version : "";
+  } catch {
+    return "";
+  }
+}
+
+/** Visible width (strips SGR sequences). */
+function visLen(s) {
+  return s.replace(/\x1b\[[0-9;:]*m/g, "").length;
+}
+
+/** Pad styled fragment to fixed visible width. */
+function padVis(styled, width) {
+  return styled + " ".repeat(Math.max(0, width - visLen(styled)));
+}
+
+/**
+ * @param {object} [opts]
+ * @param {"development" | "production"} [opts.mode]
+ * @param {number} [opts.nextPort]
+ * @param {number} [opts.fastapiPort]
+ * @param {string} [opts.hostHttpPort] — host-published HTTP port (docker -p HOST:80). Default from env or "5001".
+ */
+export function printGSlideStartupBanner(opts = {}) {
+  const mode = opts.mode === "development" ? "development" : "production";
+  const nextPort = opts.nextPort ?? 3000;
+  const fastapiPort = opts.fastapiPort ?? 8000;
+  const version = opts.version ?? loadPackageVersion();
+    const hostHttpPort =
+    opts.hostHttpPort ??
+    process.env.GSLIDE_HTTP_HOST_PORT ??
+    process.env.PRESENTON_HTTP_HOST_PORT ??
+    process.env.GSLIDE_HOST_HTTP_PORT ??
+    process.env.PRESENTON_HOST_HTTP_PORT ??
+    process.env.GSLIDE_PUBLIC_PORT ??
+    process.env.PRESENTON_PUBLIC_PORT ??
+    "5001";
+
+  const nextUrl = `http://127.0.0.1:${nextPort}`;
+  const apiUrl = `http://127.0.0.1:${fastapiPort}`;
+  const publicUrl =
+    String(hostHttpPort) === "80"
+      ? "http://127.0.0.1"
+      : `http://127.0.0.1:${hostHttpPort}`;
+
+  const iconBlock = loadAsciiBanner();
+
+  const title = [
+    "",
+    BOLD + fgRgb(29, 111, 232, "   AI Presentation Generator"),
+    ...(mode === "development"
+      ? [
+          "   " +
+            accent("Self-hosted by Gapo  ·  ") +
+            brand("GSlide"),
+        ]
+      : []),
+    muted("   ─────────────────────────────────────────────────────────"),
+    "",
+  ].join("\n");
+
+  const W = 68;
+  const pipe = (inner) => brand("  ║") + inner + brand("║");
+
+  const boxTop = brand(
+    "  ╔════════════════════════════════════════════════════════════════════╗",
+  );
+  const boxDivider = brand(
+    "  ╠════════════════════════════════════════════════════════════════════╣",
+  );
+  const boxBottom = brand(
+    "  ╚════════════════════════════════════════════════════════════════════╝",
+  );
+
+  const summaryLines =
+    mode === "development"
+      ? [
+          pipe(padVis("  " + BOLD + "Routing summary" + RESET, W)),
+          boxDivider,
+          pipe(padVis("  " + muted("Mode:                 ") + mode, W)),
+          ...(version
+            ? [pipe(padVis("  " + muted("Version:              ") + version, W))]
+            : []),
+          pipe(padVis("  " + accent("/         ") + muted("→ Next.js"), W)),
+          pipe(padVis("  " + accent("/api/v1/  ") + muted("→ FastAPI"), W)),
+          pipe(padVis("  " + muted("Next.js docker URL: ") + nextUrl, W)),
+          pipe(padVis("  " + muted("FastAPI docker URL:     ") + apiUrl, W)),
+          pipe(
+            padVis(
+              "  " +
+                muted("Public URL (Ctrl+Click to open):     ") +
+                BOLD +
+                fgRgb(255, 255, 255, publicUrl),
+              W,
+            ),
+          ),
+        ]
+      : [
+          pipe(padVis("  " + BOLD + "Application URL" + RESET, W)),
+          boxDivider,
+          pipe(padVis("  " + muted("Mode:             ") + mode, W)),
+          ...(version
+            ? [pipe(padVis("  " + muted("Version:          ") + version, W))]
+            : []),
+          pipe(
+            padVis(
+              "  " +
+                muted("Open GSlide:        ") +
+                BOLD +
+                fgRgb(255, 255, 255, publicUrl),
+              W,
+            ),
+          ),
+        ];
+
+  const summary = [
+    boxTop,
+    ...summaryLines,
+    boxBottom,
+    "",
+    "   " + muted("Made with ❤️  by Gapo"),
+  ].join("\n");
+
+  const bannerHeader = iconBlock ? `${iconBlock}\n` : "";
+  console.log("\n" + bannerHeader + title + summary);
+}
