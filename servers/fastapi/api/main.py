@@ -7,7 +7,7 @@ from starlette.requests import Request
 from starlette.responses import FileResponse
 
 from api.lifespan import app_lifespan
-from api.middlewares import SessionAuthMiddleware, UserConfigEnvUpdateMiddleware
+from api.middlewares import SessionAuthMiddleware
 from api.v1.async_tasks.router import API_V1_ASYNC_TASKS_ROUTER
 from api.v1.auth.router import API_V1_AUTH_ROUTER
 from api.v1.mock.router import API_V1_MOCK_ROUTER
@@ -94,7 +94,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.add_middleware(UserConfigEnvUpdateMiddleware)
 app.add_middleware(SessionAuthMiddleware)
 
 

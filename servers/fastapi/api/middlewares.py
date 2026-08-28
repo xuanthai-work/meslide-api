@@ -23,19 +23,6 @@ from utils.provider_overlay import (
 )
 
 
-class UserConfigEnvUpdateMiddleware(BaseHTTPMiddleware):
-    """Pass-through placeholder kept for backward compatibility.
-
-    The previous behavior copied ``userConfig.json`` into ``os.environ`` on
-    every request. That is unsafe now that two users can hold different
-    provider keys at the same time, so the middleware no longer mutates env.
-    Settings reads go through the per-user overlay + session middleware.
-    """
-
-    async def dispatch(self, request: Request, call_next):
-        return await call_next(request)
-
-
 class SessionAuthMiddleware(BaseHTTPMiddleware):
     _PUBLIC_AUTH_PATHS = {
         "/api/v1/auth/status",

@@ -7,7 +7,6 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from api.v1.auth.config import SESSION_COOKIE_NAME
 from api.v1.auth.router import API_V1_AUTH_ROUTER
-from api.v1.auth.rate_limit import LOGIN_RATE_LIMITER, login_rate_limit_key
 from api.v1.auth.users import PASSWORD_HELPER, get_jwt_strategy
 from models.sql.access_token import AccessToken
 from models.sql.provider_settings import ProviderSettings
@@ -230,37 +229,6 @@ def test_legacy_six_character_password_login_is_removed(monkeypatch, tmp_path):
     assert response.status_code == 410
     assert "no longer supported" in response.json()["detail"]
     asyncio.run(engine.dispose())
-
-
-@pytest.mark.skip(
-    reason="out-of-scope: login/register/logout removed (410); rate-limiting "
-    "the removed login flow is no longer meaningful"
-)
-def test_failed_logins_are_rate_limited(monkeypatch, tmp_path):
-    monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
-    monkeypatch.delenv("DISABLE_AUTH", raising=False)
-    client, engine = _build_client(tmp_path)
-    _seed_user(client, engine, "rate-user", "secret123")
-    key = login_rate_limit_key("testclient", "rate-user")
-    asyncio.run(LOGIN_RATE_LIMITER.clear(key))
-
-    try:
-        for _ in range(5):
-            response = client.post(
-                "/api/v1/auth/login",
-                json={"username": "rate-user", "password": "wrong-password"},
-            )
-            assert response.status_code == 401
-
-        blocked = client.post(
-            "/api/v1/auth/login",
-            json={"username": "rate-user", "password": "wrong-password"},
-        )
-        assert blocked.status_code == 429
-        assert int(blocked.headers["retry-after"]) > 0
-    finally:
-        asyncio.run(LOGIN_RATE_LIMITER.clear(key))
-        asyncio.run(engine.dispose())
 
 
 def test_register_creates_normal_user_and_sets_cookie(monkeypatch, tmp_path):
