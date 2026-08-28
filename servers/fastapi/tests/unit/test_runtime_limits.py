@@ -2,8 +2,10 @@ import asyncio
 import os
 import sys
 from types import SimpleNamespace
+import uuid
 
 from fastapi import HTTPException
+from api.v1.auth.context import reset_current_owner_id, set_current_owner_id
 from services.export_task_service import ExportTaskService
 from services.liteparse_service import LiteParseService
 from utils.runtime_limits import BoundedTextBuffer
@@ -160,14 +162,22 @@ def test_render_json_to_image_sends_json_task_payload(monkeypatch, tmp_path):
 
 def test_render_json_to_image_embeds_protected_local_assets(monkeypatch, tmp_path):
     app_data = tmp_path / "app-data"
-    asset_path = app_data / "pptx-to-json" / "session" / "images" / "photo.svg"
+    owner_id = uuid.uuid4()
+    asset_path = (
+        app_data
+        / "pptx-to-json"
+        / "users"
+        / str(owner_id)
+        / "session"
+        / "images"
+        / "photo.svg"
+    )
     asset_path.parent.mkdir(parents=True)
     asset_path.write_text("<svg></svg>", encoding="utf-8")
     output_path = tmp_path / "preview.png"
     output_path.write_bytes(b"png")
     monkeypatch.setenv("APP_DATA_DIRECTORY", str(app_data))
     monkeypatch.setenv("TEMP_DIRECTORY", str(tmp_path))
-    monkeypatch.setenv("DISABLE_AUTH", "true")
 
     service = ExportTaskService(timeout_seconds=10)
     captured = {}
@@ -179,7 +189,7 @@ def test_render_json_to_image_embeds_protected_local_assets(monkeypatch, tmp_pat
     service._run_task = fake_run_task
     local_url = (
         "http://127.0.0.1:8000/app_data/pptx-to-json/"
-        "session/images/photo.svg"
+        f"users/{owner_id}/session/images/photo.svg"
     )
     external_url = "https://example.com/photo.png"
     data = [
@@ -192,7 +202,11 @@ def test_render_json_to_image_embeds_protected_local_assets(monkeypatch, tmp_pat
         }
     ]
 
-    asyncio.run(service.render_json_to_image(data, 1280, 720))
+    owner_token = set_current_owner_id(owner_id)
+    try:
+        asyncio.run(service.render_json_to_image(data, 1280, 720))
+    finally:
+        reset_current_owner_id(owner_token)
 
     rendered_children = captured["task_payload"]["data"][0]["children"]
     assert rendered_children[0]["data"].startswith("data:image/svg+xml;base64,")

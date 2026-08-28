@@ -40,12 +40,6 @@ class OutlineGenerationStatus:
     message: str
 
 
-# Legacy test compatibility: tests patch ``outline_module.get_client`` via
-# ``patch.object``. ``get_llm_client`` is the new native-SDK factory;
-# ``get_client`` is kept as an alias so existing tests keep working.
-get_client = get_llm_client
-
-
 def _web_search_provider_display_name(provider_name: str) -> str:
     return {
         "searxng": "SearXNG",

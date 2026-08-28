@@ -140,7 +140,7 @@ def test_generate_ppt_outline_default_openai_uses_native_search_tool(monkeypatch
     monkeypatch.setenv("WEB_SEARCH_PROVIDER", "auto")
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "stream_generate_events", side_effect=fake_stream_generate_events
     ):
@@ -167,7 +167,7 @@ def test_generate_ppt_outline_streams_json_chunks_and_keeps_schema_shape():
         yield content_event("]}")
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "stream_generate_events", side_effect=fake_stream_generate_events
     ):
@@ -191,7 +191,7 @@ def test_generate_ppt_outline_returns_http_exception_chunk_on_failure():
         yield  # pragma: no cover
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module,
         "stream_generate_events",
@@ -222,7 +222,7 @@ def test_generate_ppt_outline_injects_external_search_context_without_hosted_too
         yield content_event('{"slides": [{"content": "## Current facts"}]}')
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "should_use_native_web_search", return_value=False
     ), patch.object(
@@ -257,7 +257,7 @@ def test_generate_ppt_outline_emits_provider_aware_external_search_statuses():
         yield content_event('{"slides": [{"content": "## Current facts"}]}')
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "should_use_native_web_search", return_value=False
     ), patch.object(
@@ -301,7 +301,7 @@ def test_generate_ppt_outline_emits_model_native_search_status():
         yield content_event('{"slides": [{"content": "## Current facts"}]}')
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "should_use_native_web_search", return_value=True
     ), patch.object(
@@ -343,7 +343,7 @@ def test_generate_ppt_outline_uses_fallback_query_when_query_generation_fails():
         return ""
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "should_use_native_web_search", return_value=False
     ), patch.object(
@@ -383,7 +383,7 @@ def test_generate_ppt_outline_uses_fallback_query_when_generated_query_is_null()
         return ""
 
     with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
-        outline_module, "get_client", return_value=object()
+        outline_module, "get_llm_client", return_value=object()
     ), patch.object(
         outline_module, "should_use_native_web_search", return_value=False
     ), patch.object(

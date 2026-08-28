@@ -810,6 +810,11 @@ def test_font_face_css_for_declared_fonts_uses_actual_font_metadata(
 
     monkeypatch.setattr(
         fonts_and_slides_preview,
+        "resolve_app_path_to_filesystem",
+        lambda source: str(font_path) if source == font_url else None,
+    )
+    monkeypatch.setattr(
+        fonts_and_slides_preview,
         "get_font_details",
         lambda path: pptx_font_utils.FontDetail(
             file=path,
