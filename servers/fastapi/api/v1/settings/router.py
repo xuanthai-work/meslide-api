@@ -1,8 +1,9 @@
 from typing import Any
 
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.v1.auth.demo_user import resolve_demo_user
 from api.v1.auth.users import read_user_from_cookie
 from models.sql.user import User
 from services.database import get_async_session
@@ -21,6 +22,22 @@ from utils.user_config import update_env_with_user_config
 API_V1_SETTINGS_ROUTER = APIRouter(prefix="/api/v1/settings", tags=["Settings"])
 
 
+async def read_settings_user(
+    request: Request,
+    cookie_user: User | None = Depends(read_user_from_cookie),
+    session: AsyncSession = Depends(get_async_session),
+) -> User | None:
+    """Cookie / middleware user, else the seeded demo user (no login UI)."""
+    if is_disable_auth_enabled():
+        return cookie_user
+    if cookie_user is not None:
+        return cookie_user
+    state_user = getattr(request.state, "current_user", None)
+    if state_user is not None:
+        return state_user
+    return await resolve_demo_user(session)
+
+
 def _require_settings_user(user: User | None) -> None:
     if is_disable_auth_enabled():
         return
@@ -30,7 +47,7 @@ def _require_settings_user(user: User | None) -> None:
 
 @API_V1_SETTINGS_ROUTER.get("/provider")
 async def read_provider_settings(
-    user: User | None = Depends(read_user_from_cookie),
+    user: User | None = Depends(read_settings_user),
     session: AsyncSession = Depends(get_async_session),
 ) -> dict[str, Any]:
     _require_settings_user(user)
@@ -43,7 +60,7 @@ async def read_provider_settings(
 @API_V1_SETTINGS_ROUTER.put("/provider")
 async def update_provider_settings(
     config: dict[str, Any] = Body(...),
-    user: User | None = Depends(read_user_from_cookie),
+    user: User | None = Depends(read_settings_user),
     session: AsyncSession = Depends(get_async_session),
 ) -> dict[str, Any]:
     _require_settings_user(user)

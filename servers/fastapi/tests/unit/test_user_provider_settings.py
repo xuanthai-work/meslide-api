@@ -54,8 +54,7 @@ async def _seed_user_with_session(engine, username, password="secret123"):
     provider-settings isolation tests can still drive the cookie-authenticated
     settings router without exercising the removed register/login endpoints.
     The returned token is set on the TestClient as the `gslide_session` cookie,
-    which is what `read_user_from_cookie` (the settings router's auth dependency)
-    consumes.
+    which is what `read_settings_user` consumes when a real session is present.
     """
     session_maker = async_sessionmaker(engine, expire_on_commit=False)
     async with session_maker() as session:
@@ -94,13 +93,16 @@ def test_two_overlays_do_not_leak(monkeypatch):
         reset_provider_overlay(token_b)
 
 
-def test_unauthenticated_settings_returns_401(monkeypatch, tmp_path):
+def test_settings_without_cookie_uses_demo_user(monkeypatch, tmp_path):
+    """Demo fallback: Next /api/user-config forwards no session cookie."""
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     monkeypatch.delenv("DISABLE_AUTH", raising=False)
+    monkeypatch.setenv("CAN_CHANGE_KEYS", "true")
     client, engine = _build_client(tmp_path)
 
     response = client.get("/api/v1/settings/provider")
-    assert response.status_code == 401
+    assert response.status_code == 200
+    assert isinstance(response.json(), dict)
 
     asyncio.run(engine.dispose())
 
