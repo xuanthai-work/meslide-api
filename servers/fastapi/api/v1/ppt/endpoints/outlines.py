@@ -5,7 +5,6 @@ import traceback
 import uuid
 import dirtyjson
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from constants.presentation import MAX_NUMBER_OF_SLIDES
@@ -35,7 +34,7 @@ from utils.llm_calls.generate_presentation_outlines import (
     generate_ppt_outline,
     get_messages as get_outline_messages,
 )
-from utils.sse import safe_sse_stream
+from utils.sse import safe_sse_stream, sse_streaming_response
 from utils.web_search import get_selected_web_search_provider, get_web_search_route
 
 OUTLINES_ROUTER = APIRouter(prefix="/outlines", tags=["Outlines"])
@@ -271,12 +270,11 @@ async def stream_outlines(
     async def rollback_stream_session():
         await sql_session.rollback()
 
-    return StreamingResponse(
+    return sse_streaming_response(
         safe_sse_stream(
             inner(),
             logger=LOGGER,
             error_detail="Failed to generate presentation outlines. Please try again.",
             on_error=rollback_stream_session,
-        ),
-        media_type="text/event-stream",
+        )
     )

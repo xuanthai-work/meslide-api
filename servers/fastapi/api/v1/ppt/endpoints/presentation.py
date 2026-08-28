@@ -93,7 +93,7 @@ from utils.process_slides import (
 )
 from utils.icon_weights import DEFAULT_ICON_TYPE, extract_icon_type_from_settings
 from utils.llm_utils import TextGenerationMetrics, message_content_to_text
-from utils.sse import safe_sse_stream
+from utils.sse import safe_sse_stream, sse_streaming_response
 from api.v1.auth.config import SESSION_COOKIE_NAME, read_session_token
 from utils.web_search import get_selected_web_search_provider, get_web_search_route
 from utils.web_search import build_web_search_query, get_web_search_context
@@ -1889,14 +1889,13 @@ async def _stream_smart_presentation(
     async def rollback_stream_session():
         await sql_session.rollback()
 
-    return StreamingResponse(
+    return sse_streaming_response(
         safe_sse_stream(
             inner(),
             logger=logger,
             error_detail="Failed to generate the Smart presentation. Please try again.",
             on_error=rollback_stream_session,
-        ),
-        media_type="text/event-stream",
+        )
     )
 
 
@@ -2145,14 +2144,13 @@ async def stream_presentation(
     async def rollback_stream_session():
         await sql_session.rollback()
 
-    return StreamingResponse(
+    return sse_streaming_response(
         safe_sse_stream(
             inner(),
             logger=logger,
             error_detail="Failed to generate presentation slides. Please try again.",
             on_error=rollback_stream_session,
-        ),
-        media_type="text/event-stream",
+        )
     )
 
 

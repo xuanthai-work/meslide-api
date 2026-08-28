@@ -1,12 +1,27 @@
 import asyncio
 import logging
 from collections.abc import AsyncGenerator, AsyncIterator, Awaitable, Callable
+from typing import Any
 
 from fastapi import HTTPException
+from fastapi.responses import StreamingResponse
 
 from models.sse_response import SSEErrorResponse, SSEHeartbeatResponse
 
 SSE_HEARTBEAT_SECONDS = 15.0
+SSE_RESPONSE_HEADERS = {
+    "Cache-Control": "no-cache, no-transform",
+    "X-Accel-Buffering": "no",
+}
+
+
+def sse_streaming_response(stream: AsyncIterator[Any]) -> StreamingResponse:
+    """Return an SSE response that proxies must forward without buffering."""
+    return StreamingResponse(
+        stream,
+        media_type="text/event-stream",
+        headers=SSE_RESPONSE_HEADERS,
+    )
 
 
 async def safe_sse_stream(

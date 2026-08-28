@@ -2,7 +2,6 @@ import json
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.chat import (
@@ -23,6 +22,7 @@ from services.chat import sql_chat_history
 from services.chat import ChatTurnResult, PresentationChatService
 from services.chat.conversation_store import ChatConversationStore
 from services.database import get_async_session
+from utils.sse import sse_streaming_response
 
 
 CHAT_ROUTER = APIRouter(prefix="/chat", tags=["Chat"])
@@ -162,4 +162,4 @@ async def chat_message_stream(
         except HTTPException as exc:
             yield SSEErrorResponse(detail=exc.detail).to_string()
 
-    return StreamingResponse(inner(), media_type="text/event-stream")
+    return sse_streaming_response(inner())

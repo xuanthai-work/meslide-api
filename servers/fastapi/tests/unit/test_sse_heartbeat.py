@@ -2,7 +2,7 @@ import asyncio
 import json
 
 from models.sse_response import SSEHeartbeatResponse
-from utils.sse import safe_sse_stream
+from utils.sse import safe_sse_stream, sse_streaming_response
 
 
 def _payload(frame: str) -> dict:
@@ -15,6 +15,17 @@ def _payload(frame: str) -> dict:
 def test_heartbeat_response_type():
     payload = _payload(SSEHeartbeatResponse().to_string())
     assert payload == {"type": "heartbeat"}
+
+
+def test_sse_response_disables_proxy_buffering_and_transforms():
+    async def inner():
+        yield "event: response\ndata: {}\n\n"
+
+    response = sse_streaming_response(inner())
+
+    assert response.headers["content-type"] == "text/event-stream; charset=utf-8"
+    assert response.headers["cache-control"] == "no-cache, no-transform"
+    assert response.headers["x-accel-buffering"] == "no"
 
 
 def test_safe_sse_stream_emits_heartbeat_while_inner_blocked():
