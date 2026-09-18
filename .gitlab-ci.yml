@@ -1,0 +1,55 @@
+# App-owned test pipeline. Matches .github/workflows/test.yml.
+# Image publish / cluster deploy stays with DevOps (registry, runners, Ingress).
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+stages:
+  - test
+
+default:
+  interruptible: true
+
+test-repository-tools:
+  stage: test
+  image: node:20-bookworm
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  variables:
+    npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  script:
+    - npm ci
+    - npm test
+    - node --test tests/*.test.mjs
+    - npm run sync:presentation-export
+    - npm run check:presentation-export
+
+test-fastapi:
+  stage: test
+  image: python:3.11-bookworm
+  cache:
+    key:
+      files:
+        - servers/fastapi/uv.lock
+    paths:
+      - .cache/uv/
+  variables:
+    UV_CACHE_DIR: "$CI_PROJECT_DIR/.cache/uv"
+    DISABLE_IMAGE_GENERATION: "true"
+  before_script:
+    - pip install --quiet uv
+  script:
+    - cd servers/fastapi
+    - uv sync --locked --dev
+    - uv run --locked ruff check .
+    - uv run --locked pyright
+    - uv run --locked vulture
+    - uv run --locked deptry .
+    - uv run --locked python tests/run_suite.py --verbose --tb=short
