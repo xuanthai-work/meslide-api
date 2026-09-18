@@ -177,6 +177,42 @@ def test_content_fit_issues_find_saturated_nested_text_but_ignore_notes():
     ]
 
 
+def test_content_fit_issues_flag_vietnamese_under_max_length():
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 24},
+            "body": {"type": "string", "minLength": 4, "maxLength": 80},
+            "__speaker_note__": {"type": "string", "maxLength": 10},
+        },
+    }
+    issues = generate_slide_content._content_fit_issues(
+        schema,
+        {
+            "title": "Phủ định của phủ định",
+            "body": "Short body copy.",
+            "__speaker_note__": "0123456789",
+        },
+    )
+    assert any("$.title" in issue and "visually" in issue for issue in issues)
+    assert all("$.body" not in issue for issue in issues)
+    assert all("__speaker_note__" not in issue for issue in issues)
+
+
+def test_content_fit_issues_ignore_short_english():
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 40},
+        },
+    }
+    issues = generate_slide_content._content_fit_issues(
+        schema,
+        {"title": "Hello world"},
+    )
+    assert issues == []
+
+
 def test_slide_content_generation_repairs_strings_at_max_length(monkeypatch):
     calls = []
     responses = iter(
@@ -326,7 +362,121 @@ def test_slide_content_generation_restores_outline_title_when_repair_stays_cut(
         )
     )
 
-    assert result["title"] == full_title
+    assert result["title"] == full_title[:16]
+    assert len(result["title"]) <= 16
     assert len(captured_schemas) == 2
     assert captured_schemas[0]["properties"]["title"]["maxLength"] == 16
     assert captured_schemas[1]["properties"]["title"]["maxLength"] == 12
+
+
+def test_schema_with_fit_ceilings_uses_tighter_visual_budget():
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 24},
+        },
+    }
+    content = {"title": "Phủ định của phủ định"}
+    tightened = generate_slide_content._schema_with_fit_ceilings(schema, content)
+    visual_max = tightened["properties"]["title"]["maxLength"]
+    assert visual_max < 19  # 80% of 24 is 19; visual target must be tighter
+    assert visual_max >= 4
+
+
+def test_slide_content_generation_repairs_visual_overflow(monkeypatch):
+    calls = []
+
+    async def fake_generate_structured_with_schema_retries(
+        _client,
+        _model,
+        *,
+        json_schema,
+        **_kwargs,
+    ):
+        calls.append(json_schema)
+        if len(calls) == 1:
+            return {
+                "title": "Phủ định của phủ định",
+                "__speaker_note__": "A sufficiently useful speaker note.",
+            }
+        return {
+            "title": "Phủ định biện chứng",
+            "__speaker_note__": "A sufficiently useful speaker note.",
+        }
+
+    monkeypatch.setattr(generate_slide_content, "get_llm_client", lambda: object())
+    monkeypatch.setattr(generate_slide_content, "get_model", lambda: "test-model")
+    monkeypatch.setattr(
+        generate_slide_content,
+        "generate_structured_with_schema_retries",
+        fake_generate_structured_with_schema_retries,
+    )
+
+    result = asyncio.run(
+        generate_slide_content.get_slide_content_from_type_and_outline(
+            SlideLayoutModel(
+                id="title-layout",
+                json_schema={
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "minLength": 4,
+                            "maxLength": 24,
+                        }
+                    },
+                    "required": ["title"],
+                },
+            ),
+            _outline(),
+            language="Vietnamese",
+        )
+    )
+
+    assert len(calls) == 2
+    assert calls[0]["properties"]["title"]["maxLength"] == 24
+    assert calls[1]["properties"]["title"]["maxLength"] < 19
+    assert result["title"] == "Phủ định biện chứng"
+
+
+def test_slide_content_prompt_mentions_latin_width_ceiling():
+    prompt = generate_slide_content.get_system_prompt()
+    assert "Latin-width" in prompt or "latin-width" in prompt.lower()
+
+
+def test_schema_with_fit_ceilings_tightens_array_items_once():
+    schema = {
+        "type": "array",
+        "items": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 24,
+        },
+    }
+    content = [
+        "Phủ định của phủ định",
+        "Biện chứng của phủ định",
+    ]
+
+    tightened = generate_slide_content._schema_with_fit_ceilings(schema, content)
+
+    assert tightened["items"]["maxLength"] == 16
+
+
+def test_schema_with_fit_ceilings_does_not_visually_squeeze_short_sibling():
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 24},
+            "body": {"type": "string", "minLength": 4, "maxLength": 80},
+        },
+    }
+    content = {
+        "title": "Phủ định của phủ định",
+        "body": "Résumé café",
+    }
+
+    tightened = generate_slide_content._schema_with_fit_ceilings(schema, content)
+
+    assert tightened["properties"]["title"]["maxLength"] < 19
+    assert tightened["properties"]["body"]["maxLength"] == 64
