@@ -6,6 +6,7 @@ import pytest
 from fastapi import HTTPException
 
 from api.v1.ppt.endpoints import presentation as presentation_endpoint
+from api.v1.ppt.endpoints import presentation_generate as presentation_generate_endpoint
 from models.generate_presentation_request import GeneratePresentationRequest
 from utils.llm_calls.generate_presentation_outlines import get_user_prompt
 
@@ -56,6 +57,7 @@ def test_invalid_llm_payload_raises_structured_http_error(fake_async_session):
     request = GeneratePresentationRequest(
         content="Generate slides from this text",
         n_slides=2,
+        include_table_of_contents=False,
         language="English",
         export_as="pdf",
         template="general",
@@ -65,15 +67,15 @@ def test_invalid_llm_payload_raises_structured_http_error(fake_async_session):
         yield HTTPException(status_code=408, detail="LLM timed out")
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=failing_outline_stream,
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ):

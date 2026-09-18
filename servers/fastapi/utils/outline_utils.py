@@ -1,5 +1,5 @@
-import math
 import re
+import unicodedata
 from typing import Iterable, List, Optional
 
 from models.presentation_outline_model import (
@@ -10,6 +10,21 @@ from models.presentation_outline_model import (
 
 HEADING_PATTERN = re.compile(r"^\s{0,3}#+\s*(.+)$", re.MULTILINE)
 FIRST_SENTENCE_PATTERN = re.compile(r"^\s*([^.?!]+?[.?!])", re.DOTALL)
+_TOC_TITLES = frozenset(
+    {
+        "table of contents",
+        "toc",
+        "agenda",
+        "contents",
+        "muc luc",
+        "dan y",
+        "dan bai",
+    }
+)
+_TOC_TITLE_PREFIXES = (
+    "table of contents",
+    "muc luc",
+)
 IMAGE_URL_PATTERN = re.compile(
     r"https?://[-\w./%~:!$&'()*+,;=]+?\.(?:jpe?g|png|webp)(?:\?[^\s\"\'\\]*)?",
     re.IGNORECASE | re.UNICODE,
@@ -41,12 +56,42 @@ def get_presentation_title_from_presentation_outline(
     )
 
 
-def _get_toc_count_for_total_slides(total_slides: int, title_slide: bool) -> int:
-    if total_slides <= 0:
-        return 0
+def _fold_outline_title(value: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", value)
+    without_marks = "".join(
+        character for character in decomposed if not unicodedata.combining(character)
+    )
+    return re.sub(r"\s+", " ", without_marks).strip().casefold()
 
-    first_pass = math.ceil(((total_slides - 1) if title_slide else total_slides) / 10)
-    return math.ceil((total_slides - first_pass) / 10)
+
+def _is_toc_outline(content: str) -> bool:
+    title = _fold_outline_title(_extract_outline_title(content))
+    if not title:
+        return False
+    if title in _TOC_TITLES:
+        return True
+    return any(title.startswith(prefix) for prefix in _TOC_TITLE_PREFIXES)
+
+
+def strip_generated_toc_outlines(
+    outline: PresentationOutlineModel,
+    *,
+    title_slide: bool,
+) -> PresentationOutlineModel:
+    """Drop LLM-authored TOC/agenda slides so the app can insert exactly one."""
+    kept: List[SlideOutlineModel] = []
+    for index, slide in enumerate(outline.slides):
+        if title_slide and index == 0:
+            kept.append(slide)
+            continue
+        if _is_toc_outline(slide.content):
+            continue
+        kept.append(slide)
+    if kept == list(outline.slides):
+        return outline
+    stripped = outline.model_copy(deep=True)
+    stripped.slides = kept
+    return stripped
 
 
 def get_no_of_toc_required_for_n_outlines(
@@ -55,14 +100,15 @@ def get_no_of_toc_required_for_n_outlines(
     title_slide: bool,
     target_total_slides: Optional[int] = None,
 ) -> int:
-    if target_total_slides is not None:
-        adjusted_total = max(target_total_slides, n_outlines)
-        return _get_toc_count_for_total_slides(adjusted_total, title_slide)
+    """Return 0 or 1. Extra TOC pages used to pad long decks are rejected.
 
+    ``target_total_slides`` is accepted for call-site compatibility and does
+    not create additional TOC slides.
+    """
     if n_outlines <= 0:
         return 0
-
-    return math.ceil(((n_outlines - 1) if title_slide else n_outlines) / 10)
+    content_count = (n_outlines - 1) if title_slide else n_outlines
+    return 1 if content_count > 0 else 0
 
 
 def get_no_of_outlines_to_generate_for_n_slides(
@@ -71,14 +117,15 @@ def get_no_of_outlines_to_generate_for_n_slides(
     toc: bool,
     title_slide: bool,
 ) -> int:
+    """How many content outlines to request before the app inserts the TOC.
+
+    Title slides stay in the model output. A table of contents is inserted
+    afterwards, so ``toc`` reserves exactly one slot. ``title_slide`` is kept
+    because every caller already passes the pair of structure flags.
+    """
     if toc:
-        n_toc_1 = math.ceil(((n_slides - 1) if title_slide else n_slides) / 10)
-        n_toc_2 = math.ceil((n_slides - n_toc_1) / 10)
-
-        return n_slides - n_toc_2
-
-    else:
-        return n_slides
+        return max(0, n_slides - 1)
+    return n_slides
 
 
 def get_presentation_outline_model_with_toc(
@@ -89,9 +136,14 @@ def get_presentation_outline_model_with_toc(
 ) -> PresentationOutlineModel:
     if n_toc_slides <= 0:
         return outline
+    n_toc_slides = 1
 
     outline_with_toc = outline.model_copy(deep=True)
     insertion_index = 1 if title_slide else 0
+    if insertion_index < len(outline_with_toc.slides) and _is_toc_outline(
+        outline_with_toc.slides[insertion_index].content
+    ):
+        return outline_with_toc
 
     existing_outlines = outline_with_toc.slides
     outlines_for_toc = existing_outlines[insertion_index:]

@@ -2,7 +2,6 @@ import asyncio
 import json
 import logging
 import math
-import threading
 import time
 from collections.abc import AsyncGenerator, Awaitable, Callable, Sequence
 from dataclasses import dataclass
@@ -285,7 +284,7 @@ def get_generate_kwargs(
             )
         )
 
-    extra_body = get_extra_body(uses_tool_choice=bool(tools or response_format))
+    extra_body = get_extra_body()
     if extra_body:
         kwargs["extra_body"] = extra_body
 

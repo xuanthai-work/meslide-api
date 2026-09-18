@@ -205,8 +205,23 @@ def _content_schema_for_element(element: dict[str, Any]) -> dict[str, Any]:
         )
 
     if element_type == "image":
-        key = "icon_query" if element.get("is_icon") is True else "image_prompt"
-        return _object_schema({key: {"type": "string"}})
+        if element.get("is_icon") is True:
+            return _object_schema({"icon_query": {"type": "string"}})
+        # ``image_query`` is optional: only produced when the presentation
+        # runs with web image search on; older output without it stays valid.
+        return _object_schema(
+            {
+                "image_prompt": {"type": "string"},
+                "image_query": {
+                    "type": "string",
+                    "description": (
+                        "Concise English web image-search phrase for this slot "
+                        "(web search mode only)"
+                    ),
+                },
+            },
+            required=["image_prompt"],
+        )
 
     if element_type == "text-list":
         return _compact(
@@ -952,16 +967,27 @@ def _component_content_field_schema(field: dict[str, Any]) -> dict[str, Any]:
         }
     elif element_type == "image":
         prompt_key = _component_image_prompt_key(element)
+        properties = {
+            prompt_key: {
+                "type": "string",
+                "description": _component_image_prompt_description(element),
+            }
+        }
+        required = [prompt_key]
+        if prompt_key == "image_prompt":
+            # Optional alongside image_prompt; only web-search mode fills it.
+            properties["image_query"] = {
+                "type": "string",
+                "description": (
+                    "Concise English web image-search phrase for this slot "
+                    "(web search mode only)"
+                ),
+            }
         schema = {
             "type": "object",
             "additionalProperties": False,
-            "properties": {
-                prompt_key: {
-                    "type": "string",
-                    "description": _component_image_prompt_description(element),
-                }
-            },
-            "required": [prompt_key],
+            "properties": properties,
+            "required": required,
         }
     elif element_type == "text-list":
         schema = {

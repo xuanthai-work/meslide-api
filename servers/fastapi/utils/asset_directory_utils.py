@@ -3,6 +3,7 @@ from typing import Optional
 from urllib.parse import urlparse, unquote
 
 from utils.get_env import (
+    default_gslide_directory,
     get_app_data_directory_env,
     get_fastapi_public_base_url,
     get_temp_directory_env,
@@ -81,7 +82,6 @@ def filesystem_image_path_to_app_data_url(path_or_url: str) -> str:
         abs_root = os.path.normpath(os.path.abspath(images_root))
     except (OSError, ValueError):
         return stripped
-    abs_image_key = os.path.normcase(abs_image)
     abs_root_key = os.path.normcase(abs_root)
     try:
         common = os.path.commonpath([abs_root, abs_image])
@@ -178,7 +178,7 @@ def _resolve_allowed_absolute_file(path: str) -> Optional[str]:
             app_url = "/app_data/" + relative.replace(os.sep, "/")
             return candidate if _app_data_url_allowed(app_url) else None
 
-    temp_root = get_temp_directory_env() or "/tmp/gslide"
+    temp_root = get_temp_directory_env() or default_gslide_directory()
     owner_id = get_current_owner_id()
     allowed_temp_root = (
         os.path.join(temp_root, str(owner_id)) if owner_id is not None else temp_root

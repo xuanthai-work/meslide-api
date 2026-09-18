@@ -7,6 +7,7 @@ that emit the same event shape.
 """
 import asyncio
 import json
+from contextlib import ExitStack
 from typing import Any
 from unittest.mock import patch
 
@@ -94,6 +95,21 @@ def test_system_prompt_forbids_sources_in_outlines():
     assert "Give each slide one clear purpose" in prompt
     assert "Vary audience-facing content structures where appropriate" in prompt
     assert "Generation settings are authoritative" in prompt
+
+
+def test_standard_outline_prompt_leaves_table_of_contents_to_backend():
+    prompt = outline_module.get_system_prompt(include_table_of_contents=True)
+
+    assert "Do not generate a table of contents" in prompt
+    assert "Include a table of contents slide" not in prompt
+
+    user_prompt = outline_module.get_user_prompt(
+        content="Create a product update",
+        n_slides=8,
+        language="English",
+        include_table_of_contents=True,
+    )
+    assert "Include Table Of Contents: true" not in user_prompt
 
 
 def test_system_prompt_requires_content_only_outlines_for_visual_instructions():
@@ -416,3 +432,143 @@ def test_presentation_outline_model_schema_validation_rejects_invalid_ai_payload
 
     with pytest.raises(ValidationError):
         PresentationOutlineModel.model_validate(invalid_payload)
+
+
+def _external_search_patches(query="current Nepal PM"):
+    return [
+        patch.object(outline_module, "get_model", return_value="fake-model"),
+        patch.object(outline_module, "get_llm_client", return_value=object()),
+        patch.object(outline_module, "should_use_native_web_search", return_value=False),
+        patch.object(
+            outline_module, "should_expose_external_web_search_tool", return_value=True
+        ),
+        patch.object(
+            outline_module,
+            "get_web_search_route",
+            return_value=("external", WebSearchProvider.SEARXNG),
+        ),
+        patch.object(outline_module, "generate_web_search_query", return_value=query),
+        patch.object(
+            outline_module, "get_web_search_context", return_value="Current facts"
+        ),
+    ]
+
+
+def test_outline_generation_status_defaults_keep_legacy_shape():
+    status = outline_module.OutlineGenerationStatus("Plain message")
+    assert status.message == "Plain message"
+    assert status.status_code is None
+    assert status.params is None
+
+
+def test_generate_ppt_outline_statuses_carry_stable_codes_external_search():
+    async def fake_stream_generate_events(_client, **_kwargs):
+        yield content_event('{"slides": [{"content": "## Current facts"}]}')
+
+    with ExitStack() as stack:
+        for patch_ctx in _external_search_patches():
+            stack.enter_context(patch_ctx)
+        stack.enter_context(
+            patch.object(
+                outline_module,
+                "stream_generate_events",
+                side_effect=fake_stream_generate_events,
+            )
+        )
+        chunks = _collect_async_chunks(
+            outline_module.generate_ppt_outline(
+                content="Who is the current PM of Nepal?",
+                n_slides=1,
+                language="English",
+                web_search=True,
+                emit_statuses=True,
+            )
+        )
+
+    statuses = [
+        (chunk.message, chunk.status_code, chunk.params)
+        for chunk in chunks
+        if isinstance(chunk, outline_module.OutlineGenerationStatus)
+    ]
+    assert statuses == [
+        ("Analyzing your topic for web research", "outline.analyzing_topic", None),
+        (
+            "Searching with SearXNG: current Nepal PM",
+            "outline.searching_provider",
+            {"provider": "SearXNG", "query": "current Nepal PM"},
+        ),
+        ("Web research complete", "outline.web_research_complete", None),
+        ("Drafting your presentation outline", "outline.drafting", None),
+    ]
+
+
+def test_generate_ppt_outline_native_search_status_carries_code():
+    async def fake_stream_generate_events(_client, **_kwargs):
+        yield content_event('{"slides": [{"content": "## Current facts"}]}')
+
+    with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
+        outline_module, "get_llm_client", return_value=object()
+    ), patch.object(
+        outline_module, "should_use_native_web_search", return_value=True
+    ), patch.object(
+        outline_module, "should_expose_external_web_search_tool", return_value=False
+    ), patch.object(
+        outline_module, "stream_generate_events", side_effect=fake_stream_generate_events
+    ):
+        chunks = _collect_async_chunks(
+            outline_module.generate_ppt_outline(
+                content="Current facts",
+                n_slides=1,
+                language="English",
+                web_search=True,
+                emit_statuses=True,
+            )
+        )
+
+    statuses = [
+        (chunk.message, chunk.status_code, chunk.params)
+        for chunk in chunks
+        if isinstance(chunk, outline_module.OutlineGenerationStatus)
+    ]
+    assert statuses == [
+        (
+            "Searching with model-native web search and drafting outlines",
+            "outline.native_search_drafting",
+            None,
+        )
+    ]
+
+
+def test_outline_status_serializes_with_code_fields_via_sse_model():
+    from models.sse_response import SSEStatusResponse
+
+    chunk = outline_module.OutlineGenerationStatus(
+        "Searching with SearXNG: current market",
+        status_code="outline.searching_provider",
+        params={"provider": "SearXNG", "query": "current market"},
+    )
+    frame = SSEStatusResponse(
+        status=chunk.message,
+        status_code=chunk.status_code,
+        status_params=chunk.params,
+    ).to_string()
+    assert frame == (
+        'event: response\ndata: {"type": "status", '
+        '"status": "Searching with SearXNG: current market", '
+        '"status_code": "outline.searching_provider", '
+        '"status_params": {"provider": "SearXNG", "query": "current market"}}\n\n'
+    )
+
+
+def test_outline_status_without_code_serializes_legacy_shape_via_sse_model():
+    from models.sse_response import SSEStatusResponse
+
+    chunk = outline_module.OutlineGenerationStatus("Plain message")
+    frame = SSEStatusResponse(
+        status=chunk.message,
+        status_code=chunk.status_code,
+        status_params=chunk.params,
+    ).to_string()
+    assert frame == (
+        'event: response\ndata: {"type": "status", "status": "Plain message"}\n\n'
+    )

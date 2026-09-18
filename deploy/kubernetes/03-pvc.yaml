@@ -1,0 +1,21 @@
+# Shared /app_data volume: SQLite database, presentations, uploads, exports,
+# fonts, templates. ReadWriteOnce is fine for one API replica.
+#
+# gslide-web mounts this PVC read-only. With RWO, the API and web pods must
+# be co-located on the same node (web Deployment uses podAffinity).
+# Before scaling the API beyond one replica, move the DB to PostgreSQL and
+# move files to RWX or object storage.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gslide-app-data
+  namespace: gslide
+  labels:
+    app.kubernetes.io/part-of: gslide
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  # storageClassName: "<your-storage-class>"

@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest.mock import AsyncMock, Mock, patch
 
 from api.v1.ppt.endpoints import presentation as presentation_endpoint
+from api.v1.ppt.endpoints import presentation_smart_stream
 from models.sql.presentation import PresentationModel, PresentationVersion
 from tests.conftest import FakeAsyncSession
 
@@ -160,15 +161,13 @@ def test_standard_stream_passes_disconnect_checker_and_stops():
 
 
 def test_smart_wait_loop_checks_request_disconnect_in_source():
-    source_path = Path(presentation_endpoint.__file__)
-    source = source_path.read_text(encoding="utf-8")
-
-    # Locate the _stream_smart_presentation wait loop and confirm it polls
-    # request.is_disconnected() before waiting on the next generation event.
-    smart_start = source.index("async def _stream_smart_presentation(")
-    # End the window at the next top-level async def (stream_presentation).
-    stream_start = source.index("async def stream_presentation(", smart_start)
-    smart_body = source[smart_start:stream_start]
+    # The Smart streaming flow moved to presentation_smart_stream; read its
+    # module source for the wait-loop assertions.
+    smart_source = Path(presentation_smart_stream.__file__).read_text(
+        encoding="utf-8"
+    )
+    smart_start = smart_source.index("async def _stream_smart_presentation(")
+    smart_body = smart_source[smart_start:]
 
     assert "while not generation_task.done() or not generation_events.empty():" in smart_body
     assert "request.is_disconnected()" in smart_body, (
@@ -178,7 +177,8 @@ def test_smart_wait_loop_checks_request_disconnect_in_source():
     # And the standard inner() loop must raise CancelledError before the next
     # slide LLM call when the client has disconnected, and pass the bound
     # disconnect_checker into get_slide_content_from_type_and_outline.
-    standard_start = source.index("async def stream_presentation(", smart_start)
+    source = Path(presentation_endpoint.__file__).read_text(encoding="utf-8")
+    standard_start = source.index("async def stream_presentation(")
     tail = source[standard_start:]
     assert (
         "request.is_disconnected if request is not None else None" in tail

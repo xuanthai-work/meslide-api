@@ -1,4 +1,6 @@
 import asyncio
+import os
+import tempfile
 import uuid
 from unittest.mock import patch
 
@@ -81,7 +83,9 @@ class TestMem0PresentationMemoryService:
             client = mem0_oss.get_shared_mem0_client()
 
         assert client is not None
-        assert captured["telemetry_base"].endswith("/mem0/telemetry/oss")
+        assert os.path.normpath(captured["telemetry_base"]).endswith(
+            os.path.join("mem0", "telemetry", "oss")
+        )
         assert captured["config"]["llm"]["provider"] == "openai"
         assert captured["config"]["llm"]["config"]["model"] == "gpt-4o-mini"
         assert captured["config"]["llm"]["config"]["api_key"] == "test-openai-key"
@@ -264,5 +268,6 @@ def test_oss_config_defaults_are_gslide(monkeypatch):
     _mem0_dir, _qdrant, _history, collection, _dims, config = mem0_oss._oss_config_from_env()
 
     assert collection == "gslide_memories"
-    assert _mem0_dir.replace("\\", "/").startswith("/tmp/gslide")
+    expected_root = os.path.join(tempfile.gettempdir(), "gslide").replace("\\", "/")
+    assert _mem0_dir.replace("\\", "/").startswith(expected_root)
     assert config["vector_store"]["config"]["collection_name"] == "gslide_memories"

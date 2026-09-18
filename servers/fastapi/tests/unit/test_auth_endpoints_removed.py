@@ -4,14 +4,14 @@ import tempfile
 
 # Importing `api.v1.auth.router` transitively imports `services.database`, which
 # at import time calls `_ensure_sqlite_parent_dir` on a path derived from
-# `get_app_data_directory_env()`. On Windows the default `/tmp/gslide` may not
-# be writable, so set APP_DATA_DIRECTORY BEFORE importing.
+# `get_app_data_directory_env()`. Set APP_DATA_DIRECTORY BEFORE importing so
+# tests use an isolated writable location instead of the process-wide default.
 os.environ.setdefault("APP_DATA_DIRECTORY", tempfile.gettempdir())
 
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from api.v1.auth.router import API_V1_AUTH_ROUTER
 from models.sql.access_token import AccessToken
@@ -29,8 +29,6 @@ def _make_client(monkeypatch, tmp_path):
     monkeypatch.setenv("DISABLE_AUTH", "1")
 
     engine = create_async_engine(f"sqlite+aiosqlite:///{tmp_path / 'auth.db'}")
-    session_maker = async_sessionmaker(engine, expire_on_commit=False)
-
     async def create_tables():
         async with engine.begin() as conn:
             await conn.run_sync(User.__table__.create)

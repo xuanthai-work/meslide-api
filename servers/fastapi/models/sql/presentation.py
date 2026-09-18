@@ -67,7 +67,7 @@ class PresentationModel(SQLModel, table=True):
     instructions: Optional[str] = Field(sa_column=Column(String), default=None)
     tone: Optional[str] = Field(sa_column=Column(String), default=None)
     verbosity: Optional[str] = Field(sa_column=Column(String), default=None)
-    include_table_of_contents: bool = Field(sa_column=Column(Boolean), default=False)
+    include_table_of_contents: bool = Field(sa_column=Column(Boolean), default=True)
     include_title_slide: bool = Field(sa_column=Column(Boolean), default=True)
     web_search: bool = Field(sa_column=Column(Boolean), default=False)
     theme: Optional[dict] = Field(sa_column=Column(JSON), default=None)

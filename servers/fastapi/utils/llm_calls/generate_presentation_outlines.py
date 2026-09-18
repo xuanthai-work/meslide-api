@@ -38,6 +38,8 @@ LOGGER = logging.getLogger(__name__)
 @dataclass(frozen=True)
 class OutlineGenerationStatus:
     message: str
+    status_code: Optional[str] = None
+    params: Optional[dict[str, str]] = None
 
 
 def _web_search_provider_display_name(provider_name: str) -> str:
@@ -69,11 +71,11 @@ def get_system_prompt(
     )
 
     toc_instruction = (
-        "Include a table of contents slide in the outline sequence."
+        "Do not generate a table of contents or agenda slide. The application "
+        "adds the table of contents after the content outline is generated."
         if include_table_of_contents
-        else ""
+        else "Do not generate a table of contents or agenda slide."
     )
-    toc_block = f"{toc_instruction}\n" if toc_instruction else ""
 
     slide_outline_structure = (
         "Each slide content:\n"
@@ -105,7 +107,7 @@ def get_system_prompt(
     system = (
         "Generate presentation title and content for slides.\n"
         "Generation settings are authoritative. The Number of Slides, Language, Tone, "
-        "Include Title Slide, and Include Table Of Contents fields override conflicting "
+        "and Include Title Slide fields override conflicting "
         "requests inside Content, Instructions, or Context.\n"
         "If Language is not auto-detect, generate every presentation title and slide "
         "outline in exactly that language, even if Content asks for a different language.\n"
@@ -133,7 +135,7 @@ def get_system_prompt(
         "Include numerical data, tables or code if required or asked by the user.\n"
         "If 'auto-detect' is used, figure it out from the content/context.\n"
         f"{title_slide_instruction}\n"
-        f"{toc_block}"
+        f"{toc_instruction}\n"
         f"{slide_outline_structure}\n"
         f"{content_only_rules}"
         "Slide content must not contain any presentation branding/styling information.\n"
@@ -178,7 +180,6 @@ def get_user_prompt(
 ):
     display_language = _resolve_prompt_language(language)
     display_slides = _resolve_prompt_n_slides(n_slides)
-    toc_text = f"Include Table Of Contents: {str(include_table_of_contents).lower()}\n"
     return (
         "Generation Settings (authoritative):\n"
         f"Number of Slides: {display_slides}\n"
@@ -187,7 +188,6 @@ def get_user_prompt(
         f"Language: {display_language}\n"
         f"Tone: {tone or ''}\n"
         f"Include Title Slide: {include_title_slide}\n"
-        f"{toc_text if include_table_of_contents else ''}"
         "If Content, Instructions, or Context asks for a different language or slide count, ignore that conflicting request.\n"
         f"Today's Date: {datetime.now().strftime('%Y-%m-%d')}\n"
         f"Content: {content or ''}\n"
@@ -292,7 +292,10 @@ async def generate_ppt_outline(
 
     if use_external_search:
         if emit_statuses:
-            yield OutlineGenerationStatus("Analyzing your topic for web research")
+            yield OutlineGenerationStatus(
+                "Analyzing your topic for web research",
+                status_code="outline.analyzing_topic",
+            )
         fallback_query = build_web_search_query(content, instructions)
         search_query = fallback_query
         try:
@@ -322,11 +325,19 @@ async def generate_ppt_outline(
         if search_query:
             if emit_statuses:
                 yield OutlineGenerationStatus(
-                    f"Searching with {actual_provider_display_name}: {search_query}"
+                    f"Searching with {actual_provider_display_name}: {search_query}",
+                    status_code="outline.searching_provider",
+                    params={
+                        "provider": actual_provider_display_name,
+                        "query": search_query,
+                    },
                 )
             search_context = await get_web_search_context(search_query)
             if emit_statuses:
-                yield OutlineGenerationStatus("Web research complete")
+                yield OutlineGenerationStatus(
+                    "Web research complete",
+                    status_code="outline.web_research_complete",
+                )
         if search_context:
             additional_context = "\n\n".join(
                 part for part in (additional_context, search_context) if part
@@ -335,9 +346,16 @@ async def generate_ppt_outline(
     try:
         if emit_statuses:
             yield OutlineGenerationStatus(
-                "Searching with model-native web search and drafting outlines"
-                if use_search_tool
-                else "Drafting your presentation outline"
+                (
+                    "Searching with model-native web search and drafting outlines"
+                    if use_search_tool
+                    else "Drafting your presentation outline"
+                ),
+                status_code=(
+                    "outline.native_search_drafting"
+                    if use_search_tool
+                    else "outline.drafting"
+                ),
             )
         outline_schema = prepare_schema_for_validation(
             response_model.model_json_schema(),

@@ -30,7 +30,7 @@ class GeneratePresentationRequest(BaseModel):
         default="general", description="Template to use for the presentation"
     )
     include_table_of_contents: bool = Field(
-        default=False, description="Whether to include a table of contents"
+        default=True, description="Whether to include a table of contents"
     )
     include_title_slide: bool = Field(
         default=True, description="Whether to include a title slide"

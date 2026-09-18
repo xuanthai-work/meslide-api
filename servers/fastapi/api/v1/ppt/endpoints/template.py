@@ -3,7 +3,7 @@ import logging
 import os
 import random
 from collections import Counter
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from contextvars import copy_context
 from datetime import datetime
 from functools import partial
@@ -40,6 +40,7 @@ from models.sql.async_task import AsyncTaskModel
 from models.sql.template_v2 import TemplateV2
 from services.database import async_session_maker, get_async_session
 from services.export_task_service import EXPORT_TASK_SERVICE
+from services.template_bundles.repository import TemplateBundleRepository
 from templates.preview import (
     FontsUploadAndSlidesPreviewResponse,
     upload_fonts_and_slides_preview_handler,
@@ -50,10 +51,12 @@ from templates.v2.generation import (
     generate_slide_layout,
     generate_template,
     merge_similar_components,
+    slide_layout_from_raw,
 )
 from templates.v2.models.elements import Image as SlideImageElement
 from templates.v2.models.layouts import (
     MergedComponents,
+    RawSlideLayout,
     RawSlideLayouts,
     SlideLayout,
     SlideLayouts,
@@ -67,6 +70,7 @@ from utils.icon_weights import (
     extract_icon_type_from_settings,
 )
 from utils.datetime_utils import get_current_utc_datetime
+from utils.coded_exception import CodedHTTPException
 from utils.llm_client_error_handler import handle_llm_client_exceptions
 
 
@@ -416,9 +420,10 @@ async def _generate_slide_layouts(
             "slides=%d",
             len(raw_layouts.layouts),
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="Slide layout generation produced invalid output",
+            error_code="error.template.layout_generation_invalid",
         ) from exc
 
     LOGGER.info(
@@ -440,7 +445,7 @@ async def _merge_generated_components(layouts: SlideLayouts) -> MergedComponents
             merge_similar_components,
             layouts,
         )
-    except (ValidationError, ValueError) as exc:
+    except (ValidationError, ValueError):
         LOGGER.exception(
             "[template.create] component de-duplication produced invalid output"
         )
@@ -497,6 +502,37 @@ def _ensure_unique_async_slide_layout_ids(
     return unique_layouts
 
 
+async def _generate_slide_layout_or_raw_fallback(
+    raw_layout: RawSlideLayout,
+    index: int,
+    slide_image_url: str | None,
+    fonts: dict[str, str] | None,
+    *,
+    log_context: str,
+) -> SlideLayout:
+    try:
+        generated_layout = await generate_slide_layout(
+            raw_layout,
+            index,
+            slide_image_url or "",
+            fonts,
+            max_tokens=SLIDE_LAYOUT_GENERATION_MAX_TOKENS,
+        )
+        if isinstance(generated_layout, SlideLayout):
+            return generated_layout
+        return SlideLayout.model_validate(generated_layout)
+    except asyncio.CancelledError:
+        raise
+    except Exception as exc:
+        LOGGER.warning(
+            "%s using PPTX JSON fallback slide=%d error=%s",
+            log_context,
+            index + 1,
+            exc,
+        )
+        return slide_layout_from_raw(raw_layout, slide_image_url or "")
+
+
 async def _generate_slide_layouts_with_task_progress(
     raw_layouts: RawSlideLayouts,
     slide_image_urls: list[str],
@@ -521,22 +557,19 @@ async def _generate_slide_layouts_with_task_progress(
         slide_count,
         max_workers,
     )
-    loop = asyncio.get_running_loop()
     completed_layout_indices: set[int] = set()
     layouts_by_index: dict[int, SlideLayout] = {}
 
     async def generate_one(index: int) -> tuple[int, SlideLayout]:
-        generated_layout = await generate_slide_layout(
+        layout = await _generate_slide_layout_or_raw_fallback(
             raw_layouts.layouts[index],
             index,
             slide_image_urls[index],
             fonts,
-            max_tokens=SLIDE_LAYOUT_GENERATION_MAX_TOKENS,
-        )
-        layout = (
-            generated_layout
-            if isinstance(generated_layout, SlideLayout)
-            else SlideLayout.model_validate(generated_layout)
+            log_context=(
+                "[template.create.async] slide layout generation failed; "
+                f"task_id={task.id}"
+            ),
         )
         return index, layout
 
@@ -716,8 +749,10 @@ async def _prepare_template_source(
             operation,
             request.pptx_url,
         )
-        raise HTTPException(
-            status_code=400, detail="At least one slide image is required"
+        raise CodedHTTPException(
+            status_code=400,
+            detail="At least one slide image is required",
+            error_code="error.template.images_required",
         )
 
     pptx_path = resolve_app_path_to_filesystem(request.pptx_url)
@@ -729,7 +764,11 @@ async def _prepare_template_source(
             request.pptx_url,
             pptx_path,
         )
-        raise HTTPException(status_code=400, detail="PPTX file not found")
+        raise CodedHTTPException(
+            status_code=400,
+            detail="PPTX file not found",
+            error_code="error.template.pptx_not_found",
+        )
 
     LOGGER.info(
         "[template.%s] converting PPTX to JSON pptx_path=%s",
@@ -748,9 +787,10 @@ async def _prepare_template_source(
             operation,
             pptx_path,
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="PPTX-to-JSON export produced invalid slide layout JSON",
+            error_code="error.template.pptx_json_invalid",
         ) from exc
     LOGGER.info(
         "[template.%s] PPTX-to-JSON validation complete pptx_path=%s "
@@ -772,9 +812,10 @@ async def _prepare_template_source(
             layouts=raw_layouts.layouts[: len(request.slide_image_urls)]
         )
     elif len(request.slide_image_urls) > len(raw_layouts.layouts):
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Exactly one slide image is required for each slide layout",
+            error_code="error.template.exactly_one_image",
         )
 
     return (
@@ -827,7 +868,11 @@ def _merge_template_layout_items(
 
     for item in items:
         if max_slide_count is not None and item.index >= max_slide_count:
-            raise HTTPException(status_code=400, detail="Invalid slide index")
+            raise CodedHTTPException(
+                status_code=400,
+                detail="Invalid slide index",
+                error_code="error.template.invalid_slide_index",
+            )
         layout_by_index[item.index] = item.layout
 
     ordered_indexes = sorted(layout_by_index)
@@ -839,9 +884,10 @@ def _merge_template_layout_items(
             ordered_indexes,
         )
     except ValidationError as exc:
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Patched template layouts are invalid",
+            error_code="error.template.patched_layouts_invalid",
         ) from exc
 
 
@@ -856,12 +902,12 @@ async def _generate_indexed_slide_layouts(
 
     async def run_one(index: int) -> tuple[int, SlideLayout]:
         async with semaphore:
-            generated = await generate_slide_layout(
+            generated = await _generate_slide_layout_or_raw_fallback(
                 raw_layouts.layouts[index],
                 index,
                 slide_image_urls[index],
                 fonts,
-                max_tokens=SLIDE_LAYOUT_GENERATION_MAX_TOKENS,
+                log_context="[template.layouts] slide layout generation failed;",
             )
             return index, generated
 
@@ -906,6 +952,7 @@ async def list_templates(
             TemplateV2.is_default,
             TemplateV2.created_at,
             TemplateV2.updated_at,
+            TemplateV2.layout_count,
         )
         .order_by(TemplateV2.created_at.desc())
     )
@@ -924,11 +971,18 @@ async def list_templates(
         is_default,
         created_at,
         updated_at,
+        stored_layout_count,
     ) in result.all():
         if default is not None and bool(is_default) != default:
             continue
 
-        layout_count = _count_layouts(layouts)
+        # Cutover rows keep the count in the column; legacy rows still
+        # carry their payload in the JSON column.
+        layout_count = (
+            stored_layout_count
+            if stored_layout_count is not None
+            else _count_layouts(layouts)
+        )
         if layout_count == 0:
             continue
 
@@ -1015,6 +1069,7 @@ async def init_template(
         len(raw_layouts.layouts),
         len(template.assets.get("images", [])),
     )
+    await TemplateBundleRepository().save(template)
     sql_session.add(template)
     await sql_session.commit()
     await sql_session.refresh(template)
@@ -1084,9 +1139,11 @@ async def _create_template_sync(
         len(raw_layouts.layouts),
         len(template.assets.get("images", [])),
     )
+    await TemplateBundleRepository().save(template)
     sql_session.add(template)
     await sql_session.commit()
     await sql_session.refresh(template)
+    await TemplateBundleRepository().hydrate_template(template)
     LOGGER.info(
         "[template.create] template persisted template_id=%s name=%s",
         template.id,
@@ -1132,9 +1189,10 @@ async def _create_template_with_task_progress(
             task.id,
             len(raw_layouts.layouts),
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="Slide layout generation produced invalid output",
+            error_code="error.template.layout_generation_invalid",
         ) from exc
     merged_components = await _merge_generated_components(generated_layouts)
     template = _build_created_template(
@@ -1153,9 +1211,11 @@ async def _create_template_with_task_progress(
         len(raw_layouts.layouts),
         len(template.assets.get("images", [])),
     )
+    await TemplateBundleRepository().save(template)
     sql_session.add(template)
     await sql_session.commit()
     await sql_session.refresh(template)
+    await TemplateBundleRepository().hydrate_template(template)
     LOGGER.info(
         "[template.create.async] template persisted task_id=%s "
         "template_id=%s name=%s",
@@ -1268,11 +1328,17 @@ async def generate_template_layout_from_prompt(
 ):
     template = await sql_session.get(TemplateV2, request.template_id)
     if not template:
-        raise HTTPException(status_code=404, detail="Template not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
+    await TemplateBundleRepository().hydrate_template(template)
     if template.layouts is None:
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Template layouts are unavailable",
+            error_code="error.template.layouts_unavailable",
         )
 
     try:
@@ -1283,9 +1349,10 @@ async def generate_template_layout_from_prompt(
             "template_id=%s",
             request.template_id,
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="Template layouts are invalid",
+            error_code="error.template.layouts_invalid",
         ) from exc
 
     merged_components: MergedComponents | None = None
@@ -1357,13 +1424,19 @@ async def create_template_slide_layouts(
 ):
     template = await sql_session.get(TemplateV2, request.template_id)
     if not template:
-        raise HTTPException(status_code=404, detail="Template not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
     _require_private_template(template)
+    await TemplateBundleRepository().hydrate_template(template)
 
     if not isinstance(template.raw_layouts, dict):
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Template raw layouts are unavailable",
+            error_code="error.template.raw_layouts_unavailable",
         )
 
     try:
@@ -1374,14 +1447,19 @@ async def create_template_slide_layouts(
             "template_id=%s",
             request.template_id,
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="Template raw layouts are invalid",
+            error_code="error.template.raw_layouts_invalid",
         ) from exc
 
     indices = request.layout_indices
     if any(index >= len(raw_layouts.layouts) for index in indices):
-        raise HTTPException(status_code=400, detail="Invalid slide index")
+        raise CodedHTTPException(
+            status_code=400,
+            detail="Invalid slide index",
+            error_code="error.template.invalid_slide_index",
+        )
 
     slide_image_urls = _get_template_slide_image_urls(template)
     missing_slide_image = any(
@@ -1389,9 +1467,10 @@ async def create_template_slide_layouts(
         for index in indices
     )
     if missing_slide_image:
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Slide image URL is unavailable for requested slide index",
+            error_code="error.template.slide_image_unavailable",
         )
 
     LOGGER.info(
@@ -1416,9 +1495,10 @@ async def create_template_slide_layouts(
             request.template_id,
             ",".join(str(index + 1) for index in indices),
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="Slide layout creation produced invalid output",
+            error_code="error.template.layout_creation_invalid",
         ) from exc
 
     LOGGER.info(
@@ -1441,13 +1521,19 @@ async def generate_template_blocks(
 ):
     template = await sql_session.get(TemplateV2, request.template_id)
     if not template:
-        raise HTTPException(status_code=404, detail="Template not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
     _require_private_template(template)
+    await TemplateBundleRepository().hydrate_template(template)
 
     if template.layouts is None:
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Template layouts are unavailable",
+            error_code="error.template.layouts_unavailable",
         )
 
     try:
@@ -1458,9 +1544,10 @@ async def generate_template_blocks(
             "template_id=%s",
             request.template_id,
         )
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="Template layouts are invalid",
+            error_code="error.template.layouts_invalid",
         ) from exc
 
     merged_components = await _merge_generated_components(layouts)
@@ -1468,9 +1555,11 @@ async def generate_template_blocks(
         mode="json",
         exclude_none=True,
     )
+    await TemplateBundleRepository().save(template)
     sql_session.add(template)
     await sql_session.commit()
     await sql_session.refresh(template)
+    await TemplateBundleRepository().hydrate_template(template)
     LOGGER.info(
         "[template.generate_blocks] component blocks generated "
         "template_id=%s layouts=%d merged_components=%d",
@@ -1494,8 +1583,13 @@ async def patch_template_slide_layout(
     async with lock:
         template = await sql_session.get(TemplateV2, template_id)
         if not template:
-            raise HTTPException(status_code=404, detail="Template not found")
+            raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
         _require_private_template(template)
+        await TemplateBundleRepository().hydrate_template(template)
 
         try:
             updated_layouts, layout_indexes = _merge_template_layout_items(
@@ -1508,9 +1602,10 @@ async def patch_template_slide_layout(
                 "template_id=%s",
                 template_id,
             )
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="Template layouts are invalid",
+                error_code="error.template.layouts_invalid",
             ) from exc
 
         assets = dict(template.assets) if isinstance(template.assets, dict) else {}
@@ -1518,9 +1613,11 @@ async def patch_template_slide_layout(
         _set_template_icon_type_asset(assets, updated_layouts)
         template.layouts = updated_layouts.model_dump(mode="json", exclude_none=True)
         template.assets = assets
+        await TemplateBundleRepository().save(template)
         sql_session.add(template)
         await sql_session.commit()
         await sql_session.refresh(template)
+        await TemplateBundleRepository().hydrate_template(template)
         LOGGER.info(
             "[template.patch_layout] slide layouts patched template_id=%s "
             "slides=%s saved_layouts=%d",
@@ -1538,22 +1635,32 @@ async def update_template_metadata(
     sql_session: AsyncSession = Depends(get_async_session),
 ):
     if request.id is not None and request.id != template_id:
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail="Template ID in path does not match request body ID",
+            error_code="error.template.id_mismatch",
         )
 
     template = await sql_session.get(TemplateV2, template_id)
     if not template:
-        raise HTTPException(status_code=404, detail="Template not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
     _require_private_template(template)
+    await TemplateBundleRepository().hydrate_template(template)
 
     has_updates = False
 
     if "name" in request.model_fields_set:
         name = (request.name or "").strip()
         if not name:
-            raise HTTPException(status_code=400, detail="Template name is required")
+            raise CodedHTTPException(
+                status_code=400,
+                detail="Template name is required",
+                error_code="error.template.name_required",
+            )
         template.name = name
         has_updates = True
 
@@ -1571,9 +1678,10 @@ async def update_template_metadata(
                     request.merged_components
                 )
             except ValidationError as exc:
-                raise HTTPException(
+                raise CodedHTTPException(
                     status_code=400,
                     detail="Template merged components are invalid",
+                    error_code="error.template.merged_components_invalid",
                 ) from exc
             template.merged_components = merged_components.model_dump(
                 mode="json",
@@ -1590,9 +1698,10 @@ async def update_template_metadata(
             try:
                 layouts = _coerce_template_slide_layouts(request.layouts)
             except ValidationError as exc:
-                raise HTTPException(
+                raise CodedHTTPException(
                     status_code=400,
                     detail="Template layouts are invalid",
+                    error_code="error.template.layouts_invalid",
                 ) from exc
             assets["layout_indexes"] = _layout_indexes_from_assets(
                 assets,
@@ -1630,9 +1739,17 @@ async def update_template_metadata(
     if not has_updates:
         return template
 
+    # Only payload changes alter bundle content; metadata-only updates keep
+    # the existing bundle revision (legacy rows keep working untouched).
+    if (
+        "merged_components" in request.model_fields_set
+        or "layouts" in request.model_fields_set
+    ):
+        await TemplateBundleRepository().save(template)
     sql_session.add(template)
     await sql_session.commit()
     await sql_session.refresh(template)
+    await TemplateBundleRepository().hydrate_template(template)
     return template
 
 
@@ -1647,13 +1764,22 @@ async def get_template(
 ):
     template = await sql_session.get(TemplateV2, template_id)
     if not template:
-        raise HTTPException(status_code=404, detail="Template not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
+    await TemplateBundleRepository().hydrate_template(template)
 
     return TemplateResponse(
         id=template.id,
         name=template.name,
         description=template.description,
-        layout_count=_count_layouts(template.layouts),
+        layout_count=(
+            template.layout_count
+            if template.layout_count is not None
+            else _count_layouts(template.layouts)
+        ),
         thumbnail=_get_template_thumbnail_from_assets(template.assets),
         is_default=template.is_default,
         created_at=template.created_at or get_current_utc_datetime(),
@@ -1671,15 +1797,21 @@ async def delete_template(
 ):
     template = await sql_session.get(TemplateV2, template_id)
     if not template:
-        raise HTTPException(status_code=404, detail="Template not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Template not found",
+            error_code="error.template.not_found",
+        )
 
     _require_private_template(template)
     await sql_session.delete(template)
     await sql_session.commit()
+    await TemplateBundleRepository().delete_if_unreferenced(template)
     return Response(status_code=204)
 def _require_private_template(template: TemplateV2) -> None:
     if template.is_default:
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=403,
             detail="Built-in templates are read-only",
+            error_code="error.template.builtin_readonly",
         )

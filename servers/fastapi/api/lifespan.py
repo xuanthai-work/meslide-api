@@ -6,14 +6,11 @@ from fastapi import FastAPI
 
 from migrations import migrate_database_on_startup
 from services.database import async_session_maker, create_db_and_tables, dispose_engines
+from services.object_storage.readiness import verify_object_storage_on_startup
 from services.provider_settings import migrate_provider_settings_from_file
 from templates.default_templates import import_default_templates_on_startup
 from utils.get_env import (
     get_app_data_directory_env,
-    get_can_change_keys_env,
-)
-from utils.model_availability import (
-    check_llm_and_image_provider_api_or_model_availability,
 )
 from utils.user_config import update_env_with_user_config
 from api.v1.auth.bootstrap import bootstrap_database_user
@@ -63,9 +60,8 @@ async def app_lifespan(_: FastAPI):
     async with async_session_maker() as session:
         await migrate_provider_settings_from_file(session)
     await import_default_templates_on_startup()
-    if get_can_change_keys_env() != "false":
-        update_env_with_user_config()
-    await check_llm_and_image_provider_api_or_model_availability()
+    update_env_with_user_config()
+    await verify_object_storage_on_startup()
     yield
     # Shutdown: release all database connections to prevent stale/leaked pools.
     await dispose_engines()

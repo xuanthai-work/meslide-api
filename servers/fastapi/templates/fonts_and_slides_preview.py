@@ -23,7 +23,6 @@ from templates.pptx_font_utils import (
     build_google_fonts_stylesheet_url,
     check_google_font_availability,
     extract_used_font_variants_from_pptx,
-    extract_used_fonts_from_pptx,
     get_available_and_unavailable_fonts_for_pptx,
     convert_eot_to_ttf,
     extract_font_name_from_file,
@@ -37,10 +36,11 @@ from templates.pptx_font_utils import (
 )
 from utils.asset_directory_utils import (
     absolute_fastapi_asset_url,
+    get_uploads_directory,
     resolve_app_path_to_filesystem,
 )
 from utils.download_helpers import download_file
-from utils.get_env import get_app_data_directory_env
+from utils.get_env import default_gslide_directory, get_app_data_directory_env
 from utils.font_uploads import (
     download_font_uploads,
     get_font_upload_url,
@@ -569,7 +569,7 @@ def _tailwind_fallback_css_for_slide_html(slide_html: str) -> str:
 
 
 def _app_data_directory() -> str:
-    app_data_dir = get_app_data_directory_env() or "/tmp/gslide"
+    app_data_dir = get_app_data_directory_env() or default_gslide_directory()
     os.makedirs(app_data_dir, exist_ok=True)
     return app_data_dir
 
@@ -581,8 +581,10 @@ def _get_fonts_directory() -> str:
 
 
 def _get_template_preview_session_dir(session_id: uuid.UUID) -> str:
+    # Must live under uploads/users/{owner}/… or /app_data middleware 404s
+    # every screenshot (legacy uploads/template-previews is unreadable).
     session_dir = os.path.join(
-        _app_data_directory(), "uploads", "template-previews", str(session_id)
+        get_uploads_directory(), "template-previews", str(session_id)
     )
     os.makedirs(session_dir, exist_ok=True)
     return session_dir
@@ -1485,7 +1487,7 @@ async def upload_fonts_and_fix_fonts_in_pptx(
         (
             found_embedded_fonts_with_url,
             found_embedded_fonts_with_path,
-            embedded_actual_names,
+            _embedded_actual_names,
         ) = await _prepare_embedded_fonts(
             raw_fonts,
             emb_font_details,
@@ -1497,7 +1499,6 @@ async def upload_fonts_and_fix_fonts_in_pptx(
     else:
         found_embedded_fonts_with_url = {}
         found_embedded_fonts_with_path = {}
-        embedded_actual_names = {}
 
     custom_font_files, font_mapping, font_variant_mapping = await _save_uploaded_fonts_to_temp(
         font_files, original_font_names, temp_dir, logger

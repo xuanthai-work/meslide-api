@@ -8,6 +8,10 @@ IMAGE_MODERATION_MESSAGE = (
     "An image request was blocked by the safety system. "
     "A placeholder image was used for that slide."
 )
+SAFETY_BLOCK_MESSAGE = (
+    "The request was blocked by the provider's safety system. "
+    "Please revise it and try again."
+)
 GENERIC_PROVIDER_ERROR_MESSAGE = (
     "The AI provider returned an error. Please try again."
 )
@@ -101,6 +105,107 @@ def _provider_operation_prefix(provider: str, operation: str) -> str:
     return f"{provider_label} {operation_label}"
 
 
+def classify_provider_error(
+    provider: str,
+    operation: str,
+    *,
+    status_code: int | None = None,
+    code: Any = None,
+    error_type: Any = None,
+    message: Any = None,
+) -> tuple[str, str, dict[str, str] | None]:
+    """Classify a provider error into ``(detail, error_code, error_params)``.
+
+    ``detail`` is the same user-facing text ``safe_provider_error_detail``
+    returns; ``error_code``/``error_params`` are the stable registry codes from
+    the Phase 5 contract (§4.6) so clients can localize without matching
+    English prose.
+    """
+    if looks_like_invalid_api_key_error(
+        status_code=status_code,
+        code=code,
+        error_type=error_type,
+        message=message,
+    ):
+        return INVALID_API_KEY_MESSAGE, "error.provider.invalid_api_key", None
+
+    if _looks_like_moderation_block(
+        code=code,
+        error_type=error_type,
+        message=message,
+    ):
+        if "image" in (operation or "").lower():
+            return IMAGE_MODERATION_MESSAGE, "error.provider.image_safety_placeholder", None
+        return SAFETY_BLOCK_MESSAGE, "error.provider.safety_blocked", None
+
+    prefix = _provider_operation_prefix(provider, operation)
+    normalized_code = _normalize_code(code)
+    if normalized_code == "insufficient_quota":
+        return (
+            f"{prefix} failed because API quota is unavailable. "
+            f"Check {provider} API billing and the limits for the project that owns this API key.",
+            "error.provider.quota",
+            {"provider": provider},
+        )
+
+    if status_code == 403:
+        return (
+            f"{provider} rejected the request because the configured API key does not "
+            "have access. Check the key permissions and selected model.",
+            "error.provider.key_access",
+            {"provider": provider},
+        )
+
+    if status_code == 429 or normalized_code in {"rate_limit_exceeded", "rate_limit"}:
+        return (
+            f"{prefix} is temporarily rate limited. Please wait and try again.",
+            "error.provider.rate_limited",
+            {"prefix": prefix},
+        )
+
+    if _looks_like_model_access_error(code=code, message=message):
+        return (
+            f"The selected {provider} model is not available. "
+            "Choose another model or check model access.",
+            "error.provider.model_unavailable",
+            {"provider": provider},
+        )
+
+    return (
+        f"{prefix} failed. Please try again.",
+        "error.provider.generic",
+        {"prefix": prefix},
+    )
+
+
+def classify_raw_provider_error(
+    provider: str,
+    operation: str,
+    *,
+    status_code: int | None = None,
+    code: Any = None,
+    error_type: Any = None,
+    message: Any = None,
+) -> tuple[str, dict[str, str] | None] | None:
+    """Classify raw provider pass-through text into ``(error_code, error_params)``.
+
+    Returns ``None`` when the text cannot be classified into one of the known
+    provider error categories, so callers keep raising a plain ``HTTPException``
+    with the raw provider text (legacy fallback).
+    """
+    _detail, error_code, error_params = classify_provider_error(
+        provider,
+        operation,
+        status_code=status_code,
+        code=code,
+        error_type=error_type,
+        message=message,
+    )
+    if error_code == "error.provider.generic":
+        return None
+    return error_code, error_params
+
+
 def safe_provider_error_detail(
     provider: str,
     operation: str,
@@ -110,50 +215,14 @@ def safe_provider_error_detail(
     error_type: Any = None,
     message: Any = None,
 ) -> str:
-    if looks_like_invalid_api_key_error(
+    return classify_provider_error(
+        provider,
+        operation,
         status_code=status_code,
         code=code,
         error_type=error_type,
         message=message,
-    ):
-        return INVALID_API_KEY_MESSAGE
-
-    if _looks_like_moderation_block(
-        code=code,
-        error_type=error_type,
-        message=message,
-    ):
-        if "image" in (operation or "").lower():
-            return IMAGE_MODERATION_MESSAGE
-        return (
-            "The request was blocked by the provider's safety system. "
-            "Please revise it and try again."
-        )
-
-    prefix = _provider_operation_prefix(provider, operation)
-    normalized_code = _normalize_code(code)
-    if normalized_code == "insufficient_quota":
-        return (
-            f"{prefix} failed because API quota is unavailable. "
-            f"Check {provider} API billing and the limits for the project that owns this API key."
-        )
-
-    if status_code == 403:
-        return (
-            f"{provider} rejected the request because the configured API key does not "
-            "have access. Check the key permissions and selected model."
-        )
-
-    if status_code == 429 or normalized_code in {"rate_limit_exceeded", "rate_limit"}:
-        return f"{prefix} is temporarily rate limited. Please wait and try again."
-
-    if _looks_like_model_access_error(code=code, message=message):
-        return (
-            f"The selected {provider} model is not available. "
-            "Choose another model or check model access."
-        )
-
-    return f"{prefix} failed. Please try again."
+    )[0]
 
 
 def safe_llm_provider_error_detail(

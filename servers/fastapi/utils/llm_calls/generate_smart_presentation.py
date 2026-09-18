@@ -139,6 +139,20 @@ Visual evidence and asset decisions:
   replace the quantitative evidence.
 """
 
+SMART_WEB_IMAGE_SEARCH_PROMPT = """
+Web image search is enabled for this presentation:
+- For every photographic, illustrative, or atmospheric image, emit exactly
+  `<img src="/static/images/placeholder.jpg" data-image-query="search phrase" alt="meaningful description">`.
+- The `data-image-query` value is a concise searchable English phrase
+  (roughly 3 to 10 words) naming the concrete subject and its context, for
+  example `Hanoi skyline at sunset`. No style, camera, or quality words,
+  and no prefixes like `a photo of`.
+- Never invent, guess, or embed remote image URLs. Every image must use the
+  local placeholder `src` above; the server replaces it with a real web
+  image. Slides with an invented remote image URL are rejected.
+- Provide meaningful `alt` text for every image.
+"""
+
 CHART_JS_INSTRUCTIONS = """
 - Use Chart.js for every quantitative chart. Assume `Chart` and the `datalabels`
   plugin are already available; do not add CDN scripts or custom plugins.
@@ -312,6 +326,7 @@ def get_smart_messages(
     fonts: Optional[dict[str, str]] = None,
     completed_slides: Optional[Sequence[dict[str, str]]] = None,
     retry_error: Optional[str] = None,
+    web_search: bool = False,
 ) -> list[Message]:
     completed_slides = completed_slides or []
     remaining_count = n_slides - len(completed_slides)
@@ -354,6 +369,7 @@ Include a visible table-of-contents slide: {include_table_of_contents}
 {_continuation_prompt(completed_slides, retry_error)}
 """
         + SMART_DIRECT_HTML_PROMPT
+        + (SMART_WEB_IMAGE_SEARCH_PROMPT if web_search else "")
         + f"""
 
 Source context:
@@ -716,6 +732,7 @@ async def generate_smart_presentation(
     fonts: Optional[dict[str, str]] = None,
     on_slide: SmartSlideCallback | None = None,
     on_metrics: SmartMetricsCallback | None = None,
+    web_search: bool = False,
 ) -> dict[str, Any]:
     client = get_llm_client()
     model = get_model()
@@ -740,6 +757,7 @@ async def generate_smart_presentation(
             fonts=fonts,
             completed_slides=accepted_slides,
             retry_error=retry_error,
+            web_search=web_search,
         )
         parser = SmartSlideStreamParser()
         attempt_slides: list[dict[str, str]] = []

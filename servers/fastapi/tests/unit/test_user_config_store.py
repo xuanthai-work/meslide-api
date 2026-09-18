@@ -1,4 +1,5 @@
 import json
+import os
 import stat
 from concurrent.futures import ThreadPoolExecutor
 
@@ -31,8 +32,9 @@ def test_read_secures_existing_config_files_without_changing_contents(tmp_path):
     }
     assert config_path.read_text(encoding="utf-8") == primary_content
     assert backup_path.read_text(encoding="utf-8") == backup_content
-    assert stat.S_IMODE(config_path.stat().st_mode) == 0o600
-    assert stat.S_IMODE(backup_path.stat().st_mode) == 0o600
+    if os.name != "nt":
+        assert stat.S_IMODE(config_path.stat().st_mode) == 0o600
+        assert stat.S_IMODE(backup_path.stat().st_mode) == 0o600
 
 
 def test_update_creates_parent_directory_and_writes_valid_json(tmp_path):

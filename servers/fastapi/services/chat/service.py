@@ -56,6 +56,52 @@ DIRECT_FILE_PLACEMENT_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+# Tool-call start traces: tool name -> (legacy message, stable trace code).
+# The message text stays verbatim for legacy clients; the code lets
+# localized clients map the trace without matching English prose.
+TOOL_START_TRACES: dict[str, tuple[str, str]] = {
+    "addOutline": ("Adding an outline slide", "chat.trace.adding_outline_slide"),
+    "updateOutline": ("Updating the outline slide", "chat.trace.updating_outline_slide"),
+    "deleteOutline": ("Deleting the outline slide", "chat.trace.deleting_outline_slide"),
+    "addNewSlide": ("Adding a blank slide", "chat.trace.adding_blank_slide"),
+    "addNewSlideLayout": ("Adding slide from layout", "chat.trace.adding_slide_from_layout"),
+    "getTemplateSummary": ("Reading template summary", "chat.trace.reading_template_summary"),
+    "getSmartPresentationContext": (
+        "Reading Smart deck design context",
+        "chat.trace.reading_smart_deck_context",
+    ),
+    "readSourceDocuments": ("Reading source documents", "chat.trace.reading_source_documents"),
+    "searchSlide": ("Searching relevant slides", "chat.trace.searching_relevant_slides"),
+    "getSlideAtIndex": ("Opening the requested slide", "chat.trace.opening_requested_slide"),
+    "getAvailableLayouts": (
+        "Checking available layouts",
+        "chat.trace.checking_available_layouts",
+    ),
+    "getContentSchemaFromLayoutId": (
+        "Reading layout content schema",
+        "chat.trace.checking_layout_schema",
+    ),
+    "generateAssets": ("Generating slide assets", "chat.trace.generating_slide_assets"),
+    "saveSlide": ("Saving the slide", "chat.trace.saving_slide"),
+    "updateSlide": ("Updating the slide", "chat.trace.updating_slide"),
+    "deleteSlide": ("Deleting the slide", "chat.trace.deleting_slide"),
+    "addElement": ("Adding slide element", "chat.trace.adding_slide_element"),
+    "updateElement": ("Updating slide element", "chat.trace.updating_slide_element"),
+    "deleteElement": ("Removing slide element", "chat.trace.removing_slide_element"),
+    "addComponent": ("Adding slide component", "chat.trace.adding_slide_component"),
+    "createComponent": ("Creating slide component", "chat.trace.creating_slide_component"),
+    "updateComponent": ("Updating slide component", "chat.trace.updating_slide_component"),
+    "deleteComponent": ("Removing slide component", "chat.trace.removing_slide_component"),
+    "getPresentationTheme": (
+        "Checking available themes",
+        "chat.trace.checking_available_themes",
+    ),
+    "setPresentationTheme": (
+        "Applying presentation theme",
+        "chat.trace.applying_presentation_theme",
+    ),
+}
+
 
 @dataclass(frozen=True)
 class ChatTurnResult:
@@ -64,8 +110,20 @@ class ChatTurnResult:
     tool_calls: list[str]
 
 
+@dataclass(frozen=True)
+class ChatStreamStatus:
+    """A chat status event with its stable machine code.
+
+    ``message`` is the legacy English text (kept verbatim); ``code`` lets
+    localized clients map the status without matching prose.
+    """
+
+    message: str
+    code: str
+
+
 ChatStreamEventType = Literal["chunk", "complete", "status", "trace"]
-ChatStreamEventValue = str | ChatTurnResult | dict[str, Any]
+ChatStreamEventValue = str | ChatTurnResult | ChatStreamStatus | dict[str, Any]
 
 
 class PresentationChatService:
@@ -114,7 +172,10 @@ class PresentationChatService:
         attachments: list[ChatAttachment] | None = None,
     ) -> AsyncGenerator[tuple[ChatStreamEventType, ChatStreamEventValue], None]:
         self._tools.set_turn_context(user_message)
-        yield "status", "Reading deck context"
+        yield "status", ChatStreamStatus(
+            message="Reading deck context",
+            code="chat.reading_deck_context",
+        )
         conversation_id, messages, persisted_user_message = await self._prepare_turn_context(
             user_message,
             attachments or [],
@@ -165,6 +226,7 @@ class PresentationChatService:
                     "round": round_index + 1,
                     "status": "info",
                     "message": thinking_summary,
+                    "code": "chat.trace.model_note",
                 }
 
             completion_tool_calls = list(
@@ -178,6 +240,8 @@ class PresentationChatService:
                     "round": round_index + 1,
                     "tools": tool_names,
                     "message": f"Using tools: {', '.join(tool_names)}",
+                    "code": "chat.trace.using_tools",
+                    "params": {"tools": ", ".join(tool_names)},
                 }
                 messages = self._append_sanitized_assistant_tool_turn(
                     messages,
@@ -191,13 +255,19 @@ class PresentationChatService:
                         tool_name=tool_call.name,
                         arguments=tool_call.arguments,
                     )
+                    start_message, start_code, start_params = self._tool_start_trace(
+                        tool_call.name
+                    )
                     start_trace: dict[str, Any] = {
                         "kind": "tool_call",
                         "round": round_index + 1,
                         "tool": tool_call.name,
                         "status": "start",
-                        "message": self._tool_start_message(tool_call.name),
+                        "message": start_message,
+                        "code": start_code,
                     }
+                    if start_params is not None:
+                        start_trace["params"] = start_params
                     if tool_focus:
                         start_trace.update(tool_focus)
                     yield "trace", start_trace
@@ -207,15 +277,21 @@ class PresentationChatService:
                         tool_name=tool_call.name,
                         tool_result=tool_result,
                     )
+                    (
+                        result_message,
+                        result_code,
+                        result_params,
+                    ) = self._tool_result_trace(tool_call.name, tool_result)
                     complete_trace: dict[str, Any] = {
                         "kind": "tool_call",
                         "round": round_index + 1,
                         "tool": tool_call.name,
                         "status": "success" if tool_result.get("ok") else "error",
-                        "message": self._summarize_tool_result(
-                            tool_call.name, tool_result
-                        ),
+                        "message": result_message,
+                        "code": result_code,
                     }
+                    if result_params is not None:
+                        complete_trace["params"] = result_params
                     if resolved_tool_focus:
                         complete_trace.update(resolved_tool_focus)
                     yield "trace", complete_trace
@@ -245,8 +321,12 @@ class PresentationChatService:
                     "Reached tool-call limit before final answer; "
                     "attempting best-effort summary."
                 ),
+                "code": "chat.trace.tool_limit_reached",
             }
-            yield "status", "Finalizing response"
+            yield "status", ChatStreamStatus(
+                message="Finalizing response",
+                code="chat.finalizing_response",
+            )
             response_text = await self._try_final_response_without_tools(
                 client=client,
                 model=model,
@@ -260,7 +340,10 @@ class PresentationChatService:
         if response_text is None:
             yield "chunk", final_response_text
 
-        yield "status", "Saving chat"
+        yield "status", ChatStreamStatus(
+            message="Saving chat",
+            code="chat.saving_chat",
+        )
         result = await self._persist_turn(
             conversation_id=conversation_id,
             user_message=persisted_user_message,
@@ -788,35 +871,13 @@ class PresentationChatService:
         return normalized_indices
 
     @staticmethod
-    def _tool_start_message(tool_name: str) -> str:
-        labels = {
-            "addOutline": "Adding an outline slide",
-            "updateOutline": "Updating the outline slide",
-            "deleteOutline": "Deleting the outline slide",
-            "addNewSlide": "Adding a blank slide",
-            "addNewSlideLayout": "Adding slide from layout",
-            "getTemplateSummary": "Reading template summary",
-            "getSmartPresentationContext": "Reading Smart deck design context",
-            "readSourceDocuments": "Reading source documents",
-            "searchSlide": "Searching relevant slides",
-            "getSlideAtIndex": "Opening the requested slide",
-            "getAvailableLayouts": "Checking available layouts",
-            "getContentSchemaFromLayoutId": "Reading layout content schema",
-            "generateAssets": "Generating slide assets",
-            "saveSlide": "Saving the slide",
-            "updateSlide": "Updating the slide",
-            "deleteSlide": "Deleting the slide",
-            "addElement": "Adding slide element",
-            "updateElement": "Updating slide element",
-            "deleteElement": "Removing slide element",
-            "addComponent": "Adding slide component",
-            "createComponent": "Creating slide component",
-            "updateComponent": "Updating slide component",
-            "deleteComponent": "Removing slide component",
-            "getPresentationTheme": "Checking available themes",
-            "setPresentationTheme": "Applying presentation theme",
-        }
-        return labels.get(tool_name, f"Running {tool_name}")
+    def _tool_start_trace(
+        tool_name: str,
+    ) -> tuple[str, str, dict[str, str] | None]:
+        trace = TOOL_START_TRACES.get(tool_name)
+        if trace is None:
+            return f"Running {tool_name}", "chat.trace.running_tool", {"tool": tool_name}
+        return trace[0], trace[1], None
 
     @staticmethod
     def _build_tool_limit_fallback(last_tool_results: list[dict[str, Any]]) -> str:
@@ -838,46 +899,79 @@ class PresentationChatService:
         )
 
     @staticmethod
-    def _summarize_tool_result(tool_name: str, tool_result: dict[str, Any]) -> str:
+    def _tool_result_trace(
+        tool_name: str, tool_result: dict[str, Any]
+    ) -> tuple[str, str, dict[str, Any] | None]:
+        """Summarize a tool result into (message, code, params).
+
+        The message text stays verbatim for legacy clients; the code lets
+        localized clients map the trace without matching English prose.
+        """
         if not tool_result.get("ok"):
             error = tool_result.get("error")
             if isinstance(error, str) and error.strip():
+                params: dict[str, Any] = {"tool": tool_name, "reason": error.strip()}
                 recovery = tool_result.get("recovery")
                 if isinstance(recovery, dict):
                     guidance = recovery.get("guidance")
                     if isinstance(guidance, list) and guidance:
                         first_guidance = str(guidance[0]).strip()
                         if first_guidance:
+                            params["recovery"] = first_guidance
                             return (
                                 f"{tool_name} failed: {error.strip()} "
-                                f"Recovery: {first_guidance}"
+                                f"Recovery: {first_guidance}",
+                                "chat.trace.tool_failed",
+                                params,
                             )
-                return f"{tool_name} failed: {error.strip()}"
-            return f"{tool_name} failed."
+                return (
+                    f"{tool_name} failed: {error.strip()}",
+                    "chat.trace.tool_failed",
+                    params,
+                )
+            return (
+                f"{tool_name} failed.",
+                "chat.trace.tool_failed",
+                {"tool": tool_name},
+            )
 
         result = tool_result.get("result")
         if isinstance(result, dict):
             message = result.get("message")
             if isinstance(message, str) and message.strip():
-                return message.strip()
+                return message.strip(), "chat.trace.tool_result", {"tool": tool_name}
 
             note = result.get("note")
             if isinstance(note, str) and note.strip():
-                return note.strip()
+                return note.strip(), "chat.trace.tool_result", {"tool": tool_name}
 
             count = result.get("count")
             if isinstance(count, int):
-                return f"{tool_name} returned {count} result(s)."
+                return (
+                    f"{tool_name} returned {count} result(s).",
+                    "chat.trace.tool_returned_results",
+                    {"tool": tool_name, "count": count},
+                )
 
             found = result.get("found")
             if isinstance(found, bool):
+                if found:
+                    return (
+                        f"{tool_name} found requested data.",
+                        "chat.trace.found_requested_data",
+                        {"tool": tool_name},
+                    )
                 return (
-                    f"{tool_name} found requested data."
-                    if found
-                    else f"{tool_name} did not find matching data."
+                    f"{tool_name} did not find matching data.",
+                    "chat.trace.no_matching_data",
+                    {"tool": tool_name},
                 )
 
-        return f"{tool_name} completed."
+        return (
+            f"{tool_name} completed.",
+            "chat.trace.tool_completed",
+            {"tool": tool_name},
+        )
 
     @staticmethod
     def _convert_history_to_messages(history: list[dict[str, str]]) -> list[Message]:

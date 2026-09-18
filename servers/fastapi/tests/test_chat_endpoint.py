@@ -1,8 +1,120 @@
 import asyncio
+import json
 import uuid
+from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from api.v1.ppt.endpoints.chat import delete_chat_conversation, get_chat_history
+from api.v1.ppt.endpoints.chat import (
+    chat_message_stream,
+    delete_chat_conversation,
+    get_chat_history,
+)
+from services.chat import ChatStreamStatus, ChatTurnResult
+
+
+def test_chat_message_stream_wraps_response_with_safe_sse_stream():
+    payload = SimpleNamespace(
+        presentation_id=uuid.uuid4(),
+        conversation_id=None,
+        presentation_type="standard",
+        message="Update the table",
+        attachments=[],
+    )
+    sql_session = MagicMock()
+
+    def passthrough(stream, *, logger, error_detail, error_code=None):
+        assert logger.name == "api.v1.ppt.endpoints.chat"
+        assert error_detail == "Chat stream failed"
+        assert error_code == "error.chat_stream_failed"
+        return stream
+
+    with (
+        patch("api.v1.ppt.endpoints.chat.PresentationChatService"),
+        patch(
+            "api.v1.ppt.endpoints.chat.safe_sse_stream",
+            side_effect=passthrough,
+        ) as safe_stream,
+    ):
+        response = asyncio.run(
+            chat_message_stream(payload=payload, sql_session=sql_session)
+        )
+
+    safe_stream.assert_called_once()
+    assert response.media_type == "text/event-stream"
+
+
+def test_chat_message_stream_emits_status_and_trace_codes():
+    payload = SimpleNamespace(
+        presentation_id=uuid.uuid4(),
+        conversation_id=None,
+        presentation_type="standard",
+        message="Update the table",
+        attachments=[],
+    )
+    sql_session = MagicMock()
+    conversation_id = uuid.uuid4()
+
+    async def fake_stream_reply(message, attachments=None):
+        yield (
+            "status",
+            ChatStreamStatus(
+                message="Reading deck context",
+                code="chat.reading_deck_context",
+            ),
+        )
+        yield "trace", {
+            "kind": "tool_plan",
+            "round": 1,
+            "tools": ["saveSlide"],
+            "message": "Using tools: saveSlide",
+            "code": "chat.trace.using_tools",
+            "params": {"tools": "saveSlide"},
+        }
+        yield "chunk", "Saved."
+        yield "complete", ChatTurnResult(
+            conversation_id=conversation_id,
+            response_text="Saved.",
+            tool_calls=["saveSlide"],
+        )
+
+    with patch(
+        "api.v1.ppt.endpoints.chat.PresentationChatService"
+    ) as service_cls:
+        service_cls.return_value.stream_reply = fake_stream_reply
+        response = asyncio.run(
+            chat_message_stream(payload=payload, sql_session=sql_session)
+        )
+
+    async def collect():
+        frames = []
+        async for frame in response.body_iterator:
+            frames.append(frame)
+        return frames
+
+    frames = asyncio.run(collect())
+    payloads = [
+        json.loads(frame.strip().split("\n")[1][len("data: ") :]) for frame in frames
+    ]
+
+    assert payloads[0] == {
+        "type": "status",
+        "status": "Reading deck context",
+        "status_code": "chat.reading_deck_context",
+    }
+    assert payloads[1] == {
+        "type": "trace",
+        "trace": {
+            "kind": "tool_plan",
+            "round": 1,
+            "tools": ["saveSlide"],
+            "message": "Using tools: saveSlide",
+            "code": "chat.trace.using_tools",
+            "params": {"tools": "saveSlide"},
+        },
+    }
+    assert payloads[2] == {"type": "chunk", "chunk": "Saved."}
+    assert payloads[3]["type"] == "complete"
+    assert payloads[3]["chat"]["conversation_id"] == str(conversation_id)
 
 
 def test_delete_chat_conversation_deletes_sql_thread_and_commits():

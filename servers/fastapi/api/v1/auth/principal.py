@@ -3,7 +3,6 @@ from typing import Literal
 import uuid
 
 from fastapi import HTTPException, Request
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.v1.auth.demo_user import resolve_demo_user

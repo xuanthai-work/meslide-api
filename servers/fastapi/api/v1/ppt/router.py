@@ -9,7 +9,9 @@ from api.v1.ppt.endpoints.fonts import FONTS_ROUTER
 from api.v1.ppt.endpoints.icons import ICONS_ROUTER
 from api.v1.ppt.endpoints.images import IMAGES_ROUTER
 from api.v1.ppt.endpoints.outlines import OUTLINES_ROUTER
+from api.v1.ppt.endpoints.prompt import PROMPT_ROUTER
 from api.v1.ppt.endpoints.slide import SLIDE_ROUTER
+from api.v1.ppt.endpoints.storage_health import STORAGE_HEALTH_ROUTER
 from api.v1.ppt.endpoints.template import TEMPLATE_ROUTER
 from api.v1.ppt.endpoints.presentation import PRESENTATION_ROUTER
 from api.v1.ppt.endpoints.theme import THEMES_ROUTER
@@ -32,3 +34,5 @@ API_V1_PPT_ROUTER.include_router(THEME_ROUTER)
 API_V1_PPT_ROUTER.include_router(CHAT_ROUTER)
 API_V1_PPT_ROUTER.include_router(TEMPLATE_ROUTER)
 API_V1_PPT_ROUTER.include_router(COMMUNITY_ROUTER)
+API_V1_PPT_ROUTER.include_router(STORAGE_HEALTH_ROUTER)
+API_V1_PPT_ROUTER.include_router(PROMPT_ROUTER)

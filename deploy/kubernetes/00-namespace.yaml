@@ -1,0 +1,9 @@
+# Namespace for the GSlide application workloads.
+# Change or remove if DevOps prefers a platform-managed namespace.
+# Safe to apply from both gslide-web and gslide-api (idempotent).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gslide
+  labels:
+    app.kubernetes.io/part-of: gslide

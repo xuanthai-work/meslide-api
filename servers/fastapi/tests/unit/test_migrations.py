@@ -79,17 +79,13 @@ def test_upgrade_from_baseline_stamp_skips_existing_theme_column(tmp_path):
                 row[1]
                 for row in connection.execute(text("PRAGMA table_info('user')"))
             }
-            user_indexes = {
-                row[1]
-                for row in connection.execute(text("PRAGMA index_list('user')"))
-            }
         assert version == migrations.REVISION_HEAD
         assert "theme" in columns
         assert "fonts" in columns
         assert "async_tasks" in tables
         assert "presenton_oauth_identity" not in tables
         assert "presenton_cloud_provider" not in tables
-        assert migrations.REVISION_HEAD == migrations.REVISION_USER_PROVIDER_SETTINGS
+        assert migrations.REVISION_HEAD == migrations.REVISION_TEMPLATE_BUNDLE_COLUMNS
         assert "admin_slot" not in user_columns
         assert "is_superuser" not in user_columns
         assert "user_provider_settings" in tables

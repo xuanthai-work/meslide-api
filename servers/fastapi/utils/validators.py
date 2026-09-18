@@ -1,8 +1,9 @@
 from pathlib import Path
 from typing import List
-from fastapi import HTTPException
 
 from fastapi import UploadFile
+
+from utils.coded_exception import CodedHTTPException
 
 
 def _is_accepted_file_type(file: UploadFile, accepted_types: List[str]) -> bool:
@@ -34,15 +35,27 @@ def validate_files(
             file_size = each_file.size or 0
 
             if (max_size * 1024 * 1024) < file_size:
-                raise HTTPException(
+                raise CodedHTTPException(
                     400,
                     detail=f"File '{each_file.filename}' exceeded max upload size of {max_size} MB",
+                    error_code="error.file.too_large",
+                    error_params={
+                        "filename": each_file.filename,
+                        "max_size": max_size,
+                    },
                 )
             elif not _is_accepted_file_type(each_file, accepted_types):
-                raise HTTPException(
+                raise CodedHTTPException(
                     400,
                     detail=f"File '{each_file.filename}' not accepted. Accepted types: {accepted_types}",
+                    error_code="error.file.type_not_accepted",
+                    error_params={
+                        "filename": each_file.filename,
+                        "accepted_types": ", ".join(accepted_types),
+                    },
                 )
 
     elif not (field or nullable):
-        raise HTTPException(400, detail="File must be provided.")
+        raise CodedHTTPException(
+            400, detail="File must be provided.", error_code="error.file.required"
+        )

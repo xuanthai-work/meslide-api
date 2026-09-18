@@ -100,7 +100,16 @@ def test_extract_slide_schema_from_layout_extracts_editable_content():
             "formula": {"type": "string", "minLength": 3, "maxLength": 120},
             "hero_image": {
                 "type": "object",
-                "properties": {"image_prompt": {"type": "string"}},
+                "properties": {
+                    "image_prompt": {"type": "string"},
+                    "image_query": {
+                        "type": "string",
+                        "description": (
+                            "Concise English web image-search phrase for this slot "
+                            "(web search mode only)"
+                        ),
+                    },
+                },
                 "required": ["image_prompt"],
                 "additionalProperties": False,
             },
@@ -730,7 +739,8 @@ def test_get_template_schema_strips_component_metadata():
                                     "type": "object",
                                     "additionalProperties": False,
                                     "properties": {
-                                        "image_prompt": {"type": "string"}
+                                        "image_prompt": {"type": "string"},
+                                        "image_query": {"type": "string"},
                                     },
                                     "required": ["image_prompt"],
                                 }

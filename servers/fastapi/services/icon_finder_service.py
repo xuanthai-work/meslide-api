@@ -115,10 +115,10 @@ class IconFinderService:
                             print(f"[IconFinder] Warning: Could not save vectorstore: {e}")
                             # Continue anyway - vectorstore is still usable in memory
                     else:
-                        print(f"[IconFinder] Failed to embed icons")
+                        print("[IconFinder] Failed to embed icons")
                         self._initialization_failed = True
                 else:
-                    print(f"[IconFinder] No icons found to embed")
+                    print("[IconFinder] No icons found to embed")
                     self._initialization_failed = True
             else:
                 print(f"[IconFinder] ERROR: Icons assets not found at {icons_path}")

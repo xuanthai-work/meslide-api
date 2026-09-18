@@ -15,6 +15,7 @@ from pydantic import BaseModel, ValidationError, model_validator
 
 from services.liteparse_service import _command_str, _snippet
 from api.v1.auth.context import get_current_owner_id, get_current_owner_id_raw
+from utils.coded_exception import CodedHTTPException
 from utils.asset_directory_utils import (
     get_exports_directory,
     resolve_app_path_to_filesystem,
@@ -203,9 +204,9 @@ class ExportTaskService:
     @staticmethod
     def _resolve_converter_path(export_dir: str) -> str:
         py_dir = os.path.join(export_dir, "py")
-        extension = ".exe" if os.name == "nt" else ""
         platform_name = sys_platform()
         arch_name = sys_arch()
+        extension = ".exe" if platform_name == "win32" else ""
 
         candidates: list[str] = []
         configured = (os.getenv("BUILT_PYTHON_MODULE_PATH") or "").strip()
@@ -235,9 +236,10 @@ class ExportTaskService:
 
         app_data_directory = get_app_data_directory_env()
         if not app_data_directory:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="APP_DATA_DIRECTORY must be set for PPTX-to-HTML export",
+                error_code="error.export.app_data_dir_required",
             )
         env["APP_DATA_DIRECTORY"] = app_data_directory
 
@@ -272,42 +274,57 @@ class ExportTaskService:
 
     def _ensure_runtime_ready(self) -> None:
         if not os.path.isfile(self.entrypoint_path):
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail=f"Export runtime not found at {self.entrypoint_path}",
+                error_code="error.export.runtime_not_found",
+                error_params={"path": self.entrypoint_path},
             )
         if not os.path.isfile(self.converter_path):
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail=f"Export converter binary not found at {self.converter_path}",
+                error_code="error.export.converter_not_found",
+                error_params={"path": self.converter_path},
             )
 
-    @staticmethod
-    def _resolve_output_path(response_data: dict) -> str:
+    @classmethod
+    def _resolve_output_path(cls, response_data: dict) -> str:
         for path_key in ("path", "file_path"):
             path_value = response_data.get(path_key)
             if isinstance(path_value, str):
-                resolved = ExportTaskService._resolve_trusted_runtime_path(path_value)
+                resolved = cls._resolve_trusted_runtime_path(path_value)
                 if resolved:
                     return resolved
 
         url_value = response_data.get("url")
         if isinstance(url_value, str):
-            resolved = ExportTaskService._resolve_trusted_runtime_path(url_value)
+            resolved = cls._resolve_trusted_runtime_path(url_value)
             if resolved:
                 return resolved
 
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=500,
             detail="PPTX-to-HTML task completed without a valid output path",
+            error_code="error.export.no_output_path",
         )
 
     @staticmethod
     def _resolve_trusted_runtime_path(path_or_url: str) -> str | None:
-        parsed = urlparse(path_or_url)
-        candidate = unquote(parsed.path) if parsed.scheme else path_or_url
-        if parsed.scheme == "file" and os.name == "nt" and candidate.startswith("/"):
-            candidate = candidate[1:]
+        # ``urlparse('C:\\path')`` treats ``C`` as a URL scheme. Preserve
+        # native absolute paths before parsing URLs so Windows export-runtime
+        # results go through the same trusted-root containment check.
+        if os.path.isabs(path_or_url):
+            candidate = path_or_url
+        else:
+            parsed = urlparse(path_or_url)
+            candidate = unquote(parsed.path) if parsed.scheme else path_or_url
+            if (
+                parsed.scheme == "file"
+                and os.name == "nt"
+                and candidate.startswith("/")
+            ):
+                candidate = candidate[1:]
 
         allowed_roots = [
             get_app_data_directory_env(),
@@ -315,17 +332,24 @@ class ExportTaskService:
         ]
         try:
             resolved = os.path.realpath(os.path.abspath(candidate))
-            for root in allowed_roots:
-                if not root:
-                    continue
+        except (OSError, ValueError):
+            return None
+
+        for root in allowed_roots:
+            if not root:
+                continue
+            try:
                 resolved_root = os.path.realpath(root)
                 if (
                     os.path.commonpath([resolved, resolved_root]) == resolved_root
                     and os.path.isfile(resolved)
                 ):
                     return resolved
-        except (OSError, ValueError):
-            return None
+            except (OSError, ValueError):
+                # Windows raises ValueError when candidate and root are on
+                # different drives. That root is simply not a match; another
+                # configured trusted root may still contain the file.
+                continue
         return None
 
     @staticmethod
@@ -334,9 +358,11 @@ class ExportTaskService:
             os.chmod(os.path.dirname(output_path), EXPORT_DIRECTORY_MODE)
             os.chmod(output_path, EXPORT_FILE_MODE)
         except OSError as exc:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail=f"Export completed but output permissions could not be updated: {exc}",
+                error_code="error.export.permissions_failed",
+                error_params={"reason": str(exc)},
             ) from exc
 
     @staticmethod
@@ -383,32 +409,42 @@ class ExportTaskService:
             )
 
             if result["returncode"] != 0:
-                raise HTTPException(
+                raise CodedHTTPException(
                     status_code=500,
                     detail=(
                         "Export task failed. "
                         f"returncode={result['returncode']} "
                         f"stderr={_snippet(result['stderr'])} stdout={_snippet(result['stdout'])}"
                     ),
+                    error_code="error.export.task_failed",
+                    error_params={
+                        "returncode": result["returncode"],
+                        "stderr": _snippet(result["stderr"]),
+                        "stdout": _snippet(result["stdout"]),
+                    },
                 )
 
             if not os.path.isfile(response_path):
-                raise HTTPException(
+                raise CodedHTTPException(
                     status_code=500,
                     detail=response_error_detail,
+                    error_code="error.export.no_response_file",
                 )
 
             with open(response_path, "r", encoding="utf-8") as response_file:
                 return json.load(response_file)
         except json.JSONDecodeError as exc:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="Export task produced invalid JSON output",
+                error_code="error.export.invalid_json_output",
             ) from exc
         except OSError as exc:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail=f"Failed to run export task: {exc}",
+                error_code="error.export.run_failed",
+                error_params={"reason": str(exc)},
             ) from exc
         finally:
             shutil.rmtree(temp_dir, ignore_errors=True)
@@ -463,9 +499,11 @@ class ExportTaskService:
             process.kill()
             await process.wait()
             await asyncio.gather(stdout_task, stderr_task, return_exceptions=True)
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail=f"Export task timed out after {timeout} seconds",
+                error_code="error.export.timeout",
+                error_params={"timeout": timeout},
             ) from exc
 
         LOGGER.info(
@@ -518,7 +556,12 @@ class ExportTaskService:
         self, pptx_path: str, get_fonts: bool = False
     ) -> PptxToHtmlDocument:
         if not os.path.isfile(pptx_path):
-            raise HTTPException(status_code=400, detail=f"PPTX not found: {pptx_path}")
+            raise CodedHTTPException(
+                status_code=400,
+                detail=f"PPTX not found: {pptx_path}",
+                error_code="error.export.pptx_not_found",
+                error_params={"pptx_path": pptx_path},
+            )
 
         try:
             response_data = await self._run_task(
@@ -541,9 +584,10 @@ class ExportTaskService:
 
             return PptxToHtmlDocument(**output_data)
         except json.JSONDecodeError as exc:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="PPTX-to-HTML export produced invalid JSON output",
+                error_code="error.export.invalid_json_output",
             ) from exc
 
     async def render_html_to_image(
@@ -553,9 +597,10 @@ class ExportTaskService:
         height: int,
     ) -> HtmlToImageTaskResult:
         if width <= 0 or height <= 0:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=400,
                 detail="HTML-to-image dimensions must be positive",
+                error_code="error.export.dimensions_positive",
             )
 
         response_data = await self._run_task(
@@ -581,9 +626,10 @@ class ExportTaskService:
         fonts: Mapping[str, str] | None = None,
     ) -> JsonToImageTaskResult:
         if width <= 0 or height <= 0:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=400,
                 detail="JSON-to-image dimensions must be positive",
+                error_code="error.export.dimensions_positive",
             )
 
         task_payload: dict[str, Any] = {
@@ -612,14 +658,16 @@ class ExportTaskService:
         height: int,
     ) -> HtmlToImagesTaskResult:
         if not htmls:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=400,
                 detail="At least one HTML document is required",
+                error_code="error.export.html_required",
             )
         if width <= 0 or height <= 0:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=400,
                 detail="HTML-to-image dimensions must be positive",
+                error_code="error.export.dimensions_positive",
             )
 
         try:
@@ -653,9 +701,10 @@ class ExportTaskService:
 
         raw_paths = response_data.get("file_paths")
         if not isinstance(raw_paths, list) or len(raw_paths) != len(htmls):
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="HTML-to-images export task produced invalid output",
+                error_code="error.export.invalid_output",
             )
 
         output_paths = [
@@ -673,7 +722,12 @@ class ExportTaskService:
         slide_concurrency: int | None = None,
     ) -> PptxToJsonDocument:
         if not os.path.isfile(pptx_path):
-            raise HTTPException(status_code=400, detail=f"PPTX not found: {pptx_path}")
+            raise CodedHTTPException(
+                status_code=400,
+                detail=f"PPTX not found: {pptx_path}",
+                error_code="error.export.pptx_not_found",
+                error_params={"pptx_path": pptx_path},
+            )
 
         task_payload: dict[str, Any] = {
             "type": "pptx-to-json",
@@ -699,14 +753,16 @@ class ExportTaskService:
 
             return PptxToJsonDocument(**output_data)
         except json.JSONDecodeError as exc:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="PPTX-to-JSON export produced invalid JSON output",
+                error_code="error.export.invalid_json_output",
             ) from exc
         except ValidationError as exc:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="PPTX-to-JSON export produced invalid output",
+                error_code="error.export.invalid_output",
             ) from exc
 
     @staticmethod
@@ -716,18 +772,20 @@ class ExportTaskService:
         destination_dir = get_exports_directory()
         app_data = get_app_data_directory_env()
         if not app_data:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="APP_DATA_DIRECTORY is required for exported files",
+                error_code="error.export.app_data_dir_required",
             )
         exports_root = os.path.realpath(os.path.join(app_data, "exports"))
         resolved_output = os.path.realpath(output_path)
         resolved_destination_dir = os.path.realpath(destination_dir)
         source_parent = os.path.dirname(resolved_output)
         if source_parent not in {exports_root, resolved_destination_dir}:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="Export task returned an output outside its asset directory",
+                error_code="error.export.outside_asset_dir",
             )
         destination = os.path.join(destination_dir, os.path.basename(output_path))
         os.makedirs(destination_dir, exist_ok=True)
@@ -749,9 +807,10 @@ class ExportTaskService:
         session_id = os.path.basename(source_dir)
         app_data = get_app_data_directory_env()
         if not app_data:
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="APP_DATA_DIRECTORY is required for conversion artifacts",
+                error_code="error.export.app_data_dir_required",
             )
         source_root = os.path.realpath(os.path.join(app_data, root_name))
         owner_root = os.path.realpath(
@@ -759,9 +818,10 @@ class ExportTaskService:
         )
         source_parent = os.path.dirname(source_dir)
         if source_parent not in {source_root, owner_root} or session_id == "users":
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="Conversion task returned an output outside its asset directory",
+                error_code="error.export.outside_asset_dir",
             )
         target_dir = os.path.join(
             owner_root,
@@ -827,9 +887,10 @@ class ExportTaskService:
                 "[export_runtime] extract_schema pydantic validation failed url=%s",
                 url,
             )
-            raise HTTPException(
+            raise CodedHTTPException(
                 status_code=500,
                 detail="Extract-schema task produced invalid output",
+                error_code="error.export.schema_invalid_output",
             ) from exc
 
 

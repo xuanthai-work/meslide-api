@@ -20,11 +20,6 @@ _CLOUD_STATUS_FIELDS = {
     "PRESENTON_EMAIL",
 }
 
-# Fields that are stored at the instance level, not per user. Saving these in
-# an overlay would leak operator-only state into a user row.
-_INSTANCE_LEVEL_FIELDS = {"DISABLE_ANONYMOUS_TRACKING"}
-
-
 def sanitize_provider_settings(config: dict[str, Any]) -> dict[str, Any]:
     """Keep provider/runtime settings and exclude legacy auth and Cloud status."""
     cleaned = {
@@ -38,32 +33,8 @@ def sanitize_provider_settings(config: dict[str, Any]) -> dict[str, Any]:
 
 
 def sanitize_user_overlay(config: dict[str, Any]) -> dict[str, Any]:
-    """Per-user overlay cannot include AUTH_, Cloud status, or instance-level fields."""
-    cleaned = sanitize_provider_settings(config)
-    for key in _INSTANCE_LEVEL_FIELDS:
-        cleaned.pop(key, None)
-    return cleaned
-
-
-def persist_instance_level_fields(incoming: dict[str, Any]) -> None:
-    """Write Analytics/telemetry flags to instance userConfig.json, not the overlay."""
-    path = get_user_config_path_env()
-    if not path:
-        return
-    updates = {
-        key: incoming[key]
-        for key in _INSTANCE_LEVEL_FIELDS
-        if key in incoming
-    }
-    if not updates:
-        return
-
-    def patch(existing: dict[str, Any]) -> dict[str, Any]:
-        next_config = dict(existing)
-        next_config.update(updates)
-        return next_config
-
-    update_user_config_file(path, patch)
+    """Per-user overlay cannot include AUTH_ or removed Cloud status fields."""
+    return sanitize_provider_settings(config)
 
 
 def merge_provider_settings(

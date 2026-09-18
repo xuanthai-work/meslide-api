@@ -1,6 +1,5 @@
 from typing import Optional
 
-from fastapi import HTTPException
 
 from utils.get_env import (
     get_disable_thinking_env,
@@ -18,7 +17,7 @@ def disable_thinking() -> bool:
     return parse_bool_or_none(get_disable_thinking_env()) or False
 
 
-def get_extra_body(*, uses_tool_choice: bool = False) -> Optional[dict]:
+def get_extra_body() -> Optional[dict]:
     """Return OpenAI-style ``extra_body`` payload for ``chat.completions.create``.
 
     CUSTOM (OpenAI-compatible) provider with ``DISABLE_THINKING`` is the only

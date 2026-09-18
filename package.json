@@ -6,6 +6,11 @@
   "description": "Open-source AI presentation generator",
   "scripts": {
     "test": "npm run test:template-converter && node --test scripts/package-metadata.test.mjs",
+    "lint:fastapi": "cd servers/fastapi && uv run --locked ruff check .",
+    "typecheck:fastapi": "cd servers/fastapi && uv run --locked pyright",
+    "deadcode:fastapi": "cd servers/fastapi && uv run --locked vulture && uv run --locked deptry .",
+    "test:fastapi": "cd servers/fastapi && uv run --locked python tests/run_suite.py -q",
+    "check:fastapi": "npm run lint:fastapi && npm run typecheck:fastapi && npm run deadcode:fastapi && npm run test:fastapi",
     "convert:template": "node scripts/convert-template.mjs",
     "convert:presentation-template": "node scripts/convert-presentation-template.mjs",
     "test:template-converter": "node --test scripts/convert-template.test.mjs scripts/convert-presentation-template.test.mjs",

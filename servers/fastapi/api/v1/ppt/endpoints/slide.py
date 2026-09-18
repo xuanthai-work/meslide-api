@@ -1,6 +1,6 @@
 import logging
 from typing import Annotated, Optional
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import uuid
 
@@ -12,6 +12,7 @@ from services.mem0_presentation_memory_service import (
     MEM0_PRESENTATION_MEMORY_SERVICE,
 )
 from utils.asset_directory_utils import get_images_directory
+from utils.coded_exception import CodedHTTPException
 from utils.llm_calls.edit_slide import get_edited_slide_content
 from utils.llm_calls.edit_slide_html import get_edited_slide_html
 from utils.llm_calls.select_slide_type_on_edit import get_slide_layout_from_prompt
@@ -34,10 +35,16 @@ async def edit_slide(
 ):
     slide = await sql_session.get(SlideModel, id)
     if not slide:
-        raise HTTPException(status_code=404, detail="Slide not found")
+        raise CodedHTTPException(
+            status_code=404, detail="Slide not found", error_code="error.slide_not_found"
+        )
     presentation = await sql_session.get(PresentationModel, slide.presentation)
     if not presentation:
-        raise HTTPException(status_code=404, detail="Presentation not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Presentation not found",
+            error_code="error.presentation_not_found",
+        )
 
     memory_context = await MEM0_PRESENTATION_MEMORY_SERVICE.retrieve_context(
         presentation.id,
@@ -78,6 +85,7 @@ async def edit_slide(
         ),
         allow_image_fallback=True,
         image_warnings=image_warnings,
+        web_search=presentation.web_search,
     )
     for warning in image_warnings:
         LOGGER.warning(
@@ -116,15 +124,23 @@ async def edit_slide_html(
 ):
     slide = await sql_session.get(SlideModel, id)
     if not slide:
-        raise HTTPException(status_code=404, detail="Slide not found")
+        raise CodedHTTPException(
+            status_code=404, detail="Slide not found", error_code="error.slide_not_found"
+        )
 
     presentation = await sql_session.get(PresentationModel, slide.presentation)
     if not presentation:
-        raise HTTPException(status_code=404, detail="Presentation not found")
+        raise CodedHTTPException(
+            status_code=404,
+            detail="Presentation not found",
+            error_code="error.presentation_not_found",
+        )
 
     html_to_edit = html or slide.html_content
     if not html_to_edit:
-        raise HTTPException(status_code=400, detail="No HTML to edit")
+        raise CodedHTTPException(
+            status_code=400, detail="No HTML to edit", error_code="error.slide.no_html"
+        )
 
     memory_context = await MEM0_PRESENTATION_MEMORY_SERVICE.retrieve_context(
         presentation.id,

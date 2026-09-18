@@ -4,7 +4,6 @@ import uuid
 from dataclasses import dataclass
 from typing import Literal
 
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.v1.auth.users import PASSWORD_HELPER

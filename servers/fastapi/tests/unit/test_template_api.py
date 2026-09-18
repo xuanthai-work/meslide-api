@@ -234,6 +234,7 @@ class _ListSession:
                 False,
                 now,
                 now,
+                None,
             ),
             (
                 "00000000-0000-0000-0000-000000000001",
@@ -249,6 +250,7 @@ class _ListSession:
                 False,
                 now,
                 now,
+                None,
             ),
         ]
         return _RowsResult(
@@ -606,6 +608,64 @@ def test_create_template_async_task_updates_slide_status_before_batch_completes(
     assert persisted_template.layouts["layouts"][1]["id"] == "slide_2_4802"
 
 
+def test_create_template_async_persists_when_one_slide_layout_fails(tmp_path):
+    pptx_path = tmp_path / "template.pptx"
+    pptx_path.write_bytes(b"pptx")
+    task = AsyncTaskModel(
+        id="task-template-create-partial",
+        type="template.create",
+        status="pending",
+    )
+    session = _TemplateTaskSession(task)
+    generated_layouts = _two_template_layouts()["layouts"]
+
+    def fake_generate_slide_layout(
+        _raw_layout, index, _slide_image_url, _fonts, *, max_tokens=None
+    ):
+        if index == 0:
+            raise ValueError("invalid slide layout response")
+        return generated_layouts[index]
+
+    with patch(
+        "api.v1.ppt.endpoints.template.async_session_maker",
+        new=lambda: _TemplateTaskSessionContext(session),
+    ), patch(
+        "api.v1.ppt.endpoints.template.resolve_app_path_to_filesystem",
+        return_value=str(pptx_path),
+    ), patch(
+        "api.v1.ppt.endpoints.template.EXPORT_TASK_SERVICE.convert_pptx_to_json",
+        new=AsyncMock(return_value=PptxToJsonDocument(**_two_raw_layouts())),
+    ), patch(
+        "api.v1.ppt.endpoints.template.generate_slide_layout",
+        new=AsyncMock(side_effect=fake_generate_slide_layout),
+    ), patch(
+        "api.v1.ppt.endpoints.template.merge_similar_components",
+        new=Mock(return_value=MERGED_COMPONENTS),
+    ), patch(
+        "api.v1.ppt.endpoints.template.random.randint",
+        side_effect=[4801, 4802],
+    ):
+        asyncio.run(
+            _run_create_template_task(
+                task.id,
+                CreateTemplateRequest(
+                    pptx_url="/app_data/uploads/template.pptx",
+                    slide_image_urls=[
+                        "/app_data/images/slide-1.png",
+                        "/app_data/images/slide-2.png",
+                    ],
+                ),
+            )
+        )
+
+    assert task.status == "completed"
+    assert task.message == "Template creation completed"
+    persisted_template = next(obj for obj in session.added if isinstance(obj, TemplateV2))
+    assert len(persisted_template.layouts["layouts"]) == 2
+    assert persisted_template.layouts["layouts"][0]["id"] == "slide_1_4801"
+    assert persisted_template.layouts["layouts"][1]["id"] == "slide_2_4802"
+
+
 def test_template_request_ids_accept_non_uuid_strings():
     layouts_request = CreateTemplateLayoutsRequest.model_validate(
         {"id": "general-template", "indices": [0]}
@@ -646,7 +706,10 @@ def test_init_template_persists_assets_without_layouts(tmp_path, fake_async_sess
     template = fake_async_session.added[0]
     assert template.name == "Quarterly Review"
     assert template.description == "Board deck template"
-    assert template.raw_layouts == _normalized_raw_layouts()
+    # PR3 cutover: the raw bundle lives in object storage, not the DB row.
+    assert template.raw_layouts is None
+    assert template.bundle_object_key is not None
+    assert template.bundle_size_bytes > 0
     assert template.layouts is None
     assert template.assets == {
         "pptx_url": "/app_data/uploads/quarterly-review.pptx",
@@ -689,6 +752,7 @@ def test_list_templates_filters_by_default_flag():
             True,
             now,
             now,
+            None,
         ),
         (
             "custom-template",
@@ -699,6 +763,7 @@ def test_list_templates_filters_by_default_flag():
             False,
             now,
             now,
+            None,
         ),
     ]
 

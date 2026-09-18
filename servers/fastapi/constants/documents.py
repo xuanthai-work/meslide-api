@@ -1,9 +1,9 @@
 PDF_EXTENSIONS = [".pdf"]
 TEXT_EXTENSIONS = [".txt"]
 
-WORD_EXTENSIONS = [".doc", ".docx", ".docm", ".odt", ".rtf"]
-POWERPOINT_EXTENSIONS = [".ppt", ".pptx", ".pptm", ".odp"]
-SPREADSHEET_EXTENSIONS = [".xls", ".xlsx", ".xlsm", ".ods", ".csv", ".tsv"]
+WORD_EXTENSIONS = [".docx", ".docm", ".odt"]
+POWERPOINT_EXTENSIONS = [".pptx", ".pptm", ".odp"]
+SPREADSHEET_EXTENSIONS = [".xlsx", ".xlsm", ".ods", ".csv", ".tsv"]
 
 JPEG_EXTENSIONS = [".jpg", ".jpeg"]
 PNG_EXTENSIONS = [".png"]
@@ -27,23 +27,18 @@ PDF_MIME_TYPES = ["application/pdf"]
 TEXT_MIME_TYPES = ["text/plain", "text/markdown"]
 
 WORD_MIME_TYPES = [
-    "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "application/vnd.ms-word.document.macroenabled.12",
     "application/vnd.oasis.opendocument.text",
-    "application/rtf",
-    "text/rtf",
 ]
 
 POWERPOINT_MIME_TYPES = [
-    "application/vnd.ms-powerpoint",
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     "application/vnd.ms-powerpoint.presentation.macroenabled.12",
     "application/vnd.oasis.opendocument.presentation",
 ]
 
 SPREADSHEET_MIME_TYPES = [
-    "application/vnd.ms-excel",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/vnd.ms-excel.sheet.macroenabled.12",
     "application/vnd.oasis.opendocument.spreadsheet",
@@ -78,6 +73,11 @@ UPLOAD_ACCEPTED_EXTENSIONS = (
 # Includes both MIME types and extensions because some clients upload legacy
 # office files with generic content-type values.
 UPLOAD_ACCEPTED_FILE_TYPES = UPLOAD_ACCEPTED_MIME_TYPES + UPLOAD_ACCEPTED_EXTENSIONS
+
+# Maximum document paths accepted in one prompt-rewrite request. Mirrors the
+# upload UI's MAX_SUPPORTED_FILES so the rewrite contract can never accept a
+# file set the UI would refuse to upload.
+MAX_PROMPT_REWRITE_FILE_PATHS = 8
 
 # Kept for endpoints that strictly require modern .pptx files.
 PPTX_MIME_TYPES = ["application/vnd.openxmlformats-officedocument.presentationml.presentation"]

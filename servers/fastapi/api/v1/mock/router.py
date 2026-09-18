@@ -26,8 +26,11 @@ async def mock_presentation_generation_completed():
 @API_V1_MOCK_ROUTER.get(
     "/presentation-generation-failed",
     response_model=List[APIErrorModel],
+    # Preserve the existing OpenAPI route name while avoiding a duplicate
+    # Python symbol that hid the completed handler in this module.
+    name="mock_presentation_generation_completed",
 )
-async def mock_presentation_generation_completed():
+async def mock_presentation_generation_failed():
     return [
         APIErrorModel(
             status_code=500,
