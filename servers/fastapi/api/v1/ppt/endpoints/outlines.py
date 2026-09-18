@@ -34,6 +34,7 @@ from utils.llm_calls.generate_presentation_outlines import (
     generate_ppt_outline,
     get_messages as get_outline_messages,
 )
+from utils.coded_exception import CodedHTTPException
 from utils.sse import safe_sse_stream, sse_streaming_response
 from utils.web_search import get_selected_web_search_provider, get_web_search_route
 
@@ -114,7 +115,8 @@ async def stream_outlines(
             return
 
         yield SSEStatusResponse(
-            status="Preparing your presentation outline"
+            status="Preparing your presentation outline",
+            status_code="outline.preparing",
         ).to_string()
 
         additional_context = ""
@@ -190,11 +192,25 @@ async def stream_outlines(
                     presentation.id,
                     chunk.message,
                 )
-                yield SSEStatusResponse(status=chunk.message).to_string()
+                yield SSEStatusResponse(
+                    status=chunk.message,
+                    status_code=chunk.status_code,
+                    status_params=chunk.params,
+                ).to_string()
                 continue
 
             if isinstance(chunk, HTTPException):
-                yield SSEErrorResponse(detail=chunk.detail).to_string()
+                yield SSEErrorResponse(
+                    detail=chunk.detail,
+                    error_code=(
+                        chunk.error_code if isinstance(chunk, CodedHTTPException) else None
+                    ),
+                    error_params=(
+                        chunk.error_params
+                        if isinstance(chunk, CodedHTTPException)
+                        else None
+                    ),
+                ).to_string()
                 return
 
             yield SSEResponse(
@@ -217,6 +233,8 @@ async def stream_outlines(
             )
             yield SSEErrorResponse(
                 detail=f"Failed to generate presentation outlines. Please try again. {str(e)}",
+                error_code="error.outline_parse_failed",
+                error_params={"reason": str(e)},
             ).to_string()
             return
 
@@ -238,7 +256,8 @@ async def stream_outlines(
                 detail=(
                     "Failed to generate presentation outlines with requested "
                     "number of slides. Please try again."
-                )
+                ),
+                error_code="error.outline_slide_count",
             ).to_string()
             return
 
@@ -275,6 +294,7 @@ async def stream_outlines(
             inner(),
             logger=LOGGER,
             error_detail="Failed to generate presentation outlines. Please try again.",
+            error_code="error.outline_generation_failed",
             on_error=rollback_stream_session,
         )
     )

@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import uuid
 
@@ -161,3 +162,27 @@ def test_export_cannot_move_another_users_file(monkeypatch, tmp_path):
         reset_current_owner_id(owner_token)
 
     assert other_export.read_bytes() == b"private"
+
+
+def test_legacy_template_preview_path_is_not_readable_by_signed_in_user():
+    owner_id = uuid.uuid4()
+    assert not is_app_data_path_authorized(
+        f"/app_data/uploads/template-previews/{owner_id}/slide_1.png",
+        user_id=owner_id,
+    )
+
+
+def test_template_preview_urls_must_be_owner_scoped():
+    owner_id = uuid.uuid4()
+    session_id = uuid.uuid4()
+    owned = (
+        f"/app_data/uploads/users/{owner_id}/template-previews/"
+        f"{session_id}/slide_1.png"
+    )
+    assert is_app_data_path_authorized(owned, user_id=owner_id)
+
+    source = Path("templates/fonts_and_slides_preview.py").read_text(
+        encoding="utf-8"
+    )
+    assert "get_uploads_directory()" in source
+    assert '_app_data_directory(), "uploads", "template-previews"' not in source

@@ -58,3 +58,25 @@ def test_openapi_prepare_returns_minimal_response():
 
     prepare_response = spec["components"]["schemas"]["PresentationPrepareResponse"]
     assert set(prepare_response["properties"]) == {"presentation_id"}
+
+
+def test_openapi_defaults_generated_presentations_to_required_structure():
+    openapi_spec_path = Path(__file__).resolve().parents[2] / "openai_spec.json"
+    spec = json.loads(openapi_spec_path.read_text(encoding="utf-8"))
+
+    create_body = spec["components"]["schemas"][
+        "Body_create_presentation_api_v1_ppt_presentation_create_post"
+    ]["properties"]
+    generate_request = spec["components"]["schemas"][
+        "GeneratePresentationRequest"
+    ]["properties"]
+
+    for properties in (create_body, generate_request):
+        assert properties["include_title_slide"]["default"] is True
+        assert properties["include_table_of_contents"]["default"] is True
+
+    presentation_model = spec["components"]["schemas"]["PresentationModel"][
+        "properties"
+    ]
+    assert presentation_model["include_title_slide"]["default"] is True
+    assert presentation_model["include_table_of_contents"]["default"] is True

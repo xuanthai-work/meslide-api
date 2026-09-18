@@ -44,13 +44,181 @@ def _text_nodes(root: ElementTree.Element) -> list[str]:
     ]
 
 
+def _attribute_value(element: ElementTree.Element, name: str) -> str | None:
+    """Return an OOXML attribute without depending on its namespace prefix."""
+    return next(
+        (
+            value
+            for attribute, value in element.attrib.items()
+            if _local_name(attribute) == name
+        ),
+        None,
+    )
+
+
+def _descendant_value(element: ElementTree.Element, name: str) -> str | None:
+    child = next(
+        (item for item in element.iter() if _local_name(item.tag) == name),
+        None,
+    )
+    return _attribute_value(child, "val") if child is not None else None
+
+
+def _to_letters(value: int, *, uppercase: bool) -> str:
+    result = ""
+    while value > 0:
+        value, remainder = divmod(value - 1, 26)
+        result = chr(ord("A" if uppercase else "a") + remainder) + result
+    return result
+
+
+def _to_roman(value: int, *, uppercase: bool) -> str:
+    numerals = (
+        (1000, "M"),
+        (900, "CM"),
+        (500, "D"),
+        (400, "CD"),
+        (100, "C"),
+        (90, "XC"),
+        (50, "L"),
+        (40, "XL"),
+        (10, "X"),
+        (9, "IX"),
+        (5, "V"),
+        (4, "IV"),
+        (1, "I"),
+    )
+    result = ""
+    for number, numeral in numerals:
+        while value >= number:
+            result += numeral
+            value -= number
+    return result if uppercase else result.lower()
+
+
+def _format_list_counter(value: int, number_format: str) -> str:
+    if number_format == "lowerLetter":
+        return _to_letters(value, uppercase=False)
+    if number_format == "upperLetter":
+        return _to_letters(value, uppercase=True)
+    if number_format == "lowerRoman":
+        return _to_roman(value, uppercase=False)
+    if number_format == "upperRoman":
+        return _to_roman(value, uppercase=True)
+    return str(value)
+
+
+def _docx_numbering_definitions(
+    archive: zipfile.ZipFile,
+) -> dict[tuple[str, int], tuple[int, str, str]]:
+    """Read list-instance and level definitions from ``numbering.xml``."""
+    if "word/numbering.xml" not in archive.namelist():
+        return {}
+
+    root = _read_xml(archive, "word/numbering.xml")
+    abstract_levels: dict[tuple[str, int], tuple[int, str, str]] = {}
+    number_to_abstract: dict[str, str] = {}
+
+    for element in root:
+        local_name = _local_name(element.tag)
+        if local_name == "abstractNum":
+            abstract_id = _attribute_value(element, "abstractNumId")
+            if abstract_id is None:
+                continue
+            for level in element:
+                if _local_name(level.tag) != "lvl":
+                    continue
+                level_value = _attribute_value(level, "ilvl")
+                if level_value is None or not level_value.isdigit():
+                    continue
+                start_value = _descendant_value(level, "start") or "1"
+                number_format = _descendant_value(level, "numFmt") or "decimal"
+                level_text = _descendant_value(level, "lvlText") or "%1."
+                abstract_levels[(abstract_id, int(level_value))] = (
+                    int(start_value) if start_value.isdigit() else 1,
+                    number_format,
+                    level_text,
+                )
+        elif local_name == "num":
+            number_id = _attribute_value(element, "numId")
+            abstract_id = _descendant_value(element, "abstractNumId")
+            if number_id is not None and abstract_id is not None:
+                number_to_abstract[number_id] = abstract_id
+
+    levels = {
+        (number_id, level): definition
+        for number_id, abstract_id in number_to_abstract.items()
+        for (candidate_id, level), definition in abstract_levels.items()
+        if candidate_id == abstract_id
+    }
+    return levels
+
+
+def _paragraph_numbering(paragraph: ElementTree.Element) -> tuple[str, int] | None:
+    number_properties = next(
+        (
+            element
+            for element in paragraph.iter()
+            if _local_name(element.tag) == "numPr"
+        ),
+        None,
+    )
+    if number_properties is None:
+        return None
+    number_id = _descendant_value(number_properties, "numId")
+    level = _descendant_value(number_properties, "ilvl") or "0"
+    if number_id is None or not level.isdigit():
+        return None
+    return number_id, int(level)
+
+
+def _numbered_paragraph_prefix(
+    numbering: tuple[str, int],
+    levels: dict[tuple[str, int], tuple[int, str, str]],
+    counters: dict[tuple[str, int], int],
+) -> str:
+    number_id, level = numbering
+    start, number_format, level_text = levels.get(
+        (number_id, level), (1, "decimal", f"%{level + 1}.")
+    )
+    key = (number_id, level)
+    counters[key] = counters.get(key, start - 1) + 1
+    for candidate in list(counters):
+        if candidate[0] == number_id and candidate[1] > level:
+            del counters[candidate]
+
+    prefix = level_text
+    for candidate_level in range(9):
+        candidate_key = (number_id, candidate_level)
+        if candidate_key not in counters:
+            continue
+        candidate_format = levels.get(
+            candidate_key, (1, "decimal", "")
+        )[1]
+        prefix = prefix.replace(
+            f"%{candidate_level + 1}",
+            _format_list_counter(counters[candidate_key], candidate_format),
+        )
+    if number_format == "bullet":
+        return level_text
+    return prefix
+
+
 def _extract_docx(archive: zipfile.ZipFile) -> str:
     root = _read_xml(archive, "word/document.xml")
+    numbering_levels = _docx_numbering_definitions(archive)
+    numbering_counters: dict[tuple[str, int], int] = {}
     paragraphs: list[str] = []
     for paragraph in root.iter():
         if _local_name(paragraph.tag) != "p":
             continue
         text = " ".join(_text_nodes(paragraph))
+        numbering = _paragraph_numbering(paragraph)
+        if numbering is not None:
+            prefix = _numbered_paragraph_prefix(
+                numbering, numbering_levels, numbering_counters
+            )
+            text = f"{prefix} {text}".strip()
         if text:
             paragraphs.append(text)
     return "\n".join(paragraphs)

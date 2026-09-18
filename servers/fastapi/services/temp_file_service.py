@@ -3,7 +3,7 @@ from typing import Optional, Union
 
 from fastapi import HTTPException
 
-from utils.get_env import get_temp_directory_env
+from utils.get_env import default_gslide_directory, get_temp_directory_env
 from api.v1.auth.context import get_current_owner_id_raw
 import uuid
 
@@ -11,8 +11,13 @@ import uuid
 class TempFileService:
 
     def __init__(self):
-        self.base_dir = get_temp_directory_env() or "/tmp/gslide"
-        self.cleanup_base_dir()
+        self.base_dir = get_temp_directory_env() or default_gslide_directory()
+        # Root wipe is a process-start action (no request owner). Lazy first
+        # use during a request has an owner ContextVar; running the wipe then
+        # treats the process root as an owner-scoped path and 400s, and would
+        # also delete other in-flight uploads.
+        if get_current_owner_id_raw() is None:
+            self.cleanup_base_dir()
         os.makedirs(self.base_dir, exist_ok=True)
 
     def _base_dir_realpath(self) -> str:
@@ -121,9 +126,12 @@ class TempFileService:
         dir_path: Optional[str] = None,
     ) -> str:
         file_path = self.create_temp_file_path(file_path, dir_path)
-        mode = "wb" if isinstance(content, bytes) else "w"
-        with open(file_path, mode) as f:
-            f.write(content)
+        if isinstance(content, bytes):
+            with open(file_path, "wb") as f:
+                f.write(content)
+        else:
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(content)
 
         return file_path
 
@@ -135,8 +143,10 @@ class TempFileService:
                 status_code=400,
                 detail="File path must stay within the temp directory",
             )
-        mode = "rb" if binary else "r"
-        with open(file_path, mode) as f:
+        if binary:
+            with open(file_path, "rb") as f:
+                return f.read()
+        with open(file_path, "r", encoding="utf-8") as f:
             return f.read()
 
     async def update_temp_file_from_upload(self, file_path: str, upload_file) -> None:
@@ -185,7 +195,53 @@ class TempFileService:
         os.rmdir(dir_path)
 
     def cleanup_base_dir(self):
-        self.cleanup_temp_dir(self.base_dir)
+        """Wipe contents of the process-wide temp root.
+
+        Must not go through the owner-scoped resolver: the process root is
+        the parent of per-owner directories, so that check would 400.
+        """
+        base_dir = os.path.realpath(self.base_dir)
+        if not os.path.isdir(base_dir):
+            return
+        for root, dirs, files in os.walk(base_dir, topdown=False):
+            for name in files:
+                os.remove(os.path.join(root, name))
+            for name in dirs:
+                os.rmdir(os.path.join(root, name))
 
 
-TEMP_FILE_SERVICE = TempFileService()
+_temp_file_service_instance: Optional[TempFileService] = None
+
+
+def get_temp_file_service() -> TempFileService:
+    """Return the process-wide TempFileService, constructing it on first call.
+
+    The constructor cleans and creates the base directory, so the service
+    must not be built at import time: importing this module (directly or via
+    any consumer) has to stay free of filesystem side effects, and the base
+    directory must be resolvable per process from TEMP_DIRECTORY rather
+    than at interpreter startup.
+    """
+    global _temp_file_service_instance
+    if _temp_file_service_instance is None:
+        _temp_file_service_instance = TempFileService()
+    return _temp_file_service_instance
+
+
+class _LazyTempFileService:
+    """Compatibility adapter for the ``TEMP_FILE_SERVICE`` import surface.
+
+    Consumers still do ``from services.temp_file_service import
+    TEMP_FILE_SERVICE`` and call methods on it; reads and writes are
+    forwarded to the lazily constructed singleton. Remove this adapter in a
+    dedicated PR once every caller has moved to ``get_temp_file_service()``.
+    """
+
+    def __getattr__(self, name):
+        return getattr(get_temp_file_service(), name)
+
+    def __setattr__(self, name, value):
+        setattr(get_temp_file_service(), name, value)
+
+
+TEMP_FILE_SERVICE = _LazyTempFileService()

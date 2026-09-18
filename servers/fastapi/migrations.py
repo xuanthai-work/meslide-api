@@ -32,7 +32,8 @@ REVISION_PRIMARY_ADMIN_SLOT = "e1b3c5d7f9a2"
 REVISION_SMART_GENERATION = "f3a7c1d9e5b2"
 REVISION_SMART_MODE_BACKFILL = "d2f4a6b8c0e1"
 REVISION_USER_PROVIDER_SETTINGS = "e5a7c9d1f3b4"
-REVISION_HEAD = REVISION_USER_PROVIDER_SETTINGS
+REVISION_TEMPLATE_BUNDLE_COLUMNS = "9c3b5d1f7e2a"
+REVISION_HEAD = REVISION_TEMPLATE_BUNDLE_COLUMNS
 REMOVED_TABLES = ("presenton_cloud_provider",)
 
 
@@ -154,6 +155,12 @@ def _infer_revision_from_schema(
             inspector, "user", "is_superuser"
         )
         if overlay_ready:
+            # Head only once the template bundle columns are present (or the
+            # table never existed, so nothing distinguishes older revisions).
+            if "template_v2" not in tables or _has_column(
+                inspector, "template_v2", "bundle_object_key"
+            ):
+                return REVISION_TEMPLATE_BUNDLE_COLUMNS
             return REVISION_USER_PROVIDER_SETTINGS
         if "presentations" in tables and _has_column(
             inspector, "presentations", "generation_mode"

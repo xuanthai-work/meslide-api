@@ -45,6 +45,35 @@ def test_extracts_docx_paragraphs(tmp_path):
     assert extract_office_document_text(str(path)) == "Hello world\nSecond paragraph"
 
 
+def test_extracts_docx_automatic_numbering_including_empty_list_cells(tmp_path):
+    path = tmp_path / "numbered-table.docx"
+    _write_zip(
+        path,
+        {
+            "word/document.xml": (
+                "<w:document xmlns:w='w'><w:body><w:tbl>"
+                "<w:tr><w:tc><w:p><w:pPr><w:numPr><w:ilvl w:val='0'/>"
+                "<w:numId w:val='1'/></w:numPr></w:pPr></w:p></w:tc>"
+                "<w:tc><w:p><w:r><w:t>Topic one</w:t></w:r></w:p></w:tc></w:tr>"
+                "<w:tr><w:tc><w:p><w:pPr><w:numPr><w:ilvl w:val='0'/>"
+                "<w:numId w:val='1'/></w:numPr></w:pPr></w:p></w:tc>"
+                "<w:tc><w:p><w:r><w:t>Topic two</w:t></w:r></w:p></w:tc></w:tr>"
+                "</w:tbl></w:body></w:document>"
+            ),
+            "word/numbering.xml": (
+                "<w:numbering xmlns:w='w'>"
+                "<w:abstractNum w:abstractNumId='0'><w:lvl w:ilvl='0'>"
+                "<w:start w:val='1'/><w:numFmt w:val='decimal'/>"
+                "<w:lvlText w:val='%1'/></w:lvl></w:abstractNum>"
+                "<w:num w:numId='1'><w:abstractNumId w:val='0'/></w:num>"
+                "</w:numbering>"
+            ),
+        },
+    )
+
+    assert extract_office_document_text(str(path)) == "1\nTopic one\n2\nTopic two"
+
+
 def test_rejects_legacy_binary_office_formats(tmp_path):
     path = tmp_path / "legacy.ppt"
     path.write_bytes(b"legacy")

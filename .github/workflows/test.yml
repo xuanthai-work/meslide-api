@@ -1,3 +1,6 @@
+# Repository job: npm test + Dockerfile/export contracts.
+# FastAPI job: keep steps aligned with root `npm run check:fastapi`
+# (ruff, pyright, vulture, deptry, tests/run_suite.py).
 name: Test api
 
 on:
@@ -32,8 +35,8 @@ jobs:
       - name: Run repository tests
         run: npm test
 
-      - name: Run Dockerfile contract tests
-        run: node --test tests/dockerfile.test.mjs
+      - name: Run Dockerfile and CI contract tests
+        run: node --test tests/*.test.mjs
 
       - name: Install presentation export runtime
         run: npm run sync:presentation-export
@@ -48,10 +51,8 @@ jobs:
       run:
         working-directory: servers/fastapi
     env:
-      APP_DATA_DIRECTORY: /tmp/gslide-app-data
-      TEMP_DIRECTORY: /tmp/gslide-temp
-      DATABASE_URL: sqlite+aiosqlite:////tmp/gslide-test.db
-      DISABLE_ANONYMOUS_TRACKING: "true"
+      # APP_DATA_DIRECTORY / TEMP_DIRECTORY / DATABASE_URL isolation is owned
+      # by tests/run_suite.py (same as local `npm run test:fastapi`).
       DISABLE_IMAGE_GENERATION: "true"
 
     steps:
@@ -72,8 +73,17 @@ jobs:
       - name: Install locked dependencies
         run: uv sync --locked --dev
 
-      - name: Create test directories
-        run: mkdir -p "$APP_DATA_DIRECTORY" "$TEMP_DIRECTORY"
+      - name: Run Ruff
+        run: uv run --locked ruff check .
+
+      - name: Run Pyright
+        run: uv run --locked pyright
+
+      - name: Check for dead code
+        run: uv run --locked vulture
+
+      - name: Check dependency declarations
+        run: uv run --locked deptry .
 
       - name: Run all pytest tests
-        run: uv run --locked python -m pytest --verbose --tb=short
+        run: uv run --locked python tests/run_suite.py --verbose --tb=short

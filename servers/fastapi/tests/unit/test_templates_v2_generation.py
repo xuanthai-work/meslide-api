@@ -26,6 +26,7 @@ from templates.v2.generation import (
     generate_slide_layout,
     generate_template,
     merge_similar_components,
+    slide_layout_from_raw,
 )
 from templates.v2.models.elements import Image as TemplateImage
 from templates.v2.models.layouts import (
@@ -43,7 +44,6 @@ from utils.llm_messages import (
     AssistantToolCall,
     ImageContentPart,
     SystemMessage,
-    ToolResponseMessage,
     UserMessage,
 )
 
@@ -417,6 +417,65 @@ def test_generate_slide_layout_accepts_direct_schema_response(monkeypatch, caplo
     )
     messages = [record.getMessage() for record in caplog.records]
     assert any("slide 1: slide layout JSON returned" in message for message in messages)
+
+
+def test_slide_layout_from_raw_wraps_source_elements():
+    raw = _raw_layout("source_slide")
+
+    layout = slide_layout_from_raw(raw, "/app_data/images/slide-1.png")
+
+    assert layout.id == "source_slide"
+    assert len(layout.components) == 1
+    assert layout.components[0].elements == raw.elements
+
+
+def test_slide_layout_from_raw_uses_screenshot_when_elements_empty():
+    raw = RawSlideLayout.model_validate(
+        {
+            "id": "empty_slide",
+            "description": "Empty imported slide without PPTX elements.",
+            "elements": [],
+        }
+    )
+
+    layout = slide_layout_from_raw(raw, "/app_data/images/slide-1.png")
+
+    assert layout.id == "empty_slide"
+    assert len(layout.components) == 1
+    element = layout.components[0].elements[0]
+    assert element.type == "image"
+    assert element.data == "/app_data/images/slide-1.png"
+
+
+def test_generate_slide_layout_falls_back_to_raw_when_llm_json_invalid(
+    monkeypatch, caplog
+):
+    async def fake_stream_generate_events(_client, **_kwargs):
+        yield _completion_event(content="{not-json")
+
+    monkeypatch.setattr("templates.v2.generation.DEFAULT_VALIDATION_RETRIES", 0)
+    monkeypatch.setattr(
+        "templates.v2.generation.stream_generate_events",
+        fake_stream_generate_events,
+    )
+    monkeypatch.setattr("templates.v2.generation.get_model", lambda: "test-model")
+    monkeypatch.setattr(
+        "templates.v2.generation.get_llm_client", lambda: object()
+    )
+    caplog.set_level(logging.WARNING, logger="templates.v2.generation")
+
+    result = asyncio.run(
+        generate_slide_layout(
+            _raw_layout(),
+            0,
+            "https://example.com/slide-1.png",
+        )
+    )
+
+    assert result.id == "source_slide"
+    assert result.components[0].elements[0].name == "title"
+    messages = [record.getMessage() for record in caplog.records]
+    assert any("using PPTX JSON fallback" in message for message in messages)
 
 
 def test_generate_slide_layout_replaces_content_image_urls(monkeypatch):

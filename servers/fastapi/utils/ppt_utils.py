@@ -3,7 +3,6 @@ from models.presentation_outline_model import PresentationOutlineModel
 import re
 from typing import List
 
-from models.presentation_structure_model import PresentationStructureModel
 
 
 def get_presentation_title_from_outlines(

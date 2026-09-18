@@ -5,10 +5,9 @@ import uuid
 
 # IMPORTANT: `api.v1.auth.demo_user` -> `api.v1.auth.users` transitively imports
 # `services.database`, which at import time calls `_ensure_sqlite_parent_dir()`
-# on `os.path.join(get_app_data_directory_env() or "/tmp/gslide", "fastapi.db")`.
-# On Windows that default becomes `//tmp/gslide/` and `os.makedirs` raises
-# `FileNotFoundError: [WinError 53]`. Set APP_DATA_DIRECTORY BEFORE importing
-# anything from the auth package so the path resolves to a writable temp dir.
+# on the default fastapi.db path under the gslide app-data directory. Set
+# APP_DATA_DIRECTORY BEFORE importing anything from the auth package so the
+# database lands in a writable temp dir instead of the process-wide default.
 os.environ.setdefault("APP_DATA_DIRECTORY", tempfile.gettempdir())
 
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine

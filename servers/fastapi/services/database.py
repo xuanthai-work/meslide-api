@@ -32,26 +32,78 @@ from utils.get_env import get_migrate_database_on_startup_env
 from utils.db_utils import get_database_url_and_connect_args, get_pool_kwargs
 
 
-database_url, connect_args = get_database_url_and_connect_args()
-
-# Apply connection-pool settings for server-class databases (PostgreSQL, MySQL).
-# SQLite uses a file-lock model and ignores pool configuration, so we skip it.
-_pool_kwargs = get_pool_kwargs() if "sqlite" not in database_url else {}
-
-sql_engine: AsyncEngine = create_async_engine(
-    database_url, connect_args=connect_args, **_pool_kwargs
-)
+_engine_instance: AsyncEngine | None = None
+_session_maker_instance: async_sessionmaker | None = None
 
 
-if "sqlite" in database_url:
-    @event.listens_for(sql_engine.sync_engine, "connect")
-    def _enable_sqlite_foreign_keys(dbapi_connection, _connection_record) -> None:
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
-        cursor.close()
+def get_sql_engine() -> AsyncEngine:
+    """Return the process-wide async engine, creating it on first call.
+
+    Building the engine resolves the database URL, which creates the SQLite
+    parent directory, so it must not happen at import time: importing this
+    module has to stay free of filesystem side effects, and code paths that
+    never touch the database must not pay for engine construction.
+    """
+    global _engine_instance
+    if _engine_instance is None:
+        database_url, connect_args = get_database_url_and_connect_args()
+        # Apply connection-pool settings for server-class databases
+        # (PostgreSQL, MySQL). SQLite uses a file-lock model and ignores
+        # pool configuration, so we skip it.
+        pool_kwargs = {} if "sqlite" in database_url else get_pool_kwargs()
+        engine = create_async_engine(
+            database_url, connect_args=connect_args, **pool_kwargs
+        )
+        if "sqlite" in database_url:
+            event.listen(engine.sync_engine, "connect", _enable_sqlite_foreign_keys)
+        _engine_instance = engine
+    return _engine_instance
 
 
-async_session_maker = async_sessionmaker(sql_engine, expire_on_commit=False)
+def _enable_sqlite_foreign_keys(dbapi_connection, _connection_record) -> None:
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
+
+
+def get_async_session_maker() -> async_sessionmaker:
+    """Return the process-wide session maker bound to the lazy engine."""
+    global _session_maker_instance
+    if _session_maker_instance is None:
+        _session_maker_instance = async_sessionmaker(
+            get_sql_engine(), expire_on_commit=False
+        )
+    return _session_maker_instance
+
+
+class _LazyEngine:
+    """Compatibility adapter for the ``sql_engine`` import surface.
+
+    Consumers still do ``from services.database import sql_engine`` and use
+    engine attributes (``begin``, ``dispose``, ``sync_engine``); reads are
+    forwarded to the lazily constructed singleton. Remove this adapter in a
+    dedicated PR once every caller has moved to ``get_sql_engine()``.
+    """
+
+    def __getattr__(self, name):
+        return getattr(get_sql_engine(), name)
+
+
+class _LazyAsyncSessionMaker:
+    """Compatibility adapter for the ``async_session_maker`` import surface.
+
+    Consumers still do ``from services.database import async_session_maker``
+    and call it to open sessions; calls are forwarded to the lazily
+    constructed singleton. Remove this adapter in a dedicated PR once every
+    caller has moved to ``get_async_session_maker()``.
+    """
+
+    def __call__(self, *args, **kwargs):
+        return get_async_session_maker()(*args, **kwargs)
+
+
+sql_engine = _LazyEngine()
+async_session_maker = _LazyAsyncSessionMaker()
 
 
 _STRICT_OWNER_MODELS = (
@@ -152,6 +204,8 @@ async def dispose_engines():
 
     Call this during application shutdown (e.g. in a FastAPI ``shutdown``
     event or lifespan context) to release every connection back to the
-    database and prevent stale / leaked connections.
+    database and prevent stale / leaked connections. Shutdown must not
+    construct the engine, so skip disposal when nothing was ever created.
     """
-    await sql_engine.dispose()
+    if _engine_instance is not None:
+        await _engine_instance.dispose()

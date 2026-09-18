@@ -4,9 +4,8 @@ import os
 import stat
 import tempfile
 
-# On Windows the default app-data path resolves to a non-writable `//tmp/gslide`
-# location; set APP_DATA_DIRECTORY BEFORE importing app modules so the SQLite
-# parent dir can be created. Mirrors test_default_user_principal.py.
+# Set APP_DATA_DIRECTORY BEFORE importing app modules so the SQLite parent
+# dir lands in an isolated writable location. Mirrors test_default_user_principal.py.
 os.environ.setdefault("APP_DATA_DIRECTORY", tempfile.gettempdir())
 
 import pytest

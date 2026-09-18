@@ -10,12 +10,10 @@ from services.database import get_async_session
 from services.provider_settings import (
     get_provider_settings,
     get_user_provider_overlay,
-    persist_instance_level_fields,
     save_provider_settings,
     save_user_provider_overlay,
-    sanitize_user_overlay,
 )
-from utils.get_env import get_can_change_keys_env, is_disable_auth_enabled
+from utils.get_env import is_disable_auth_enabled
 from utils.user_config import update_env_with_user_config
 
 
@@ -64,13 +62,6 @@ async def update_provider_settings(
     session: AsyncSession = Depends(get_async_session),
 ) -> dict[str, Any]:
     _require_settings_user(user)
-    overlay_writes = sanitize_user_overlay(config or {})
-    if get_can_change_keys_env() == "false" and overlay_writes:
-        raise HTTPException(
-            status_code=403,
-            detail="You are not allowed to access this resource",
-        )
-    persist_instance_level_fields(config or {})
     if is_disable_auth_enabled():
         saved = await save_provider_settings(session, config)
         update_env_with_user_config()

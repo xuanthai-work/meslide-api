@@ -34,6 +34,7 @@ dependencies = [
     "jsonschema>=4.26.0",
     "python-pptx>=1.0.2",
     "fonttools>=4.55.0",
+    "boto3>=1.40.0",
 ]
 
 [tool.uv]
@@ -52,12 +53,75 @@ include = [
 ]
 
 [tool.pyright]
-typeCheckingMode = "off"
+typeCheckingMode = "basic"
+venvPath = "."
+venv = ".venv"
+# Expand this list package-by-package as the existing typing baseline is fixed.
+include = [
+    "services/image_search",
+    "utils/datetime_utils.py",
+    "utils/filename_utils.py",
+    "utils/outline_limits.py",
+]
+exclude = [
+    ".venv",
+    "alembic/versions",
+]
+
+[tool.ruff]
+target-version = "py311"
+exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+# Start with correctness-focused Pyflakes rules. Add import/style rules only in
+# dedicated cleanup PRs so this guardrail stays actionable.
+select = ["F"]
+
+[tool.vulture]
+# Scan runtime packages only. Alembic versions are generated; do not add
+# broad ignore_names to silence unused application symbols.
+paths = [
+    "api",
+    "constants",
+    "enums",
+    "models",
+    "services",
+    "templates",
+    "utils",
+    "server.py",
+    "migrations.py",
+]
+exclude = ["alembic/versions/"]
+min_confidence = 80
+sort_by_size = true
+
+[tool.deptry]
+# Direct imports supplied by framework extras are existing packaging debt. Keep
+# unused-dependency detection active while that debt is handled separately.
+ignore = ["DEP003"]
+
+[tool.deptry.per_rule_ignores]
+# Loaded through URL schemes or plugin discovery rather than direct imports.
+# New entries need an owner comment. Do not grow this list to hide unused
+# packages that application code no longer needs.
+DEP002 = [
+    "aiomysql",      # SQLAlchemy MySQL async driver (DATABASE_URL)
+    "aiosqlite",     # SQLAlchemy SQLite async driver (default local DB)
+    "asyncpg",       # SQLAlchemy PostgreSQL async driver (DATABASE_URL)
+    "cryptography",  # SQLAlchemy/password hashing extra
+    "greenlet",      # SQLAlchemy async greenlet runtime
+    "nltk",          # Mem0/NLP tokenizer loaded by provider stack
+    "psycopg",       # SQLAlchemy PostgreSQL sync driver (migrations/tools)
+]
 
 [dependency-groups]
 dev = [
+    "deptry>=0.25.1",
+    "pyright>=1.1.413",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
+    "ruff>=0.16.6",
+    "vulture>=2.16",
 ]
 
 [tool.pytest.ini_options]

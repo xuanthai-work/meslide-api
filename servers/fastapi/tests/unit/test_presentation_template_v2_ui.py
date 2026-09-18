@@ -1,6 +1,7 @@
 import copy
 
 from api.v1.ppt.endpoints import presentation as presentation_endpoint
+from api.v1.ppt.endpoints import presentation_template_content
 from services.chat.memory_layer import PresentationChatMemoryLayer
 
 
@@ -930,7 +931,7 @@ def test_apply_template_content_to_ui_keeps_markdown_run_whitespace():
 
 
 def test_template_markdown_text_runs_keep_source_boundary_spaces():
-    runs = presentation_endpoint._template_text_runs_from_markdown(
+    runs = presentation_template_content._template_text_runs_from_markdown(
         "Hello **how are you?** and",
         {"font": {"family": "Inter", "size": 24}},
     )

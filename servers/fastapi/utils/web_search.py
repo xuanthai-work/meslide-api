@@ -4,7 +4,6 @@ import re
 import time
 from dataclasses import dataclass
 from typing import Any
-from urllib.parse import urlparse, urlunparse
 
 import aiohttp
 from fastapi import HTTPException
@@ -17,6 +16,13 @@ from utils.get_env import (
     get_web_search_provider_env,
 )
 from utils.llm_provider import get_llm_provider
+from utils.searxng import (
+    SEARXNG_USER_AGENT,
+    build_searxng_search_url,
+    make_searxng_client_timeout,
+    parse_searxng_json_response,
+    redact_searxng_url_credentials,
+)
 
 LOGGER = logging.getLogger(__name__)
 DEFAULT_MAX_RESULTS = 5
@@ -54,9 +60,7 @@ def _has_searxng_base_url() -> bool:
     return bool((get_searxng_base_url_env() or "").strip())
 
 
-def should_expose_external_web_search_tool(
-    native_search_available: bool = True,
-) -> bool:
+def should_expose_external_web_search_tool() -> bool:
     selected = get_selected_web_search_provider()
     if selected == WebSearchProvider.NATIVE:
         return False
@@ -136,8 +140,8 @@ async def search_web(query: str, max_results: int | None = None) -> list[WebSear
 
     try:
         async with aiohttp.ClientSession(
-            timeout=aiohttp.ClientTimeout(total=15),
-            headers={"User-Agent": "Presenton/1.0"},
+            timeout=make_searxng_client_timeout(),
+            headers={"User-Agent": SEARXNG_USER_AGENT},
         ) as session:
             if provider == WebSearchProvider.SEARXNG:
                 results = await _search_searxng(session, query, limit)
@@ -211,37 +215,19 @@ def _clean_outline_web_text(value: Any) -> str:
     return _clean_text(text)
 
 
-def _required(value: str | None, label: str) -> str:
-    if value and value.strip():
-        return value.strip()
-    raise HTTPException(status_code=400, detail=f"{label} is not configured")
-
-
+# Shared SearXNG connection helpers moved to utils/searxng.py; kept as thin
+# delegates so the pre-extraction text-search contract and tests are
+# byte-for-byte preserved.
 def _get_searxng_search_url() -> str:
-    configured_url = _required(get_searxng_base_url_env(), "SEARXNG_BASE_URL")
-    parsed = urlparse(configured_url)
-    path = parsed.path.rstrip("/")
-    if not path.endswith("/search"):
-        path = f"{path}/search"
-    return urlunparse(parsed._replace(path=path, params="", query="", fragment=""))
+    return build_searxng_search_url()
 
 
 def _redact_url_credentials(value: str) -> str:
-    parsed = urlparse(value)
-    if not parsed.username and not parsed.password:
-        return value
-    hostname = parsed.hostname or ""
-    if parsed.port:
-        hostname = f"{hostname}:{parsed.port}"
-    return urlunparse(parsed._replace(netloc=f"***:***@{hostname}"))
+    return redact_searxng_url_credentials(value)
 
 
 async def _json_response(response: aiohttp.ClientResponse) -> dict[str, Any]:
-    if response.status >= 400:
-        detail = (await response.text())[:500]
-        raise HTTPException(response.status, detail=f"Web search request failed: {detail}")
-    payload = await response.json(content_type=None)
-    return payload if isinstance(payload, dict) else {}
+    return await parse_searxng_json_response(response)
 
 
 async def _search_searxng(

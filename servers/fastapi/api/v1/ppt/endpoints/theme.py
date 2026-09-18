@@ -2,12 +2,13 @@ import copy
 import uuid
 from typing import Any, List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
 from models.sql.image_asset import ImageAsset
+from utils.coded_exception import CodedHTTPException
 from models.sql.key_value import KeyValueSqlModel
 from services.database import get_async_session
 from utils.asset_directory_utils import normalize_slide_asset_url
@@ -98,11 +99,17 @@ async def _resolve_logo_url(
     try:
         logo_uuid = uuid.UUID(str(logo))
     except ValueError as exc:
-        raise HTTPException(status_code=400, detail="Invalid logo id") from exc
+        raise CodedHTTPException(
+            status_code=400,
+            detail="Invalid logo id",
+            error_code="error.theme.invalid_logo_id",
+        ) from exc
 
     image_asset = await sql_session.get(ImageAsset, logo_uuid)
     if not image_asset:
-        raise HTTPException(status_code=404, detail="Logo not found")
+        raise CodedHTTPException(
+            status_code=404, detail="Logo not found", error_code="error.theme.logo_not_found"
+        )
     return normalize_slide_asset_url(image_asset.path)
 
 
@@ -157,12 +164,16 @@ async def update_theme(
 ):
     row = await _get_themes_row(sql_session)
     if not row:
-        raise HTTPException(status_code=404, detail="Theme not found")
+        raise CodedHTTPException(
+            status_code=404, detail="Theme not found", error_code="error.theme.not_found"
+        )
 
     themes = _read_themes_from_row(row)
     theme = next((item for item in themes if item.get("id") == theme_id), None)
     if not theme:
-        raise HTTPException(status_code=404, detail="Theme not found")
+        raise CodedHTTPException(
+            status_code=404, detail="Theme not found", error_code="error.theme.not_found"
+        )
 
     if payload.name is not None:
         theme["name"] = payload.name

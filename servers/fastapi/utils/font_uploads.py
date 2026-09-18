@@ -18,7 +18,7 @@ from templates.pptx_font_utils import (
     normalize_font_family_name,
 )
 from utils.asset_directory_utils import absolute_fastapi_asset_url
-from utils.get_env import get_app_data_directory_env
+from utils.get_env import default_gslide_directory, get_app_data_directory_env
 
 
 ALLOWED_FONT_EXTENSIONS = {
@@ -66,7 +66,7 @@ class FontUploadsResponse(BaseModel):
 
 
 def get_fonts_directory() -> str:
-    app_data_dir = get_app_data_directory_env() or "/tmp/gslide"
+    app_data_dir = get_app_data_directory_env() or default_gslide_directory()
     fonts_dir = os.path.join(app_data_dir, "fonts")
     os.makedirs(fonts_dir, exist_ok=True)
     return fonts_dir
@@ -166,12 +166,12 @@ def _font_upload_filesystem_path(font_upload: FontUpload) -> str:
     if os.path.isabs(font_upload.path):
         return font_upload.path
     return os.path.join(
-        get_app_data_directory_env() or "/tmp/gslide", font_upload.path
+        get_app_data_directory_env() or default_gslide_directory(), font_upload.path
     )
 
 
 def _font_path_to_url(path: str) -> str:
-    app_data = get_app_data_directory_env() or "/tmp/gslide"
+    app_data = get_app_data_directory_env() or default_gslide_directory()
     try:
         abs_path = os.path.abspath(path)
         abs_app_data = os.path.abspath(app_data)

@@ -7,7 +7,7 @@ adapted for local app_data storage instead of S3.
 
 from typing import List, Optional
 
-from fastapi import File, HTTPException, UploadFile
+from fastapi import File, UploadFile
 
 from templates.fonts_and_slides_preview import (
     FontCheckResponse,

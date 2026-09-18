@@ -4,8 +4,8 @@ import tempfile
 
 # IMPORTANT: importing `api.v1.auth.router` transitively imports
 # `services.database`, which at import time calls `_ensure_sqlite_parent_dir()`
-# on a path derived from `get_app_data_directory_env()`. On Windows the default
-# `/tmp/gslide` is not writable, so set APP_DATA_DIRECTORY BEFORE importing.
+# on a path derived from `get_app_data_directory_env()`. Set APP_DATA_DIRECTORY
+# BEFORE importing so tests use an isolated writable location.
 os.environ.setdefault("APP_DATA_DIRECTORY", tempfile.gettempdir())
 
 from fastapi import FastAPI

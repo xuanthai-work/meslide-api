@@ -1,0 +1,112 @@
+# FastAPI + Chromium export runtime. Owns the /app_data PVC (read-write).
+# ClusterIP only. Keep at ONE replica while SQLite + RWO /app_data is in use.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: gslide
+  labels:
+    app.kubernetes.io/part-of: gslide
+    app.kubernetes.io/name: gslide
+    app.kubernetes.io/component: api
+spec:
+  replicas: 1
+  # SQLite and the RWO /app_data volume require a single API writer even
+  # during deployments. Stop the old pod before starting its replacement.
+  strategy:
+    type: Recreate
+  # No HPA yet: CPU-based autoscaling is misleading for I/O-bound LLM streams,
+  # and >1 replica is unsafe until persistence is multi-replica capable.
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gslide
+      app.kubernetes.io/component: api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gslide
+        app.kubernetes.io/component: api
+    spec:
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        # The current gslide-api image runs as root (Chromium + /root caches),
+        # so runAsNonRoot cannot be enabled without image changes.
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: ghcr.io/<org>/gslide-api:latest # replace with your image
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: gslide-api-config
+            - secretRef:
+                name: gslide-secrets
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          # /api/v1/auth/status is in FastAPI's public auth paths, so it always
+          # returns 200 once the app is up (probe-safe, no session needed).
+          startupProbe:
+            httpGet:
+              path: /api/v1/auth/status
+              port: http
+            periodSeconds: 10
+            failureThreshold: 12 # up to 120s for migrations + model cache warmup
+          readinessProbe:
+            httpGet:
+              path: /api/v1/auth/status
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          # Conservative: do not restart a healthy pod mid slow LLM call.
+          livenessProbe:
+            httpGet:
+              path: /api/v1/auth/status
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+          volumeMounts:
+            - name: app-data
+              mountPath: /app_data
+            - name: tmp
+              mountPath: /tmp
+          securityContext:
+            allowPrivilegeEscalation: false
+            # readOnlyRootFilesystem stays false: Chromium and the HF/fastembed
+            # caches under /root/.cache need a writable root FS.
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: gslide-app-data
+        - name: tmp
+          emptyDir:
+            sizeLimit: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: gslide
+  labels:
+    app.kubernetes.io/part-of: gslide
+    app.kubernetes.io/component: api
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: gslide
+    app.kubernetes.io/component: api
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http

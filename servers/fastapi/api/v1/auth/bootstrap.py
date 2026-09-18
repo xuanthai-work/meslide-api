@@ -1,10 +1,9 @@
 import logging
 import os
 
-from sqlalchemy import delete, func, select, update
+from sqlalchemy import func, select, update
 
 from api.v1.auth.users import PASSWORD_HELPER
-from models.sql.access_token import AccessToken
 from models.sql.user import User
 from models.sql.async_task import AsyncTaskModel
 from models.sql.async_presentation_generation_status import (
@@ -22,7 +21,6 @@ from models.sql.template_v2 import TemplateV2
 from models.sql.webhook_subscription import WebhookSubscription
 from services.database import async_session_maker
 from api.v1.auth.config import (
-    get_legacy_admin_credentials,
     persist_auth_credentials,
 )
 

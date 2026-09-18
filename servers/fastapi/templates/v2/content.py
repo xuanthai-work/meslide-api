@@ -66,7 +66,9 @@ def template_asset_prompt(value: Any, *, is_icon: bool) -> str | None:
     prompt_keys = (
         ("icon_query", "__icon_query__", "query", "prompt")
         if is_icon
-        else ("image_prompt", "__image_prompt__", "prompt", "query")
+        # image_query (web-search mode) is read after the generation prompt so
+        # hydration keeps preferring image_prompt when both exist.
+        else ("image_prompt", "__image_prompt__", "image_query", "prompt", "query")
     )
     for key in prompt_keys:
         prompt = value.get(key)

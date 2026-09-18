@@ -22,17 +22,6 @@ def memory_snapshot_mb() -> dict[str, int]:
 
 def log_memory(logger: logging.Logger, label: str, **fields: object) -> None:
     logger.info("[memory] %s %s extra=%s", label, memory_snapshot_mb(), fields)
-    try:
-        import sentry_sdk  # type: ignore
-
-        sentry_sdk.add_breadcrumb(
-            category="memory",
-            message=label,
-            level="info",
-            data={**memory_snapshot_mb(), **fields},
-        )
-    except Exception:
-        pass
 
 
 class BoundedTextBuffer:

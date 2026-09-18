@@ -1,4 +1,5 @@
 import json
+import logging
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -19,13 +20,15 @@ from models.sse_response import (
     SSETraceResponse,
 )
 from services.chat import sql_chat_history
-from services.chat import ChatTurnResult, PresentationChatService
+from services.chat import ChatStreamStatus, ChatTurnResult, PresentationChatService
 from services.chat.conversation_store import ChatConversationStore
 from services.database import get_async_session
-from utils.sse import sse_streaming_response
+from utils.coded_exception import CodedHTTPException
+from utils.sse import safe_sse_stream, sse_streaming_response
 
 
 CHAT_ROUTER = APIRouter(prefix="/chat", tags=["Chat"])
+LOGGER = logging.getLogger(__name__)
 
 
 @CHAT_ROUTER.get("/conversations", response_model=list[ChatConversationListItem])
@@ -144,8 +147,11 @@ async def chat_message_stream(
                         event="response",
                         data=json.dumps({"type": "chunk", "chunk": value}),
                     ).to_string()
-                elif event_type == "status" and isinstance(value, str):
-                    yield SSEStatusResponse(status=value).to_string()
+                elif event_type == "status" and isinstance(value, ChatStreamStatus):
+                    yield SSEStatusResponse(
+                        status=value.message,
+                        status_code=value.code,
+                    ).to_string()
                 elif event_type == "trace" and isinstance(value, dict):
                     yield SSETraceResponse(trace=value).to_string()
                 elif event_type == "complete" and isinstance(value, ChatTurnResult):
@@ -160,6 +166,21 @@ async def chat_message_stream(
                         value=complete_payload.model_dump(mode="json"),
                     ).to_string()
         except HTTPException as exc:
-            yield SSEErrorResponse(detail=exc.detail).to_string()
+            yield SSEErrorResponse(
+                detail=exc.detail,
+                error_code=(
+                    exc.error_code if isinstance(exc, CodedHTTPException) else None
+                ),
+                error_params=(
+                    exc.error_params if isinstance(exc, CodedHTTPException) else None
+                ),
+            ).to_string()
 
-    return sse_streaming_response(inner())
+    return sse_streaming_response(
+        safe_sse_stream(
+            inner(),
+            logger=LOGGER,
+            error_detail="Chat stream failed",
+            error_code="error.chat_stream_failed",
+        )
+    )

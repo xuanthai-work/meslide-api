@@ -533,8 +533,11 @@ def test_export_task_output_permissions_are_readable(tmp_path):
 
     EXPORT_TASK_SERVICE._ensure_output_readable(str(output_path))
 
-    assert stat.S_IMODE(export_dir.stat().st_mode) == 0o755
-    assert stat.S_IMODE(output_path.stat().st_mode) == 0o644
+    assert os.access(export_dir, os.R_OK)
+    assert os.access(output_path, os.R_OK)
+    if os.name != "nt":
+        assert stat.S_IMODE(export_dir.stat().st_mode) == 0o755
+        assert stat.S_IMODE(output_path.stat().st_mode) == 0o644
 
 
 def test_replace_and_extension_helpers():

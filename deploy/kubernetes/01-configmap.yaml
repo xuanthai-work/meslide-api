@@ -1,0 +1,25 @@
+# Non-sensitive API settings. Provider credentials live in gslide-secrets.
+# SearXNG is omitted: this deploy does not include web image search.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gslide-api-config
+  namespace: gslide
+  labels:
+    app.kubernetes.io/part-of: gslide
+    app.kubernetes.io/component: api
+data:
+  PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium"
+  APP_DATA_DIRECTORY: "/app_data"
+  TEMP_DIRECTORY: "/tmp/gslide"
+  USER_CONFIG_PATH: "/app_data/userConfig.json"
+  MIGRATE_DATABASE_ON_STARTUP: "true"
+  # Chromium (in api) renders exports through the internal web service.
+  EXPORT_PAGE_BASE_URL: "http://web:3000"
+  NEXT_PUBLIC_URL: "http://localhost:3000"
+  ENABLE_PARALLEL_IMAGE_GENERATION: "true"
+  WEB_SEARCH_PROVIDER: "auto"
+  # Rollout gate for automatic web image search. Keep false until SearXNG is
+  # deployed from a separate repo.
+  WEB_IMAGE_SEARCH_ENABLED: "false"
+  OBJECT_STORAGE_BACKEND: "local"

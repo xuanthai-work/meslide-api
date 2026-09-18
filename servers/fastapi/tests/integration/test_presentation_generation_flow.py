@@ -8,6 +8,9 @@ import pytest
 from fastapi import HTTPException
 
 from api.v1.ppt.endpoints import presentation as presentation_endpoint
+from api.v1.ppt.endpoints import presentation_crud as presentation_crud_endpoint
+from api.v1.ppt.endpoints import presentation_generate as presentation_generate_endpoint
+from api.v1.ppt.endpoints import presentation_layout
 from constants.presentation import MAX_NUMBER_OF_SLIDES
 from enums.async_task_status import AsyncTaskStatus
 from models.generate_presentation_request import GeneratePresentationRequest
@@ -74,6 +77,7 @@ def test_generate_presentation_handler_full_flow_uses_mocked_dependencies():
     request = GeneratePresentationRequest(
         content="Create a two-slide deck about renewable energy.",
         n_slides=2,
+        include_table_of_contents=False,
         language="English",
         export_as="pptx",
         template="general",
@@ -99,39 +103,39 @@ def test_generate_presentation_handler_full_flow_uses_mocked_dependencies():
     )
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generated_outlines",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=fake_outline_stream,
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_presentation_structure",
         new=AsyncMock(return_value=PresentationStructureModel(slides=[0, 1])),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_slide_content_from_type_and_outline",
         get_slide_content,
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "process_slide_and_fetch_assets",
         new=AsyncMock(return_value=[]),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_images_directory",
         return_value="/tmp",
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "ImageGenerationService",
         return_value=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "export_presentation",
         new=AsyncMock(
             return_value=PresentationAndPath(
@@ -140,11 +144,11 @@ def test_generate_presentation_handler_full_flow_uses_mocked_dependencies():
             )
         ),
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "random",
         new=Mock(randint=Mock(return_value=0)),
     ):
@@ -170,6 +174,7 @@ def test_async_task_data_carries_presentation_ref_for_polling_callers():
     request = GeneratePresentationRequest(
         content="Create a two-slide deck about renewable energy.",
         n_slides=2,
+        include_table_of_contents=False,
         language="English",
         export_as="pptx",
         template="general",
@@ -193,39 +198,39 @@ def test_async_task_data_carries_presentation_ref_for_polling_callers():
         yield '{"slides":[{"content":"## Intro"},{"content":"## Action Plan"}]}'
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generated_outlines",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=fake_outline_stream,
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_presentation_structure",
         new=AsyncMock(return_value=PresentationStructureModel(slides=[0, 1])),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_slide_content_from_type_and_outline",
         new=AsyncMock(return_value={"title": "Intro", "points": ["A"]}),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "process_slide_and_fetch_assets",
         new=AsyncMock(return_value=[]),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_images_directory",
         return_value="/tmp",
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "ImageGenerationService",
         return_value=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "export_presentation",
         new=AsyncMock(
             return_value=PresentationAndPath(
@@ -234,11 +239,11 @@ def test_async_task_data_carries_presentation_ref_for_polling_callers():
             )
         ),
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "random",
         new=Mock(randint=Mock(return_value=0)),
     ):
@@ -289,6 +294,7 @@ def test_generate_presentation_handler_uses_template_layout():
     request = GeneratePresentationRequest(
         content="Create a one-slide deck about climate risk.",
         n_slides=1,
+        include_table_of_contents=False,
         language="English",
         export_as="pptx",
         template=f"custom-{template_id}",
@@ -298,39 +304,39 @@ def test_generate_presentation_handler_uses_template_layout():
         yield '{"slides":[{"content":"## Climate risk"}]}'
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generated_outlines",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=fake_outline_stream,
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_presentation_structure",
         new=AsyncMock(return_value=PresentationStructureModel(slides=[0])),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_slide_content_from_type_and_outline",
         new=AsyncMock(return_value={"hero": {"headline": "V2 headline"}}),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "process_slide_and_fetch_assets",
         new=AsyncMock(return_value=[]),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_images_directory",
         return_value="/tmp",
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "ImageGenerationService",
         return_value=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "export_presentation",
         new=AsyncMock(
             return_value=PresentationAndPath(
@@ -339,11 +345,11 @@ def test_generate_presentation_handler_uses_template_layout():
             )
         ),
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "random",
         new=Mock(randint=Mock(return_value=0)),
     ):
@@ -385,7 +391,7 @@ def test_default_template_name_resolves_bundled_template_without_schema_page():
     session = FakeAsyncSession(get_results={template_id: template})
 
     layout_payload, layout_model, fonts = _run(
-        presentation_endpoint._resolve_generation_layout("general", session)
+        presentation_layout._resolve_generation_layout("general", session)
     )
 
     assert layout_payload["layouts"][0]["id"] == "template-layout-1"
@@ -405,6 +411,8 @@ def test_create_presentation_stores_current_version(fake_async_session):
 
     assert presentation.version == PresentationVersion.V2_STANDARD
     assert presentation.content == "Create a short deck."
+    assert presentation.include_title_slide is True
+    assert presentation.include_table_of_contents is True
     assert fake_async_session.added == [presentation]
     assert fake_async_session.commit_count == 1
 
@@ -438,6 +446,7 @@ def test_create_blank_presentation_is_template_free_and_editable():
     assert presentation.layout is None
     assert presentation.fonts is None
     assert presentation.include_title_slide is False
+    assert presentation.include_table_of_contents is False
 
     assert slide.presentation == presentation.id
     assert slide.index == 0
@@ -515,6 +524,7 @@ def test_check_api_request_accepts_custom_prefixed_template_id():
     request = GeneratePresentationRequest(
         content="Create a deck.",
         n_slides=1,
+        include_table_of_contents=False,
         template=f"custom-{template_id}",
     )
 
@@ -529,6 +539,7 @@ def test_check_api_request_rejects_missing_custom_prefixed_template_id(
     request = GeneratePresentationRequest(
         content="Create a deck.",
         n_slides=1,
+        include_table_of_contents=False,
         template=f"custom-{uuid.uuid4()}",
     )
 
@@ -1030,6 +1041,7 @@ def test_generate_presentation_handler_rejects_invalid_llm_json(fake_async_sessi
     request = GeneratePresentationRequest(
         content="Generate a small deck",
         n_slides=2,
+        include_table_of_contents=False,
         language="English",
         export_as="pdf",
         template="general",
@@ -1039,15 +1051,15 @@ def test_generate_presentation_handler_rejects_invalid_llm_json(fake_async_sessi
         yield "{invalid-json"
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=fake_outline_stream,
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ):
@@ -1070,6 +1082,7 @@ def test_generate_presentation_handler_rejects_too_few_outlines(fake_async_sessi
     request = GeneratePresentationRequest(
         content="Generate a deck",
         n_slides=4,
+        include_table_of_contents=False,
         language="English",
         export_as="pptx",
         template="general",
@@ -1079,19 +1092,19 @@ def test_generate_presentation_handler_rejects_too_few_outlines(fake_async_sessi
         yield '{"slides":[{"content":"## One"},{"content":"## Two"}]}'
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generated_outlines",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=fake_outline_stream,
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ):
@@ -1114,6 +1127,7 @@ def test_generate_presentation_handler_trims_extra_outlines():
     request = GeneratePresentationRequest(
         content="Generate a deck",
         n_slides=2,
+        include_table_of_contents=False,
         language="English",
         export_as="pptx",
         template="general",
@@ -1135,39 +1149,39 @@ def test_generate_presentation_handler_trims_extra_outlines():
         )
 
     with patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generation_context",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
+        presentation_generate_endpoint.MEM0_PRESENTATION_MEMORY_SERVICE,
         "store_generated_outlines",
         new=AsyncMock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_ppt_outline",
         side_effect=fake_outline_stream,
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "generate_presentation_structure",
         new=AsyncMock(return_value=PresentationStructureModel(slides=[0, 1])),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_slide_content_from_type_and_outline",
         new=AsyncMock(return_value={"title": "T", "points": ["A"]}),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "process_slide_and_fetch_assets",
         new=AsyncMock(return_value=[]),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "get_images_directory",
         return_value="/tmp",
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "ImageGenerationService",
         return_value=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "export_presentation",
         new=AsyncMock(
             return_value=PresentationAndPath(
@@ -1176,11 +1190,11 @@ def test_generate_presentation_handler_trims_extra_outlines():
             )
         ),
     ), patch.object(
-        presentation_endpoint.CONCURRENT_SERVICE,
+        presentation_generate_endpoint.CONCURRENT_SERVICE,
         "run_task",
         new=Mock(),
     ), patch.object(
-        presentation_endpoint,
+        presentation_generate_endpoint,
         "random",
         new=Mock(randint=Mock(return_value=0)),
     ):
@@ -1252,7 +1266,7 @@ def test_edit_presentation_hydrates_template_slide_ui():
     )
 
     with patch.object(
-        presentation_endpoint,
+        presentation_crud_endpoint,
         "export_presentation",
         new=_fake_export_presentation,
     ):
@@ -1307,7 +1321,7 @@ def test_derive_presentation_hydrates_template_slide_ui():
     )
 
     with patch.object(
-        presentation_endpoint,
+        presentation_crud_endpoint,
         "export_presentation",
         new=_fake_export_presentation,
     ):
@@ -1352,7 +1366,7 @@ def test_export_existing_presentation_returns_path_without_regenerating():
     session = FakeAsyncSession(get_results={presentation_id: presentation})
 
     with patch.object(
-        presentation_endpoint,
+        presentation_crud_endpoint,
         "export_presentation",
         new=_fake_export_presentation,
     ):

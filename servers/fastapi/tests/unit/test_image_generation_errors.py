@@ -13,6 +13,7 @@ from services.chat.memory_layer import PresentationChatMemoryLayer
 from services.image_generation_service import ImageGenerationService
 from utils.get_env import is_parallel_image_generation_enabled
 from utils.image_generation_error import normalize_image_generation_error
+from utils.coded_exception import CodedHTTPException
 from utils.llm_client_error_handler import handle_llm_client_exceptions
 from utils.process_slides import (
     process_old_and_new_slides_and_fetch_assets,
@@ -106,6 +107,9 @@ def test_llm_error_handler_preserves_openai_quota_status():
 
     assert normalized.status_code == 429
     assert "API quota is unavailable" in normalized.detail
+    assert isinstance(normalized, CodedHTTPException)
+    assert normalized.error_code == "error.provider.quota"
+    assert normalized.error_params == {"provider": "OpenAI"}
 
 
 def test_llm_error_handler_hides_openai_auth_raw_provider_response():
@@ -115,6 +119,8 @@ def test_llm_error_handler_hides_openai_auth_raw_provider_response():
     assert normalized.detail == INVALID_API_KEY_MESSAGE
     assert "sk-proj" not in normalized.detail
     assert "invalid_api_key" not in normalized.detail
+    assert isinstance(normalized, CodedHTTPException)
+    assert normalized.error_code == "error.provider.invalid_api_key"
 
 
 def test_image_generation_service_raises_provider_error_instead_of_placeholder():
@@ -270,6 +276,8 @@ def test_slide_asset_processing_can_fallback_with_visible_warning():
                 "Check OpenAI API billing and the limits for the project that owns this API key."
             ),
             "code": "insufficient_quota",
+            "error_code": "error.provider.quota",
+            "error_params": {"provider": "OpenAI"},
         }
     ]
 

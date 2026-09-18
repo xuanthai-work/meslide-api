@@ -10,6 +10,9 @@ from sqlmodel import select
 
 from models.sql.template_v2 import TemplateV2
 from services.database import async_session_maker
+from services.object_storage.errors import ObjectStorageError
+from services.template_bundles.errors import InvalidBundleError
+from services.template_bundles.repository import TemplateBundleRepository
 from templates.v2.models.layouts import MergedComponents, SlideLayouts
 from utils.get_env import get_app_data_directory_env
 from utils.icon_weights import extract_icon_type_from_settings
@@ -49,6 +52,7 @@ async def import_default_templates_on_startup(
             else:
                 session.add(template)
                 LOGGER.info("Imported default template: %s", template.id)
+            await _save_default_template_bundle(existing or template)
             await session.commit()
 
         await _remove_stale_default_templates(session, imported_template_ids)
@@ -56,6 +60,23 @@ async def import_default_templates_on_startup(
 
 def _default_templates_root() -> Path:
     return Path(__file__).resolve().parents[3] / "templates"
+
+
+async def _save_default_template_bundle(template: TemplateV2) -> None:
+    """Dual-write the seeded template's bundle; never block startup.
+
+    Seeded payloads are trusted data that predate bundle validation, so an
+    invalid bundle or a cold storage backend is logged and skipped — the
+    legacy JSON columns remain the source of truth for that row.
+    """
+    try:
+        await TemplateBundleRepository().save(template)
+    except (InvalidBundleError, ObjectStorageError) as exc:
+        LOGGER.warning(
+            "Default template bundle upload skipped template_id=%s error=%s",
+            template.id,
+            exc,
+        )
 
 
 def resolve_default_template_id(
@@ -168,6 +189,8 @@ async def _remove_stale_default_templates(
         LOGGER.info("Removed stale default template: %s", template.id)
 
     await session.commit()
+    for template in stale_templates:
+        await TemplateBundleRepository().delete_if_unreferenced(template)
 
 
 def _read_template_id(raw: dict[str, Any], template_dir: Path) -> str:

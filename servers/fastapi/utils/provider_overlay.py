@@ -13,8 +13,8 @@ from contextvars import ContextVar, Token
 from typing import Any
 
 # Names whose getters in ``utils.get_env`` should look at the overlay first.
-# Names NOT in this list (CAN_CHANGE_KEYS, DATABASE_URL, APP_DATA_DIRECTORY,
-# DISABLE_AUTH, SEARXNG_BASE_URL, ENABLE_PARALLEL_IMAGE_GENERATION,
+# Names NOT in this list (DATABASE_URL, APP_DATA_DIRECTORY, DISABLE_AUTH,
+# SEARXNG_BASE_URL, ENABLE_PARALLEL_IMAGE_GENERATION,
 # USER_CONFIG_PATH, AUTH_*, ...) keep reading ``os.environ`` only.
 _OVERLAYED_ENV_NAMES: frozenset[str] = frozenset(
     {

@@ -1,12 +1,13 @@
 import asyncio
 import logging
 from collections.abc import AsyncGenerator, AsyncIterator, Awaitable, Callable
-from typing import Any
+from typing import Any, Optional
 
 from fastapi import HTTPException
 from fastapi.responses import StreamingResponse
 
 from models.sse_response import SSEErrorResponse, SSEHeartbeatResponse
+from utils.coded_exception import CodedHTTPException
 
 SSE_HEARTBEAT_SECONDS = 15.0
 SSE_RESPONSE_HEADERS = {
@@ -29,6 +30,8 @@ async def safe_sse_stream(
     *,
     logger: logging.Logger,
     error_detail: str,
+    error_code: Optional[str] = None,
+    error_params: Optional[dict] = None,
     on_error: Callable[[], Awaitable[None]] | None = None,
     heartbeat_seconds: float = SSE_HEARTBEAT_SECONDS,
 ) -> AsyncGenerator[str, None]:
@@ -75,7 +78,23 @@ async def safe_sse_stream(
                     if isinstance(value, HTTPException)
                     else error_detail
                 )
-                yield SSEErrorResponse(detail=str(detail)).to_string()
+                # Coded exceptions forward their own machine code; plain
+                # HTTPExceptions keep the legacy (uncoded) error frame; other
+                # exceptions fall back to the caller's catch-all code.
+                if isinstance(value, CodedHTTPException):
+                    frame_error_code = value.error_code
+                    frame_error_params = value.error_params
+                elif isinstance(value, HTTPException):
+                    frame_error_code = None
+                    frame_error_params = None
+                else:
+                    frame_error_code = error_code
+                    frame_error_params = error_params
+                yield SSEErrorResponse(
+                    detail=str(detail),
+                    error_code=frame_error_code,
+                    error_params=frame_error_params,
+                ).to_string()
                 break
     finally:
         if not producer.done():

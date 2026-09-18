@@ -23,8 +23,8 @@ from templates.v2.models.layouts import (
     slide_layout_llm_json_schema,
 )
 from templates.v2.models.elements import Image as SlideImageElement
-from templates.v2.models.elements import ImageFit
-from templates.v2.tools import PREVIEW_SLIDE_TOOL_NAME, PreviewSlideTool
+from templates.v2.models.elements import ImageFit, Position, Size
+from templates.v2.tools import PreviewSlideTool
 from utils.asset_directory_utils import resolve_image_path_to_filesystem
 from utils.llm_messages import (
     AssistantMessage,
@@ -37,7 +37,6 @@ from utils.llm_messages import (
 )
 from utils.llm_provider import get_llm_client, get_model
 from utils.llm_utils import (
-    extract_structured_content,
     get_generate_kwargs,
     stream_generate_events,
 )
@@ -48,6 +47,8 @@ from utils.llm_utils import (
 get_client = get_llm_client
 
 DEFAULT_VALIDATION_RETRIES = 5
+SLIDE_FALLBACK_WIDTH = 1280.0
+SLIDE_FALLBACK_HEIGHT = 720.0
 MAX_PARALLEL_SLIDE_LAYOUTS = 10
 MAX_PREVIEW_SLIDE_CALLS = 2
 CONTENT_IMAGE_PLACEHOLDER_URL = "/static/images/replaceable_template_image.png"
@@ -338,12 +339,23 @@ async def generate_template(
 
     async def run_one(index: int, layout: RawSlideLayout) -> tuple[int, SlideLayout]:
         async with semaphore:
-            result = await generate_slide_layout(
-                layout,
-                index,
-                slide_image_urls[index],
-                fonts,
-            )
+            try:
+                result = await generate_slide_layout(
+                    layout,
+                    index,
+                    slide_image_urls[index],
+                    fonts,
+                )
+            except asyncio.CancelledError:
+                raise
+            except Exception as exc:
+                LOGGER.warning(
+                    "[templates.v2.generate] slide %d: using PPTX JSON fallback "
+                    "error=%s",
+                    index + 1,
+                    exc,
+                )
+                result = slide_layout_from_raw(layout, slide_image_urls[index])
             return index, result
 
     tasks = [
@@ -828,6 +840,44 @@ def _unique_merged_component_id(component_id: str, used_ids: set[str]) -> str:
         suffix += 1
 
 
+def slide_layout_from_raw(
+    source_layout: RawSlideLayout,
+    slide_image_url: str | None = None,
+) -> SlideLayout:
+    """Build a usable SlideLayout from PPTX JSON when LLM output is invalid."""
+    elements = list(source_layout.elements)
+    if not elements:
+        image_url = (slide_image_url or "").strip()
+        if not image_url:
+            raise ValueError(
+                "Cannot build a fallback slide layout without elements or a slide image"
+            )
+        elements = [
+            SlideImageElement(
+                type="image",
+                position=Position(x=0, y=0),
+                size=Size(width=SLIDE_FALLBACK_WIDTH, height=SLIDE_FALLBACK_HEIGHT),
+                data=image_url,
+                decorative=True,
+                name="slide_preview",
+                is_icon=False,
+                fit=ImageFit.CONTAIN,
+            )
+        ]
+    return SlideLayout(
+        id=source_layout.id,
+        description=source_layout.description,
+        components=[
+            Component(
+                id=f"{source_layout.id}_imported",
+                description=source_layout.description,
+                position=Position(x=0, y=0),
+                elements=elements,
+            )
+        ],
+    )
+
+
 async def generate_slide_layout(
     source_layout: RawSlideLayout,
     slide_index: int,
@@ -853,15 +903,26 @@ async def generate_slide_layout(
         ),
     ]
     preview_tool = PreviewSlideTool(slide_index=slide_index, fonts=fonts)
-    layout = await _generate_preview_candidate(
-        client=client,
-        model=model,
-        messages=messages,
-        label=f"slide {slide_index + 1}",
-        preview_tool=preview_tool,
-        validation_retries=DEFAULT_VALIDATION_RETRIES,
-        max_tokens=max_tokens,
-    )
+    label = f"slide {slide_index + 1}"
+    try:
+        layout = await _generate_preview_candidate(
+            client=client,
+            model=model,
+            messages=messages,
+            label=label,
+            preview_tool=preview_tool,
+            validation_retries=DEFAULT_VALIDATION_RETRIES,
+            max_tokens=max_tokens,
+        )
+    except asyncio.CancelledError:
+        raise
+    except Exception as exc:
+        LOGGER.warning(
+            "[templates.v2.llm] %s: using PPTX JSON fallback error=%s",
+            label,
+            exc,
+        )
+        layout = slide_layout_from_raw(source_layout, slide_image_url)
     return _replace_content_image_urls(layout)
 
 

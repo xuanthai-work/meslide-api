@@ -1,0 +1,437 @@
+{
+ "query": "vietnam solar farm",
+ "categories": "images",
+ "format": "json",
+ "safesearch": 1,
+ "results": [
+  {
+   "title": "eclipse",
+   "url": "https://cdn.jsdelivr.net/npm/lucide-static/icons/eclipse.svg",
+   "img_src": "https://cdn.jsdelivr.net/npm/lucide-static/icons/eclipse.svg",
+   "engine": "lucide",
+   "engines": [
+    "lucide"
+   ],
+   "img_format": "SVG",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "solar-panel",
+   "url": "https://cdn.jsdelivr.net/npm/lucide-static/icons/solar-panel.svg",
+   "img_src": "https://cdn.jsdelivr.net/npm/lucide-static/icons/solar-panel.svg",
+   "engine": "lucide",
+   "engines": [
+    "lucide"
+   ],
+   "img_format": "SVG",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "tractor",
+   "url": "https://cdn.jsdelivr.net/npm/lucide-static/icons/tractor.svg",
+   "img_src": "https://cdn.jsdelivr.net/npm/lucide-static/icons/tractor.svg",
+   "engine": "lucide",
+   "engines": [
+    "lucide"
+   ],
+   "img_format": "SVG",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Team-sustain-solar-farm-in-vietnam",
+   "url": "https://commons.wikimedia.org/w/index.php?curid=81478016",
+   "img_src": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Team-sustain-solar-farm-in-vietnam.jpg",
+   "engine": "openverse",
+   "engines": [
+    "openverse"
+   ],
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Stacks of Wheat (End of Summer) (1890–91) // Claude Monet (French, 1840–1926)",
+   "url": "https://artic.edu/artworks/64818",
+   "img_src": "https://www.artic.edu/iiif/2//a38e2828-ec6f-ece1-a30f-70243449197b/full/843,/0/default.jpg",
+   "engine": "artic",
+   "engines": [
+    "artic"
+   ],
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Predicta (Media Burn Storyboard) (1975) // Ant Farm (Doug Michels, Chip Lord, and Curtis Schreier) American, 1968-1978",
+   "url": "https://artic.edu/artworks/185122",
+   "img_src": "https://www.artic.edu/iiif/2//275cb06e-5b38-e47b-c286-8f7d4ad186c6/full/843,/0/default.jpg",
+   "engine": "artic",
+   "engines": [
+    "artic"
+   ],
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "A Bundle of Lavender (1910) // Augustus Edwin John English, 1878-1961",
+   "url": "https://artic.edu/artworks/59421",
+   "img_src": "https://www.artic.edu/iiif/2//ea7337ab-2828-a953-5860-33a2dc028103/full/843,/0/default.jpg",
+   "engine": "artic",
+   "engines": [
+    "artic"
+   ],
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Circular Rooms With Possible Escape (1999) // Diana De Solares Guatemalan, born 1952",
+   "url": "https://artic.edu/artworks/154602",
+   "img_src": "https://www.artic.edu/iiif/2//6a465545-0358-539d-2817-3ee9e68f1678/full/843,/0/default.jpg",
+   "engine": "artic",
+   "engines": [
+    "artic"
+   ],
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Projects | Dau Tieng 1 and 2 PV Solar Power Plant, Tây Ninh, Vietnam",
+   "url": "https://www.aurecongroup.com/projects/energy/dau-tieng-solar-power-plant",
+   "img_src": "https://www.aurecongroup.com/-/media/images/aurecon/content/projects/energy/dau-tieng-1-and-2/dau-tieng-solar-farm-aerial_1920x1080.jpg?as=0&w=824",
+   "thumbnail_src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2uR_fAaw2tohMZyqPLF152Cg4kjAr3uzru3umbC86I7duKWCCyEQhVQ&s",
+   "engine": "google cse images",
+   "engines": [
+    "google cse images"
+   ],
+   "resolution": "824x464",
+   "img_format": "jpeg",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Vietnam's New Solar Farm, Southeast Asia's Largest, Opens in Tay ...",
+   "url": "https://saigoneer.com/saigon-development/17350-vietnam-s-new-solar-farm,-southeast-asia-s-largest,-opens-in-tay-ninh",
+   "img_src": "https://media.urbanistnetwork.com/saigoneer/article-images/2019/Sep/9/solar_SGNRb.jpg",
+   "thumbnail_src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRps7EBXFMUTFPs9DgRpuG_uaxEPqSrxhopq4CyVXwLJEYQr2BLBpAGTg&s",
+   "engine": "google cse images",
+   "engines": [
+    "google cse images"
+   ],
+   "resolution": "1600x1067",
+   "img_format": "jpeg",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Trungnam Group launches largest solar farm in Vietnam ...",
+   "url": "https://transformer-magazine.com/news/trungnam-group-launches-largest-solar-farm-in-vietnam/",
+   "img_src": "https://transformer-magazine.com/files/Vietnam_shutterstock_1525381094-1.png",
+   "thumbnail_src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8z3ZymZ0B7LpBcDfCbhzaJWy2b9S-WZonpLG0Wt7cqfi1yzYKsJ-sytY&s",
+   "engine": "google cse images",
+   "engines": [
+    "google cse images"
+   ],
+   "resolution": "850x400",
+   "img_format": "png",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Vietnam's most beautiful solar farm opened to public viewing",
+   "url": "https://news.tuoitre.vn/saigontimes/vietnams-most-beautiful-solar-farm-opened-to-public-viewing-10598143.htm",
+   "img_src": "https://cdn2.tuoitre.vn/thesaigontimesen/uploads/2022/04/Spectacular-sunrise-is-seen-at-the-An-Hao-solar-farm.png",
+   "thumbnail_src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQLmbjk51_Hmpk6U4xoMONpbEMJTlARRm25ZjJHVGVSZXtPz5oIwvIYA&s",
+   "engine": "google cse images",
+   "engines": [
+    "google cse images"
+   ],
+   "resolution": "1000x431",
+   "img_format": "png",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Expansive Solar Farm in Vietnam's Binh Thuan Province",
+   "url": "https://www.pexels.com/photo/expansive-solar-farm-in-vietnam-s-binh-thuan-province-35105443/",
+   "img_src": "https://images.pexels.com/photos/35105443/pexels-photo-35105443.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-35105443.jpg&fm=jpg",
+   "thumbnail_src": "https://images.pexels.com/photos/35105443/pexels-photo-35105443.jpeg?auto=compress&cs=tinysrgb&h=130",
+   "engine": "pexels",
+   "engines": [
+    "pexels"
+   ],
+   "resolution": "5464x3640",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Expansive Solar Farm in Rural Landscape",
+   "url": "https://www.pexels.com/photo/expansive-solar-farm-in-rural-landscape-35105440/",
+   "img_src": "https://images.pexels.com/photos/35105440/pexels-photo-35105440.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-35105440.jpg&fm=jpg",
+   "thumbnail_src": "https://images.pexels.com/photos/35105440/pexels-photo-35105440.jpeg?auto=compress&cs=tinysrgb&h=130",
+   "engine": "pexels",
+   "engines": [
+    "pexels"
+   ],
+   "resolution": "5464x3640",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Aerial View of Vast Solar Farm with Mountains",
+   "url": "https://www.pexels.com/photo/aerial-view-of-vast-solar-farm-with-mountains-35105436/",
+   "img_src": "https://images.pexels.com/photos/35105436/pexels-photo-35105436.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-35105436.jpg&fm=jpg",
+   "thumbnail_src": "https://images.pexels.com/photos/35105436/pexels-photo-35105436.jpeg?auto=compress&cs=tinysrgb&h=130",
+   "engine": "pexels",
+   "engines": [
+    "pexels"
+   ],
+   "resolution": "5464x3640",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Aerial View of Solar Farm with Mountain Background",
+   "url": "https://www.pexels.com/photo/aerial-view-of-solar-farm-with-mountain-background-35105441/",
+   "img_src": "https://images.pexels.com/photos/35105441/pexels-photo-35105441.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-35105441.jpg&fm=jpg",
+   "thumbnail_src": "https://images.pexels.com/photos/35105441/pexels-photo-35105441.jpeg?auto=compress&cs=tinysrgb&h=130",
+   "engine": "pexels",
+   "engines": [
+    "pexels"
+   ],
+   "resolution": "5464x3640",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Vietnam’s most beautiful solar farm opened to public viewing - The ...",
+   "url": "https://english.thesaigontimes.vn/vietnams-most-beautiful-solar-farm-opened-to-public-viewing/",
+   "img_src": "https://english.thesaigontimes.vn/wp-content/uploads/2022/04/Spectacular-sunrise-is-seen-at-the-An-Hao-solar-farm.png",
+   "thumbnail_src": "https://ts4.mm.bing.net/th?id=OIP.QWUdo73WphmUVkjcNNd1ngHaDM&pid=15.1",
+   "engine": "bing images",
+   "engines": [
+    "bing images"
+   ],
+   "resolution": "1000×431",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Solar Farm Vietnam",
+   "url": "https://fity.club/lists/suggestions/Solar-Farm-Vietnam/",
+   "img_src": "https://media.urbanistnetwork.com/saigoneer/article-images/2019/Sep/9/solar_SGNRh.jpg",
+   "thumbnail_src": "https://ts3.mm.bing.net/th?id=OIP.G2UqX5TO9okD8TvFfQoFpAHaE8&pid=15.1",
+   "engine": "bing images",
+   "engines": [
+    "bing images"
+   ],
+   "resolution": "1900×1267",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Expansive Solar Farm in Vietnam's Binh Thuan Province …",
+   "url": "https://www.pexels.com/photo/expansive-solar-farm-in-vietnam-s-binh-thuan-province-35105443/",
+   "img_src": "https://images.pexels.com/photos/35105443/pexels-photo-35105443/free-photo-of-expansive-solar-farm-in-vietnam-s-binh-thuan-province.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+   "thumbnail_src": "https://ts4.mm.bing.net/th?id=OIP.prA6filpWNjlSkSRsUe1NwHaE7&pid=15.1",
+   "engine": "bing images",
+   "engines": [
+    "bing images"
+   ],
+   "resolution": "1126×750",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Solar Farm Vietnam",
+   "url": "https://fity.club/lists/suggestions/Solar-Farm-Vietnam/",
+   "img_src": "https://pidg.org/wp-content/uploads/Ninh-Tuan-Solar-Power.jpg",
+   "thumbnail_src": "https://ts4.mm.bing.net/th?id=OIP.QbqAXLvKwPCyohLQVX5DbgHaEr&pid=15.1",
+   "engine": "bing images",
+   "engines": [
+    "bing images"
+   ],
+   "resolution": "1500×949",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Team-sustain-solar-farm-in-vietnam",
+   "url": "https://commons.wikimedia.org/wiki/File:Team-sustain-solar-farm-in-vietnam.jpg",
+   "img_src": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Team-sustain-solar-farm-in-vietnam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumbnail_src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Team-sustain-solar-farm-in-vietnam.jpg/500px-Team-sustain-solar-farm-in-vietnam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "engine": "wikicommons.images",
+   "engines": [
+    "wikicommons.images"
+   ],
+   "resolution": "1181 x 536",
+   "img_format": "image/jpeg",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "USAID Facilitates Private Sector Investment in Solar Energy (23877190788)",
+   "url": "https://commons.wikimedia.org/wiki/File:USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_(23877190788).jpg",
+   "img_src": "https://upload.wikimedia.org/wikipedia/commons/f/f4/USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2823877190788%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumbnail_src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2823877190788%29.jpg/330px-USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2823877190788%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "engine": "wikicommons.images",
+   "engines": [
+    "wikicommons.images"
+   ],
+   "resolution": "7360 x 4912",
+   "img_format": "image/jpeg",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "USAID Facilitates Private Sector Investment in Solar Energy (37020556624)",
+   "url": "https://commons.wikimedia.org/wiki/File:USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_(37020556624).jpg",
+   "img_src": "https://upload.wikimedia.org/wikipedia/commons/f/f6/USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2837020556624%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumbnail_src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2837020556624%29.jpg/330px-USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2837020556624%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "engine": "wikicommons.images",
+   "engines": [
+    "wikicommons.images"
+   ],
+   "resolution": "5858 x 4146",
+   "img_format": "image/jpeg",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "USAID Facilitates Private Sector Investment in Solar Energy (37059870943)",
+   "url": "https://commons.wikimedia.org/wiki/File:USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_(37059870943).jpg",
+   "img_src": "https://upload.wikimedia.org/wikipedia/commons/a/ac/USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2837059870943%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "thumbnail_src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2837059870943%29.jpg/330px-USAID_Facilitates_Private_Sector_Investment_in_Solar_Energy_%2837059870943%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "engine": "wikicommons.images",
+   "engines": [
+    "wikicommons.images"
+   ],
+   "resolution": "5918 x 4174",
+   "img_format": "image/jpeg",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Vietnamese PV projects to assess potential of battery storage in preventing curtailment",
+   "url": "https://www.pv-tech.org/vietnamese-pv-projects-to-assess-potential-of-battery-storage-in-preventing-curtailment/",
+   "img_src": "https://i.pinimg.com/originals/66/9b/66/669b6667c40172c85723e557103019c3.jpg",
+   "thumbnail_src": "https://i.pinimg.com/236x/66/9b/66/669b6667c40172c85723e557103019c3.jpg",
+   "engine": "pinterest",
+   "engines": [
+    "pinterest"
+   ],
+   "resolution": "1128x700",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Vietnam Receives Funding From ADB to Build Major Floating Solar Power Plant | Saigoneer",
+   "url": "https://saigoneer.com/saigon-environment/17547-vietnam-receives-funding-from-adb-to-build-major-floating-solar-power-plant",
+   "img_src": "https://i.pinimg.com/originals/fe/65/2d/fe652de0dcd96b15cd482e34ac21000e.jpg",
+   "thumbnail_src": "https://i.pinimg.com/236x/fe/65/2d/fe652de0dcd96b15cd482e34ac21000e.jpg",
+   "engine": "pinterest",
+   "engines": [
+    "pinterest"
+   ],
+   "resolution": "1257x838",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "năng lượng tái tạo vượt trội",
+   "url": "https://mpenergy.vn/",
+   "img_src": "https://i.pinimg.com/originals/59/f2/29/59f229404fbfe5865ecd8588312185dc.png",
+   "thumbnail_src": "https://i.pinimg.com/236x/59/f2/29/59f229404fbfe5865ecd8588312185dc.jpg",
+   "engine": "pinterest",
+   "engines": [
+    "pinterest"
+   ],
+   "resolution": "1672x941",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "",
+   "url": "https://www.pinterest.com/pin/465278205275519900/",
+   "img_src": "https://i.pinimg.com/originals/3e/0f/1d/3e0f1dc84d6a767818fdb2e5ed3bf84d.jpg",
+   "thumbnail_src": "https://i.pinimg.com/236x/3e/0f/1d/3e0f1dc84d6a767818fdb2e5ed3bf84d.jpg",
+   "engine": "pinterest",
+   "engines": [
+    "pinterest"
+   ],
+   "resolution": "1880x1252",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Advertising | Wall painting | Taibei 臺北市 | Taiwan 台灣",
+   "url": "https://www.flickr.com/photos/45853697@N03/26404732424",
+   "img_src": "//live.staticflickr.com/7136/26404732424_7ebd5fb5a2_c.jpg",
+   "thumbnail_src": "//live.staticflickr.com/7136/26404732424_7ebd5fb5a2_n.jpg",
+   "engine": "flickr",
+   "engines": [
+    "flickr"
+   ],
+   "resolution": "800 x 609",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "building | Taiwan",
+   "url": "https://www.flickr.com/photos/45853697@N03/21904646430",
+   "img_src": "//live.staticflickr.com/5768/21904646430_9b04c987d6_c.jpg",
+   "thumbnail_src": "//live.staticflickr.com/5768/21904646430_9b04c987d6_n.jpg",
+   "engine": "flickr",
+   "engines": [
+    "flickr"
+   ],
+   "resolution": "800 x 619",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "Advertising Hasselblad ELM | Taibei 臺北市 | Taiwan 台灣",
+   "url": "https://www.flickr.com/photos/45853697@N03/26977059856",
+   "img_src": "//live.staticflickr.com/7098/26977059856_b7b67a3214_c.jpg",
+   "thumbnail_src": "//live.staticflickr.com/7098/26977059856_b7b67a3214_n.jpg",
+   "engine": "flickr",
+   "engines": [
+    "flickr"
+   ],
+   "resolution": "800 x 583",
+   "template": "images.html",
+   "category": "images"
+  },
+  {
+   "title": "03. mju superia 400--000048",
+   "url": "https://www.flickr.com/photos/38027226@N07/33490744328",
+   "img_src": "//live.staticflickr.com/65535/33490744328_77d26c554a_c.jpg",
+   "thumbnail_src": "//live.staticflickr.com/65535/33490744328_77d26c554a_n.jpg",
+   "engine": "flickr",
+   "engines": [
+    "flickr"
+   ],
+   "resolution": "800 x 450",
+   "template": "images.html",
+   "category": "images"
+  }
+ ],
+ "unresponsive_engines": [
+  [
+   "brave.images",
+   "Suspended: too many requests"
+  ],
+  [
+   "duckduckgo images",
+   "access denied"
+  ],
+  [
+   "startpage images",
+   "Suspended: CAPTCHA"
+  ],
+  [
+   "unsplash",
+   "parsing error"
+  ]
+ ]
+}

@@ -5,7 +5,15 @@ from pathlib import Path
 from typing import Any
 
 from models.sql.template_v2 import TemplateV2
+from services.object_storage.local import LocalObjectStorage
+from services.template_bundles.repository import TemplateBundleRepository
 from templates import default_templates
+
+
+async def _first_stored_key(storage: LocalObjectStorage) -> str | None:
+    for path in sorted(storage.root.rglob("*.json.gz")):
+        return str(path.relative_to(storage.root)).replace("\\", "/")
+    return None
 
 
 def _component() -> dict[str, Any]:
@@ -157,14 +165,17 @@ def test_default_template_import_normalizes_shapes_and_copies_static(
     assert template.id == "general"
     assert template.is_default is True
     assert template.raw_layouts is None
-    assert list(template.layouts) == ["layouts"]
-    assert list(template.merged_components) == ["components"]
+    # PR3 cutover: the payload lives in the uploaded bundle, not the row.
+    assert template.bundle_object_key is not None
+    bundle = asyncio.run(TemplateBundleRepository().load(template))
+    assert list(bundle.layouts) == ["layouts"]
+    assert list(bundle.merged_components) == ["components"]
     assert (
-        template.layouts["layouts"][0]["components"][0]["elements"][0]["data"]
+        bundle.layouts["layouts"][0]["components"][0]["elements"][0]["data"]
         == "/app_data/templates/general/static/image.png"
     )
     assert (
-        template.merged_components["components"][0]["variants"][0]["elements"][0][
+        bundle.merged_components["components"][0]["variants"][0]["elements"][0][
             "data"
         ]
         == "/app_data/templates/general/static/image.png"
@@ -227,6 +238,35 @@ def test_default_template_import_removes_static_directory_removed_from_bundle(
     assert not old_static_dir.exists()
 
 
+def test_default_template_import_uploads_bundle_object(
+    tmp_path,
+    monkeypatch,
+):
+    templates_root = tmp_path / "templates"
+    _write_template_bundle(templates_root)
+    app_data_dir = tmp_path / "app_data"
+    storage = LocalObjectStorage(root=tmp_path / "object-storage")
+    monkeypatch.setenv("APP_DATA_DIRECTORY", str(app_data_dir))
+    monkeypatch.setattr(
+        "services.template_bundles.repository.get_object_storage",
+        lambda: storage,
+    )
+    monkeypatch.setattr(
+        default_templates,
+        "async_session_maker",
+        lambda: _SessionContext(_FakeSession()),
+    )
+
+    asyncio.run(default_templates.import_default_templates_on_startup(templates_root))
+
+    object_key = asyncio.run(_first_stored_key(storage))
+    assert object_key is not None
+    # Default templates carry the system owner id (get_current_owner_id
+    # outside a request context), so the key lands under that owner.
+    assert "/templates/general/revisions/" in object_key
+    assert object_key.endswith(".json.gz")
+
+
 def test_default_template_import_updates_existing_database_row(tmp_path, monkeypatch):
     templates_root = tmp_path / "templates"
     _write_template_bundle(templates_root, include_raw_layouts=True)
@@ -257,8 +297,10 @@ def test_default_template_import_updates_existing_database_row(tmp_path, monkeyp
     assert existing.description == "General purpose default template."
     assert existing.is_default is True
     assert existing.raw_layouts is None
-    assert list(existing.layouts) == ["layouts"]
-    assert list(existing.merged_components) == ["components"]
+    # PR3 cutover: the seeded payload is re-uploaded as a bundle revision.
+    assert existing.bundle_object_key is not None
+    assert existing.layouts is None
+    assert existing.merged_components is None
     assert existing.assets["thumbnail"] == (
         "/app_data/templates/general/static/thumbnail.png"
     )

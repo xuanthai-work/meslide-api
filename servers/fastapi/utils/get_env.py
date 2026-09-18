@@ -1,4 +1,5 @@
 import os
+import tempfile
 
 from utils.provider_overlay import overlay_or_env
 
@@ -15,10 +16,6 @@ def _is_truthy(value: str | None) -> bool:
     if value is None:
         return False
     return value.strip().lower() in {"1", "true", "yes", "on"}
-
-
-def get_can_change_keys_env():
-    return os.getenv("CAN_CHANGE_KEYS")
 
 
 def get_database_url_env():
@@ -42,6 +39,16 @@ def get_fastapi_public_base_url() -> str | None:
 
 def get_temp_directory_env():
     return os.getenv("TEMP_DIRECTORY")
+
+
+def default_gslide_directory() -> str:
+    """Cross-platform fallback root for temp and app-data directories.
+
+    Callers previously hardcoded ``"/tmp/gslide"``, which resolves to a
+    drive-relative path on Windows and broke local commands. Use the
+    platform temp root instead so the default works everywhere.
+    """
+    return os.path.join(tempfile.gettempdir(), "gslide")
 
 
 def get_user_config_path_env():
@@ -129,6 +136,21 @@ def get_searxng_base_url_env():
     return os.getenv("SEARXNG_BASE_URL")
 
 
+def get_web_image_search_enabled_env():
+    # Operator rollout gate for the automatic web image-search feature.
+    # Deliberately env-only (never overlay/userConfig): unlike provider
+    # credentials, rollout availability must not vary per user —
+    # presentation.web_search stays the only user-facing switch.
+    return os.getenv("WEB_IMAGE_SEARCH_ENABLED")
+
+
+def get_web_image_search_max_results_env():
+    # Operator-level bounded cap on parsed candidates per image query.
+    # Env-only, like SEARXNG_BASE_URL: it bounds a backend resource, not a
+    # user preference.
+    return os.getenv("WEB_IMAGE_SEARCH_MAX_RESULTS")
+
+
 # Gpt Image 1.5 Quality
 def get_gpt_image_1_5_quality_env():
     return overlay_or_env("GPT_IMAGE_1_5_QUALITY")
@@ -136,18 +158,6 @@ def get_gpt_image_1_5_quality_env():
 
 def get_migrate_database_on_startup_env():
     return os.getenv("MIGRATE_DATABASE_ON_STARTUP")
-
-
-def get_sentry_dsn_env():
-    return os.getenv("SENTRY_DSN")
-
-
-def get_sentry_traces_sample_rate_env():
-    return os.getenv("SENTRY_TRACES_SAMPLE_RATE")
-
-
-def get_sentry_send_default_pii_env():
-    return os.getenv("SENTRY_SEND_DEFAULT_PII")
 
 
 # OpenAI Compatible Image Provider

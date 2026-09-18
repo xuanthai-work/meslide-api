@@ -1,5 +1,4 @@
 from io import BytesIO
-from typing import List
 from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 from PIL import Image, UnidentifiedImageError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,6 +8,8 @@ from models.image_prompt import ImagePrompt
 from models.sql.image_asset import ImageAsset
 from services.database import get_async_session
 from services.image_generation_service import ImageGenerationService
+from services.image_search.metrics import hash_query_for_log
+from utils.coded_exception import CodedHTTPException
 from utils.asset_directory_utils import (
     filesystem_image_path_to_app_data_url,
     get_images_directory,
@@ -47,21 +48,28 @@ async def _read_validated_image_upload(file: UploadFile) -> bytes:
     extension = os.path.splitext(filename)[1].lower()
     if extension not in ALLOWED_UPLOAD_IMAGE_EXTENSIONS:
         accepted = ", ".join(sorted(ALLOWED_UPLOAD_IMAGE_EXTENSIONS))
-        raise HTTPException(
+        raise CodedHTTPException(
             status_code=400,
             detail=f"Invalid image file type. Accepted types: {accepted}",
+            error_code="error.image.invalid_type",
+            error_params={"accepted": accepted},
         )
 
     content = await file.read()
     if not content:
-        raise HTTPException(status_code=400, detail="Uploaded image file is empty")
+        raise CodedHTTPException(
+            status_code=400,
+            detail="Uploaded image file is empty",
+            error_code="error.image.empty_file",
+        )
 
     try:
         with Image.open(BytesIO(content)) as image:
             if image.format not in ALLOWED_UPLOAD_IMAGE_FORMATS:
-                raise HTTPException(
+                raise CodedHTTPException(
                     status_code=400,
                     detail="Uploaded image format is not supported",
+                    error_code="error.image.unsupported_format",
                 )
             image.verify()
     except HTTPException:
@@ -73,8 +81,10 @@ async def _read_validated_image_upload(file: UploadFile) -> bytes:
         UnidentifiedImageError,
         ValueError,
     ):
-        raise HTTPException(
-            status_code=400, detail="Uploaded file is not a valid image"
+        raise CodedHTTPException(
+            status_code=400,
+            detail="Uploaded file is not a valid image",
+            error_code="error.image.invalid_image",
         )
 
     return content
@@ -119,8 +129,11 @@ async def get_generated_images(sql_session: AsyncSession = Depends(get_async_ses
         )
         return [_image_asset_api_dict(a) for a in images_result]
     except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Failed to retrieve generated images: {str(e)}"
+        raise CodedHTTPException(
+            status_code=500,
+            detail=f"Failed to retrieve generated images: {str(e)}",
+            error_code="error.image.retrieve_generated_failed",
+            error_params={"reason": str(e)},
         )
 
 
@@ -149,7 +162,12 @@ async def upload_image(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to upload image: {str(e)}")
+        raise CodedHTTPException(
+            status_code=500,
+            detail=f"Failed to upload image: {str(e)}",
+            error_code="error.image.upload_failed",
+            error_params={"reason": str(e)},
+        )
 
 
 @IMAGES_ROUTER.get("/uploaded")
@@ -162,8 +180,11 @@ async def get_uploaded_images(sql_session: AsyncSession = Depends(get_async_sess
         )
         return [_image_asset_api_dict(a) for a in images_result]
     except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Failed to retrieve uploaded images: {str(e)}"
+        raise CodedHTTPException(
+            status_code=500,
+            detail=f"Failed to retrieve uploaded images: {str(e)}",
+            error_code="error.image.list_uploaded_failed",
+            error_params={"reason": str(e)},
         )
 
 
@@ -175,7 +196,9 @@ async def delete_uploaded_image_by_id(
         # Fetch the asset to get its actual file path
         image = await sql_session.get(ImageAsset, id)
         if not image:
-            raise HTTPException(status_code=404, detail="Image not found")
+            raise CodedHTTPException(
+                status_code=404, detail="Image not found", error_code="error.image.not_found"
+            )
 
         os.remove(image.path)
 
@@ -183,4 +206,85 @@ async def delete_uploaded_image_by_id(
         await sql_session.commit()
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete image: {str(e)}")
+        raise CodedHTTPException(
+            status_code=500,
+            detail=f"Failed to delete image: {str(e)}",
+            error_code="error.image.delete_failed",
+            error_params={"reason": str(e)},
+        )
+
+@IMAGES_ROUTER.get("/search/health")
+async def get_image_search_health(probe: bool = False):
+    """Operator diagnostics for automatic web image search (plan Phase 8).
+
+    Read-only: reports the rollout gate and SearXNG configuration, and
+    optionally (``?probe=true``) performs one fixed benign image search —
+    search only, never an import — so operators can verify the instance
+    and its image engines without mutating any presentation or asset.
+
+    Always answers 200: this is a diagnostics surface, not a liveness
+    gate; failures appear inside the ``probe`` block instead.
+    """
+    from services.image_search import get_image_search_service
+    from services.image_search.availability import (
+        get_web_image_search_max_results,
+        web_image_search_available,
+        web_image_search_configured,
+        web_image_search_feature_enabled,
+    )
+    from utils.searxng import get_searxng_base_url, redact_searxng_url_credentials
+
+    feature_enabled = web_image_search_feature_enabled()
+    configured = web_image_search_configured()
+    base_url = get_searxng_base_url()
+
+    health: dict = {
+        "feature_enabled": feature_enabled,
+        "configured": configured,
+        "available": web_image_search_available(),
+        "base_url": redact_searxng_url_credentials(base_url) if base_url else None,
+        "max_results": get_web_image_search_max_results(),
+    }
+
+    if not probe:
+        return health
+
+    if not feature_enabled or not configured:
+        health["probe"] = {
+            "ok": False,
+            "reason": "not_enabled" if not feature_enabled else "not_configured",
+        }
+        return health
+
+    # Fixed benign query: the probe must not depend on any user content.
+    probe_query = "gslide image search health probe"
+    search_stats: dict = {}
+    try:
+        service = get_image_search_service()
+        candidates = await service.search(
+            probe_query,
+            limit=get_web_image_search_max_results(),
+            stats=search_stats,
+        )
+    except TimeoutError:
+        health["probe"] = {"ok": False, "reason": "timeout"}
+        return health
+    except HTTPException as exc:
+        health["probe"] = {"ok": False, "reason": str(exc.detail)[:200]}
+        return health
+    except Exception as exc:  # noqa: BLE001 — diagnostics report, never raise
+        health["probe"] = {"ok": False, "reason": str(exc)[:200]}
+        return health
+
+    engines = sorted(
+        {candidate.engine for candidate in candidates if candidate.engine}
+    )
+    health["probe"] = {
+        "ok": True,
+        "query_hash": hash_query_for_log(probe_query),
+        "latency_ms": search_stats.get("fetch_latency_ms"),
+        "cached": search_stats.get("cached", False),
+        "candidates": len(candidates),
+        "engines": engines,
+    }
+    return health

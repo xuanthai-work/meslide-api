@@ -1,8 +1,9 @@
 import os
 from typing import Annotated, List, Optional
-from fastapi import APIRouter, Body, File, HTTPException, UploadFile
+from fastapi import APIRouter, Body, File, UploadFile
 
 from constants.documents import UPLOAD_ACCEPTED_FILE_TYPES
+from utils.coded_exception import CodedHTTPException
 from models.decomposed_file_info import DecomposedFileInfo
 from services.temp_file_service import TEMP_FILE_SERVICE
 from services.documents_loader import DocumentsLoader
@@ -15,7 +16,9 @@ FILES_ROUTER = APIRouter(prefix="/files", tags=["Files"])
 @FILES_ROUTER.post("/upload", response_model=List[str])
 async def upload_files(files: Optional[List[UploadFile]]):
     if not files:
-        raise HTTPException(400, "Documents are required")
+        raise CodedHTTPException(
+            400, "Documents are required", error_code="error.file.documents_required"
+        )
 
     temp_dir = TEMP_FILE_SERVICE.create_temp_dir(str(uuid.uuid4()))
 

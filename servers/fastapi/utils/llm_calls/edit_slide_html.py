@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Optional
 from fastapi import HTTPException
 from utils.llm_client_error_handler import handle_llm_client_exceptions
 from utils.llm_messages import SystemMessage, UserMessage

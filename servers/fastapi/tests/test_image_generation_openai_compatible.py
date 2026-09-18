@@ -1,6 +1,6 @@
 import pytest
 import os
-from unittest.mock import Mock, patch, AsyncMock, MagicMock
+from unittest.mock import Mock, patch, AsyncMock
 from services.image_generation_service import ImageGenerationService
 
 
@@ -239,7 +239,7 @@ class TestImageGenerationOpenAICompatible:
                         with patch(
                             "services.image_generation_service.aiohttp.ClientSession",
                             return_value=mock_session,
-                        ) as MockSession:
+                        ):
                             image_path = await service.generate_image_openai_compatible(
                                 "test prompt", mock_images_directory
                             )
