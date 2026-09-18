@@ -1,4 +1,5 @@
 # App-owned test pipeline. Matches .github/workflows/test.yml.
+# Project CI config path must be `.gitlab-ci.yml` (not the infra-layer template).
 # Image publish / cluster deploy stays with DevOps (registry, runners, Ingress).
 workflow:
   rules:
@@ -13,9 +14,14 @@ stages:
 default:
   interruptible: true
 
+.test_rules: &test_rules
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: $CI_COMMIT_BRANCH
+
 test-repository-tools:
   stage: test
   image: node:20-bookworm
+  rules: *test_rules
   cache:
     key:
       files:
@@ -34,6 +40,7 @@ test-repository-tools:
 test-fastapi:
   stage: test
   image: python:3.11-bookworm
+  rules: *test_rules
   cache:
     key:
       files:
