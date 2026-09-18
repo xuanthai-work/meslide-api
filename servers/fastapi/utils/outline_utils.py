@@ -105,6 +105,7 @@ def get_no_of_toc_required_for_n_outlines(
     ``target_total_slides`` is accepted for call-site compatibility and does
     not create additional TOC slides.
     """
+    _ = target_total_slides
     if n_outlines <= 0:
         return 0
     content_count = (n_outlines - 1) if title_slide else n_outlines
