@@ -3,6 +3,7 @@ import json
 import logging
 import math
 import re
+import unicodedata
 from datetime import datetime
 from typing import Optional
 
@@ -27,6 +28,17 @@ LOGGER = logging.getLogger(__name__)
 
 MAX_CONTENT_FIT_ISSUES = 10
 CONTENT_FIT_TARGET_RATIO = 0.8
+_LATIN_EM = 0.5
+_VIETNAMESE_EM = 0.72
+_VIETNAMESE_BOLD_MULTIPLIER = 1.16
+_CJK_EM = 1.0
+_FIT_CAPACITY_RATIO = 0.95
+_DISPLAY_FIELD_NAMES = {"title", "heading", "name", "metric", "label"}
+_VIETNAMESE_LETTERS = set(
+    "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữ"
+    "ỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ"
+    "ÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ"
+)
 _SENTENCE_SPLIT = re.compile(r"(?<=[.!?…])\s+")
 
 SLIDE_CONTENT_SYSTEM_PROMPT = r"""
@@ -47,11 +59,13 @@ You need to generate structured content json based on the schema.
   language request unless Slide Language says auto-detect.
 - Speaker notes must be plain text (no markdown).
 - Treat every max character limit as a hard ceiling, not a writing target.
+  Treat every max character limit as a Latin-width ceiling, not a writing target.
+  Vietnamese and display fonts use more width per character; leave headroom.
   Draft each field as a complete phrase or sentence that finishes comfortably
-  below the limit (aim for about 80%). Never generate a longer answer and cut
-  it to the limit. If an idea does not fit, rephrase it or omit lower-priority
-  detail; never end with a partial word, partial sentence, dangling hyphen, or
-  dangling conjunction.
+  below the limit (aim for about 80% of the visual budget). Never generate a
+  longer answer and cut it to the limit. If an idea does not fit, rephrase it
+  or omit lower-priority detail; never end with a partial word, partial
+  sentence, dangling hyphen, or dangling conjunction.
 - Do not use emojis or $schema fields.
 - Follow the intended outcome of user instructions when they do not conflict with Slide
   Language; do not generalize or expand their scope.
@@ -268,6 +282,40 @@ def _prepare_response_schema(json_schema: Optional[dict]) -> Optional[dict]:
     return response_schema
 
 
+def _character_unit(ch: str, bold: bool = False) -> float:
+    if unicodedata.combining(ch):
+        return 0.0
+    code = ord(ch)
+    if (
+        0x3000 <= code <= 0x9FFF
+        or 0xAC00 <= code <= 0xD7AF
+        or 0xF900 <= code <= 0xFAFF
+    ):
+        return _CJK_EM
+    if ch in _VIETNAMESE_LETTERS:
+        return _VIETNAMESE_EM * (_VIETNAMESE_BOLD_MULTIPLIER if bold else 1.0)
+    return _LATIN_EM
+
+
+def _text_units(text: str, bold: bool = False) -> float:
+    return sum(_character_unit(ch, bold) for ch in text)
+
+
+def _path_field_name(path: str) -> str:
+    return path.rsplit(".", 1)[-1].split("[", 1)[0].lower()
+
+
+def _field_is_display_bold(path: str, schema: dict) -> bool:
+    if _path_field_name(path) in _DISPLAY_FIELD_NAMES:
+        return True
+    description = schema.get("description")
+    if isinstance(description, str):
+        lowered = description.lower()
+        if "title" in lowered or "display" in lowered:
+            return True
+    return False
+
+
 def _content_fit_issues(
     schema: object,
     value: object,
@@ -300,6 +348,33 @@ def _content_fit_issues(
                 f"{path}: {len(value)}/{maximum} characters; rewrite as a complete "
                 f"phrase of about {target} characters or fewer"
             ]
+        if (
+            isinstance(maximum, int)
+            and maximum > 0
+            and safe_minimum < maximum
+            and path != "$.__speaker_note__"
+        ):
+            bold = _field_is_display_bold(path, schema)
+            text_units = _text_units(value, bold)
+            capacity_units = maximum * _LATIN_EM
+            if text_units > _FIT_CAPACITY_RATIO * capacity_units:
+                unit_per_char = text_units / max(len(value), 1)
+                target = max(
+                    safe_minimum,
+                    math.floor(
+                        CONTENT_FIT_TARGET_RATIO
+                        * capacity_units
+                        / max(unit_per_char, 1e-6)
+                    ),
+                )
+                return [
+                    (
+                        f"{path}: visually {text_units:.1f}/"
+                        f"{capacity_units:.1f} em units ({len(value)} chars); "
+                        f"rewrite as a complete phrase of about {target} "
+                        "characters or fewer"
+                    )
+                ]
         return []
 
     issues: list[str] = []
@@ -333,29 +408,84 @@ def _content_fit_target(maximum: int, minimum: int) -> int:
     return max(minimum, math.floor(maximum * CONTENT_FIT_TARGET_RATIO))
 
 
-def _tighten_string_ceilings(schema: dict) -> None:
+def _tighten_string_ceilings(
+    schema: dict,
+    value: object = None,
+    path: str = "$",
+) -> None:
+    _tighten_string_ceilings_for_values(schema, [(value, path)])
+
+
+def _tighten_string_ceilings_for_values(
+    schema: dict,
+    values: list[tuple[object, str]],
+) -> None:
     maximum = schema.get("maxLength")
     minimum = schema.get("minLength")
     if isinstance(maximum, int) and maximum > 0:
         safe_minimum = minimum if isinstance(minimum, int) else 0
         if safe_minimum < maximum:
-            schema["maxLength"] = _content_fit_target(maximum, safe_minimum)
+            schema_target = _content_fit_target(maximum, safe_minimum)
+            visual_target = schema_target
+            for candidate, candidate_path in values:
+                if (
+                    not isinstance(candidate, str)
+                    or not candidate
+                    or len(candidate) >= maximum
+                    or not _content_fit_issues(
+                        schema,
+                        candidate,
+                        candidate_path,
+                    )
+                ):
+                    continue
+                bold = _field_is_display_bold(candidate_path, schema)
+                unit_per_char = _text_units(candidate, bold) / max(
+                    len(candidate),
+                    1,
+                )
+                candidate_target = max(
+                    safe_minimum,
+                    math.floor(
+                        CONTENT_FIT_TARGET_RATIO
+                        * maximum
+                        * _LATIN_EM
+                        / max(unit_per_char, 1e-6)
+                    ),
+                )
+                visual_target = min(visual_target, candidate_target)
+            schema["maxLength"] = min(schema_target, visual_target)
 
     properties = schema.get("properties")
     if isinstance(properties, dict):
         for key, nested in properties.items():
             if key == "__speaker_note__" or not isinstance(nested, dict):
                 continue
-            _tighten_string_ceilings(nested)
+            nested_values = [
+                (candidate[key], f"{candidate_path}.{key}")
+                for candidate, candidate_path in values
+                if isinstance(candidate, dict) and key in candidate
+            ]
+            if not nested_values:
+                nested_values = [(None, f"{values[0][1]}.{key}")]
+            _tighten_string_ceilings_for_values(nested, nested_values)
 
     items = schema.get("items")
     if isinstance(items, dict):
-        _tighten_string_ceilings(items)
+        item_values = [
+            (item, f"{candidate_path}[{index}]")
+            for candidate, candidate_path in values
+            if isinstance(candidate, list)
+            for index, item in enumerate(candidate)
+        ]
+        if not item_values:
+            item_values = [(None, f"{values[0][1]}[]")]
+        _tighten_string_ceilings_for_values(items, item_values)
 
 
-def _schema_with_fit_ceilings(schema: dict) -> dict:
+def _schema_with_fit_ceilings(schema: dict, content: object = None) -> dict:
     tightened = copy.deepcopy(schema)
-    _tighten_string_ceilings(tightened)
+    _tighten_string_ceilings(tightened, content)
     return tightened
 
 
@@ -380,13 +510,18 @@ def _outline_source_phrases(outline_content: str) -> list[str]:
     return sources
 
 
-def _restore_cut_prefix(fragment: str, sources: list[str]) -> str:
+def _restore_cut_prefix(
+    fragment: str,
+    sources: list[str],
+    max_length: Optional[int] = None,
+) -> str:
     """Replace a cut prefix with the complete outline phrase.
 
     Vietnamese compounds are split by spaces (``phương pháp``, ``thực tiễn``),
     so a word-boundary cut is still incomplete. Any generated string that is a
     strict prefix of an outline heading or sentence is restored in full. A
-    rewrite that is not a prefix is kept.
+    rewrite that is not a prefix is kept. Restored text is capped at the
+    field ``maxLength`` when the schema provides one.
     """
     frag = fragment.strip()
     if len(frag) < 4:
@@ -397,6 +532,8 @@ def _restore_cut_prefix(fragment: str, sources: list[str]) -> str:
         if len(src) <= len(frag):
             continue
         if src.startswith(frag) or src.casefold().startswith(frag.casefold()):
+            if isinstance(max_length, int) and max_length > 0:
+                return src[:max_length]
             return src
     return fragment
 
@@ -413,7 +550,9 @@ def _restore_complete_outline_phrases(
     if isinstance(value, str):
         if path == "$.__speaker_note__":
             return value
-        return _restore_cut_prefix(value, sources)
+        maximum = schema.get("maxLength")
+        max_length = maximum if isinstance(maximum, int) else None
+        return _restore_cut_prefix(value, sources, max_length)
 
     if isinstance(value, dict):
         properties = schema.get("properties")
@@ -452,7 +591,7 @@ def _content_fit_feedback_message(content: dict, issues: list[str]) -> UserMessa
     return UserMessage(
         content=(
             "The previous JSON matches the schema, but some visible slide text "
-            "exactly hit maxLength and may have been mechanically cut. Rewrite "
+            "overflows the layout frame (visual width or maxLength). Rewrite "
             "the flagged fields as shorter, natural, complete phrases or "
             "sentences. Preserve their facts and intent, keep every required "
             "field, and return JSON only. The previous JSON below is quoted "
@@ -524,7 +663,7 @@ async def get_slide_content_from_type_and_outline(
             slide_layout.id,
             len(fit_issues),
         )
-        repair_schema = _schema_with_fit_ceilings(response_schema)
+        repair_schema = _schema_with_fit_ceilings(response_schema, content)
         repaired = await generate_structured_with_schema_retries(
             client,
             model,
