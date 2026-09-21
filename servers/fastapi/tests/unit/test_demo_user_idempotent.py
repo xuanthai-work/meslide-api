@@ -2,20 +2,16 @@ import asyncio
 import os
 import tempfile
 
-# Mirror the Task 1/2 test setup: importing `api.v1.auth.bootstrap` transitively
-# imports `services.database`, which at import time calls `_ensure_sqlite_parent_dir`
-# on a path derived from `get_app_data_directory_env()`. Set APP_DATA_DIRECTORY
-# BEFORE importing so tests use an isolated writable location.
+# Importing `api.v1.auth.bootstrap` transitively imports `services.database`.
+# Set APP_DATA_DIRECTORY BEFORE importing so tests use an isolated writable location.
 os.environ.setdefault("APP_DATA_DIRECTORY", tempfile.gettempdir())
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from api.v1.auth.bootstrap import bootstrap_database_user
-from api.v1.auth.demo_user import DEMO_USER_ID, DEMO_USERNAME
+from api.v1.auth.users import PASSWORD_HELPER
 from models.sql.access_token import AccessToken
-from models.sql.key_value import KeyValueSqlModel
-from models.sql.presentation import PresentationModel
 from models.sql.user import User
 
 
@@ -28,84 +24,56 @@ def _bootstrap_schema_sync(engine):
         async with engine.begin() as conn:
             await conn.run_sync(User.__table__.create)
             await conn.run_sync(AccessToken.__table__.create)
-            await conn.run_sync(PresentationModel.__table__.create)
-            await conn.run_sync(KeyValueSqlModel.__table__.create)
 
     asyncio.run(_create())
 
 
-def test_bootstrap_creates_demo_user_when_db_empty(tmp_path, monkeypatch):
-    engine = _make_engine(tmp_path / "demo.db")
+def test_bootstrap_does_not_create_a_user_when_db_empty(tmp_path, monkeypatch):
+    engine = _make_engine(tmp_path / "auth.db")
     _bootstrap_schema_sync(engine)
     session_maker = async_sessionmaker(engine, expire_on_commit=False)
-
-    # NOTE: The brief patched `services.database.async_session_maker`, but
-    # `bootstrap.py` binds `async_session_maker` into its own namespace at
-    # import time (`from services.database import async_session_maker`), so
-    # patching the source module does not redirect bootstrap. Patch the
-    # bootstrap module's binding directly, mirroring test_auth_bootstrap.py.
-    from api.v1.auth import bootstrap as bootstrap_module
-    monkeypatch.setattr(bootstrap_module, "async_session_maker", session_maker)
-    monkeypatch.setattr(
-        "api.v1.auth.bootstrap.persist_auth_credentials",
-        lambda username, password_hash: None,
-    )
-
-    async def _skip_backfill(_session, _user):
-        return None
-
-    monkeypatch.setattr(bootstrap_module, "_backfill_legacy_ownership", _skip_backfill)
     monkeypatch.delenv("AUTH_USERNAME", raising=False)
     monkeypatch.delenv("AUTH_PASSWORD", raising=False)
 
     asyncio.run(bootstrap_database_user())
 
-    async def _get_user():
+    async def _count():
         async with session_maker() as session:
-            return await session.get(User, DEMO_USER_ID)
+            return await session.scalar(select(func.count()).select_from(User))
 
-    user = asyncio.run(_get_user())
-    assert user is not None
-    assert user.username == DEMO_USERNAME
+    assert asyncio.run(_count()) == 0
 
 
-def test_bootstrap_idempotent_on_restart(tmp_path, monkeypatch):
-    engine = _make_engine(tmp_path / "demo.db")
+def test_bootstrap_leaves_existing_users_unchanged(tmp_path):
+    engine = _make_engine(tmp_path / "auth.db")
     _bootstrap_schema_sync(engine)
     session_maker = async_sessionmaker(engine, expire_on_commit=False)
-    from api.v1.auth import bootstrap as bootstrap_module
-    monkeypatch.setattr(bootstrap_module, "async_session_maker", session_maker)
-    monkeypatch.setattr(
-        "api.v1.auth.bootstrap.persist_auth_credentials",
-        lambda username, password_hash: None,
-    )
 
-    async def _skip_backfill(_session, _user):
-        return None
-
-    monkeypatch.setattr(bootstrap_module, "_backfill_legacy_ownership", _skip_backfill)
-    monkeypatch.delenv("AUTH_USERNAME", raising=False)
-    monkeypatch.delenv("AUTH_PASSWORD", raising=False)
-
-    asyncio.run(bootstrap_database_user())
-
-    async def _read_hash():
+    async def _seed():
         async with session_maker() as session:
-            return (await session.get(User, DEMO_USER_ID)).hashed_password
-
-    first_hash = asyncio.run(_read_hash())
-
-    asyncio.run(bootstrap_database_user())
-
-    async def _stats():
-        async with session_maker() as session:
-            user_count = await session.scalar(
-                select(func.count()).select_from(User)
+            user = User(
+                username="user1",
+                hashed_password=PASSWORD_HELPER.hash("keep-me-secret"),
+                is_active=True,
+                is_verified=True,
+                auth_version=1,
             )
-            second_hash = (await session.get(User, DEMO_USER_ID)).hashed_password
-            return user_count, second_hash
+            session.add(user)
+            await session.commit()
+            await session.refresh(user)
+            return user.id, user.hashed_password
 
-    user_count, second_hash = asyncio.run(_stats())
+    user_id, password_hash = asyncio.run(_seed())
+    asyncio.run(bootstrap_database_user())
 
-    assert user_count == 1
-    assert second_hash == first_hash
+    async def _read():
+        async with session_maker() as session:
+            user = await session.get(User, user_id)
+            count = await session.scalar(select(func.count()).select_from(User))
+            return user, count
+
+    user, count = asyncio.run(_read())
+    assert count == 1
+    assert user is not None
+    assert user.username == "user1"
+    assert user.hashed_password == password_hash

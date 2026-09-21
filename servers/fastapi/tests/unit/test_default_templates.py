@@ -4,6 +4,9 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+import uuid
+
+from api.v1.auth.context import reset_current_owner_id, set_current_owner_id
 from models.sql.template_v2 import TemplateV2
 from services.object_storage.local import LocalObjectStorage
 from services.template_bundles.repository import TemplateBundleRepository
@@ -305,6 +308,61 @@ def test_default_template_import_updates_existing_database_row(tmp_path, monkeyp
         "/app_data/templates/general/static/thumbnail.png"
     )
     assert (app_data_dir / "templates/general/static/image.png").exists()
+
+
+def test_default_template_import_clears_legacy_owner_so_catalog_is_shared(
+    tmp_path,
+    monkeypatch,
+):
+    templates_root = tmp_path / "templates"
+    _write_template_bundle(templates_root)
+    app_data_dir = tmp_path / "app_data"
+    existing = TemplateV2(
+        id="general",
+        name="Old name",
+        owner_id=uuid.UUID("00000000-0000-0000-0000-000000000001"),
+        is_default=True,
+    )
+    session = _FakeSession(existing=existing)
+    monkeypatch.setenv("APP_DATA_DIRECTORY", str(app_data_dir))
+    monkeypatch.setattr(
+        default_templates,
+        "async_session_maker",
+        lambda: _SessionContext(session),
+    )
+
+    asyncio.run(default_templates.import_default_templates_on_startup(templates_root))
+
+    assert existing.owner_id is None
+    assert existing.is_default is True
+
+
+def test_default_template_import_stays_shared_even_if_owner_context_is_set(
+    tmp_path,
+    monkeypatch,
+):
+    templates_root = tmp_path / "templates"
+    _write_template_bundle(templates_root)
+    app_data_dir = tmp_path / "app_data"
+    session = _FakeSession()
+    monkeypatch.setenv("APP_DATA_DIRECTORY", str(app_data_dir))
+    monkeypatch.setattr(
+        default_templates,
+        "async_session_maker",
+        lambda: _SessionContext(session),
+    )
+
+    token = set_current_owner_id(uuid.uuid4())
+    try:
+        asyncio.run(
+            default_templates.import_default_templates_on_startup(templates_root)
+        )
+    finally:
+        reset_current_owner_id(token)
+
+    assert len(session.added) == 1
+    assert session.added[0].owner_id is None
+    assert session.added[0].is_default is True
 
 
 def test_default_template_import_removes_stale_default_database_rows(

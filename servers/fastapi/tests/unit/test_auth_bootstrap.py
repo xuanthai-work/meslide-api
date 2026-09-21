@@ -112,19 +112,17 @@ def test_reset_auth_recovers_user_without_replacing_account(
     assert stat.S_IMODE((tmp_path / "userConfig.json.bak").stat().st_mode) == 0o600
 
 
-def test_reset_auth_without_password_refuses_to_delete_or_replace_user(
+def test_bootstrap_does_not_require_demo_password_or_replace_users(
     monkeypatch, tmp_path
 ):
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     monkeypatch.setenv("RESET_AUTH", "true")
-    monkeypatch.setenv("DEMO_AUTH_FROM_ENV", "true")
     monkeypatch.delenv("AUTH_PASSWORD", raising=False)
-    monkeypatch.delenv("DEMO_PASSWORD", raising=False)
     monkeypatch.delenv("AUTH_OVERRIDE_FROM_ENV", raising=False)
 
     async def runner():
         engine, session_maker = await _create_auth_database(
-            tmp_path / "missing-password.db"
+            tmp_path / "existing-user.db"
         )
         try:
             async with session_maker() as session:
@@ -139,9 +137,7 @@ def test_reset_auth_without_password_refuses_to_delete_or_replace_user(
                 await session.commit()
                 original_id = user.id
 
-            monkeypatch.setattr(bootstrap, "async_session_maker", session_maker)
-            with pytest.raises(RuntimeError, match="requires DEMO_PASSWORD"):
-                await bootstrap.bootstrap_database_user()
+            await bootstrap.bootstrap_database_user()
 
             async with session_maker() as session:
                 users = list(await session.scalars(select(User)))

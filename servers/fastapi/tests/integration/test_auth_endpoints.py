@@ -101,16 +101,15 @@ def test_setup_endpoint_removed(monkeypatch, tmp_path):
     asyncio.run(engine.dispose())
 
 
-def test_login_on_empty_db_is_428_without_setup_flag(monkeypatch, tmp_path):
+def test_login_on_empty_db_is_unauthorized(monkeypatch, tmp_path):
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     client, engine = _build_client(tmp_path)
     response = client.post(
         "/api/v1/auth/login",
         json={"username": "alice", "password": "secret123"},
     )
-    # Login is removed (410 Gone); the previous 428 "no accounts yet" path is gone.
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Invalid username or password"
     asyncio.run(engine.dispose())
 
 
@@ -128,20 +127,23 @@ def test_login_sets_http_only_jwt_cookie_for_username_only_account(
     monkeypatch.delenv("DISABLE_AUTH", raising=False)
 
     client, engine = _build_client(tmp_path)
-    register = client.post(
-        "/api/v1/auth/register",
-        json={"username": "admin", "password": "secret123"},
-    )
+    asyncio.run(_seed_user_with_session(engine, "admin", "secret123"))
     client.cookies.clear()
     response = client.post(
         "/api/v1/auth/login",
         json={"username": "ADMIN", "password": "secret123"},
     )
 
-    # Both register and login are removed (410 Gone); cookie side-effects are gone.
-    assert register.status_code == 410
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
+    assert response.status_code == 200
+    assert response.json()["username"] == "admin"
+    cookie = response.cookies.get(SESSION_COOKIE_NAME)
+    assert cookie
+    set_cookie = response.headers.get("set-cookie", "")
+    assert "HttpOnly" in set_cookie or "httponly" in set_cookie.lower()
+
+    status = client.get("/api/v1/auth/status")
+    assert status.json()["authenticated"] is True
+    assert status.json()["username"] == "admin"
 
     asyncio.run(engine.dispose())
 
@@ -201,7 +203,7 @@ def test_legacy_presenton_api_key_still_verifies(monkeypatch, tmp_path):
     asyncio.run(engine.dispose())
 
 
-def test_legacy_six_character_password_login_is_removed(monkeypatch, tmp_path):
+def test_legacy_six_character_password_login_still_works(monkeypatch, tmp_path):
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     monkeypatch.delenv("DISABLE_AUTH", raising=False)
     client, engine = _build_client(tmp_path)
@@ -225,9 +227,8 @@ def test_legacy_six_character_password_login_is_removed(monkeypatch, tmp_path):
         json={"username": "legacy-user", "password": "123456"},
     )
 
-    # Login is removed (410 Gone) even for legacy seeded users.
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
+    assert response.status_code == 200
+    assert response.json()["username"] == "legacy-user"
     asyncio.run(engine.dispose())
 
 
@@ -279,13 +280,15 @@ def test_logout_deletes_gslide_and_legacy_session_cookies(monkeypatch, tmp_path)
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     monkeypatch.delenv("DISABLE_AUTH", raising=False)
     client, engine = _build_client(tmp_path)
-    _seed_user(client, engine, "admin", "secret123")
-    client.post(
+    asyncio.run(_seed_user_with_session(engine, "admin", "secret123"))
+    login = client.post(
         "/api/v1/auth/login",
         json={"username": "admin", "password": "secret123"},
     )
+    assert login.status_code == 200
     response = client.post("/api/v1/auth/logout")
-    # Logout is removed (410 Gone); cookie-deletion side-effects are gone.
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
+    assert response.status_code == 204
+    set_cookie = response.headers.get("set-cookie", "").lower()
+    assert SESSION_COOKIE_NAME in set_cookie
+    assert "max-age=0" in set_cookie or "max-age=0" in set_cookie.replace(" ", "")
     asyncio.run(engine.dispose())

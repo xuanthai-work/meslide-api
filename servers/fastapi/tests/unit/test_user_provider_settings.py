@@ -90,15 +90,13 @@ def test_two_overlays_do_not_leak(monkeypatch):
         reset_provider_overlay(token_b)
 
 
-def test_settings_without_cookie_uses_demo_user(monkeypatch, tmp_path):
-    """Demo fallback: Next /api/user-config forwards no session cookie."""
+def test_settings_without_cookie_returns_401(monkeypatch, tmp_path):
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     monkeypatch.delenv("DISABLE_AUTH", raising=False)
     client, engine = _build_client(tmp_path)
 
     response = client.get("/api/v1/settings/provider")
-    assert response.status_code == 200
-    assert isinstance(response.json(), dict)
+    assert response.status_code == 401
 
     asyncio.run(engine.dispose())
 

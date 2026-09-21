@@ -3,6 +3,7 @@ from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
+from alembic.runtime.migration import MigrationContext
 from alembic.script import ScriptDirectory
 from sqlalchemy import create_engine, inspect, text
 
@@ -87,6 +88,33 @@ def _run_migrations() -> None:
             command.upgrade(config, "head")
             return
         raise
+
+
+def check_migrations_at_head() -> str:
+    """Return whether the database Alembic revision matches script head."""
+    try:
+        base_dir = Path(__file__).resolve().parents[0]
+        config = Config()
+        config.set_main_option("script_location", str(base_dir / "alembic"))
+        database_url, _ = get_database_url_and_connect_args()
+        database_url = to_sync_sqlalchemy_url(database_url)
+        config.set_main_option("sqlalchemy.url", database_url)
+
+        script = ScriptDirectory.from_config(config)
+        heads = set(script.get_heads())
+        engine = create_engine(database_url)
+        try:
+            with engine.connect() as connection:
+                current = set(
+                    MigrationContext.configure(connection).get_current_heads()
+                )
+        finally:
+            engine.dispose()
+        if not current or current != heads:
+            return "pending"
+        return "ok"
+    except Exception:
+        return "unavailable"
 
 
 def _repair_orphan_alembic_revision(config: Config, database_url: str) -> None:

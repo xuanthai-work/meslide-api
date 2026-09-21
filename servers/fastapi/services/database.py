@@ -160,6 +160,9 @@ def _stamp_new_owned_rows(session, _flush_context, _instances) -> None:
         return
     owner_models = _STRICT_OWNER_MODELS + (TemplateV2,)
     for instance in session.new:
+        if isinstance(instance, TemplateV2) and instance.is_default:
+            instance.owner_id = None
+            continue
         if isinstance(instance, owner_models):
             instance.owner_id = owner_id
 

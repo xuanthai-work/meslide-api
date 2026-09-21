@@ -263,8 +263,12 @@ const waitForProcessHttp = (
       const req = request(
         { host, port, path, method: "GET", timeout: 1_000 },
         (response) => {
+          const isReady =
+            typeof response.statusCode === "number" &&
+            response.statusCode >= 200 &&
+            response.statusCode < 300;
           response.resume();
-          finishAttempt(true);
+          finishAttempt(isReady);
         }
       );
 
@@ -367,7 +371,7 @@ const main = async () => {
       "FastAPI",
       fastApiProcess,
       fastapiPort,
-      "/api/v1/auth/status"
+      "/health/ready"
     );
     printGSlideStartupBanner({
       mode: isDev ? "development" : "production",

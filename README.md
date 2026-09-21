@@ -21,6 +21,17 @@ docker compose up --build api-dev
 
 API lắng nghe `http://localhost:8000`. UI chạy từ `gslide-web` trên cùng Docker network `gslide` tại [http://localhost:3000](http://localhost:3000). Trình duyệt không gọi thẳng cổng 8000; web chuyển tiếp `/api/v1` tới service `api`.
 
+## Health
+
+Probe nằm ở **root process**, không dưới `/api/v1` (đó là API sản phẩm, có version và auth).
+
+| Path | Ý nghĩa | Khi fail |
+| --- | --- | --- |
+| `GET /health/live` | Process còn nhận request. Không đụng DB/storage. | Docker/K8s **liveness** → restart container |
+| `GET /health/ready` | DB (`SELECT 1`), Alembic head, object storage. `200` khi cả ba `ok`, `503` kèm `checks` nếu chưa. | Compose/K8s **readiness** → cắt traffic, không restart |
+
+Compose `api` / `api-dev` ping `http://127.0.0.1:8000/health/ready`. Kubelet gọi thẳng pod `:8000`, không qua Ingress.
+
 Chromium trong container này render trang xuất của web qua `EXPORT_PAGE_BASE_URL` (mặc định `http://web:3000`).
 
 Biến môi trường nằm trong [`.env.example`](./.env.example). Điền LLM provider trước khi sinh slide. Sau khi sửa `.env`, recreate container:

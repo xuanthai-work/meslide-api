@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 from starlette.responses import FileResponse
 
+from api.health import HEALTH_ROUTER
 from api.lifespan import app_lifespan
 from api.middlewares import SessionAuthMiddleware
 from api.v1.async_tasks.router import API_V1_ASYNC_TASKS_ROUTER
@@ -26,6 +27,7 @@ init_sandbox_safe_mimetypes()
 app = FastAPI(lifespan=app_lifespan)
 
 # Routers
+app.include_router(HEALTH_ROUTER)
 app.include_router(API_V1_PPT_ROUTER)
 app.include_router(API_V1_WEBHOOK_ROUTER)
 app.include_router(API_V1_MOCK_ROUTER)

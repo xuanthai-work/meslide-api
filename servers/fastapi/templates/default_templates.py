@@ -146,6 +146,7 @@ def _load_default_template(template_dir: Path) -> TemplateV2:
 
     return TemplateV2(
         id=template_id,
+        owner_id=None,
         name=_read_required_string(rewritten, "name", template_id),
         description=_read_optional_string(rewritten.get("description")),
         raw_layouts=None,
@@ -166,6 +167,7 @@ def _update_template_from_default(existing: TemplateV2, template: TemplateV2) ->
     existing.layouts = template.layouts
     existing.assets = template.assets
     existing.is_default = True
+    existing.owner_id = None
 
 
 async def _remove_stale_default_templates(

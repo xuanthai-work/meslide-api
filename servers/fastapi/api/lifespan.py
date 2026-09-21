@@ -48,9 +48,8 @@ async def app_lifespan(_: FastAPI):
     """
     Lifespan context manager for FastAPI application.
     Initializes the application data directory, runs Alembic migrations when
-    MIGRATE_DATABASE_ON_STARTUP=true, creates any missing tables, bootstraps
-    the bootstrap user from legacy/env credentials (if provided), and checks LLM model
-    availability.
+    MIGRATE_DATABASE_ON_STARTUP=true, creates any missing tables, and checks
+    object storage readiness. Users are not auto-seeded at startup.
     """
     _configure_application_logging()
     os.makedirs(get_app_data_directory_env(), exist_ok=True)
