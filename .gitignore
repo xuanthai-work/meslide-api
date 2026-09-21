@@ -3,6 +3,7 @@ presentation-export/
 .cache/presentation-export/
 app_data
 .venv
+.venv-windows
 __pycache__
 .pytest_cache
 .env
