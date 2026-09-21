@@ -28,8 +28,9 @@ test("api compose runs only api services on the shared gslide network", async ()
   assert.match(compose, /:8000"/);
   assert.match(
     compose,
-    /http:\/\/127\.0\.0\.1:8000\/api\/v1\/auth\/status/,
+    /http:\/\/127\.0\.0\.1:8000\/health\/ready/,
   );
+  assert.doesNotMatch(compose, /\/api\/v1\/auth\/status/);
   assert.match(compose, /gslide_app_data:\/app_data$/m);
   assert.match(compose, /WEB_IMAGE_SEARCH_ENABLED=\$\{WEB_IMAGE_SEARCH_ENABLED:-false\}/);
   assert.doesNotMatch(compose, /depends_on:\s*\n\s+searxng/);
@@ -70,4 +71,8 @@ test("api kubernetes manifests own PVC and secrets and omit SearXNG", async () =
   assert.match(config, /EXPORT_PAGE_BASE_URL: "http:\/\/web:3000"/);
   assert.match(config, /WEB_IMAGE_SEARCH_ENABLED: "false"/);
   assert.doesNotMatch(config, /SEARXNG_BASE_URL/);
+  assert.match(api, /startupProbe:\s*\n\s+httpGet:\s*\n\s+path: \/health\/ready/);
+  assert.match(api, /readinessProbe:\s*\n\s+httpGet:\s*\n\s+path: \/health\/ready/);
+  assert.match(api, /livenessProbe:\s*\n\s+httpGet:\s*\n\s+path: \/health\/live/);
+  assert.doesNotMatch(api, /\/api\/v1\/auth\/status/);
 });

@@ -51,24 +51,23 @@ spec:
             limits:
               cpu: 2000m
               memory: 4Gi
-          # /api/v1/auth/status is in FastAPI's public auth paths, so it always
-          # returns 200 once the app is up (probe-safe, no session needed).
+          # Live does not touch DB/storage so a blip there does not restart the
+          # pod mid LLM call. Ready waits until the API can actually serve.
           startupProbe:
             httpGet:
-              path: /api/v1/auth/status
+              path: /health/ready
               port: http
             periodSeconds: 10
             failureThreshold: 12 # up to 120s for migrations + model cache warmup
           readinessProbe:
             httpGet:
-              path: /api/v1/auth/status
+              path: /health/ready
               port: http
             periodSeconds: 10
             failureThreshold: 3
-          # Conservative: do not restart a healthy pod mid slow LLM call.
           livenessProbe:
             httpGet:
-              path: /api/v1/auth/status
+              path: /health/live
               port: http
             periodSeconds: 30
             timeoutSeconds: 10

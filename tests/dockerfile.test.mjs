@@ -16,6 +16,10 @@ test("api Dockerfiles use start-api.js and do not copy Next standalone", async (
   assert.match(api, /COPY servers\/fastapi/);
   assert.match(await readFile(path.join(root, "scripts/start-api.js"), "utf8"), /server\.py/);
   assert.doesNotMatch(await readFile(path.join(root, "scripts/start-api.js"), "utf8"), /nextjsDir/);
+  const startApi = await readFile(path.join(root, "scripts/start-api.js"), "utf8");
+  assert.match(startApi, /\/health\/ready/);
+  assert.doesNotMatch(startApi, /\/api\/v1\/auth\/status/);
+  assert.match(startApi, /statusCode/);
 });
 
 test("export_utils reads EXPORT_PAGE_BASE_URL", async () => {

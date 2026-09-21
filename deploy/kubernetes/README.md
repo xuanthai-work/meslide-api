@@ -43,8 +43,12 @@ Keep **one** API replica while SQLite + RWO `/app_data` is in use (`Recreate`
 strategy). SearXNG / automatic web image search is out of scope for this
 deploy (`WEB_IMAGE_SEARCH_ENABLED=false`, no `SEARXNG_BASE_URL`).
 
-Probes use `/api/v1/auth/status`. Startup up to 120 s. Liveness is
-conservative so a healthy pod is not restarted mid slow LLM call.
+Probes hit the API process at **root paths** (not `/api/v1`): `/health/live`
+(liveness — process only) and `/health/ready` (startup + readiness — DB,
+Alembic head, object storage). Kubelet calls the pod on `:8000`; do not
+route these through Ingress or treat `/api/v1/auth/status` as a probe.
+Startup up to 120 s. Liveness does not query the database so a healthy pod
+is not restarted mid slow LLM call.
 
 The current image runs as root (Chromium + `/root/.cache`).
 `allowPrivilegeEscalation: false` and `capabilities.drop: [ALL]` are set.

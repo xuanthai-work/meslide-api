@@ -7,6 +7,43 @@ from api import middlewares
 from api.middlewares import SessionAuthMiddleware
 
 
+def test_health_probes_do_not_require_auth():
+    middleware = SessionAuthMiddleware(app=None)
+
+    assert middleware._requires_auth("/health/live") is False
+    assert middleware._requires_auth("/health/ready") is False
+
+
+def test_health_live_skips_disable_auth_database_session(monkeypatch):
+    monkeypatch.setattr(middlewares, "is_disable_auth_enabled", lambda: True)
+
+    def boom_session_maker():
+        raise AssertionError("liveness must not open a database session")
+
+    monkeypatch.setattr(middlewares, "async_session_maker", boom_session_maker)
+
+    async def next_handler(_request):
+        return Response("alive")
+
+    request = Request(
+        {
+            "type": "http",
+            "method": "GET",
+            "scheme": "http",
+            "path": "/health/live",
+            "query_string": b"",
+            "headers": [],
+            "client": ("127.0.0.1", 1234),
+            "server": ("127.0.0.1", 8000),
+        }
+    )
+    response = asyncio.run(
+        SessionAuthMiddleware(app=None).dispatch(request, next_handler)
+    )
+
+    assert response.body == b"alive"
+
+
 def test_only_shared_app_data_asset_prefixes_do_not_require_auth():
     middleware = SessionAuthMiddleware(app=None)
 

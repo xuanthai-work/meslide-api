@@ -37,6 +37,7 @@ class SessionAuthMiddleware(BaseHTTPMiddleware):
         "/app_data/templates/",
     )
     _PROTECTED_NON_API_PATHS = {"/docs", "/openapi.json", "/redoc"}
+    _HEALTH_PATHS = {"/health/live", "/health/ready"}
 
     def _requires_auth(self, path: str) -> bool:
         if any(path.startswith(prefix) for prefix in self._PUBLIC_AUTH_PREFIXES):
@@ -50,6 +51,10 @@ class SessionAuthMiddleware(BaseHTTPMiddleware):
         return path in self._PROTECTED_NON_API_PATHS
 
     async def dispatch(self, request: Request, call_next):
+        path = request.url.path
+        if path in self._HEALTH_PATHS:
+            return await call_next(request)
+
         if is_disable_auth_enabled():
             overlay_token = None
             try:
@@ -60,7 +65,6 @@ class SessionAuthMiddleware(BaseHTTPMiddleware):
                 if overlay_token is not None:
                     reset_provider_overlay(overlay_token)
 
-        path = request.url.path
         if (
             request.method == "OPTIONS"
             or not self._requires_auth(path)
