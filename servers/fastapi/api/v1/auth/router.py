@@ -1,11 +1,20 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi.responses import JSONResponse
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.v1.auth.assets import is_app_data_path_authorized
-from api.v1.auth.demo_user import resolve_demo_user
+from api.v1.auth.config import (
+    LEGACY_SESSION_COOKIE_NAME,
+    SESSION_COOKIE_NAME,
+    session_cookie_kwargs,
+)
 from api.v1.auth.principal import resolve_request_principal
+from api.v1.auth.schemas import LoginCredentialsRequest
 from api.v1.auth.users import (
+    PASSWORD_HELPER,
+    UsernameUserDatabase,
+    get_jwt_strategy,
     read_user_from_cookie,
     serialize_user,
 )
@@ -36,18 +45,12 @@ async def get_status(
             "user_id": None,
         }
     if user is None:
-        # No cookie/bearer session. In the default-on demo mode there is no
-        # login flow (login returns 410), so a cookieless browser can never
-        # obtain a gslide_session cookie. Fall back to the seeded demo user so
-        # proxy.ts /status checks see `authenticated: true` and API-driven
-        # interactions (settings, uploads, exports) work out of the box.
-        # A real cookie/Bearer session still wins via the `user` branch above.
-        demo = await resolve_demo_user(session)
+        configured = await _account_count(session) > 0
         return {
-            "configured": True,
-            "authenticated": True,
-            "username": demo.username,
-            "user_id": str(demo.id),
+            "configured": configured,
+            "authenticated": False,
+            "username": None,
+            "user_id": None,
         }
     configured = await _account_count(session) > 0
     return {
@@ -85,12 +88,36 @@ async def verify_session(
     }
 
 
-@API_V1_AUTH_ROUTER.post("/login", status_code=410)
-async def login():
-    raise HTTPException(
-        status_code=410,
-        detail="Login is no longer supported; gslide now ships as a miniweb inside the parent Gapo app.",
+def _clear_session_cookies(response: Response) -> None:
+    response.delete_cookie(SESSION_COOKIE_NAME, path="/")
+    response.delete_cookie(LEGACY_SESSION_COOKIE_NAME, path="/")
+
+
+@API_V1_AUTH_ROUTER.post("/login")
+async def login(
+    credentials: LoginCredentialsRequest,
+    request: Request,
+    session: AsyncSession = Depends(get_async_session),
+):
+    user_db = UsernameUserDatabase(session)
+    user = await user_db.get_by_email(credentials.username)
+    if user is None or not user.is_active:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+    verified, updated_hash = PASSWORD_HELPER.verify_and_update(
+        credentials.password,
+        user.hashed_password,
     )
+    if not verified:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+    if updated_hash:
+        user.hashed_password = updated_hash
+        session.add(user)
+        await session.commit()
+        await session.refresh(user)
+    token = await get_jwt_strategy().write_token(user)
+    response = JSONResponse(serialize_user(user))
+    response.set_cookie(value=token, **session_cookie_kwargs(request))
+    return response
 
 
 @API_V1_AUTH_ROUTER.post("/register", status_code=410)
@@ -101,9 +128,8 @@ async def register():
     )
 
 
-@API_V1_AUTH_ROUTER.post("/logout", status_code=410)
+@API_V1_AUTH_ROUTER.post("/logout")
 async def logout():
-    raise HTTPException(
-        status_code=410,
-        detail="Logout is no longer supported; gslide now ships as a miniweb inside the parent Gapo app.",
-    )
+    response = Response(status_code=204)
+    _clear_session_cookies(response)
+    return response

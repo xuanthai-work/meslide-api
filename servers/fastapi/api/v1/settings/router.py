@@ -3,7 +3,6 @@ from typing import Any
 from fastapi import APIRouter, Body, Depends, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.v1.auth.demo_user import resolve_demo_user
 from api.v1.auth.users import read_user_from_cookie
 from models.sql.user import User
 from services.database import get_async_session
@@ -23,17 +22,13 @@ API_V1_SETTINGS_ROUTER = APIRouter(prefix="/api/v1/settings", tags=["Settings"])
 async def read_settings_user(
     request: Request,
     cookie_user: User | None = Depends(read_user_from_cookie),
-    session: AsyncSession = Depends(get_async_session),
 ) -> User | None:
-    """Cookie / middleware user, else the seeded demo user (no login UI)."""
+    """Cookie / middleware user. Unauthenticated callers get 401 below."""
     if is_disable_auth_enabled():
         return cookie_user
     if cookie_user is not None:
         return cookie_user
-    state_user = getattr(request.state, "current_user", None)
-    if state_user is not None:
-        return state_user
-    return await resolve_demo_user(session)
+    return getattr(request.state, "current_user", None)
 
 
 def _require_settings_user(user: User | None) -> None:

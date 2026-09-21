@@ -20,13 +20,14 @@ def _reset_owner_var():
     return token
 
 
-def test_get_current_owner_id_returns_demo_when_unset():
-    """I1: defensive fallback — when no owner was set in the ContextVar,
-    get_current_owner_id must return the DEMO_USER_ID (not None). The
-    middleware is the primary setter; this is the safety net."""
+def test_get_current_owner_id_returns_none_when_unset():
+    """When no owner was set in the ContextVar, return None.
+
+    Request handlers get an owner from SessionAuthMiddleware. Code outside
+    that middleware must not inherit a leftover demo-user id.
+    """
     _reset_owner_var()
-    owner = get_current_owner_id()
-    assert owner == uuid.UUID("00000000-0000-0000-0000-000000000001")
+    assert get_current_owner_id() is None
 
 
 def test_get_current_owner_id_returns_set_owner_when_present():

@@ -12,7 +12,6 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from api.v1.auth.demo_user import DEMO_USER_ID, DEMO_USERNAME
 from api.v1.auth.router import API_V1_AUTH_ROUTER
 from models.sql.access_token import AccessToken
 from models.sql.provider_settings import ProviderSettings
@@ -44,12 +43,10 @@ def _build_client(tmp_path) -> tuple[TestClient, object]:
     return TestClient(app), engine
 
 
-def test_status_returns_demo_user_when_no_cookie_and_auth_enabled(
+def test_status_returns_unauthenticated_when_no_cookie_and_auth_enabled(
     monkeypatch, tmp_path
 ):
-    """C1: /status must fall back to the demo user when no cookie is present
-    and DISABLE_AUTH is unset. Without this, proxy.ts treats every API request
-    as unauthenticated (401) and the default-on demo is functionally broken."""
+    """Without a session cookie, /status reports unauthenticated so the login UI can show."""
     monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
     monkeypatch.delenv("DISABLE_AUTH", raising=False)
 
@@ -57,17 +54,15 @@ def test_status_returns_demo_user_when_no_cookie_and_auth_enabled(
     response = client.get("/api/v1/auth/status")
     assert response.status_code == 200
     payload = response.json()
-    assert payload["authenticated"] is True
-    assert payload["username"] == DEMO_USERNAME
-    assert payload["user_id"] == str(DEMO_USER_ID)
-    assert payload["user_id"] == "00000000-0000-0000-0000-000000000001"
-    assert payload["configured"] is True
+    assert payload["authenticated"] is False
+    assert payload["username"] is None
+    assert payload["user_id"] is None
 
     asyncio.run(engine.dispose())
 
 
-def test_status_cookie_user_takes_precedence_over_demo(monkeypatch, tmp_path):
-    """A real cookie session still wins over the demo fallback."""
+def test_status_cookie_user_is_reported_as_authenticated(monkeypatch, tmp_path):
+    """A real cookie session is reported as authenticated."""
     from api.v1.auth.users import PASSWORD_HELPER, get_jwt_strategy
     from api.v1.auth.config import SESSION_COOKIE_NAME
 

@@ -46,12 +46,10 @@ def _make_client(monkeypatch, tmp_path):
 @pytest.mark.parametrize(
     "path,body",
     [
-        ("/api/v1/auth/login", {"username": "x", "password": "x12345678"}),
         ("/api/v1/auth/register", {"username": "x", "password": "x12345678"}),
-        ("/api/v1/auth/logout", {}),
     ],
 )
-def test_removed_auth_endpoints_return_410(monkeypatch, tmp_path, path, body):
+def test_removed_register_endpoint_returns_410(monkeypatch, tmp_path, path, body):
     client = _make_client(monkeypatch, tmp_path)
     response = client.post(path, json=body)
     assert response.status_code == 410

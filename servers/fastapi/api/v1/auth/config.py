@@ -3,7 +3,6 @@ import hashlib
 import hmac
 import secrets
 from collections.abc import Mapping
-from typing import Optional
 
 from utils.get_env import get_user_config_path_env
 from utils.user_config_store import read_user_config_file, update_user_config_file
@@ -12,6 +11,22 @@ from utils.user_config_store import read_user_config_file, update_user_config_fi
 SESSION_COOKIE_NAME = "gslide_session"
 LEGACY_SESSION_COOKIE_NAME = "presenton_session"
 SESSION_TTL_SECONDS = 60 * 60 * 24 * 30
+
+
+def session_cookie_secure(request) -> bool:
+    forwarded = (request.headers.get("x-forwarded-proto") or "").split(",")[0]
+    return forwarded.strip().lower() == "https" or request.url.scheme == "https"
+
+
+def session_cookie_kwargs(request) -> dict:
+    return {
+        "key": SESSION_COOKIE_NAME,
+        "httponly": True,
+        "samesite": "lax",
+        "secure": session_cookie_secure(request),
+        "max_age": SESSION_TTL_SECONDS,
+        "path": "/",
+    }
 
 
 def read_session_token(cookies: Mapping[str, str] | None) -> str | None:
@@ -105,33 +120,3 @@ def get_or_create_auth_secret() -> str:
     config["AUTH_SECRET_KEY"] = secret
     _save_auth_config(config)
     return secret
-
-
-def get_legacy_admin_credentials() -> tuple[Optional[str], Optional[str]]:
-    """Return the pre-multi-user username and encoded password hash, if present."""
-    config = _load_user_config()
-    username = config.get("AUTH_USERNAME")
-    password_hash = config.get("AUTH_PASSWORD_HASH")
-    return (
-        username.strip() if isinstance(username, str) and username.strip() else None,
-        password_hash if isinstance(password_hash, str) and password_hash else None,
-    )
-
-
-def persist_auth_credentials(
-    username: str,
-    password_hash: str,
-    *,
-    rotate_secret: bool = False,
-) -> None:
-    """Keep the rollback/recovery credential copy in userConfig.json current.
-
-    The bootstrap username/password no longer implies an admin role — this is
-    just the recovery copy used when the database cannot be opened.
-    """
-    config = _load_user_config()
-    config["AUTH_USERNAME"] = username.strip()
-    config["AUTH_PASSWORD_HASH"] = password_hash
-    if rotate_secret or not config.get("AUTH_SECRET_KEY"):
-        config["AUTH_SECRET_KEY"] = _base64url_encode(secrets.token_bytes(32))
-    _save_auth_config(config)
