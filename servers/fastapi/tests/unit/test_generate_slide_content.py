@@ -1,4 +1,5 @@
 import asyncio
+import unicodedata
 
 import pytest
 
@@ -6,9 +7,75 @@ from models.presentation_layout import SlideLayoutModel
 from models.presentation_outline_model import SlideOutlineModel
 from utils.llm_calls import generate_slide_content
 
+_NOTE = "A sufficiently useful speaker note for the slide presentation."
+_COVER_OUTLINE = (
+    "Vật chất là gì? Vận động, đứng im, không gian, thời gian là gì?"
+)
+_CUT_COVER_TITLE = "Vật chất là gì? Vận"
+
 
 def _outline() -> SlideOutlineModel:
     return SlideOutlineModel(content="Slide outline")
+
+
+def _title_layout(max_length: int, min_length: int = 4) -> SlideLayoutModel:
+    return SlideLayoutModel(
+        id="title-layout",
+        json_schema={
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "minLength": min_length,
+                    "maxLength": max_length,
+                }
+            },
+            "required": ["title"],
+        },
+    )
+
+
+def _patch_slide_llm(monkeypatch, responder):
+    calls = []
+
+    async def fake_generate_structured_with_schema_retries(
+        _client,
+        _model,
+        *,
+        messages,
+        **kwargs,
+    ):
+        calls.append(
+            {
+                "messages": messages,
+                "json_schema": kwargs.get("json_schema"),
+            }
+        )
+        if callable(responder):
+            return responder(len(calls), kwargs.get("json_schema"), messages)
+        if isinstance(responder, list):
+            index = min(len(calls) - 1, len(responder) - 1)
+            return responder[index]
+        return dict(responder)
+
+    monkeypatch.setattr(generate_slide_content, "get_llm_client", lambda: object())
+    monkeypatch.setattr(generate_slide_content, "get_model", lambda: "test-model")
+    monkeypatch.setattr(
+        generate_slide_content,
+        "generate_structured_with_schema_retries",
+        fake_generate_structured_with_schema_retries,
+    )
+    return calls
+
+
+def _generate(layout, outline, language="Vietnamese"):
+    return asyncio.run(
+        generate_slide_content.get_slide_content_from_type_and_outline(
+            layout,
+            outline,
+            language,
+        )
+    )
 
 
 def test_slide_content_prompt_keeps_visual_commands_out_of_output_fields():
@@ -222,7 +289,7 @@ def test_slide_content_generation_repairs_strings_at_max_length(monkeypatch):
                 "__speaker_note__": "A sufficiently useful speaker note.",
             },
             {
-                "title": "Giáo dục AI chuyên sâu",
+                "title": "Giáo dục AI",
                 "__speaker_note__": "A sufficiently useful speaker note.",
             },
         ]
@@ -267,7 +334,7 @@ def test_slide_content_generation_repairs_strings_at_max_length(monkeypatch):
         )
     )
 
-    assert result["title"] == "Giáo dục AI chuyên sâu"
+    assert result["title"] == "Giáo dục AI"
     assert len(calls) == 2
     assert "$.title: 25/25 characters" in calls[1][-1].content
     assert "return JSON only" in calls[1][-1].content
@@ -310,7 +377,7 @@ def test_keep_complete_rewrite_that_is_not_an_outline_prefix():
     assert rewritten == "Thói quen mới"
 
 
-def test_slide_content_generation_restores_outline_title_when_repair_stays_cut(
+def test_slide_content_generation_does_not_persist_sliced_outline_title(
     monkeypatch,
 ):
     full_title = "Rèn Luyện Bản Thân"
@@ -362,9 +429,13 @@ def test_slide_content_generation_restores_outline_title_when_repair_stays_cut(
         )
     )
 
-    assert result["title"] == full_title[:16]
+    assert result["title"] != full_title[:16]
+    assert result["title"] != full_title
     assert len(result["title"]) <= 16
-    assert len(captured_schemas) == 2
+    assert result["title"][-1].isalnum()
+    assert full_title.startswith(result["title"])
+    assert result["title"] in {"Rèn", "Rèn Luyện", "Rèn Luyện Bản"}
+    assert len(captured_schemas) == 1 + generate_slide_content.MAX_FIT_REPAIR_ATTEMPTS
     assert captured_schemas[0]["properties"]["title"]["maxLength"] == 16
     assert captured_schemas[1]["properties"]["title"]["maxLength"] == 12
 
@@ -400,7 +471,7 @@ def test_slide_content_generation_repairs_visual_overflow(monkeypatch):
                 "__speaker_note__": "A sufficiently useful speaker note.",
             }
         return {
-            "title": "Phủ định biện chứng",
+            "title": "Phủ định",
             "__speaker_note__": "A sufficiently useful speaker note.",
         }
 
@@ -436,7 +507,7 @@ def test_slide_content_generation_repairs_visual_overflow(monkeypatch):
     assert len(calls) == 2
     assert calls[0]["properties"]["title"]["maxLength"] == 24
     assert calls[1]["properties"]["title"]["maxLength"] < 19
-    assert result["title"] == "Phủ định biện chứng"
+    assert result["title"] == "Phủ định"
 
 
 def test_slide_content_prompt_mentions_latin_width_ceiling():
@@ -480,3 +551,337 @@ def test_schema_with_fit_ceilings_does_not_visually_squeeze_short_sibling():
 
     assert tightened["properties"]["title"]["maxLength"] < 19
     assert tightened["properties"]["body"]["maxLength"] == 64
+
+
+def test_restore_cut_prefix_does_not_slice_source_that_exceeds_max_length():
+    restored = generate_slide_content._restore_cut_prefix(
+        _CUT_COVER_TITLE,
+        [_COVER_OUTLINE],
+        max_length=19,
+    )
+
+    assert restored != _COVER_OUTLINE
+    assert restored == _CUT_COVER_TITLE
+    assert len(restored) <= 19
+
+
+def test_restore_cut_prefix_restores_source_when_it_fits_max_length():
+    title = "Rèn Luyện Bản Thân"
+    restored = generate_slide_content._restore_cut_prefix(
+        title[:10],
+        [title],
+        max_length=40,
+    )
+
+    assert restored == title
+
+
+def test_cover_title_fallback_is_complete_phrase_within_max_length(monkeypatch):
+    assert len(_CUT_COVER_TITLE) == 19
+
+    def responder(_call, _schema, _messages):
+        return {"title": _CUT_COVER_TITLE, "__speaker_note__": _NOTE}
+
+    _patch_slide_llm(monkeypatch, responder)
+    result = _generate(
+        _title_layout(19),
+        SlideOutlineModel(content=f"## {_COVER_OUTLINE}\nTriết học Mác."),
+    )
+
+    assert len(result["title"]) <= 19
+    assert result["title"] != _CUT_COVER_TITLE
+    assert result["title"].endswith("?")
+    assert "Vận" not in result["title"]
+    assert result["title"] == "Vật chất là gì?"
+
+
+def test_partial_word_title_is_not_persisted(monkeypatch):
+    source = "Hoàn cảnh ra đời của chủ nghĩa duy vật"
+    cut = "Hoàn cảnh ra đ"
+
+    def responder(_call, _schema, _messages):
+        return {"title": cut, "__speaker_note__": _NOTE}
+
+    _patch_slide_llm(monkeypatch, responder)
+    result = _generate(
+        _title_layout(24),
+        SlideOutlineModel(content=f"## {source}\nBối cảnh lịch sử."),
+    )
+
+    assert result["title"] != cut
+    assert not result["title"].endswith("đ")
+    assert len(result["title"]) <= 24
+    assert result["title"] in {
+        "Hoàn cảnh",
+        "Hoàn cảnh ra",
+        "Hoàn cảnh ra đời",
+    }
+
+
+def test_repair_response_at_tightened_max_length_is_retried(monkeypatch):
+    original_max = 25
+    repair_max = 20
+    saturated_original = "A" * original_max
+    saturated_repair = "B" * repair_max
+    rewritten = "Compact AI title"
+
+    responses = [
+        {"title": saturated_original, "__speaker_note__": _NOTE},
+        {"title": saturated_repair, "__speaker_note__": _NOTE},
+        {"title": rewritten, "__speaker_note__": _NOTE},
+    ]
+    calls = _patch_slide_llm(monkeypatch, responses)
+    result = _generate(
+        _title_layout(original_max),
+        SlideOutlineModel(content="## Deep learning education\nBody."),
+        language="English",
+    )
+
+    assert result["title"] == rewritten
+    assert len(calls) == 3
+    assert calls[0]["json_schema"]["properties"]["title"]["maxLength"] == original_max
+    assert calls[1]["json_schema"]["properties"]["title"]["maxLength"] == repair_max
+    assert calls[2]["json_schema"]["properties"]["title"]["maxLength"] == repair_max
+
+
+def test_repair_rewrite_that_fits_is_accepted_without_extra_retry(monkeypatch):
+    calls = _patch_slide_llm(
+        monkeypatch,
+        [
+            {"title": "A" * 25, "__speaker_note__": _NOTE},
+            {"title": "Giáo dục AI", "__speaker_note__": _NOTE},
+        ],
+    )
+    result = _generate(_title_layout(25), _outline())
+
+    assert result["title"] == "Giáo dục AI"
+    assert len(calls) == 2
+
+
+def test_bounded_retry_then_safe_fallback_when_model_keeps_cutting(monkeypatch):
+    cut = "Định nghĩa Lên"
+    source = "Định nghĩa Lênin về giai cấp công nhân"
+
+    def responder(_call, _schema, _messages):
+        return {"title": cut, "__speaker_note__": _NOTE}
+
+    calls = _patch_slide_llm(monkeypatch, responder)
+    result = _generate(
+        _title_layout(20),
+        SlideOutlineModel(content=f"## {source}\nGiai cấp."),
+    )
+
+    assert len(calls) == 1 + generate_slide_content.MAX_FIT_REPAIR_ATTEMPTS
+    assert result["title"] != cut
+    assert len(result["title"]) <= 20
+    assert not result["title"].endswith("Lên")
+    assert " " not in result["title"] or result["title"].split()[-1] != "Lên"
+
+
+def test_overflowing_outline_source_is_not_restored(monkeypatch):
+    full_title = "Rèn Luyện Bản Thân Qua Việc Lặp Lại Hàng Ngày"
+    cut = full_title[:16]
+
+    def responder(_call, _schema, _messages):
+        return {"title": cut, "__speaker_note__": _NOTE}
+
+    _patch_slide_llm(monkeypatch, responder)
+    result = _generate(
+        _title_layout(16),
+        SlideOutlineModel(content=f"## {full_title}\nThói quen."),
+    )
+
+    assert result["title"] != full_title
+    assert result["title"] != cut
+    assert len(result["title"]) <= 16
+    assert len(full_title) > 16
+
+
+def test_non_prefix_rewrite_is_kept_when_complete_and_within_limit(monkeypatch):
+    calls = _patch_slide_llm(
+        monkeypatch,
+        [
+            {"title": _CUT_COVER_TITLE, "__speaker_note__": _NOTE},
+            {"title": "Duy vật", "__speaker_note__": _NOTE},
+        ],
+    )
+    result = _generate(
+        _title_layout(24),
+        SlideOutlineModel(content=f"## {_COVER_OUTLINE}\nNội dung."),
+    )
+
+    assert result["title"] == "Duy vật"
+    assert not _COVER_OUTLINE.startswith(result["title"])
+    assert len(calls) == 2
+
+
+def test_speaker_note_is_not_shortened_by_visual_fit_repair(monkeypatch):
+    long_note = (
+        "Speaker notes may be long because they are read aloud and never "
+        "render inside the Template V2 text boxes on the slide canvas."
+    )
+    assert len(long_note) > 80
+    captured = []
+
+    def responder(call, schema, _messages):
+        captured.append(schema["properties"]["__speaker_note__"]["maxLength"])
+        if call == 1:
+            return {"title": _CUT_COVER_TITLE, "__speaker_note__": long_note}
+        return {"title": "Vật chất là gì?", "__speaker_note__": long_note}
+
+    _patch_slide_llm(monkeypatch, responder)
+    result = _generate(
+        _title_layout(19),
+        SlideOutlineModel(content=f"## {_COVER_OUTLINE}\nNội dung."),
+    )
+
+    assert result["__speaker_note__"] == long_note
+    assert result["title"] == "Vật chất là gì?"
+    assert captured
+    assert all(max_length == 500 for max_length in captured)
+
+
+def test_nested_card_and_agenda_cuts_are_not_persisted(monkeypatch):
+    sources = [
+        "Hoàn cảnh ra đời của chủ nghĩa duy vật.",
+        "Định nghĩa Lênin về giai cấp.",
+        "Các yếu tố tự dưỡng tạo nên sự sống.",
+        "Hình thành thông qua ngưng tụ và loãng khí.",
+        "Thiếu sự phát triển biến-đổi liên tục.",
+    ]
+    cut_payload = {
+        "title": "Triết học",
+        "cards": [
+            {
+                "title": "Hoàn cảnh ra đ",
+                "description": "Các yếu tố tự dư",
+            },
+            {
+                "title": "Định nghĩa Lên",
+                "description": "Giai cấp công nhân.",
+            },
+        ],
+        "agenda": [
+            "Hình thành thông qua ngưng tụ và lo",
+            "Thiếu sự phát triển biến-đ",
+        ],
+        "__speaker_note__": _NOTE,
+    }
+
+    def responder(_call, _schema, _messages):
+        return cut_payload
+
+    layout = SlideLayoutModel(
+        id="nested-layout",
+        json_schema={
+            "type": "object",
+            "properties": {
+                "title": {"type": "string", "minLength": 4, "maxLength": 24},
+                "cards": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "minLength": 4,
+                                "maxLength": 24,
+                            },
+                            "description": {
+                                "type": "string",
+                                "minLength": 4,
+                                "maxLength": 40,
+                            },
+                        },
+                    },
+                },
+                "agenda": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "minLength": 4,
+                        "maxLength": 36,
+                    },
+                },
+            },
+            "required": ["title", "cards", "agenda"],
+        },
+    )
+    _patch_slide_llm(monkeypatch, responder)
+    result = _generate(
+        layout,
+        SlideOutlineModel(content="## Nested\n" + " ".join(sources)),
+    )
+
+    assert result["cards"][0]["title"] != "Hoàn cảnh ra đ"
+    assert result["cards"][1]["title"] != "Định nghĩa Lên"
+    assert result["cards"][0]["description"] != "Các yếu tố tự dư"
+    assert not result["cards"][0]["description"].endswith("tự dư")
+    assert result["agenda"][0] != "Hình thành thông qua ngưng tụ và lo"
+    assert not result["agenda"][0].endswith(" lo")
+    assert not result["agenda"][1].endswith("biến-đ")
+    assert "-" not in result["agenda"][1][-2:]
+    assert len(result["cards"][0]["title"]) <= 24
+    assert len(result["agenda"][0]) <= 36
+
+
+def test_slide_text_issues_flag_repair_schema_saturation():
+    original = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 25},
+        },
+    }
+    repair = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 20},
+        },
+    }
+    value = {"title": "B" * 20}
+
+    original_issues = generate_slide_content._slide_text_issues(original, value)
+    repair_issues = generate_slide_content._slide_text_issues(repair, value)
+
+    assert original_issues == []
+    assert any("$.title" in issue and "20/20" in issue for issue in repair_issues)
+
+
+def test_slide_text_issues_flag_partial_word_under_max_length():
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 40},
+        },
+    }
+    issues = generate_slide_content._slide_text_issues(
+        schema,
+        {"title": "Hoàn cảnh ra đ"},
+        ["Hoàn cảnh ra đời của chủ nghĩa duy vật"],
+    )
+
+    assert any("$.title" in issue for issue in issues)
+
+
+def test_safe_fit_text_uses_complete_sentence_not_raw_slice():
+    result = generate_slide_content._safe_fit_text(
+        _CUT_COVER_TITLE,
+        19,
+        [_COVER_OUTLINE],
+    )
+
+    assert result == "Vật chất là gì?"
+    assert len(result) <= 19
+    assert result != _COVER_OUTLINE[:19]
+
+
+def test_safe_fit_text_does_not_split_combining_marks():
+    source = "Cafe\u0301 latte is a tasty drink for the whole table"
+    result = generate_slide_content._safe_fit_text(source, 12, [source])
+
+    assert len(unicodedata.normalize("NFC", result)) <= 12 or len(result) <= 12
+    if result:
+        assert not unicodedata.combining(result[0])
+        if unicodedata.combining(result[-1]):
+            assert not unicodedata.combining(result[-2])
+    assert result != source[:12] or not unicodedata.combining(source[12])
