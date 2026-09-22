@@ -34,7 +34,8 @@ REVISION_SMART_GENERATION = "f3a7c1d9e5b2"
 REVISION_SMART_MODE_BACKFILL = "d2f4a6b8c0e1"
 REVISION_USER_PROVIDER_SETTINGS = "e5a7c9d1f3b4"
 REVISION_TEMPLATE_BUNDLE_COLUMNS = "9c3b5d1f7e2a"
-REVISION_HEAD = REVISION_TEMPLATE_BUNDLE_COLUMNS
+REVISION_SMART_COMMUNITY_REMOVED = "a4e8c2d6f0b1"
+REVISION_HEAD = REVISION_SMART_COMMUNITY_REMOVED
 REMOVED_TABLES = ("presenton_cloud_provider",)
 
 
@@ -188,7 +189,23 @@ def _infer_revision_from_schema(
             if "template_v2" not in tables or _has_column(
                 inspector, "template_v2", "bundle_object_key"
             ):
-                return REVISION_TEMPLATE_BUNDLE_COLUMNS
+                retired_columns_present = (
+                    "presentations" in tables
+                    and (
+                        _has_column(inspector, "presentations", "generation_mode")
+                        or _has_column(
+                            inspector, "presentations", "community_design_ids"
+                        )
+                    )
+                ) or (
+                    "slides" in tables
+                    and _has_column(inspector, "slides", "html_content")
+                )
+                return (
+                    REVISION_TEMPLATE_BUNDLE_COLUMNS
+                    if retired_columns_present
+                    else REVISION_SMART_COMMUNITY_REMOVED
+                )
             return REVISION_USER_PROVIDER_SETTINGS
         if "presentations" in tables and _has_column(
             inspector, "presentations", "generation_mode"
