@@ -15,6 +15,7 @@ from constants.presentation import MAX_NUMBER_OF_SLIDES
 from enums.async_task_status import AsyncTaskStatus
 from models.generate_presentation_request import GeneratePresentationRequest
 from models.presentation_and_path import PresentationAndPath
+from models.presentation_create_request import CreatePresentationRequest
 from models.presentation_from_template import EditPresentationRequest, SlideContentUpdate
 from models.presentation_outline_model import SlideOutlineModel
 from models.presentation_structure_model import PresentationStructureModel
@@ -404,7 +405,7 @@ def test_default_template_name_resolves_bundled_template_without_schema_page():
 def test_create_presentation_stores_current_version(fake_async_session):
     presentation = _run(
         presentation_endpoint.create_presentation(
-            content="Create a short deck.",
+            payload=CreatePresentationRequest(content="Create a short deck."),
             sql_session=fake_async_session,
         )
     )

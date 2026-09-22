@@ -1,6 +1,6 @@
 """Availability and rollout gating for automatic web image search.
 
-Two independent operator facts, kept separate because the Standard/Smart
+Two independent operator facts, kept separate because presentation
 resolvers need to distinguish them (plan Phase 5):
 
 - ``web_image_search_feature_enabled()`` — the ``WEB_IMAGE_SEARCH_ENABLED``

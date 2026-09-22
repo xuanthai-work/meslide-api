@@ -21,8 +21,7 @@ from api.v1.auth.context import get_current_owner_id
 from api.v1.ppt.endpoints.presentation_layout import _hydrate_template_slide_ui
 from api.v1.ppt.endpoints.presentation_responses import _presentation_response_data
 from constants.presentation import MAX_NUMBER_OF_SLIDES
-from enums.tone import Tone
-from enums.verbosity import Verbosity
+from models.presentation_create_request import CreatePresentationRequest
 from models.presentation_and_path import PresentationPathAndEditPath
 from models.presentation_from_template import EditPresentationRequest
 from models.presentation_with_slides import PresentationWithSlides
@@ -250,18 +249,11 @@ async def export_existing_presentation(
 
 @PRESENTATION_CRUD_ROUTER.post("/create", response_model=PresentationModel)
 async def create_presentation(
-    content: Annotated[str, Body()],
-    n_slides: Annotated[Optional[int], Body()] = None,
-    language: Annotated[Optional[str], Body()] = None,
-    file_paths: Annotated[Optional[List[str]], Body()] = None,
-    tone: Annotated[Tone, Body()] = Tone.DEFAULT,
-    verbosity: Annotated[Verbosity, Body()] = Verbosity.STANDARD,
-    instructions: Annotated[Optional[str], Body()] = None,
-    include_table_of_contents: Annotated[bool, Body()] = True,
-    include_title_slide: Annotated[bool, Body()] = True,
-    web_search: Annotated[bool, Body()] = False,
+    payload: CreatePresentationRequest,
     sql_session: AsyncSession = Depends(get_async_session),
 ):
+
+    n_slides = payload.n_slides
 
     if n_slides is not None and n_slides < 1:
         raise CodedHTTPException(
@@ -278,7 +270,7 @@ async def create_presentation(
             error_params={"max": MAX_NUMBER_OF_SLIDES},
         )
 
-    if include_table_of_contents and n_slides is not None and n_slides < 3:
+    if payload.include_table_of_contents and n_slides is not None and n_slides < 3:
         raise CodedHTTPException(
             status_code=400,
             detail="Number of slides cannot be less than 3 if table of contents is included",
@@ -286,10 +278,10 @@ async def create_presentation(
         )
 
     presentation_id = uuid.uuid4()
-    language_to_store = (language or "").strip()
+    language_to_store = (payload.language or "").strip()
     validated_file_paths = (
-        TEMP_FILE_SERVICE.resolve_existing_temp_paths(file_paths)
-        if file_paths
+        TEMP_FILE_SERVICE.resolve_existing_temp_paths(payload.file_paths)
+        if payload.file_paths
         else None
     )
     # DB schema stores an int; 0 is used as internal marker for auto slide count.
@@ -298,16 +290,16 @@ async def create_presentation(
     presentation = PresentationModel(
         id=presentation_id,
         version=PresentationVersion.V2_STANDARD,
-        content=content,
+        content=payload.content,
         n_slides=n_slides_to_store,
         language=language_to_store,
         file_paths=validated_file_paths,
-        tone=tone.value,
-        verbosity=verbosity.value,
-        instructions=instructions,
-        include_table_of_contents=include_table_of_contents,
-        include_title_slide=include_title_slide,
-        web_search=web_search,
+        tone=payload.tone.value,
+        verbosity=payload.verbosity.value,
+        instructions=payload.instructions,
+        include_table_of_contents=payload.include_table_of_contents,
+        include_title_slide=payload.include_title_slide,
+        web_search=payload.web_search,
     )
 
     sql_session.add(presentation)
@@ -318,7 +310,7 @@ async def create_presentation(
         "Created presentation: id=%s web_search_enabled=%s selected_web_search_provider=%s "
         "web_search_route=%s actual_web_search_provider=%s",
         presentation_id,
-        web_search,
+        payload.web_search,
         get_selected_web_search_provider().value,
         search_route,
         (

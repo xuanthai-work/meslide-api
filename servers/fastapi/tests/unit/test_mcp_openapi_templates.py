@@ -64,9 +64,9 @@ def test_openapi_defaults_generated_presentations_to_required_structure():
     openapi_spec_path = Path(__file__).resolve().parents[2] / "openai_spec.json"
     spec = json.loads(openapi_spec_path.read_text(encoding="utf-8"))
 
-    create_body = spec["components"]["schemas"][
-        "Body_create_presentation_api_v1_ppt_presentation_create_post"
-    ]["properties"]
+    create_schema = spec["components"]["schemas"]["CreatePresentationRequest"]
+    assert create_schema["additionalProperties"] is False
+    create_body = create_schema["properties"]
     generate_request = spec["components"]["schemas"][
         "GeneratePresentationRequest"
     ]["properties"]

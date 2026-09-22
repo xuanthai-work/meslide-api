@@ -1,7 +1,7 @@
 """Lifecycle and export tests for searched slide images (plan Phase 8).
 
-- Local searched assets survive a presentation reload: the persisted slide
-  HTML keeps pointing at its ``/app_data/images`` file, and the file is
+- Local searched assets survive a presentation reload: the persisted JSON
+  slide keeps pointing at its ``/app_data/images`` file, and the file is
   still on disk.
 - Duplicates share (not copy) the searched asset files, and deleting a
   presentation never removes them — asset cleanup is owned by the image
@@ -80,7 +80,6 @@ def _deck_with_searched_image(tmp_path, asset_url):
         language="vi",
         title="Searched deck",
         web_search=True,
-        generation_mode="standard",
         created_at=now,
         updated_at=now,
     )
@@ -90,8 +89,7 @@ def _deck_with_searched_image(tmp_path, asset_url):
         layout_group="group",
         layout="image-left",
         index=0,
-        content={},
-        html_content=f'<img src="{asset_url}" alt="photo">',
+        content={"elements": [{"type": "image", "data": asset_url}]},
     )
     return presentation, slide
 
@@ -110,8 +108,8 @@ def test_searched_asset_survives_presentation_reload(tmp_path):
 
     response = asyncio.run(get_presentation(presentation.id, object(), session))
 
-    assert response.slides[0].html_content == slide.html_content
-    assert asset_url in response.slides[0].html_content
+    assert response.slides[0].content == slide.content
+    assert response.slides[0].content["elements"][0]["data"] == asset_url
     # The underlying local file is still served at that URL.
     import os
 
@@ -147,8 +145,8 @@ def test_duplicate_presentation_shares_searched_asset_files(tmp_path, monkeypatc
     new_slide = response.slides[0]
     # The copy references the same already-imported local file — duplicate
     # must not re-search, re-import, or re-download anything.
-    assert asset_url in new_slide.html_content
-    assert new_slide.html_content == slide.html_content
+    assert new_slide.content == slide.content
+    assert new_slide.content["elements"][0]["data"] == asset_url
     assert session.added[0].id != presentation.id
     assert session.commits == 1
 

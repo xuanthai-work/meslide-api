@@ -11,6 +11,7 @@ import uuid
 from pathlib import Path
 
 from api.v1.ppt.endpoints import presentation_generate
+from models.presentation_create_request import CreatePresentationRequest
 from models.sql.presentation import PresentationModel
 from tests.conftest import FakeAsyncSession
 
@@ -33,7 +34,10 @@ def test_create_presentation_persists_web_search_enabled():
 
     session = FakeAsyncSession()
     created = asyncio.run(
-        create_presentation(content="Topic", web_search=True, sql_session=session)
+        create_presentation(
+            payload=CreatePresentationRequest(content="Topic", web_search=True),
+            sql_session=session,
+        )
     )
     assert created.web_search is True
     # The same row object was handed to the session for persistence.
@@ -47,7 +51,10 @@ def test_create_presentation_persists_web_search_default_false():
 
     session = FakeAsyncSession()
     created = asyncio.run(
-        create_presentation(content="Topic", sql_session=session)
+        create_presentation(
+            payload=CreatePresentationRequest(content="Topic"),
+            sql_session=session,
+        )
     )
     assert created.web_search is False
 
