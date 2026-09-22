@@ -28,7 +28,6 @@ from models.presentation_from_template import EditPresentationRequest
 from models.presentation_with_slides import PresentationWithSlides
 from models.sql.presentation import PresentationModel, PresentationVersion
 from models.sql.slide import SlideModel
-from services.community_presentations import normalize_community_ids
 from services.database import get_async_session
 from services.temp_file_service import TEMP_FILE_SERVICE
 from utils.coded_exception import CodedHTTPException
@@ -261,8 +260,6 @@ async def create_presentation(
     include_table_of_contents: Annotated[bool, Body()] = True,
     include_title_slide: Annotated[bool, Body()] = True,
     web_search: Annotated[bool, Body()] = False,
-    generation_mode: Annotated[Literal["standard", "smart"], Body()] = "standard",
-    community_design_ids: Annotated[Optional[List[int]], Body()] = None,
     sql_session: AsyncSession = Depends(get_async_session),
 ):
 
@@ -288,22 +285,6 @@ async def create_presentation(
             error_code="error.slides_toc_min",
         )
 
-    normalized_community_ids = normalize_community_ids(community_design_ids)
-    if generation_mode != "smart" and normalized_community_ids:
-        raise CodedHTTPException(
-            status_code=400,
-            detail="Community references are available only in Smart mode",
-            error_code="error.community_refs_smart_only",
-        )
-    if generation_mode == "smart" and not (
-        content.strip() or file_paths or normalized_community_ids
-    ):
-        raise CodedHTTPException(
-            status_code=400,
-            detail="A prompt, document, or community reference is required",
-            error_code="error.prompt_required",
-        )
-
     presentation_id = uuid.uuid4()
     language_to_store = (language or "").strip()
     validated_file_paths = (
@@ -327,8 +308,6 @@ async def create_presentation(
         include_table_of_contents=include_table_of_contents,
         include_title_slide=include_title_slide,
         web_search=web_search,
-        generation_mode=generation_mode,
-        community_design_ids=normalized_community_ids or None,
     )
 
     sql_session.add(presentation)
@@ -398,58 +377,6 @@ async def create_blank_presentation(
         **_presentation_response_data(presentation),
         slides=[slide],
     )
-
-@PRESENTATION_CRUD_ROUTER.patch("/{id}/mode", response_model=PresentationModel)
-async def switch_presentation_mode(
-    id: uuid.UUID,
-    generation_mode: Annotated[Literal["standard", "smart"], Body(embed=True)],
-    sql_session: AsyncSession = Depends(get_async_session),
-):
-    """Switch the generator used by the next explicit regeneration.
-
-    Existing slides remain in place until the target generator commits its new
-    deck, so a failed generation does not destroy the current presentation.
-    """
-    presentation = await sql_session.get(PresentationModel, id)
-    if not presentation:
-        raise CodedHTTPException(
-            status_code=404,
-            detail="Presentation not found",
-            error_code="error.presentation_not_found",
-        )
-
-    if generation_mode == presentation.generation_mode:
-        return presentation
-
-    if generation_mode == "standard" and not (
-        presentation.outlines and presentation.structure and presentation.layout
-    ):
-        raise CodedHTTPException(
-            status_code=409,
-            detail=(
-                "This Smart presentation does not have the outline and template "
-                "data required for Standard mode"
-            ),
-            error_code="error.mode_conversion_unavailable",
-        )
-
-    if generation_mode == "smart" and not (
-        (presentation.content or "").strip()
-        or presentation.file_paths
-        or presentation.community_design_ids
-    ):
-        raise CodedHTTPException(
-            status_code=409,
-            detail="This presentation does not have source content for Smart mode",
-            error_code="error.mode_conversion_source_required",
-        )
-
-    presentation.generation_mode = generation_mode
-    sql_session.add(presentation)
-    await sql_session.commit()
-    await sql_session.refresh(presentation)
-    return presentation
-
 
 @PRESENTATION_CRUD_ROUTER.patch("/update", response_model=PresentationWithSlides)
 async def update_presentation(

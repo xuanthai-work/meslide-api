@@ -1,5 +1,5 @@
 import logging
-from typing import Annotated, Optional
+from typing import Annotated
 from fastapi import APIRouter, Body, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import uuid
@@ -14,7 +14,6 @@ from services.mem0_presentation_memory_service import (
 from utils.asset_directory_utils import get_images_directory
 from utils.coded_exception import CodedHTTPException
 from utils.llm_calls.edit_slide import get_edited_slide_content
-from utils.llm_calls.edit_slide_html import get_edited_slide_html
 from utils.llm_calls.select_slide_type_on_edit import get_slide_layout_from_prompt
 from utils.process_slides import process_old_and_new_slides_and_fetch_assets
 
@@ -110,62 +109,6 @@ async def edit_slide(
         slide_index=slide.index,
         edit_prompt=prompt,
         edited_slide_content=edited_slide_content,
-    )
-
-    return slide
-
-
-@SLIDE_ROUTER.post("/edit-html", response_model=SlideModel)
-async def edit_slide_html(
-    id: Annotated[uuid.UUID, Body()],
-    prompt: Annotated[str, Body()],
-    html: Annotated[Optional[str], Body()] = None,
-    sql_session: AsyncSession = Depends(get_async_session),
-):
-    slide = await sql_session.get(SlideModel, id)
-    if not slide:
-        raise CodedHTTPException(
-            status_code=404, detail="Slide not found", error_code="error.slide_not_found"
-        )
-
-    presentation = await sql_session.get(PresentationModel, slide.presentation)
-    if not presentation:
-        raise CodedHTTPException(
-            status_code=404,
-            detail="Presentation not found",
-            error_code="error.presentation_not_found",
-        )
-
-    html_to_edit = html or slide.html_content
-    if not html_to_edit:
-        raise CodedHTTPException(
-            status_code=400, detail="No HTML to edit", error_code="error.slide.no_html"
-        )
-
-    memory_context = await MEM0_PRESENTATION_MEMORY_SERVICE.retrieve_context(
-        presentation.id,
-        prompt,
-    )
-
-    edited_slide_html = await get_edited_slide_html(
-        prompt,
-        html_to_edit,
-        memory_context,
-    )
-
-    # Always assign a new unique id to the slide
-    # This is to ensure that the nextjs can track slide updates
-    slide.id = uuid.uuid4()
-
-    sql_session.add(slide)
-    slide.html_content = edited_slide_html
-    await sql_session.commit()
-
-    await MEM0_PRESENTATION_MEMORY_SERVICE.store_slide_edit(
-        presentation_id=presentation.id,
-        slide_index=slide.index,
-        edit_prompt=prompt,
-        edited_slide_content=edited_slide_html,
     )
 
     return slide

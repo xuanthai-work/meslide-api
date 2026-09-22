@@ -3,16 +3,14 @@
 The automatic web image-search feature (docs/gslide-searxng-image-search-spec.md
 FR-1) reuses the persisted per-presentation `web_search` flag as its only
 user switch. These tests lock the contract that create, duplicate/derive
-(`get_new_presentation`), regenerate (stream with `?regenerate=true`), and the
-legacy `/generate` handler all preserve the value, and that no endpoint
-mutates it after creation.
+(`get_new_presentation`), and the legacy `/generate` handler all preserve the
+value, and that no endpoint mutates it after creation.
 """
 
 import uuid
 from pathlib import Path
 
 from api.v1.ppt.endpoints import presentation_generate
-from api.v1.ppt.endpoints import presentation_smart_stream
 from models.sql.presentation import PresentationModel
 from tests.conftest import FakeAsyncSession
 
@@ -135,9 +133,8 @@ def test_legacy_generate_handler_persists_web_search_in_source():
 
 
 # ---------------------------------------------------------------------------
-# No flow may mutate web_search after creation: stream (regenerate), prepare,
-# mode switch, and update must only read it. A write would silently flip the
-# user's choice mid-lifecycle.
+# No flow may mutate web_search after creation. A write would silently flip
+# the user's choice mid-lifecycle.
 # ---------------------------------------------------------------------------
 
 
@@ -146,17 +143,4 @@ def test_no_endpoint_reassigns_web_search_after_creation():
     assert "presentation.web_search =" not in source, (
         "presentation.web_search must be immutable after create; regeneration, "
         "prepare, and update flows must only read it"
-    )
-
-
-def test_stream_endpoint_reads_web_search_for_smart_flow():
-    # The Smart streaming flow lives in presentation_smart_stream now.
-    smart_source = Path(presentation_smart_stream.__file__).read_text(
-        encoding="utf-8"
-    )
-    smart_start = smart_source.index("async def _stream_smart_presentation(")
-    smart_body = smart_source[smart_start:]
-    assert "presentation.web_search" in smart_body, (
-        "Smart stream must branch text (and later image) search on the "
-        "persisted presentation.web_search value"
     )

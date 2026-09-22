@@ -66,10 +66,6 @@ TOOL_START_TRACES: dict[str, tuple[str, str]] = {
     "addNewSlide": ("Adding a blank slide", "chat.trace.adding_blank_slide"),
     "addNewSlideLayout": ("Adding slide from layout", "chat.trace.adding_slide_from_layout"),
     "getTemplateSummary": ("Reading template summary", "chat.trace.reading_template_summary"),
-    "getSmartPresentationContext": (
-        "Reading Smart deck design context",
-        "chat.trace.reading_smart_deck_context",
-    ),
     "readSourceDocuments": ("Reading source documents", "chat.trace.reading_source_documents"),
     "searchSlide": ("Searching relevant slides", "chat.trace.searching_relevant_slides"),
     "getSlideAtIndex": ("Opening the requested slide", "chat.trace.opening_requested_slide"),
@@ -133,18 +129,14 @@ class PresentationChatService:
         presentation_id: uuid.UUID,
         conversation_id: uuid.UUID | None,
         chat_mode: ChatToolMode = "presentation",
-        presentation_type: Literal["standard", "smart"] = "standard",
     ):
         self._sql_session = sql_session
         self._presentation_id = presentation_id
         self._conversation_id = conversation_id
-        self._presentation_type = presentation_type
-
         self._conversation_store = ChatConversationStore(sql_session)
         self._memory = PresentationContextStore(
             sql_session,
             presentation_id,
-            presentation_type=presentation_type,
         )
         self._tools = ChatTools(self._memory, mode=chat_mode)
 
@@ -363,14 +355,6 @@ class PresentationChatService:
         presentation = await self._sql_session.get(PresentationModel, self._presentation_id)
         if not presentation:
             raise HTTPException(status_code=404, detail="Presentation not found")
-        if presentation.generation_mode != self._presentation_type:
-            raise HTTPException(
-                status_code=400,
-                detail=(
-                    "Presentation type does not match the stored generation mode."
-                ),
-            )
-
         attachment_context, attachment_memory = await self._build_attachment_context(
             user_message=user_message,
             attachments=attachments or [],
@@ -419,7 +403,6 @@ class PresentationChatService:
                 content=build_system_prompt(
                     presentation_memory_context=presentation_memory,
                     chat_memory_context=chat_memory,
-                    presentation_type=self._presentation_type,
                 )
             ),
             *history_messages,

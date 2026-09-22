@@ -76,11 +76,5 @@ class ImageSearchLimits:
     # Per-presentation cap within one generation job.
     max_concurrent_imports_per_presentation: int = 2
 
-    # --- Smart HTML slots ----------------------------------------------------
-    # Maximum data-image-query <img> slots resolved per Smart slide; extra
-    # slots keep their placeholder and lose the marker before persistence.
-    max_slots_per_smart_slide: int = 6
-
-
 #: The single locked limits instance referenced by the whole pipeline.
 limits = ImageSearchLimits()

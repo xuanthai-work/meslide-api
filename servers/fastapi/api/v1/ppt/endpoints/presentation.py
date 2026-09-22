@@ -83,7 +83,6 @@ from api.v1.ppt.endpoints.presentation_template_content import (
     _template_slide_ui,
 )
 from api.v1.ppt.endpoints.presentation_responses import _presentation_response_data
-from api.v1.ppt.endpoints.presentation_smart_stream import _stream_smart_presentation
 from api.v1.ppt.endpoints.presentation_generate import generate_presentation_handler
 from api.v1.ppt.endpoints.presentation_layout import (
     _get_presentation_stream_layout,
@@ -115,7 +114,6 @@ edit_presentation_with_new_content = (
 export_existing_presentation = _presentation_crud.export_existing_presentation
 get_all_presentations = _presentation_crud.get_all_presentations
 get_presentation = _presentation_crud.get_presentation
-switch_presentation_mode = _presentation_crud.switch_presentation_mode
 update_presentation = _presentation_crud.update_presentation
 update_presentation_slide = _presentation_crud.update_presentation_slide
 
@@ -253,13 +251,6 @@ async def stream_presentation(
         detail="Presentation not found",
         error_code="error.presentation_not_found",
     )
-    if presentation.generation_mode == "smart":
-        return await _stream_smart_presentation(
-            presentation,
-            sql_session,
-            request,
-            regenerate=regenerate,
-        )
     if not presentation.structure:
         raise CodedHTTPException(
             status_code=400,

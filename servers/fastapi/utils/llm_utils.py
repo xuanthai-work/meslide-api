@@ -462,7 +462,7 @@ async def _iterate_openai_responses_stream(
 ):
     """Iterate OpenAI Responses API streaming events.
 
-    Maps to the same event shape the chat service / smart deck generator expect:
+    Maps to the event shape consumed by chat and Standard presentation generation:
     - ``_StreamContentChunk(type="content", chunk=text)``
     - ``_StreamThinkingChunk(type="thinking", chunk=text)``
     - ``_StreamCompletionChunk(type="completion", content=..., tool_calls=..., usage=..., raw=...)``

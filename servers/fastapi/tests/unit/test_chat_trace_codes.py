@@ -21,10 +21,6 @@ EXPECTED_TOOL_START_TRACES = {
     "addNewSlide": ("Adding a blank slide", "chat.trace.adding_blank_slide"),
     "addNewSlideLayout": ("Adding slide from layout", "chat.trace.adding_slide_from_layout"),
     "getTemplateSummary": ("Reading template summary", "chat.trace.reading_template_summary"),
-    "getSmartPresentationContext": (
-        "Reading Smart deck design context",
-        "chat.trace.reading_smart_deck_context",
-    ),
     "readSourceDocuments": ("Reading source documents", "chat.trace.reading_source_documents"),
     "searchSlide": ("Searching relevant slides", "chat.trace.searching_relevant_slides"),
     "getSlideAtIndex": ("Opening the requested slide", "chat.trace.opening_requested_slide"),

@@ -114,7 +114,6 @@ async def chat_message(
         sql_session=sql_session,
         presentation_id=payload.presentation_id,
         conversation_id=payload.conversation_id,
-        presentation_type=payload.presentation_type,
     )
     result = await service.generate_reply(payload.message, payload.attachments)
     return ChatMessageResponse(
@@ -133,7 +132,6 @@ async def chat_message_stream(
         sql_session=sql_session,
         presentation_id=payload.presentation_id,
         conversation_id=payload.conversation_id,
-        presentation_type=payload.presentation_type,
     )
 
     async def inner():
