@@ -16,7 +16,6 @@ def test_chat_message_stream_wraps_response_with_safe_sse_stream():
     payload = SimpleNamespace(
         presentation_id=uuid.uuid4(),
         conversation_id=None,
-        presentation_type="standard",
         message="Update the table",
         attachments=[],
     )
@@ -47,7 +46,6 @@ def test_chat_message_stream_emits_status_and_trace_codes():
     payload = SimpleNamespace(
         presentation_id=uuid.uuid4(),
         conversation_id=None,
-        presentation_type="standard",
         message="Update the table",
         attachments=[],
     )

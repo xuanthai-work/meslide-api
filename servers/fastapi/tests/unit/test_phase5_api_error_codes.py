@@ -10,6 +10,7 @@ from api.v1.ppt.endpoints.images import _read_validated_image_upload
 from api.v1.ppt.endpoints.presentation import create_presentation
 from api.v1.ppt.endpoints.template import _require_private_template
 from api.v1.ppt.endpoints.theme import _resolve_logo_url
+from models.presentation_create_request import CreatePresentationRequest
 from services.export_task_service import ExportTaskService
 from utils.coded_exception import CodedHTTPException
 from utils.provider_error_messages import classify_raw_provider_error
@@ -25,7 +26,9 @@ def _assert_code(expected: str, call):
 
 def test_presentation_validation_has_stable_code():
     async def run():
-        await create_presentation(content="topic", n_slides=0)
+        await create_presentation(
+            payload=CreatePresentationRequest(content="topic", n_slides=0)
+        )
 
     _assert_code("error.slides_must_be_positive", lambda: asyncio.run(run()))
 

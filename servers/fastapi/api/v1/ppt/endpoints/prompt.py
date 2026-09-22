@@ -65,6 +65,7 @@ async def rewrite_prompt(
         language=payload.language,
         n_slides=payload.n_slides,
         file_paths=resolved_file_paths or None,
+        previous_prompt=payload.previous_prompt,
         disconnect_checker=request.is_disconnected,
     )
     return PromptRewriteResponse(rewritten_prompt=rewritten_prompt)

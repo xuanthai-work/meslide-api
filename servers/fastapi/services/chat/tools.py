@@ -20,12 +20,10 @@ from services.chat.schemas import (
     GenerateAssetsInput,
     GetAvailableBlocksInput,
     GetContentSchemaFromLayoutIdInput,
-    GetSmartPresentationContextInput,
     GetSlideAtIndexInput,
     NoArgsInput,
     ReadSourceDocumentsInput,
     SaveSlideInput,
-    SaveSmartSlideInput,
     SearchSlidesInput,
     SetPresentationThemeInput,
     UpdateComponentInput,
@@ -79,7 +77,6 @@ class ChatTools(ChatToolsRepairMixin):
             "addNewSlide": self._add_new_slide,
             "addNewSlideLayout": self._add_new_slide_layout,
             "getTemplateSummary": self._get_template_summary,
-            "getSmartPresentationContext": self._get_smart_presentation_context,
             "readSourceDocuments": self._read_source_documents,
             "searchSlide": self._search_slides,
             "getSlideAtIndex": self._get_slide_at_index,
@@ -106,8 +103,6 @@ class ChatTools(ChatToolsRepairMixin):
         self._generated_assets = []
 
     def get_tool_definitions(self) -> list[Tool]:
-        if self._memory.presentation_type == "smart":
-            return self._get_smart_tool_definitions()
         return [
             Tool(
                 name="addOutline",
@@ -350,76 +345,6 @@ class ChatTools(ChatToolsRepairMixin):
                 name="generateAssets",
                 description="Generate one or more image/icon assets for slide edits.",
                 schema=GenerateAssetsInput,
-                strict=False,
-            ),
-        ]
-
-    def _get_smart_tool_definitions(self) -> list[Tool]:
-        return [
-            Tool(
-                name="getSmartPresentationContext",
-                description=(
-                    "Read Smart deck metadata, fonts, outlines, structure, and live "
-                    "HTML slide previews. Use before new slides, style changes, or "
-                    "multi-slide edits. Prefer includeSlideHtml=false; fetch exact "
-                    "target HTML with getSlideAtIndex."
-                ),
-                schema=GetSmartPresentationContextInput,
-                strict=False,
-            ),
-            Tool(
-                name="readSourceDocuments",
-                description=(
-                    "Read parsed source documents linked to this presentation when "
-                    "the user asks to use, summarize, quote, or visualize their content."
-                ),
-                schema=ReadSourceDocumentsInput,
-                strict=False,
-            ),
-            Tool(
-                name="searchSlide",
-                description=(
-                    "Search rendered Smart slide text and return matching slide indices "
-                    "and snippets."
-                ),
-                schema=SearchSlidesInput,
-                strict=False,
-            ),
-            Tool(
-                name="getSlideAtIndex",
-                description=(
-                    "Read one live Smart HTML slide by zero-based index. Set "
-                    "includeFullContent=true before every edit to receive the complete "
-                    "authoritative html field."
-                ),
-                schema=GetSlideAtIndexInput,
-                strict=False,
-            ),
-            Tool(
-                name="generateAssets",
-                description=(
-                    "Generate image or icon assets before inserting new visual URLs "
-                    "into Smart slide HTML."
-                ),
-                schema=GenerateAssetsInput,
-                strict=False,
-            ),
-            Tool(
-                name="saveSlide",
-                description=(
-                    "Replace or insert one Smart HTML slide. Pass the complete HTML "
-                    "fragment in html. For an edit, first read the slide, keep its "
-                    "design and scripts, and use replaceOldSlideAtIndex=true."
-                ),
-                schema=SaveSmartSlideInput,
-                strict=False,
-            ),
-            Tool(
-                name="deleteSlide",
-                description=(
-                    "Delete a Smart slide by zero-based index and reindex the rest."
-                ),
-                schema=DeleteSlideInput,
                 strict=False,
             ),
         ]
@@ -680,16 +605,6 @@ class ChatTools(ChatToolsRepairMixin):
             "message": "Template summary fetched successfully.",
         }
 
-    async def _get_smart_presentation_context(
-        self,
-        args: dict[str, Any],
-    ) -> dict[str, Any]:
-        payload = GetSmartPresentationContextInput(**args)
-        return await self._memory.get_smart_presentation_context(
-            include_slide_html=payload.include_slide_html,
-            max_html_chars_per_slide=payload.max_html_chars_per_slide,
-        )
-
     async def _read_source_documents(self, args: dict[str, Any]) -> dict[str, Any]:
         payload = ReadSourceDocumentsInput(**args)
         return await self._memory.read_source_documents(
@@ -745,15 +660,6 @@ class ChatTools(ChatToolsRepairMixin):
         }
 
     async def _save_slide(self, args: dict[str, Any]) -> dict[str, Any]:
-        if self._memory.presentation_type == "smart":
-            payload = SaveSmartSlideInput(**args)
-            return await self._memory.save_html_slide(
-                html=payload.html,
-                index=payload.index,
-                replace_old_slide_at_index=payload.replace_old_slide_at_index,
-                speaker_note=payload.speaker_note,
-            )
-
         payload_args = json.loads(json.dumps(dict(args), ensure_ascii=False))
         raw_content = payload_args.get("content")
         if isinstance(raw_content, dict):

@@ -12,11 +12,10 @@ from fastapi import (
     Depends,
     HTTPException,
     Path,
-    Query,
     Request,
 )
 from pydantic import BaseModel
-from sqlalchemy import delete
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from constants.presentation import MAX_NUMBER_OF_SLIDES
 from enums.async_task_status import AsyncTaskStatus
@@ -74,7 +73,6 @@ from utils.process_slides import (
 )
 from utils.coded_exception import CodedHTTPException
 from utils.sse import safe_sse_stream, sse_streaming_response
-from api.v1.auth.context import get_current_owner_id
 from templates.default_templates import resolve_default_template_id
 import uuid
 
@@ -83,7 +81,6 @@ from api.v1.ppt.endpoints.presentation_template_content import (
     _template_slide_ui,
 )
 from api.v1.ppt.endpoints.presentation_responses import _presentation_response_data
-from api.v1.ppt.endpoints.presentation_smart_stream import _stream_smart_presentation
 from api.v1.ppt.endpoints.presentation_generate import generate_presentation_handler
 from api.v1.ppt.endpoints.presentation_layout import (
     _get_presentation_stream_layout,
@@ -115,7 +112,6 @@ edit_presentation_with_new_content = (
 export_existing_presentation = _presentation_crud.export_existing_presentation
 get_all_presentations = _presentation_crud.get_all_presentations
 get_presentation = _presentation_crud.get_presentation
-switch_presentation_mode = _presentation_crud.switch_presentation_mode
 update_presentation = _presentation_crud.update_presentation
 update_presentation_slide = _presentation_crud.update_presentation_slide
 
@@ -219,6 +215,9 @@ async def prepare_presentation(
                 title_slide=presentation.include_title_slide,
             )
 
+    await sql_session.execute(
+        delete(SlideModel).where(SlideModel.presentation == presentation_id)
+    )
     sql_session.add(presentation)
     presentation.outlines = presentation_outline_model.model_dump(mode="json")
     presentation.title = title or presentation.title
@@ -239,11 +238,41 @@ async def prepare_presentation(
     return PresentationPrepareResponse(presentation_id=presentation.id)
 
 
+_UNRESOLVED_ASSET_MARKERS = (
+    "/static/images/placeholder.jpg",
+    "/static/icons/placeholder.svg",
+)
+
+
+def _contiguous_saved_slides(slides: list[SlideModel]) -> list[SlideModel]:
+    prefix: list[SlideModel] = []
+    for expected, slide in enumerate(sorted(slides, key=lambda item: item.index)):
+        if slide.index != expected:
+            break
+        prefix.append(slide)
+    return prefix
+
+
+def _slide_needs_asset_fetch(slide: SlideModel) -> bool:
+    blob = json.dumps(slide.content or {})
+    return any(marker in blob for marker in _UNRESOLVED_ASSET_MARKERS)
+
+
+async def _load_saved_slide_prefix(
+    sql_session: AsyncSession, presentation_id: uuid.UUID
+) -> list[SlideModel]:
+    rows = await sql_session.scalars(
+        select(SlideModel)
+        .where(SlideModel.presentation == presentation_id)
+        .order_by(SlideModel.index)
+    )
+    return _contiguous_saved_slides(list(rows))
+
+
 @PRESENTATION_ROUTER.get("/stream/{id}", response_model=PresentationWithSlides)
 async def stream_presentation(
     id: uuid.UUID,
     request: Request = None,
-    regenerate: bool = Query(False),
     sql_session: AsyncSession = Depends(get_async_session),
 ):
     presentation = await sql_session.get(PresentationModel, id)
@@ -253,13 +282,6 @@ async def stream_presentation(
         detail="Presentation not found",
         error_code="error.presentation_not_found",
     )
-    if presentation.generation_mode == "smart":
-        return await _stream_smart_presentation(
-            presentation,
-            sql_session,
-            request,
-            regenerate=regenerate,
-        )
     if not presentation.structure:
         raise CodedHTTPException(
             status_code=400,
@@ -358,11 +380,46 @@ async def stream_presentation(
                 await asset_events.put(("slide", slide_index))
 
         slides: List[SlideModel] = []
+        saved_prefix = await _load_saved_slide_prefix(sql_session, id)
+        # Drop a gap or a previous longer deck. The contiguous prefix stays so
+        # a retry continues at the first missing slide instead of starting over.
+        await sql_session.execute(
+            delete(SlideModel).where(
+                SlideModel.presentation == id,
+                SlideModel.index >= len(saved_prefix),
+            )
+        )
+        await sql_session.commit()
         yield SSEResponse(
             event="response",
             data=json.dumps({"type": "chunk", "chunk": '{ "slides": [ '}),
         ).to_string()
         yielded_slide_asset_sse_count = 0
+        scheduled_asset_count = 0
+
+        def schedule_slide_assets(slide_index: int, slide: SlideModel) -> None:
+            nonlocal scheduled_asset_count
+            asset_warnings_by_slide[slide_index] = []
+            asset_task = asyncio.create_task(
+                process_slide_and_fetch_assets(
+                    image_generation_service,
+                    slide,
+                    outline_image_urls=(
+                        image_urls_for_slides[slide_index]
+                        if slide_index < len(image_urls_for_slides)
+                        else None
+                    ),
+                    icon_weight=icon_weight,
+                    allow_image_fallback=True,
+                    image_warnings=asset_warnings_by_slide[slide_index],
+                    web_search=presentation.web_search,
+                    deck_image_context=deck_image_search_context,
+                    image_status_callback=queue_image_status,
+                )
+            )
+            async_assets_generation_tasks.append(asset_task)
+            asyncio.create_task(notify_slide_assets_ready(slide_index, asset_task))
+            scheduled_asset_count += 1
 
         for i, slide_layout_index in enumerate(structure.slides):
             if request is not None and await request.is_disconnected():
@@ -373,6 +430,47 @@ async def stream_presentation(
                     i,
                 )
                 raise asyncio.CancelledError
+
+            if i < len(saved_prefix):
+                slide = saved_prefix[i]
+                slides.append(slide)
+                if _slide_needs_asset_fetch(slide):
+                    schedule_slide_assets(i, slide)
+                yield SSEResponse(
+                    event="response",
+                    data=json.dumps(
+                        {"type": "chunk", "chunk": slide.model_dump_json()}
+                    ),
+                ).to_string()
+                while True:
+                    try:
+                        event_kind, event_value = asset_events.get_nowait()
+                    except asyncio.QueueEmpty:
+                        break
+                    if event_kind == "status":
+                        async for status_frame in emit_image_status(event_value):
+                            yield status_frame
+                        continue
+                    done_idx = event_value
+                    slides[done_idx].ui = _apply_template_content_to_ui(
+                        slides[done_idx].ui,
+                        slides[done_idx].content,
+                    )
+                    yielded_slide_asset_sse_count += 1
+                    await sql_session.commit()
+                    yield SSEResponse(
+                        event="response",
+                        data=json.dumps(
+                            {
+                                "type": "slide_assets",
+                                "slide_index": done_idx,
+                                "slide": slides[done_idx].model_dump(mode="json"),
+                                "warnings": asset_warnings_by_slide.get(done_idx, []),
+                            }
+                        ),
+                    ).to_string()
+                continue
+
             slide_layout = layout.slides[slide_layout_index]
 
             try:
@@ -412,31 +510,13 @@ async def stream_presentation(
             )
             slides.append(slide)
 
-            # This will mutate slide and add placeholder assets
+            # Persist before the next LLM call so a later failure can resume here.
             process_slide_add_placeholder_assets(slide)
             slide.ui = _apply_template_content_to_ui(slide.ui, slide.content)
+            sql_session.add(slide)
+            await sql_session.commit()
 
-            # This will mutate slide - start task immediately so it runs in parallel with next slide LLM generation
-            asset_warnings_by_slide[i] = []
-            asset_task = asyncio.create_task(
-                process_slide_and_fetch_assets(
-                    image_generation_service,
-                    slide,
-                    outline_image_urls=(
-                        image_urls_for_slides[i]
-                        if i < len(image_urls_for_slides)
-                        else None
-                    ),
-                    icon_weight=icon_weight,
-                    allow_image_fallback=True,
-                    image_warnings=asset_warnings_by_slide[i],
-                    web_search=presentation.web_search,
-                    deck_image_context=deck_image_search_context,
-                    image_status_callback=queue_image_status,
-                )
-            )
-            async_assets_generation_tasks.append(asset_task)
-            asyncio.create_task(notify_slide_assets_ready(i, asset_task))
+            schedule_slide_assets(i, slide)
 
             yield SSEResponse(
                 event="response",
@@ -475,7 +555,7 @@ async def stream_presentation(
             data=json.dumps({"type": "chunk", "chunk": " ] }"}),
         ).to_string()
 
-        while yielded_slide_asset_sse_count < len(slides):
+        while yielded_slide_asset_sse_count < scheduled_asset_count:
             event_kind, event_value = await asset_events.get()
             if event_kind == "status":
                 async for status_frame in emit_image_status(event_value):
@@ -487,6 +567,7 @@ async def stream_presentation(
                 slides[done_idx].content,
             )
             yielded_slide_asset_sse_count += 1
+            await sql_session.commit()
             yield SSEResponse(
                 event="response",
                 data=json.dumps(
@@ -515,15 +596,6 @@ async def stream_presentation(
 
         for slide in slides:
             slide.ui = _apply_template_content_to_ui(slide.ui, slide.content)
-
-        # Moved this here to make sure new slides are generated before deleting the old ones
-        await sql_session.execute(
-            delete(SlideModel).where(
-                SlideModel.presentation == id,
-                SlideModel.owner_id == get_current_owner_id(),
-            )
-        )
-        await sql_session.commit()
 
         sql_session.add(presentation)
         sql_session.add_all(slides)

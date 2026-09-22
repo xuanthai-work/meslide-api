@@ -2,6 +2,7 @@ from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
+import pytest
 from sqlalchemy import create_engine, inspect, text
 
 import migrations
@@ -14,6 +15,92 @@ def _alembic_config(database_url: str) -> Config:
     )
     config.set_main_option("sqlalchemy.url", database_url)
     return config
+
+
+def test_remove_smart_fields_migration_drops_columns_on_clean_database(tmp_path):
+    database_url = f"sqlite:///{tmp_path / 'remove-smart-clean.db'}"
+    command.upgrade(_alembic_config(database_url), "9c3b5d1f7e2a")
+    command.upgrade(_alembic_config(database_url), "head")
+    engine = create_engine(database_url)
+    try:
+        inspector = inspect(engine)
+        presentation_columns = {
+            column["name"] for column in inspector.get_columns("presentations")
+        }
+        slide_columns = {
+            column["name"] for column in inspector.get_columns("slides")
+        }
+        assert "generation_mode" not in presentation_columns
+        assert "community_design_ids" not in presentation_columns
+        assert "html_content" not in slide_columns
+    finally:
+        engine.dispose()
+
+
+def test_remove_smart_fields_migration_refuses_unexpected_data(tmp_path):
+    database_url = f"sqlite:///{tmp_path / 'remove-smart-refuse.db'}"
+    command.upgrade(_alembic_config(database_url), "9c3b5d1f7e2a")
+    engine = create_engine(database_url)
+    try:
+        with engine.begin() as connection:
+            connection.execute(
+                text(
+                    "INSERT INTO presentations (id, version, content, n_slides, "
+                    "language, created_at, updated_at, generation_mode) VALUES "
+                    "('00000000-0000-0000-0000-000000000001', 'v2-standard', 'x', "
+                    "1, 'en', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'smart')"
+                )
+            )
+        with pytest.raises(RuntimeError, match="Smart presentation data still exists"):
+            command.upgrade(_alembic_config(database_url), "head")
+    finally:
+        engine.dispose()
+
+
+def test_remove_smart_fields_migration_refuses_html_slide_data(tmp_path):
+    database_url = f"sqlite:///{tmp_path / 'remove-smart-html-refuse.db'}"
+    command.upgrade(_alembic_config(database_url), "9c3b5d1f7e2a")
+    engine = create_engine(database_url)
+    try:
+        with engine.begin() as connection:
+            connection.execute(
+                text(
+                    "INSERT INTO presentations (id, version, content, n_slides, "
+                    "language, created_at, updated_at, generation_mode) VALUES "
+                    "('00000000-0000-0000-0000-000000000001', 'v2-standard', 'x', "
+                    "1, 'en', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'standard')"
+                )
+            )
+            connection.execute(
+                text(
+                    "INSERT INTO slides (id, presentation, layout_group, layout, "
+                    '"index", content, html_content) VALUES '
+                    "('00000000-0000-0000-0000-000000000002', "
+                    "'00000000-0000-0000-0000-000000000001', 'smart-html', "
+                    "'smart-html', 0, '{}', '<section>legacy</section>')"
+                )
+            )
+        with pytest.raises(RuntimeError, match="Smart HTML slide data still exists"):
+            command.upgrade(_alembic_config(database_url), "head")
+    finally:
+        engine.dispose()
+
+
+def test_remove_smart_fields_downgrade_restores_schema(tmp_path):
+    database_url = f"sqlite:///{tmp_path / 'remove-smart-down.db'}"
+    command.upgrade(_alembic_config(database_url), "head")
+    command.downgrade(_alembic_config(database_url), "9c3b5d1f7e2a")
+    engine = create_engine(database_url)
+    try:
+        inspector = inspect(engine)
+        assert {"generation_mode", "community_design_ids"} <= {
+            column["name"] for column in inspector.get_columns("presentations")
+        }
+        assert "html_content" in {
+            column["name"] for column in inspector.get_columns("slides")
+        }
+    finally:
+        engine.dispose()
 
 
 def test_legacy_database_with_theme_is_stamped_past_theme_migration(
@@ -85,7 +172,7 @@ def test_upgrade_from_baseline_stamp_skips_existing_theme_column(tmp_path):
         assert "async_tasks" in tables
         assert "presenton_oauth_identity" not in tables
         assert "presenton_cloud_provider" not in tables
-        assert migrations.REVISION_HEAD == migrations.REVISION_TEMPLATE_BUNDLE_COLUMNS
+        assert migrations.REVISION_HEAD == migrations.REVISION_SMART_COMMUNITY_REMOVED
         assert "admin_slot" not in user_columns
         assert "is_superuser" not in user_columns
         assert "user_provider_settings" in tables
@@ -358,7 +445,7 @@ def test_async_task_status_migration_maps_processing_to_pending(tmp_path):
         engine.dispose()
 
 
-def test_smart_mode_backfill_repairs_html_presentations(tmp_path):
+def test_smart_mode_backfill_data_blocks_retirement_migration(tmp_path):
     database_url = f"sqlite:///{tmp_path / 'smart-mode-backfill.db'}"
     engine = create_engine(database_url)
     try:
@@ -412,25 +499,8 @@ def test_smart_mode_backfill_repairs_html_presentations(tmp_path):
                 {"revision": migrations.REVISION_SMART_GENERATION},
             )
 
-        command.upgrade(_alembic_config(database_url), "head")
-
-        with engine.connect() as connection:
-            version = connection.execute(
-                text("SELECT version_num FROM alembic_version")
-            ).scalar_one()
-            modes = dict(
-                connection.execute(
-                    text(
-                        "SELECT id, generation_mode FROM presentations ORDER BY id"
-                    )
-                ).all()
-            )
-
-        assert version == migrations.REVISION_HEAD
-        assert modes == {
-            "smart-deck": "smart",
-            "standard-deck": "standard",
-        }
+        with pytest.raises(RuntimeError, match="Smart presentation data still exists"):
+            command.upgrade(_alembic_config(database_url), "head")
     finally:
         engine.dispose()
 

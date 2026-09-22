@@ -23,6 +23,15 @@ class PromptRewriteRequest(BaseModel):
         le=MAX_NUMBER_OF_SLIDES,
         description="Target slide count for the rewritten prompt. If omitted, no slide-count constraint is applied.",
     )
+    previous_prompt: Optional[str] = Field(
+        default=None,
+        max_length=8000,
+        description=(
+            "Existing rewritten brief to revise. When present, the rewrite "
+            "edits this text instead of composing a new brief from the source "
+            "prompt alone. Empty values mean there is no previous brief."
+        ),
+    )
     file_paths: Optional[List[str]] = Field(
         default=None,
         max_length=MAX_PROMPT_REWRITE_FILE_PATHS,
@@ -40,6 +49,14 @@ class PromptRewriteRequest(BaseModel):
     def strip_outer_whitespace(cls, value):
         if isinstance(value, str):
             return value.strip()
+        return value
+
+    @field_validator("previous_prompt", mode="before")
+    @classmethod
+    def strip_previous_prompt(cls, value):
+        if isinstance(value, str):
+            stripped = value.strip()
+            return stripped or None
         return value
 
     @field_validator("file_paths", mode="before")

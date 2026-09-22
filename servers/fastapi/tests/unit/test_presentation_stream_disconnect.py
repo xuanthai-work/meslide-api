@@ -2,11 +2,9 @@ import asyncio
 import inspect
 import uuid
 from datetime import datetime
-from pathlib import Path
 from unittest.mock import AsyncMock, Mock, patch
 
 from api.v1.ppt.endpoints import presentation as presentation_endpoint
-from api.v1.ppt.endpoints import presentation_smart_stream
 from models.sql.presentation import PresentationModel, PresentationVersion
 from tests.conftest import FakeAsyncSession
 
@@ -57,13 +55,6 @@ class _DisconnectRequest:
 
 def test_stream_presentation_accepts_request():
     params = inspect.signature(presentation_endpoint.stream_presentation).parameters
-    assert "request" in params
-
-
-def test_stream_smart_presentation_accepts_request():
-    params = inspect.signature(
-        presentation_endpoint._stream_smart_presentation
-    ).parameters
     assert "request" in params
 
 
@@ -148,42 +139,6 @@ def test_standard_stream_passes_disconnect_checker_and_stops():
     assert slide_calls == 1, f"expected 1 slide LLM call, got {slide_calls}"
     # The pre-iteration disconnect poll must have run for the second slide.
     assert request._calls >= 2
-
-
-# ---------------------------------------------------------------------------
-# Step 1c (source-level fallback, permitted by the plan): the Smart wait loop
-# must check ``request.is_disconnected`` so a disconnect aborts generation.
-# Driving the Smart path end-to-end requires the full Smart generation pipeline
-# (community references, generate_smart_presentation, etc.), which is
-# impractical without the full app; the plan permits an honest source-level
-# assertion for this case.
-# ---------------------------------------------------------------------------
-
-
-def test_smart_wait_loop_checks_request_disconnect_in_source():
-    # The Smart streaming flow moved to presentation_smart_stream; read its
-    # module source for the wait-loop assertions.
-    smart_source = Path(presentation_smart_stream.__file__).read_text(
-        encoding="utf-8"
-    )
-    smart_start = smart_source.index("async def _stream_smart_presentation(")
-    smart_body = smart_source[smart_start:]
-
-    assert "while not generation_task.done() or not generation_events.empty():" in smart_body
-    assert "request.is_disconnected()" in smart_body, (
-        "Smart wait loop must poll request.is_disconnected() each iteration"
-    )
-
-    # And the standard inner() loop must raise CancelledError before the next
-    # slide LLM call when the client has disconnected, and pass the bound
-    # disconnect_checker into get_slide_content_from_type_and_outline.
-    source = Path(presentation_endpoint.__file__).read_text(encoding="utf-8")
-    standard_start = source.index("async def stream_presentation(")
-    tail = source[standard_start:]
-    assert (
-        "request.is_disconnected if request is not None else None" in tail
-    ), "standard loop must pass request.is_disconnected as disconnect_checker"
-    assert "raise asyncio.CancelledError" in tail
 
 
 # ---------------------------------------------------------------------------

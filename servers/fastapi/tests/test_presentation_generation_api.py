@@ -54,8 +54,7 @@ class FakeAsyncSession:
         return None
 
 
-@pytest.mark.parametrize("generation_mode", ["standard", "smart"])
-def test_presentation_responses_include_cloud_compatible_type(generation_mode):
+def test_presentation_responses_omit_retired_mode_fields():
     now = get_current_utc_datetime()
     presentation = PresentationModel(
         owner_id=uuid.uuid4(),
@@ -63,7 +62,6 @@ def test_presentation_responses_include_cloud_compatible_type(generation_mode):
         content="Build a deck",
         n_slides=3,
         language="English",
-        generation_mode=generation_mode,
         created_at=now,
         updated_at=now,
     )
@@ -73,8 +71,11 @@ def test_presentation_responses_include_cloud_compatible_type(generation_mode):
         slides=[],
     )
 
-    assert response.type == generation_mode
-    assert response.model_dump(mode="json")["type"] == generation_mode
+    payload = response.model_dump(mode="json")
+
+    assert "generation_mode" not in payload
+    assert "type" not in payload
+    assert "community_design_ids" not in payload
 
 
 class TestPresentationGenerationAPI:

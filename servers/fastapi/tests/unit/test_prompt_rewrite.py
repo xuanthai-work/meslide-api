@@ -231,6 +231,37 @@ def test_prompt_builder_quotes_exact_source_content():
 
     assert SOURCE_PROMPT in content
     assert "quoted user data" in content.lower()
+    assert "PREVIOUS_BRIEF" not in content
+
+
+def test_prompt_builder_revises_a_previous_brief_instead_of_starting_over():
+    previous = "Bản đã viết, đã được người dùng sửa câu kết."
+    content = build_rewrite_messages(
+        SOURCE_PROMPT, previous_prompt=f"  {previous}  "
+    )[1].content
+
+    assert "do not discard it and write a new one from scratch" in content
+    assert previous in content
+    assert "<<<PREVIOUS_BRIEF" in content
+    assert SOURCE_PROMPT in content
+
+
+def test_request_previous_prompt_defaults_to_none_and_blank_is_cleared():
+    assert (
+        PromptRewriteRequest(prompt="Design a deck about results").previous_prompt
+        is None
+    )
+    assert (
+        PromptRewriteRequest(
+            prompt="Design a deck about results", previous_prompt="  \n  "
+        ).previous_prompt
+        is None
+    )
+    kept = PromptRewriteRequest(
+        prompt="Design a deck about results",
+        previous_prompt="  Bản trước  ",
+    )
+    assert kept.previous_prompt == "Bản trước"
 
 
 def test_prompt_builder_system_prompt_states_rewrite_rules():
@@ -695,6 +726,7 @@ def _patch_endpoint_rewrite(monkeypatch, result=None, exc=None):
         language=None,
         n_slides=None,
         file_paths=None,
+        previous_prompt=None,
         disconnect_checker=None,
     ):
         calls.append(
@@ -703,6 +735,7 @@ def _patch_endpoint_rewrite(monkeypatch, result=None, exc=None):
                 "language": language,
                 "n_slides": n_slides,
                 "file_paths": file_paths,
+                "previous_prompt": previous_prompt,
                 "disconnect_checker": disconnect_checker,
             }
         )
@@ -776,6 +809,25 @@ def test_endpoint_forwards_minimal_request(monkeypatch):
     assert calls[0]["language"] is None
     assert calls[0]["n_slides"] is None
     assert calls[0]["file_paths"] is None
+    assert calls[0]["previous_prompt"] is None
+
+
+def test_endpoint_forwards_previous_prompt_for_a_revision(monkeypatch):
+    calls = _patch_endpoint_rewrite(monkeypatch, result="A revised brief.")
+    client = _build_endpoint_client()
+
+    response = client.post(
+        "/api/v1/ppt/prompt/rewrite",
+        json={
+            "prompt": SOURCE_PROMPT,
+            "previous_prompt": "  Bản trước đã sửa tay  ",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {"rewritten_prompt": "A revised brief."}
+    assert calls[0]["previous_prompt"] == "Bản trước đã sửa tay"
+    assert calls[0]["prompt"] == SOURCE_PROMPT
 
 
 @pytest.mark.parametrize(

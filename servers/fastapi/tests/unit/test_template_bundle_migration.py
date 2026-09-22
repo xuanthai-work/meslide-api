@@ -43,9 +43,11 @@ def test_bundle_columns_added_on_upgrade_and_removed_on_downgrade(tmp_path):
     finally:
         engine.dispose()
 
-    # Downgrade back below the bundle migration drops the columns again
+    # Downgrade back below the bundle migration drops the columns again. The
+    # Smart/Community retirement revision now sits on top of this migration,
+    # so -1 would only remove that newer revision.
     # (PostgreSQL parity; SQLite supports drop_column since 3.35).
-    command.downgrade(config, "-1")
+    command.downgrade(config, "e5a7c9d1f3b4")
 
     engine = create_engine(database_url)
     try:

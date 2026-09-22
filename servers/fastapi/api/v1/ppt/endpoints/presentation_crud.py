@@ -21,14 +21,12 @@ from api.v1.auth.context import get_current_owner_id
 from api.v1.ppt.endpoints.presentation_layout import _hydrate_template_slide_ui
 from api.v1.ppt.endpoints.presentation_responses import _presentation_response_data
 from constants.presentation import MAX_NUMBER_OF_SLIDES
-from enums.tone import Tone
-from enums.verbosity import Verbosity
+from models.presentation_create_request import CreatePresentationRequest
 from models.presentation_and_path import PresentationPathAndEditPath
 from models.presentation_from_template import EditPresentationRequest
 from models.presentation_with_slides import PresentationWithSlides
 from models.sql.presentation import PresentationModel, PresentationVersion
 from models.sql.slide import SlideModel
-from services.community_presentations import normalize_community_ids
 from services.database import get_async_session
 from services.temp_file_service import TEMP_FILE_SERVICE
 from utils.coded_exception import CodedHTTPException
@@ -251,20 +249,11 @@ async def export_existing_presentation(
 
 @PRESENTATION_CRUD_ROUTER.post("/create", response_model=PresentationModel)
 async def create_presentation(
-    content: Annotated[str, Body()],
-    n_slides: Annotated[Optional[int], Body()] = None,
-    language: Annotated[Optional[str], Body()] = None,
-    file_paths: Annotated[Optional[List[str]], Body()] = None,
-    tone: Annotated[Tone, Body()] = Tone.DEFAULT,
-    verbosity: Annotated[Verbosity, Body()] = Verbosity.STANDARD,
-    instructions: Annotated[Optional[str], Body()] = None,
-    include_table_of_contents: Annotated[bool, Body()] = True,
-    include_title_slide: Annotated[bool, Body()] = True,
-    web_search: Annotated[bool, Body()] = False,
-    generation_mode: Annotated[Literal["standard", "smart"], Body()] = "standard",
-    community_design_ids: Annotated[Optional[List[int]], Body()] = None,
+    payload: CreatePresentationRequest,
     sql_session: AsyncSession = Depends(get_async_session),
 ):
+
+    n_slides = payload.n_slides
 
     if n_slides is not None and n_slides < 1:
         raise CodedHTTPException(
@@ -281,34 +270,18 @@ async def create_presentation(
             error_params={"max": MAX_NUMBER_OF_SLIDES},
         )
 
-    if include_table_of_contents and n_slides is not None and n_slides < 3:
+    if payload.include_table_of_contents and n_slides is not None and n_slides < 3:
         raise CodedHTTPException(
             status_code=400,
             detail="Number of slides cannot be less than 3 if table of contents is included",
             error_code="error.slides_toc_min",
         )
 
-    normalized_community_ids = normalize_community_ids(community_design_ids)
-    if generation_mode != "smart" and normalized_community_ids:
-        raise CodedHTTPException(
-            status_code=400,
-            detail="Community references are available only in Smart mode",
-            error_code="error.community_refs_smart_only",
-        )
-    if generation_mode == "smart" and not (
-        content.strip() or file_paths or normalized_community_ids
-    ):
-        raise CodedHTTPException(
-            status_code=400,
-            detail="A prompt, document, or community reference is required",
-            error_code="error.prompt_required",
-        )
-
     presentation_id = uuid.uuid4()
-    language_to_store = (language or "").strip()
+    language_to_store = (payload.language or "").strip()
     validated_file_paths = (
-        TEMP_FILE_SERVICE.resolve_existing_temp_paths(file_paths)
-        if file_paths
+        TEMP_FILE_SERVICE.resolve_existing_temp_paths(payload.file_paths)
+        if payload.file_paths
         else None
     )
     # DB schema stores an int; 0 is used as internal marker for auto slide count.
@@ -317,18 +290,16 @@ async def create_presentation(
     presentation = PresentationModel(
         id=presentation_id,
         version=PresentationVersion.V2_STANDARD,
-        content=content,
+        content=payload.content,
         n_slides=n_slides_to_store,
         language=language_to_store,
         file_paths=validated_file_paths,
-        tone=tone.value,
-        verbosity=verbosity.value,
-        instructions=instructions,
-        include_table_of_contents=include_table_of_contents,
-        include_title_slide=include_title_slide,
-        web_search=web_search,
-        generation_mode=generation_mode,
-        community_design_ids=normalized_community_ids or None,
+        tone=payload.tone.value,
+        verbosity=payload.verbosity.value,
+        instructions=payload.instructions,
+        include_table_of_contents=payload.include_table_of_contents,
+        include_title_slide=payload.include_title_slide,
+        web_search=payload.web_search,
     )
 
     sql_session.add(presentation)
@@ -339,7 +310,7 @@ async def create_presentation(
         "Created presentation: id=%s web_search_enabled=%s selected_web_search_provider=%s "
         "web_search_route=%s actual_web_search_provider=%s",
         presentation_id,
-        web_search,
+        payload.web_search,
         get_selected_web_search_provider().value,
         search_route,
         (
@@ -398,58 +369,6 @@ async def create_blank_presentation(
         **_presentation_response_data(presentation),
         slides=[slide],
     )
-
-@PRESENTATION_CRUD_ROUTER.patch("/{id}/mode", response_model=PresentationModel)
-async def switch_presentation_mode(
-    id: uuid.UUID,
-    generation_mode: Annotated[Literal["standard", "smart"], Body(embed=True)],
-    sql_session: AsyncSession = Depends(get_async_session),
-):
-    """Switch the generator used by the next explicit regeneration.
-
-    Existing slides remain in place until the target generator commits its new
-    deck, so a failed generation does not destroy the current presentation.
-    """
-    presentation = await sql_session.get(PresentationModel, id)
-    if not presentation:
-        raise CodedHTTPException(
-            status_code=404,
-            detail="Presentation not found",
-            error_code="error.presentation_not_found",
-        )
-
-    if generation_mode == presentation.generation_mode:
-        return presentation
-
-    if generation_mode == "standard" and not (
-        presentation.outlines and presentation.structure and presentation.layout
-    ):
-        raise CodedHTTPException(
-            status_code=409,
-            detail=(
-                "This Smart presentation does not have the outline and template "
-                "data required for Standard mode"
-            ),
-            error_code="error.mode_conversion_unavailable",
-        )
-
-    if generation_mode == "smart" and not (
-        (presentation.content or "").strip()
-        or presentation.file_paths
-        or presentation.community_design_ids
-    ):
-        raise CodedHTTPException(
-            status_code=409,
-            detail="This presentation does not have source content for Smart mode",
-            error_code="error.mode_conversion_source_required",
-        )
-
-    presentation.generation_mode = generation_mode
-    sql_session.add(presentation)
-    await sql_session.commit()
-    await sql_session.refresh(presentation)
-    return presentation
-
 
 @PRESENTATION_CRUD_ROUTER.patch("/update", response_model=PresentationWithSlides)
 async def update_presentation(

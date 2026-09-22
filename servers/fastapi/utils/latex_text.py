@@ -14,7 +14,7 @@ class _LatexTagParser(HTMLParser):
         self.saw_latex = False
         self.invalid = False
 
-    def handle_starttag(self, tag: str, attrs) -> None:
+    def handle_starttag(self, tag: str, _attrs) -> None:
         if tag.casefold() != "latex":
             self._buffer.append(self.get_starttag_text() or f"<{tag}>")
             return
@@ -25,7 +25,7 @@ class _LatexTagParser(HTMLParser):
         self._in_latex = True
         self.saw_latex = True
 
-    def handle_startendtag(self, tag: str, attrs) -> None:
+    def handle_startendtag(self, tag: str, _attrs) -> None:
         self._buffer.append(self.get_starttag_text() or f"<{tag}/>")
 
     def handle_endtag(self, tag: str) -> None:

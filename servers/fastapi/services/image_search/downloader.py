@@ -1,6 +1,6 @@
 """Secure remote-image import (FR-6).
 
-The ONLY component allowed to fetch remote image bytes. Standard/Smart
+The ONLY component allowed to fetch remote image bytes. Presentation
 resolvers must call the reviewed importer service through
 ``SearxngImageSearchService.search_and_import``; no presentation path may
 implement its own downloader, and no endpoint accepts arbitrary client
