@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import List, Literal, Optional
+from typing import List, Optional
 import uuid
 import copy
 from sqlalchemy import JSON, Column, DateTime, Enum as SAEnum, ForeignKey, String
@@ -72,14 +72,6 @@ class PresentationModel(SQLModel, table=True):
     web_search: bool = Field(sa_column=Column(Boolean), default=False)
     theme: Optional[dict] = Field(sa_column=Column(JSON), default=None)
     fonts: Optional[dict] = Field(sa_column=Column(JSON), default=None)
-    generation_mode: Literal["standard", "smart"] = Field(
-        sa_column=Column(String, nullable=False, default="standard"),
-        default="standard",
-    )
-    community_design_ids: Optional[List[int]] = Field(
-        sa_column=Column(JSON), default=None
-    )
-
     def get_new_presentation(self):
         return PresentationModel(
             id=uuid.uuid4(),
@@ -101,8 +93,6 @@ class PresentationModel(SQLModel, table=True):
             web_search=self.web_search,
             theme=copy.deepcopy(self.theme),
             fonts=copy.deepcopy(self.fonts),
-            generation_mode=self.generation_mode,
-            community_design_ids=copy.deepcopy(self.community_design_ids),
         )
 
     def get_presentation_outline(self):

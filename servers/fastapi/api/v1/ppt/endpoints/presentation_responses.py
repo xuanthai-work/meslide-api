@@ -9,14 +9,6 @@ from models.sql.presentation import PresentationModel
 
 
 def _presentation_response_data(presentation: PresentationModel) -> dict:
-    return presentation.model_dump(
-        exclude={
-            "layout",
-            "structure",
-            "theme",
-            "generation_mode",
-            "community_design_ids",
-        }
-    )
+    return presentation.model_dump(exclude={"layout", "structure", "theme"})
 
 

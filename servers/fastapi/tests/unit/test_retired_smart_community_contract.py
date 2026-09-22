@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from api.v1.ppt.router import API_V1_PPT_ROUTER
 from models.chat import ChatMessageRequest
 from models.presentation_with_slides import PresentationWithSlides
+from models.sql.presentation import PresentationModel
+from models.sql.slide import SlideModel
 
 
 def _openapi_schema() -> dict:
@@ -36,3 +38,9 @@ def test_presentation_response_has_no_retired_mode_fields() -> None:
 
 def test_chat_request_has_no_presentation_type_switch() -> None:
     assert "presentation_type" not in ChatMessageRequest.model_fields
+
+
+def test_runtime_sql_models_have_no_retired_fields() -> None:
+    assert "generation_mode" not in PresentationModel.model_fields
+    assert "community_design_ids" not in PresentationModel.model_fields
+    assert "html_content" not in SlideModel.model_fields
