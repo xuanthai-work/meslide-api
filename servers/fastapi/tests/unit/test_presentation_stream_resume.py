@@ -171,3 +171,44 @@ def test_stream_keeps_saved_slide_when_the_next_llm_call_fails():
     assert not any(
         isinstance(obj, SlideModel) and obj.index == 1 for obj in session.added
     )
+
+
+def test_retry_after_llm_failure_only_calls_llm_for_the_missing_slide():
+    presentation_id = uuid.uuid4()
+    presentation = _presentation(presentation_id)
+    session = _SessionWithSlides(presentation, [])
+    first_attempt_calls = 0
+
+    async def fail_on_second_slide(*_args, **_kwargs):
+        nonlocal first_attempt_calls
+        first_attempt_calls += 1
+        if first_attempt_calls == 1:
+            return {"hero": {"headline": "Causes"}, "__speaker_note__": ""}
+        raise HTTPException(status_code=502, detail="LLM died")
+
+    first_chunks = _consume(session, fail_on_second_slide)
+    assert "LLM died" in "".join(first_chunks)
+    assert first_attempt_calls == 2
+
+    persisted_slides = [
+        obj for obj in session.added if isinstance(obj, SlideModel)
+    ]
+    assert [slide.index for slide in persisted_slides] == [0]
+
+    session._slides = persisted_slides
+    session.added.clear()
+    retry_calls = 0
+
+    async def finish_missing_slide(*_args, **_kwargs):
+        nonlocal retry_calls
+        retry_calls += 1
+        return {"hero": {"headline": "Effects"}, "__speaker_note__": ""}
+
+    retry_chunks = _consume(session, finish_missing_slide)
+    retry_body = "".join(retry_chunks)
+
+    assert retry_calls == 1
+    assert "Causes" in retry_body
+    assert any(
+        isinstance(obj, SlideModel) and obj.index == 1 for obj in session.added
+    )
