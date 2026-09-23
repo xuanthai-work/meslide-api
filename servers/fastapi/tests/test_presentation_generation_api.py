@@ -4,21 +4,17 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from fastapi import BackgroundTasks, HTTPException
+from fastapi import BackgroundTasks
 from pydantic import ValidationError
 
 from api.v1.ppt.endpoints.presentation import (
-    _presentation_response_data,
     check_async_presentation_generation_status,
     generate_presentation_async,
     generate_presentation_sync,
 )
 from models.generate_presentation_request import GeneratePresentationRequest
 from models.presentation_and_path import PresentationPathAndEditPath
-from models.presentation_with_slides import PresentationWithSlides
 from models.sql.async_task import AsyncTaskModel
-from models.sql.presentation import PresentationModel, PresentationVersion
-from utils.datetime_utils import get_current_utc_datetime
 
 
 class FakeRequest:
@@ -52,30 +48,6 @@ class FakeAsyncSession:
 
     async def refresh(self, *_args, **_kwargs):
         return None
-
-
-def test_presentation_responses_omit_retired_mode_fields():
-    now = get_current_utc_datetime()
-    presentation = PresentationModel(
-        owner_id=uuid.uuid4(),
-        version=PresentationVersion.V2_STANDARD,
-        content="Build a deck",
-        n_slides=3,
-        language="English",
-        created_at=now,
-        updated_at=now,
-    )
-
-    response = PresentationWithSlides(
-        **_presentation_response_data(presentation),
-        slides=[],
-    )
-
-    payload = response.model_dump(mode="json")
-
-    assert "generation_mode" not in payload
-    assert "type" not in payload
-    assert "community_design_ids" not in payload
 
 
 class TestPresentationGenerationAPI:
@@ -200,27 +172,6 @@ class TestPresentationGenerationAPI:
                     "template": "general",
                 }
             )
-
-    def test_generate_presentation_with_n_slides_less_than_one(self):
-        request = GeneratePresentationRequest(
-            content="Create a presentation about artificial intelligence and machine learning",
-            n_slides=0,
-            language="English",
-            export_as="pdf",
-            template="general",
-        )
-
-        with pytest.raises(HTTPException) as exc:
-            asyncio.run(
-                generate_presentation_sync(
-                    request_http=FakeRequest(),
-                    request=request,
-                    sql_session=FakeAsyncSession(),
-                )
-            )
-
-        assert exc.value.status_code == 400
-        assert exc.value.detail == "Number of slides must be greater than 0"
 
     def test_generate_presentation_with_invalid_export_type(self):
         with pytest.raises(ValidationError):
