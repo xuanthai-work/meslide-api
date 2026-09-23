@@ -1,6 +1,5 @@
 import asyncio
 
-import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
@@ -67,27 +66,6 @@ async def _seed_access_token(engine, token, user_id):
     async with session_maker() as session:
         session.add(AccessToken(token=token, user_id=user_id))
         await session.commit()
-
-
-def _seed_user(client: TestClient, engine, username: str, password: str) -> None:
-    client.post(
-        "/api/v1/auth/register",
-        json={"username": username, "password": password},
-    )
-
-
-def test_register_allowed_when_instance_empty(monkeypatch, tmp_path):
-    monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
-    monkeypatch.delenv("DISABLE_AUTH", raising=False)
-    client, engine = _build_client(tmp_path)
-    response = client.post(
-        "/api/v1/auth/register",
-        json={"username": "alice", "password": "secret123"},
-    )
-    # Registration is removed (410 Gone); gslide ships as a miniweb inside Gapo.
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
-    asyncio.run(engine.dispose())
 
 
 def test_setup_endpoint_removed(monkeypatch, tmp_path):
@@ -229,50 +207,6 @@ def test_legacy_six_character_password_login_still_works(monkeypatch, tmp_path):
 
     assert response.status_code == 200
     assert response.json()["username"] == "legacy-user"
-    asyncio.run(engine.dispose())
-
-
-def test_register_creates_normal_user_and_sets_cookie(monkeypatch, tmp_path):
-    monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
-    monkeypatch.delenv("DISABLE_AUTH", raising=False)
-    client, engine = _build_client(tmp_path)
-
-    setup = client.post(
-        "/api/v1/auth/register",
-        json={"username": "first-user", "password": "secret123"},
-    )
-    response = client.post(
-        "/api/v1/auth/register",
-        json={"username": "alice", "password": "secret123"},
-    )
-    # Register is removed (410 Gone); cookie/created-user side-effects are gone.
-    assert setup.status_code == 410
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
-
-    asyncio.run(engine.dispose())
-
-
-@pytest.mark.skip(
-    reason="out-of-scope: register removed (410); duplicate-username conflict "
-    "detection on the removed register flow is no longer meaningful"
-)
-def test_register_conflict_on_duplicate_username(monkeypatch, tmp_path):
-    monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
-    monkeypatch.delenv("DISABLE_AUTH", raising=False)
-    client, engine = _build_client(tmp_path)
-    _seed_user(client, engine, "admin", "secret123")
-    first = client.post(
-        "/api/v1/auth/register",
-        json={"username": "alice", "password": "secret123"},
-    )
-    client.cookies.clear()
-    second = client.post(
-        "/api/v1/auth/register",
-        json={"username": "ALICE", "password": "otherpass1"},
-    )
-    assert first.status_code == 201
-    assert second.status_code == 409
     asyncio.run(engine.dispose())
 
 

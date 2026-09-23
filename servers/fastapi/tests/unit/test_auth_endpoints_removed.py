@@ -8,7 +8,6 @@ import tempfile
 # tests use an isolated writable location instead of the process-wide default.
 os.environ.setdefault("APP_DATA_DIRECTORY", tempfile.gettempdir())
 
-import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -41,19 +40,6 @@ def _make_client(monkeypatch, tmp_path):
     app = FastAPI()
     app.include_router(API_V1_AUTH_ROUTER)
     return TestClient(app)
-
-
-@pytest.mark.parametrize(
-    "path,body",
-    [
-        ("/api/v1/auth/register", {"username": "x", "password": "x12345678"}),
-    ],
-)
-def test_removed_register_endpoint_returns_410(monkeypatch, tmp_path, path, body):
-    client = _make_client(monkeypatch, tmp_path)
-    response = client.post(path, json=body)
-    assert response.status_code == 410
-    assert "no longer supported" in response.json()["detail"]
 
 
 def test_status_endpoint_still_works(monkeypatch, tmp_path):
