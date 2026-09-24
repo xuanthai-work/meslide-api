@@ -15,7 +15,7 @@
 - Chỉ làm trong `gslide-api`; không sửa `gslide-web` hoặc thiết kế lại API contract.
 - Không đổi schema, Alembic, SQL model, query, owner scope, session, thứ tự commit, object-storage implementation, hoặc template-bundle protocol.
 - Không đổi auth, middleware, task runner, cách lưu async task, dependency version hoặc deployment.
-- Giữ 79 OpenAPI operations, 119 schemas và toàn bộ request/response/status/header hiện tại.
+- Giữ 78 OpenAPI operations, 119 schemas và toàn bộ request/response/status/header hiện tại.
 - Giữ nguyên `detail`, `error_code`, `error_params`, frame SSE, progress/task data và public asset URL hiện tại, kể cả hành vi lỗi chưa hợp lý.
 - Test dùng runner SQLite cô lập và fake; không đòi Postgres, S3, LLM, OCR hoặc Chromium thật ở local.
 - Đây là characterization tests: chạy trên baseline phải PASS ngay. Không cố tạo lỗi ở production code chỉ để có bước red của TDD; giá trị của test là chặn hồi quy trong các đợt sau.
@@ -74,7 +74,7 @@ def test_runtime_openapi_matches_recorded_contract():
         for method in methods
         if method in {"get", "post", "put", "patch", "delete"}
     }
-    assert len(operations) == 79
+    assert len(operations) == 78
     assert len(recorded["components"]["schemas"]) == 119
 ```
 

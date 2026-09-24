@@ -24,7 +24,7 @@ Giới hạn trên áp dụng cho code được thay. Test vẫn có thể đi q
 
 `api.main` gắn health, các router `/api/v1` và static assets. `SessionAuthMiddleware` nhận diện principal và đặt owner/provider context. Nhiều endpoint đồng thời làm validation, chuyển đổi dữ liệu, gọi hệ thống ngoài, thao tác DB và dựng response. Các điểm tập trung nhất là generation/stream presentation, tạo và sửa template, cùng chỉnh slide bằng chat. Các module đã tách như `presentation_layout.py`, `presentation_template_content.py`, `templates/v2/generation.py`, `services/chat/*` và `services/image_search/*` là ranh giới để tiếp tục cải thiện; không thay toàn bộ cấu trúc package.
 
-Baseline của lần audit: **79 OpenAPI operations, 119 schemas**; `openai_spec.json` bằng `app.openapi()`; 1.280 test FastAPI, `npm test` và 7 test contract CI/Docker/Compose đều pass. Bộ test Python dùng SQLite cô lập. Pyright trên `.venv-windows` hiện báo import không tìm thấy vì `pyproject.toml` trỏ tới `.venv`; đây là giới hạn môi trường local, chưa được xem là lỗi type của code.
+Baseline xác nhận trong worktree: **78 OpenAPI operations, 119 schemas**; `openai_spec.json` bằng `app.openapi()`; 1.277 test FastAPI pass với Python từ `.venv-windows` và SQLite cô lập. Lần audit trước cũng ghi nhận `npm test` và 7 test contract CI/Docker/Compose pass. Pyright trên `.venv-windows` hiện báo import không tìm thấy vì `pyproject.toml` trỏ tới `.venv`; đây là giới hạn môi trường local, chưa được xem là lỗi type của code.
 
 Mọi đợt phải giữ:
 
