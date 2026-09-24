@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import pytest
 from fastapi import HTTPException
 
@@ -200,3 +202,50 @@ def test_responses_tools_flatten_functions_and_keep_other_tools():
     ]
     assert tools[0]["function"]["name"] == "search"
     assert llm_utils._tools_for_responses_api is _tools_for_responses_api
+
+
+def test_feedback_limits_errors_and_previous_json():
+    from utils.llm_schema_feedback import structured_validation_feedback_user_message
+
+    feedback = structured_validation_feedback_user_message(
+        {"body": "é" * 7000}, [f"e{i}" for i in range(11)]
+    )
+
+    assert feedback.content.startswith(
+        "The previous JSON response did not match the required response schema.\n\n"
+        "Validation errors:\n"
+    )
+    assert "- e0\n" in feedback.content
+    assert "- e9\n" in feedback.content
+    assert "- e10" not in feedback.content
+    assert "...and 1 more validation errors." in feedback.content
+    assert feedback.content.count("\n- ") == 11
+    previous_json = feedback.content.split("```json\n", 1)[1].split("\n```", 1)[0]
+    assert len(previous_json.split("\n... (truncated)", 1)[0]) == 6000
+    assert previous_json.endswith("\n... (truncated)")
+    assert "é" in previous_json
+    assert "\\u00e9" not in previous_json
+    assert feedback.content.endswith(
+        "Return corrected JSON only. Make sure it fully matches the required schema."
+    )
+    assert llm_utils.structured_validation_feedback_user_message is (
+        structured_validation_feedback_user_message
+    )
+    assert "structured_validation_feedback_user_message" in llm_utils.__all__
+
+
+def test_feedback_keeps_exact_prompt_and_serializes_non_json_values():
+    from utils.llm_schema_feedback import structured_validation_feedback_user_message
+
+    feedback = structured_validation_feedback_user_message(
+        {"price": Decimal("1.25")}, ["price: expected string"]
+    )
+
+    assert feedback.content == (
+        "The previous JSON response did not match the required response schema.\n\n"
+        "Validation errors:\n"
+        "- price: expected string\n\n"
+        "Previous invalid JSON:\n"
+        '```json\n{\n  "price": "1.25"\n}\n```\n\n'
+        "Return corrected JSON only. Make sure it fully matches the required schema."
+    )
