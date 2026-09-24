@@ -47,9 +47,9 @@ def _build_client(tmp_path):
 async def _seed_user_with_session(engine, username, password="secret123"):
     """Insert a User directly and mint a JWT session token, returning (user_id, token).
 
-    Replaces the old `POST /api/v1/auth/register` seeding path (now 410 Gone) so
-    provider-settings isolation tests can still drive the cookie-authenticated
-    settings router without exercising the removed register/login endpoints.
+    Inserts a user directly. `POST /api/v1/auth/register` is not a route, so
+    provider-settings isolation tests drive the cookie-authenticated settings
+    router without calling that path.
     The returned token is set on the TestClient as the `gslide_session` cookie,
     which is what `read_settings_user` consumes when a real session is present.
     """

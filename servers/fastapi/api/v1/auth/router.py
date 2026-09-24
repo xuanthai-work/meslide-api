@@ -120,14 +120,6 @@ async def login(
     return response
 
 
-@API_V1_AUTH_ROUTER.post("/register", status_code=410)
-async def register():
-    raise HTTPException(
-        status_code=410,
-        detail="Registration is no longer supported; gslide now ships as a miniweb inside the parent Gapo app.",
-    )
-
-
 @API_V1_AUTH_ROUTER.post("/logout")
 async def logout():
     response = Response(status_code=204)

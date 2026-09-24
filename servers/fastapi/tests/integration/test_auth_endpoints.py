@@ -2,6 +2,7 @@ import asyncio
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from api.v1.auth.config import SESSION_COOKIE_NAME
@@ -40,7 +41,7 @@ def _build_client(tmp_path) -> tuple[TestClient, object]:
 async def _seed_user_with_session(engine, username, password="secret123"):
     """Insert a User directly and mint a JWT session token, returning (user, jwt).
 
-    Replaces the old `POST /api/v1/auth/register` seeding path (now 410 Gone).
+    Inserts a user directly. `POST /api/v1/auth/register` is not a route.
     The JWT is set as the `gslide_session` cookie on the TestClient by the caller
     so cookie-authenticated endpoints (e.g. `token/create`) work without register.
     """
@@ -66,6 +67,38 @@ async def _seed_access_token(engine, token, user_id):
     async with session_maker() as session:
         session.add(AccessToken(token=token, user_id=user_id))
         await session.commit()
+
+
+def test_public_registration_is_not_a_route(monkeypatch, tmp_path):
+    """Public self-signup is absent from the auth router and cannot create a user.
+
+    This client mounts only the auth router, so a missing path is 404.
+    SessionAuthMiddleware on the full app can return 401 or 428 before the
+    router runs, so that status is not evidence the route is gone.
+    """
+    monkeypatch.setenv("USER_CONFIG_PATH", str(tmp_path / "userConfig.json"))
+    client, engine = _build_client(tmp_path)
+
+    assert "/api/v1/auth/register" not in {
+        getattr(route, "path", None) for route in API_V1_AUTH_ROUTER.routes
+    }
+    assert "/api/v1/auth/register" not in client.app.openapi()["paths"]
+
+    response = client.post(
+        "/api/v1/auth/register",
+        json={"username": "alice", "password": "secret123"},
+    )
+    assert response.status_code == 404
+
+    async def count_users() -> int:
+        session_maker = async_sessionmaker(engine, expire_on_commit=False)
+        async with session_maker() as session:
+            return int(
+                await session.scalar(select(func.count()).select_from(User)) or 0
+            )
+
+    assert asyncio.run(count_users()) == 0
+    asyncio.run(engine.dispose())
 
 
 def test_setup_endpoint_removed(monkeypatch, tmp_path):

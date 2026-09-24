@@ -29,7 +29,6 @@ class SessionAuthMiddleware(BaseHTTPMiddleware):
         "/api/v1/auth/verify",
         "/api/v1/auth/login",
         "/api/v1/auth/logout",
-        "/api/v1/auth/register",
     }
     _PUBLIC_AUTH_PREFIXES: tuple[str, ...] = ()
     _PUBLIC_APP_DATA_PREFIXES = (
