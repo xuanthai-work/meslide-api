@@ -119,6 +119,25 @@ def test_load_documents_parses_office_files_without_liteparse(
     mock_extract.assert_called_once_with(office_file)
 
 
+def test_mixed_text_office_keeps_input_order(tmp_path, monkeypatch):
+    text_file = tmp_path / "a.txt"
+    text_file.write_text("first", encoding="utf-8")
+    office_file = tmp_path / "b.docx"
+    office_file.write_bytes(b"fake")
+    monkeypatch.setattr(
+        TEMP_FILE_SERVICE, "resolve_existing_temp_paths", lambda paths: paths
+    )
+    monkeypatch.setattr(
+        DocumentsLoader, "load_office_document", staticmethod(lambda _: "second")
+    )
+
+    loader = DocumentsLoader([str(text_file), str(office_file)])
+    asyncio.run(loader.load_documents())
+
+    assert loader.documents == ["first", "second"]
+    assert loader.images == [[], []]
+
+
 def _make_mock_page(text: str) -> MagicMock:
     page = MagicMock()
     page.extract_text.return_value = text

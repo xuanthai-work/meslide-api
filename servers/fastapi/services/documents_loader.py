@@ -206,9 +206,6 @@ class DocumentsLoader:
                     status_code=404, detail=f"File {file_path} not found"
                 )
 
-            document = ""
-            imgs: List[str] = []
-
             extension = Path(file_path).suffix.lower()
             LOGGER.info(
                 "[DocumentsLoader] Processing file=%s extension=%s",
@@ -216,32 +213,48 @@ class DocumentsLoader:
                 extension,
             )
 
-            if extension in PDF_EXTENSIONS:
-                document, imgs = await self.load_pdf(
-                    file_path, load_text, load_images, temp_dir
-                )
-            elif extension in TEXT_EXTENSIONS:
-                document = await self.load_text(file_path)
-            elif extension in OFFICE_EXTENSIONS:
-                document = await asyncio.to_thread(
-                    self.load_office_document,
-                    file_path,
-                )
-            elif extension in IMAGE_EXTENSIONS:
-                document = await asyncio.to_thread(
-                    self.load_image,
-                    file_path,
-                    temp_dir,
-                )
-            else:
-                document = await asyncio.to_thread(self._parse_with_liteparse, file_path)
-
+            document, imgs = await self._load_one_document(
+                file_path, load_text, load_images, temp_dir
+            )
             document = clean_extracted_document_text(document)
             documents.append(document)
             images.append(imgs)
 
         self._documents = documents
         self._images = images
+
+    async def _load_one_document(
+        self,
+        file_path: str,
+        load_text: bool,
+        load_images: bool,
+        temp_dir: str | None,
+    ) -> tuple[str, list[str]]:
+        document = ""
+        imgs: list[str] = []
+        extension = Path(file_path).suffix.lower()
+
+        if extension in PDF_EXTENSIONS:
+            document, imgs = await self.load_pdf(
+                file_path, load_text, load_images, temp_dir
+            )
+        elif extension in TEXT_EXTENSIONS:
+            document = await self.load_text(file_path)
+        elif extension in OFFICE_EXTENSIONS:
+            document = await asyncio.to_thread(
+                self.load_office_document,
+                file_path,
+            )
+        elif extension in IMAGE_EXTENSIONS:
+            document = await asyncio.to_thread(
+                self.load_image,
+                file_path,
+                temp_dir,
+            )
+        else:
+            document = await asyncio.to_thread(self._parse_with_liteparse, file_path)
+
+        return document, imgs
 
     async def load_pdf(
         self,
