@@ -45,6 +45,21 @@ def absolute_fastapi_asset_url(path: str) -> str:
     return p
 
 
+def font_path_to_url(path: str) -> str:
+    app_data = get_app_data_directory_env() or default_gslide_directory()
+    try:
+        abs_path = os.path.abspath(path)
+        abs_app_data = os.path.abspath(app_data)
+        common = os.path.commonpath([abs_path, abs_app_data])
+    except ValueError:
+        return path
+    if common != abs_app_data:
+        return path
+
+    rel = os.path.relpath(abs_path, abs_app_data).replace(os.sep, "/")
+    return absolute_fastapi_asset_url(f"/app_data/{rel}")
+
+
 def normalize_slide_asset_url(path_or_url: str) -> str:
     """Slide JSON media URLs: keep https/data/blob; make /app_data and /static absolute when FastAPI base is set."""
     if not path_or_url or not isinstance(path_or_url, str):
