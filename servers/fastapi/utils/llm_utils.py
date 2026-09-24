@@ -12,6 +12,10 @@ from fastapi import HTTPException
 
 from enums.llm_provider import LLMProvider
 from utils.llm_config import get_extra_body
+from utils.llm_message_payloads import (
+    _convert_messages_for_provider,
+    normalize_content_parts,
+)
 from utils.llm_messages import (
     AssistantMessage,
     AssistantToolCall,
@@ -26,8 +30,6 @@ from utils.llm_messages import (
     WebSearchTool,
     build_reasoning_kwargs,
     build_response_format,
-    messages_to_google,
-    messages_to_openai,
     google_system_instruction as extract_google_system_instruction,
     tool_calls_from_google_response,
     tool_calls_from_openai_response,
@@ -158,36 +160,11 @@ class TextGenerationMetrics:
 # ---------------------------------------------------------------------------
 
 
-def normalize_content_parts(content: Any) -> list[Any]:
-    """Flatten ``str | list[str | TextContentPart | ImageContentPart]`` to parts."""
-    if content is None:
-        return []
-    if isinstance(content, str):
-        return [TextContentPart(text=content)]
-    if isinstance(content, Sequence) and not isinstance(content, (bytes, bytearray)):
-        return list(content)
-    text = getattr(content, "text", None)
-    if isinstance(text, str):
-        return [TextContentPart(text=text)]
-    return [content]
-
-
 def messages_to_provider_payload(
     messages: Sequence[Message],
 ) -> list[dict[str, Any]]:
     """Translate local ``Message`` list into provider-native payload."""
-    provider = get_llm_provider()
-    if provider in (LLMProvider.OPENAI, LLMProvider.CUSTOM):
-        return messages_to_openai(messages)
-    if provider == LLMProvider.GOOGLE:
-        return messages_to_google(messages)
-    raise HTTPException(
-        status_code=500,
-        detail=(
-            "Invalid LLM provider. Please select one of: "
-            "openai, google, custom"
-        ),
-    )
+    return _convert_messages_for_provider(messages, get_llm_provider())
 
 
 def _build_tools_kwarg(tools: Sequence[Any]) -> dict[str, Any]:
