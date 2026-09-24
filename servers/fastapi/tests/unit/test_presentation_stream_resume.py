@@ -1,4 +1,5 @@
 import asyncio
+import json
 import uuid
 from datetime import datetime
 from unittest.mock import AsyncMock, Mock, patch
@@ -130,6 +131,26 @@ def test_stream_reuses_saved_slide_and_generates_only_the_remainder():
     )
     assert session.commit_count >= 1
     assert saved not in session.deleted
+
+
+def test_resumed_stream_keeps_first_chunk_last_complete_and_slide_order():
+    presentation_id = uuid.uuid4()
+    session = _SessionWithSlides(
+        _presentation(presentation_id),
+        [_saved_slide(presentation_id)],
+    )
+
+    async def next_slide(*_args, **_kwargs):
+        return {"hero": {"headline": "Effects"}, "__speaker_note__": ""}
+
+    frames = _consume(session, next_slide)
+    assert all(frame.startswith("event: response\ndata: ") for frame in frames)
+    events = [json.loads(frame.split("data: ", 1)[1].split("\n", 1)[0]) for frame in frames]
+
+    assert events[0] == {"type": "chunk", "chunk": '{ "slides": [ '}
+    assert {"type": "chunk", "chunk": " ] }"} in events
+    assert events[-1]["type"] == "complete"
+    assert [slide["index"] for slide in events[-1]["presentation"]["slides"]] == [0, 1]
 
 
 def test_stream_commits_a_finished_slide_before_the_next_llm_call():
