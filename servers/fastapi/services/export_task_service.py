@@ -13,6 +13,7 @@ from urllib.parse import unquote, urlparse
 from fastapi import HTTPException
 from pydantic import BaseModel, ValidationError, model_validator
 
+from services.export_payloads import json_to_image_payload, pptx_to_json_payload
 from services.liteparse_service import _command_str, _snippet
 from api.v1.auth.context import get_current_owner_id, get_current_owner_id_raw
 from utils.coded_exception import CodedHTTPException
@@ -632,14 +633,9 @@ class ExportTaskService:
                 error_code="error.export.dimensions_positive",
             )
 
-        task_payload: dict[str, Any] = {
-            "type": "json-to-image",
-            "data": _localize_json_image_assets(data),
-            "width": width,
-            "height": height,
-        }
-        if fonts:
-            task_payload["fonts"] = dict(fonts)
+        task_payload = json_to_image_payload(
+            _localize_json_image_assets(data), width, height, fonts
+        )
 
         response_data = await self._run_task(
             task_payload,
@@ -729,12 +725,7 @@ class ExportTaskService:
                 error_params={"pptx_path": pptx_path},
             )
 
-        task_payload: dict[str, Any] = {
-            "type": "pptx-to-json",
-            "pptx_path": pptx_path,
-        }
-        if slide_concurrency is not None:
-            task_payload["slide_concurrency"] = slide_concurrency
+        task_payload = pptx_to_json_payload(pptx_path, slide_concurrency)
 
         try:
             response_data = await self._run_task(
