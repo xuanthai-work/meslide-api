@@ -181,12 +181,12 @@ def test_delete_presentation_keeps_searched_asset_files(tmp_path):
 
 
 def test_json_export_localizes_searched_asset_into_data_uri(tmp_path, monkeypatch):
-    from services import export_task_service
+    from services import export_image_assets, export_task_service
 
     asset_path, asset_url = _write_searched_asset(tmp_path)
     url_to_file = {asset_url: asset_path}
     monkeypatch.setattr(
-        export_task_service,
+        export_image_assets,
         "resolve_app_path_to_filesystem",
         lambda value: url_to_file.get(value),
     )
@@ -202,10 +202,10 @@ def test_json_export_localizes_searched_asset_into_data_uri(tmp_path, monkeypatc
 
 
 def test_json_export_leaves_remote_and_unresolvable_sources_alone(tmp_path, monkeypatch):
-    from services import export_task_service
+    from services import export_image_assets, export_task_service
 
     monkeypatch.setattr(
-        export_task_service, "resolve_app_path_to_filesystem", lambda value: None
+        export_image_assets, "resolve_app_path_to_filesystem", lambda value: None
     )
 
     payload = [
