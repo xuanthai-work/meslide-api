@@ -12,6 +12,7 @@ from services.documents_loader import (
     _unwrap_liteparse_json_line_if_stored,
     clean_extracted_document_text,
 )
+from services.liteparse_service import LiteParseError
 from services.temp_file_service import TEMP_FILE_SERVICE
 
 
@@ -99,6 +100,17 @@ def test_load_image_converts_to_png_before_ocr(mock_convert, mock_parse):
         timeout_seconds=DocumentsLoader.DECOMPOSE_TIMEOUT_SECONDS,
     )
     mock_parse.assert_called_once_with("/tmp/converted.png", dpi=300)
+
+
+def test_liteparse_fallback_returns_text_from_secondary_parser():
+    loader = DocumentsLoader(file_paths=[])
+    loader.liteparse_service = MagicMock()
+    loader.liteparse_service.parse_to_markdown.side_effect = LiteParseError("broken")
+    loader.document_service = MagicMock()
+    loader.document_service.parse_to_markdown.return_value = "fallback"
+
+    assert loader._parse_with_liteparse("/tmp/a.pdf") == "fallback"
+    loader.document_service.parse_to_markdown.assert_called_once_with("/tmp/a.pdf")
 
 
 @patch("services.documents_loader.DocumentsLoader.load_office_document")
