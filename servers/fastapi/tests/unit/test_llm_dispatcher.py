@@ -123,7 +123,15 @@ def test_openai_web_search_uses_responses_with_unwrapped_schema(monkeypatch):
                     name="SlideTitle",
                     json_schema=_schema(),
                 ),
-                tools=[WebSearchTool()],
+                tools=[
+                    WebSearchTool(),
+                    Tool(
+                        name="previewSlide",
+                        description="Preview a slide",
+                        input_schema={"type": "object", "properties": {}},
+                        strict=True,
+                    ),
+                ],
                 stream=False,
             ),
         )
@@ -132,7 +140,16 @@ def test_openai_web_search_uses_responses_with_unwrapped_schema(monkeypatch):
     assert client._chat.calls == []
     assert len(client._responses.calls) == 1
     kwargs = client._responses.calls[0]
-    assert kwargs["tools"] == [{"type": "web_search"}]
+    assert kwargs["tools"] == [
+        {"type": "web_search"},
+        {
+            "type": "function",
+            "name": "previewSlide",
+            "description": "Preview a slide",
+            "parameters": {"type": "object", "properties": {}},
+            "strict": True,
+        },
+    ]
     assert "input" in kwargs
     fmt = kwargs["text"]["format"]
     assert fmt["type"] == "json_schema"

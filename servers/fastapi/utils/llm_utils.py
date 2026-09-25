@@ -12,6 +12,11 @@ from fastapi import HTTPException
 
 from enums.llm_provider import LLMProvider
 from utils.llm_config import get_extra_body
+from utils.llm_dispatch_payloads import chat_completion_kwargs
+from utils.llm_message_payloads import (
+    _convert_messages_for_provider,
+    normalize_content_parts,
+)
 from utils.llm_messages import (
     AssistantMessage,
     AssistantToolCall,
@@ -26,13 +31,16 @@ from utils.llm_messages import (
     WebSearchTool,
     build_reasoning_kwargs,
     build_response_format,
-    messages_to_google,
-    messages_to_openai,
     google_system_instruction as extract_google_system_instruction,
     tool_calls_from_google_response,
     tool_calls_from_openai_response,
 )
 from utils.llm_provider import get_llm_provider, use_responses_api
+from utils.llm_responses_payload import (
+    _to_responses_text_format,
+    _tools_for_responses_api,
+)
+from utils.llm_schema_feedback import structured_validation_feedback_user_message
 from utils.dict_utils import to_plain_data
 from utils.schema_utils import get_schema_validation_errors
 
@@ -158,36 +166,11 @@ class TextGenerationMetrics:
 # ---------------------------------------------------------------------------
 
 
-def normalize_content_parts(content: Any) -> list[Any]:
-    """Flatten ``str | list[str | TextContentPart | ImageContentPart]`` to parts."""
-    if content is None:
-        return []
-    if isinstance(content, str):
-        return [TextContentPart(text=content)]
-    if isinstance(content, Sequence) and not isinstance(content, (bytes, bytearray)):
-        return list(content)
-    text = getattr(content, "text", None)
-    if isinstance(text, str):
-        return [TextContentPart(text=text)]
-    return [content]
-
-
 def messages_to_provider_payload(
     messages: Sequence[Message],
 ) -> list[dict[str, Any]]:
     """Translate local ``Message`` list into provider-native payload."""
-    provider = get_llm_provider()
-    if provider in (LLMProvider.OPENAI, LLMProvider.CUSTOM):
-        return messages_to_openai(messages)
-    if provider == LLMProvider.GOOGLE:
-        return messages_to_google(messages)
-    raise HTTPException(
-        status_code=500,
-        detail=(
-            "Invalid LLM provider. Please select one of: "
-            "openai, google, custom"
-        ),
-    )
+    return _convert_messages_for_provider(messages, get_llm_provider())
 
 
 def _build_tools_kwarg(tools: Sequence[Any]) -> dict[str, Any]:
@@ -301,44 +284,6 @@ def get_generate_kwargs(
 # ---------------------------------------------------------------------------
 
 
-def _to_responses_text_format(response_format: Any) -> Any:
-    """Unwrap Chat Completions ``response_format`` into Responses ``text.format``."""
-    if not isinstance(response_format, dict):
-        return response_format
-    inner = response_format.get("json_schema")
-    if response_format.get("type") == "json_schema" and isinstance(inner, dict):
-        return {
-            "type": "json_schema",
-            "name": inner.get("name"),
-            "schema": inner.get("schema"),
-            "strict": inner.get("strict", False),
-        }
-    return response_format
-
-
-def _tools_for_responses_api(tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Flatten Chat Completions function-tool wrappers for Responses."""
-    converted: list[dict[str, Any]] = []
-    for tool in tools:
-        if not isinstance(tool, dict):
-            converted.append(tool)
-            continue
-        nested = tool.get("function")
-        if tool.get("type") == "function" and isinstance(nested, dict):
-            converted.append(
-                {
-                    "type": "function",
-                    "name": nested.get("name"),
-                    "description": nested.get("description"),
-                    "parameters": nested.get("parameters"),
-                    "strict": nested.get("strict", False),
-                }
-            )
-            continue
-        converted.append(tool)
-    return converted
-
-
 async def _dispatch_chat_completion(
     client: Any,
     *,
@@ -384,19 +329,9 @@ async def _dispatch_chat_completion(
             if extra_body:
                 responses_kwargs["extra_body"] = extra_body
             return client.responses.create(**responses_kwargs)
-        chat_kwargs: dict[str, Any] = {
-            "model": model,
-            "messages": messages,
-            "stream": stream,
-        }
-        if tools:
-            chat_kwargs["tools"] = tools
-        if response_format is not None:
-            chat_kwargs["response_format"] = response_format
-        if max_tokens is not None:
-            chat_kwargs["max_tokens"] = max_tokens
-        if extra_body:
-            chat_kwargs["extra_body"] = extra_body
+        chat_kwargs = chat_completion_kwargs(
+            model, messages, stream, tools, response_format, max_tokens, extra_body
+        )
         return client.chat.completions.create(**chat_kwargs)
 
     if provider == LLMProvider.GOOGLE:
@@ -434,19 +369,9 @@ async def _dispatch_chat_completion(
         )
 
     # CUSTOM provider — OpenAI-compatible chat completions.
-    chat_kwargs = {
-        "model": model,
-        "messages": messages,
-        "stream": stream,
-    }
-    if tools:
-        chat_kwargs["tools"] = tools
-    if response_format is not None:
-        chat_kwargs["response_format"] = response_format
-    if max_tokens is not None:
-        chat_kwargs["max_tokens"] = max_tokens
-    if extra_body:
-        chat_kwargs["extra_body"] = extra_body
+    chat_kwargs = chat_completion_kwargs(
+        model, messages, stream, tools, response_format, max_tokens, extra_body
+    )
     return client.chat.completions.create(**chat_kwargs)
 
 
@@ -967,40 +892,6 @@ async def generate_structured_with_schema_retries(
         )
 
     raise HTTPException(status_code=400, detail="LLM did not return any content")
-
-
-def structured_validation_feedback_user_message(
-    content: dict,
-    validation_errors: list[str],
-) -> UserMessage:
-    max_error_count = 10
-    max_json_chars = 6000
-
-    formatted_errors = validation_errors[:max_error_count]
-    if len(validation_errors) > max_error_count:
-        formatted_errors.append(
-            f"...and {len(validation_errors) - max_error_count} more validation errors."
-        )
-
-    previous_response = json.dumps(
-        content,
-        ensure_ascii=False,
-        indent=2,
-        default=str,
-    )
-    if len(previous_response) > max_json_chars:
-        previous_response = previous_response[:max_json_chars] + "\n... (truncated)"
-
-    return UserMessage(
-        content=(
-            "The previous JSON response did not match the required response schema.\n\n"
-            "Validation errors:\n"
-            + "\n".join(f"- {error}" for error in formatted_errors)
-            + "\n\nPrevious invalid JSON:\n"
-            + f"```json\n{previous_response}\n```\n\n"
-            + "Return corrected JSON only. Make sure it fully matches the required schema."
-        )
-    )
 
 
 # ---------------------------------------------------------------------------
