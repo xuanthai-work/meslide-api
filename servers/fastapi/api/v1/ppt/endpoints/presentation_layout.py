@@ -25,6 +25,7 @@ from templates.default_templates import resolve_default_template_id
 from templates.v2.schema import get_template_schema
 from utils.coded_exception import CodedHTTPException
 from utils.icon_weights import DEFAULT_ICON_TYPE, extract_icon_type_from_settings
+from utils.generation_font import generation_font_assets, with_generation_font
 from api.v1.ppt.endpoints.presentation_template_content import (
     _apply_template_content_to_ui,
     _is_template_layout_payload,
@@ -160,11 +161,11 @@ async def _resolve_generation_layout(
             bundled_template_id,
         )
 
-    layout_payload = _copy_template_layout_payload(template)
+    layout_payload = with_generation_font(_copy_template_layout_payload(template))
     return (
         layout_payload,
         _build_template_structure_layout(template, layout_payload),
-        _extract_template_fonts_from_assets(template.assets),
+        generation_font_assets(_extract_template_fonts_from_assets(template.assets)),
     )
 
 
@@ -334,12 +335,12 @@ async def _resolve_prepare_layout(
         )
     template = await TemplateBundleRepository().hydrate_template(template)
 
-    layout_payload = _copy_template_layout_payload(template)
+    layout_payload = with_generation_font(_copy_template_layout_payload(template))
 
     structure_layout = _build_template_structure_layout(template, layout_payload)
     return (
         layout_payload,
         structure_layout,
-        _extract_template_fonts_from_assets(template.assets),
+        generation_font_assets(_extract_template_fonts_from_assets(template.assets)),
     )
 

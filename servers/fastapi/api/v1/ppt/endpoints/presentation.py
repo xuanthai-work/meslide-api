@@ -82,6 +82,7 @@ from api.v1.ppt.endpoints.presentation_template_content import (
 )
 from api.v1.ppt.endpoints.presentation_responses import _presentation_response_data
 from api.v1.ppt.endpoints.presentation_generate import generate_presentation_handler
+from utils.generation_font import with_generation_font
 from api.v1.ppt.endpoints.presentation_layout import (
     _get_presentation_stream_layout,
     _insert_toc_layouts,
@@ -114,6 +115,10 @@ get_all_presentations = _presentation_crud.get_all_presentations
 get_presentation = _presentation_crud.get_presentation
 update_presentation = _presentation_crud.update_presentation
 update_presentation_slide = _presentation_crud.update_presentation_slide
+
+
+def _apply_generated_slide_content(ui, content):
+    return with_generation_font(_apply_template_content_to_ui(ui, content))
 
 logger = logging.getLogger(__name__)
 
@@ -452,7 +457,7 @@ async def stream_presentation(
                             yield status_frame
                         continue
                     done_idx = event_value
-                    slides[done_idx].ui = _apply_template_content_to_ui(
+                    slides[done_idx].ui = _apply_generated_slide_content(
                         slides[done_idx].ui,
                         slides[done_idx].content,
                     )
@@ -512,7 +517,7 @@ async def stream_presentation(
 
             # Persist before the next LLM call so a later failure can resume here.
             process_slide_add_placeholder_assets(slide)
-            slide.ui = _apply_template_content_to_ui(slide.ui, slide.content)
+            slide.ui = _apply_generated_slide_content(slide.ui, slide.content)
             sql_session.add(slide)
             await sql_session.commit()
 
@@ -533,7 +538,7 @@ async def stream_presentation(
                         yield status_frame
                     continue
                 done_idx = event_value
-                slides[done_idx].ui = _apply_template_content_to_ui(
+                slides[done_idx].ui = _apply_generated_slide_content(
                     slides[done_idx].ui,
                     slides[done_idx].content,
                 )
@@ -562,7 +567,7 @@ async def stream_presentation(
                     yield status_frame
                 continue
             done_idx = event_value
-            slides[done_idx].ui = _apply_template_content_to_ui(
+            slides[done_idx].ui = _apply_generated_slide_content(
                 slides[done_idx].ui,
                 slides[done_idx].content,
             )
@@ -595,7 +600,7 @@ async def stream_presentation(
             generated_assets.extend(assets_list)
 
         for slide in slides:
-            slide.ui = _apply_template_content_to_ui(slide.ui, slide.content)
+            slide.ui = _apply_generated_slide_content(slide.ui, slide.content)
 
         sql_session.add(presentation)
         sql_session.add_all(slides)

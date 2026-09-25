@@ -46,6 +46,7 @@ from utils.asset_directory_utils import get_images_directory
 from utils.coded_exception import CodedHTTPException
 from utils.export_utils import export_presentation
 from utils.json_parse_diagnostics import describe_json_parse_failure
+from utils.generation_font import with_generation_font
 from utils.llm_calls.generate_presentation_outlines import (
     generate_ppt_outline,
     get_messages as get_outline_messages,
@@ -497,6 +498,7 @@ async def generate_presentation_handler(
 
         for slide in slides:
             _hydrate_template_slide_ui(slide, layout_payload)
+            slide.ui = with_generation_font(slide.ui)
 
         # 8. Save PresentationModel and Slides
         sql_session.add(presentation)
