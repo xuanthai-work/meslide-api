@@ -311,6 +311,7 @@ class Chart(BaseModel):
     position: Optional[Position] = None
     size: Optional[Size] = None
     rotation: Optional[float] = None
+    font: Optional[Font] = None
     chart_type: ChartType
     title: Optional[str] = None
     title_color: Optional[str] = None

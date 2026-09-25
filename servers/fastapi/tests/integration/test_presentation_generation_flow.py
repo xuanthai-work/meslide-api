@@ -368,16 +368,17 @@ def test_generate_presentation_handler_uses_template_layout():
     )
     slide = next(item for item in session.added_all if isinstance(item, SlideModel))
     assert presentation.version == PresentationVersion.V2_STANDARD
-    assert presentation.layout == {
-        **_template_layout_payload(),
-        "icon_type": "bold",
-        "icon_weight": "bold",
-        "name": template_id,
-        "template_id": template_id,
-    }
-    assert presentation.fonts == {"Inter": "https://example.com/inter.css"}
+    assert presentation.layout["template_id"] == template_id
+    assert presentation.layout["icon_weight"] == "bold"
+    assert presentation.layout["layouts"][0]["components"][0]["elements"][0]["font"]["family"] == "Be Vietnam Pro"
+    assert presentation.fonts["Inter"] == "https://example.com/inter.css"
+    assert presentation.fonts["Be Vietnam Pro"].startswith(
+        "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:"
+    )
     assert slide.layout_group == template_id
     assert slide.ui["components"][0]["elements"][0]["runs"][0]["text"] == "V2 headline"
+    assert slide.ui["components"][0]["elements"][0]["font"]["family"] == "Be Vietnam Pro"
+    assert template.layouts == _template_layout_payload()
 
 
 def test_default_template_name_resolves_bundled_template_without_schema_page():
@@ -399,7 +400,10 @@ def test_default_template_name_resolves_bundled_template_without_schema_page():
     assert layout_payload["name"] == template_id
     assert layout_payload["template_id"] == template_id
     assert layout_model.slides[0].id == "template-layout-1"
-    assert fonts == {"Inter": "/app_data/templates/general/inter.ttf"}
+    assert fonts["Inter"] == "/app_data/templates/general/inter.ttf"
+    assert fonts["Be Vietnam Pro"].startswith(
+        "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:"
+    )
 
 
 def test_create_presentation_stores_current_version(fake_async_session):
@@ -776,15 +780,15 @@ def test_prepare_presentation_accepts_template_layout_id():
         )
 
     assert response.presentation_id == presentation_id
-    assert presentation.layout == {
-        **template_layouts,
-        "icon_type": "bold",
-        "icon_weight": "bold",
-        "name": template_id,
-        "template_id": template_id,
-    }
+    assert presentation.layout["template_id"] == template_id
+    assert presentation.layout["icon_weight"] == "bold"
+    assert presentation.layout["layouts"][0]["components"][0]["elements"][0]["font"]["family"] == "Be Vietnam Pro"
     assert presentation.structure == {"slides": [0]}
-    assert presentation.fonts == {"Inter": "https://example.com/inter.css"}
+    assert presentation.fonts["Inter"] == "https://example.com/inter.css"
+    assert presentation.fonts["Be Vietnam Pro"].startswith(
+        "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:"
+    )
+    assert template.layouts == template_layouts
     structure_layout = generate_structure.await_args.kwargs["presentation_layout"]
     assert structure_layout.name == template_id
     assert structure_layout.slides[0].id == "template-layout-1"
