@@ -1,6 +1,6 @@
 node_modules
 presentation-export/
-.cache/presentation-export/
+.cache/
 app_data
 .venv
 .venv-windows
