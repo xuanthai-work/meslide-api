@@ -12,6 +12,7 @@ from fastapi import HTTPException
 
 from enums.llm_provider import LLMProvider
 from utils.llm_config import get_extra_body
+from utils.llm_dispatch_payloads import chat_completion_kwargs
 from utils.llm_message_payloads import (
     _convert_messages_for_provider,
     normalize_content_parts,
@@ -328,19 +329,9 @@ async def _dispatch_chat_completion(
             if extra_body:
                 responses_kwargs["extra_body"] = extra_body
             return client.responses.create(**responses_kwargs)
-        chat_kwargs: dict[str, Any] = {
-            "model": model,
-            "messages": messages,
-            "stream": stream,
-        }
-        if tools:
-            chat_kwargs["tools"] = tools
-        if response_format is not None:
-            chat_kwargs["response_format"] = response_format
-        if max_tokens is not None:
-            chat_kwargs["max_tokens"] = max_tokens
-        if extra_body:
-            chat_kwargs["extra_body"] = extra_body
+        chat_kwargs = chat_completion_kwargs(
+            model, messages, stream, tools, response_format, max_tokens, extra_body
+        )
         return client.chat.completions.create(**chat_kwargs)
 
     if provider == LLMProvider.GOOGLE:
@@ -378,19 +369,9 @@ async def _dispatch_chat_completion(
         )
 
     # CUSTOM provider — OpenAI-compatible chat completions.
-    chat_kwargs = {
-        "model": model,
-        "messages": messages,
-        "stream": stream,
-    }
-    if tools:
-        chat_kwargs["tools"] = tools
-    if response_format is not None:
-        chat_kwargs["response_format"] = response_format
-    if max_tokens is not None:
-        chat_kwargs["max_tokens"] = max_tokens
-    if extra_body:
-        chat_kwargs["extra_body"] = extra_body
+    chat_kwargs = chat_completion_kwargs(
+        model, messages, stream, tools, response_format, max_tokens, extra_body
+    )
     return client.chat.completions.create(**chat_kwargs)
 
 

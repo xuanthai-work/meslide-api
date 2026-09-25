@@ -1,10 +1,13 @@
+import asyncio
 from decimal import Decimal
+from types import SimpleNamespace
 
 import pytest
 from fastapi import HTTPException
 
 from enums.llm_provider import LLMProvider
 from utils import llm_utils
+from utils.llm_dispatch_payloads import chat_completion_kwargs
 from utils.llm_message_payloads import (
     _convert_messages_for_provider,
     normalize_content_parts,
@@ -249,3 +252,89 @@ def test_feedback_keeps_exact_prompt_and_serializes_non_json_values():
         '```json\n{\n  "price": "1.25"\n}\n```\n\n'
         "Return corrected JSON only. Make sure it fully matches the required schema."
     )
+
+
+def test_chat_kwargs_omit_unset_and_empty_optional_fields():
+    messages = [{"role": "user", "content": "a"}]
+    expected = {"model": "m", "messages": messages, "stream": False}
+
+    assert (
+        chat_completion_kwargs("m", messages, False, None, None, None, None) == expected
+    )
+    assert chat_completion_kwargs("m", messages, False, [], None, None, {}) == expected
+
+
+def test_chat_kwargs_preserve_present_options_and_falsey_non_none_values():
+    messages = [{"role": "user", "content": "a"}]
+    tools = [{"type": "function", "function": {"name": "search"}}]
+    response_format = {"type": "json_object"}
+    extra_body = {"metadata": {"source": "test"}}
+
+    kwargs = chat_completion_kwargs(
+        "m", messages, True, tools, response_format, 0, extra_body
+    )
+    assert kwargs == {
+        "model": "m",
+        "messages": messages,
+        "stream": True,
+        "tools": tools,
+        "response_format": response_format,
+        "max_tokens": 0,
+        "extra_body": extra_body,
+    }
+    assert kwargs["messages"] is messages
+    assert kwargs["tools"] is tools
+    assert kwargs["response_format"] is response_format
+    assert kwargs["extra_body"] is extra_body
+    assert (
+        chat_completion_kwargs("m", messages, False, None, {}, None, None)[
+            "response_format"
+        ]
+        == {}
+    )
+
+
+@pytest.mark.parametrize("provider", [LLMProvider.OPENAI, LLMProvider.CUSTOM])
+def test_chat_provider_branches_use_shared_kwargs(monkeypatch, provider):
+    monkeypatch.setattr(llm_utils, "get_llm_provider", lambda: provider)
+    monkeypatch.setattr(llm_utils, "use_responses_api", lambda *args, **kwargs: False)
+    messages = [{"role": "user", "content": "a"}]
+    calls = []
+    sentinel = {"shared": "payload"}
+
+    def build_kwargs(*args):
+        calls.append(args)
+        return sentinel
+
+    monkeypatch.setattr(llm_utils, "chat_completion_kwargs", build_kwargs)
+
+    class Completions:
+        def create(self, **kwargs):
+            assert kwargs == sentinel
+            return sentinel
+
+    client = SimpleNamespace(chat=SimpleNamespace(completions=Completions()))
+    result = asyncio.run(
+        llm_utils._dispatch_chat_completion(
+            client,
+            model="m",
+            messages=messages,
+            stream=True,
+            tools=[{"type": "function"}],
+            response_format={},
+            max_tokens=0,
+            extra_body={"metadata": "x"},
+        )
+    )
+    assert result is sentinel
+    assert calls == [
+        (
+            "m",
+            messages,
+            True,
+            [{"type": "function"}],
+            {},
+            0,
+            {"metadata": "x"},
+        )
+    ]
