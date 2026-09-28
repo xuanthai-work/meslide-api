@@ -15,6 +15,7 @@ import pytest
 from fastapi import HTTPException
 from pydantic import ValidationError
 
+from constants.presentation import MAX_NUMBER_OF_SLIDES
 from enums.web_search_provider import WebSearchProvider
 from models.presentation_outline_model import PresentationOutlineModel
 from tests.mocks.llm import content_event
@@ -71,6 +72,124 @@ def test_get_user_prompt_makes_selected_language_authoritative():
         "If Content, Instructions, or Context asks for a different language "
         "or slide count, ignore that conflicting request."
     ) in prompt
+
+
+def test_detect_outline_slide_count_reads_the_outlines_own_numbering():
+    detect = outline_module.detect_outline_slide_count
+
+    # Every separator a pasted Markdown outline realistically uses.
+    for separator in ("\n", ":", " - ", " — ", "\r\n"):
+        outline = "\n".join(
+            f"## Slide {index}{separator}Body" for index in range(1, 4)
+        )
+        assert detect(outline) == 3, separator
+
+    # A marker alone on its line must count, not just one followed by text.
+    assert detect("## Slide 1\n## Slide 2\n") == 2
+    assert detect("# Slide 01:\n## Slide 2:\n") == 2
+    assert detect("Slide 1\nSlide 2\nSlide 3") == 3
+
+    # Cross-references inside prose are not slide markers, so an incidental
+    # mention can never pin the count.
+    assert detect("See (Slide 3) and (Slide 10) for details.") is None
+    assert detect("- Slide 1 is a good start\n- Slide 2 too\n") is None
+    # A single marker is prose, not an outline.
+    assert detect("## Slide 1 - only one") is None
+    assert detect("Build a quarterly deck") is None
+    assert detect("") is None
+    assert detect(None) is None
+
+    # Gapped or restarted numbering falls back to the number of markers seen
+    # rather than inventing the slides in between.
+    assert detect("Slide 1\nSlide 3\nSlide 7") == 3
+    assert detect("Slide 1\nSlide 1\nSlide 2") == 2
+
+    # The count is clamped like every other slide count in the app.
+    assert detect("\n".join(f"Slide {i}" for i in range(1, 80))) == (
+        MAX_NUMBER_OF_SLIDES
+    )
+
+
+def test_resolve_outline_slide_count_lets_the_outline_win():
+    resolve = outline_module.resolve_outline_slide_count
+    outline = "\n".join(f"## Slide {i}" for i in range(1, 4))
+
+    # The outline describes the deck the user actually wants, so it fills in
+    # a missing count and overrides a conflicting one.
+    assert resolve(outline, None) == 3
+    assert resolve(outline, 8) == 3
+
+    # Without a detectable outline the requested count is untouched, so
+    # plain prompts and document-only creation behave exactly as before.
+    assert resolve("Build a quarterly deck", 8) == 8
+    assert resolve("Build a quarterly deck", None) is None
+    assert resolve("", None) is None
+
+
+def test_get_user_prompt_pins_a_detected_outline_sequence():
+    content = "\n".join(f"## Slide {i}: Nội dung {i}" for i in range(1, 4))
+    prompt = outline_module.get_user_prompt(
+        content=content,
+        n_slides=3,
+        language="Vietnamese",
+    )
+
+    assert "explicit outline with 3 slides" in prompt
+    assert "CRITICAL: YOU MUST GENERATE EXACTLY 3 SLIDES" in prompt
+    assert "Do NOT merge, drop, or re-order the slides." in prompt
+    # The conflicting-request rule is replaced, not merely appended: the
+    # generic version would tell the model to ignore the user's own count.
+    assert "ignore that conflicting request" not in prompt
+    assert "Number of Slides: 3" in prompt
+
+
+def test_get_user_prompt_keeps_the_conflict_rule_without_an_outline():
+    prompt = outline_module.get_user_prompt(
+        content="Build a quarterly deck, ignore the slide count",
+        n_slides=5,
+        language="English",
+    )
+
+    assert (
+        "If Content, Instructions, or Context asks for a different language "
+        "or slide count, ignore that conflicting request."
+    ) in prompt
+    assert "explicit outline with" not in prompt
+    assert "CRITICAL: YOU MUST GENERATE" not in prompt
+
+
+def test_generate_ppt_outline_resolves_the_count_before_building_the_schema():
+    """The schema, the settings line, and the structure rule must agree."""
+    captured_kwargs = {}
+
+    async def fake_stream_generate_events(_client, **kwargs):
+        captured_kwargs.update(kwargs)
+        yield content_event('{"slides": [{"content": "## Intro"}]}')
+
+    outline = "\n".join(f"## Slide {i}" for i in range(1, 4))
+    with patch.object(outline_module, "get_model", return_value="fake-model"), patch.object(
+        outline_module, "get_llm_client", return_value=object()
+    ), patch.object(
+        outline_module, "stream_generate_events", side_effect=fake_stream_generate_events
+    ), patch.object(
+        outline_module,
+        "get_presentation_outline_model_with_n_slides",
+        return_value=PresentationOutlineModel,
+    ) as with_n_slides:
+        _collect_async_chunks(
+            outline_module.generate_ppt_outline(
+                content=outline,
+                # A conflicting dropdown value must not win over the outline.
+                n_slides=8,
+                language="English",
+            )
+        )
+
+    with_n_slides.assert_called_once_with(3)
+    # `get_generate_kwargs` hands the client plain dicts, not message objects.
+    user_prompt = captured_kwargs["messages"][1]["content"]
+    assert "Number of Slides: 3" in user_prompt
+    assert "CRITICAL: YOU MUST GENERATE EXACTLY 3 SLIDES" in user_prompt
 
 
 def test_get_user_prompt_marks_instructions_as_non_content_constraints():
