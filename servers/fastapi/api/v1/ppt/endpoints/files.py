@@ -2,7 +2,7 @@ import os
 from typing import Annotated, List, Optional
 from fastapi import APIRouter, Body, File, UploadFile
 
-from constants.documents import UPLOAD_ACCEPTED_FILE_TYPES
+from constants.documents import TEXT_EXTENSIONS, UPLOAD_ACCEPTED_FILE_TYPES
 from utils.coded_exception import CodedHTTPException
 from models.decomposed_file_info import DecomposedFileInfo
 from services.temp_file_service import TEMP_FILE_SERVICE
@@ -50,7 +50,11 @@ async def decompose_files(
     txt_files = []
     other_files = []
     for file_path in resolved_file_paths:
-        if file_path.endswith(".txt"):
+        # Plain-text formats (.txt, .md, .markdown) need no converter: their
+        # content is already the extracted text, so pass the original file
+        # through untouched. Compare the lowercase suffix the same way
+        # DocumentsLoader does so routing cannot disagree with the loader.
+        if os.path.splitext(file_path)[1].lower() in TEXT_EXTENSIONS:
             txt_files.append(file_path)
         else:
             other_files.append(file_path)
