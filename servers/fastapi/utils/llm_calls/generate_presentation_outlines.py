@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 import logging
+import re
 from typing import Optional
 
 from models.presentation_outline_model import PresentationOutlineModel
@@ -168,6 +169,77 @@ def _resolve_prompt_n_slides(n_slides: Optional[int]) -> str:
     return str(n_slides)
 
 
+# A slide marker only counts at the start of a line, so inline cross-references
+# such as "(Slide 3)" inside a bullet do not inflate the count. The trailing
+# separator is `?:  \r?$` rather than a whitespace class so a newline-delimited
+# outline (`## Slide 1` on its own line) is not cut short after the first hit.
+_OUTLINE_SLIDE_MARKER = re.compile(
+    r"^[ \t]*(?:#{1,3}[ \t]*)?Slide[ \t]*(\d+)(?:[ \t]*[:\u2014-]|\r?$)",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+
+def detect_outline_slide_count(content: str) -> Optional[int]:
+    """Count the slides an outline declares for itself.
+
+    Users paste documents that already number their own slides (``## Slide 1``,
+    ``Slide 01:``, ``Slide 3 -``), which is a stronger signal than the
+    requested slide count. A lone marker is treated as prose rather than an
+    outline, and the result is clamped to ``MAX_NUMBER_OF_SLIDES`` like every
+    other count in the app.
+    """
+    if not content:
+        return None
+
+    numbers = {int(match.group(1)) for match in _OUTLINE_SLIDE_MARKER.finditer(content)}
+    if len(numbers) < 2:
+        return None
+
+    # A conventional outline numbers its slides 1..N with no gaps, so the
+    # highest marker is the count. Anything else (gaps, restarts, repeats)
+    # falls back to how many distinct markers were seen, which never invents
+    # slides the outline does not describe.
+    ordered = sorted(numbers)
+    is_sequential = all(value == index + 1 for index, value in enumerate(ordered))
+    count = len(ordered) if is_sequential else len(numbers)
+
+    return min(count, MAX_NUMBER_OF_SLIDES)
+
+
+def resolve_outline_slide_count(
+    content: str, n_slides: Optional[int]
+) -> Optional[int]:
+    """Slide count the outline generator should actually aim for.
+
+    An outline that numbers its own slides wins: it describes the deck the
+    user actually wants, and honouring the requested count instead would drop
+    or merge slides they wrote out. A request without a detectable outline
+    keeps the requested count, so plain prompts and document-only creation
+    behave exactly as before.
+    """
+    detected_count = detect_outline_slide_count(content)
+    if detected_count is None:
+        return n_slides
+    return detected_count
+
+
+def _outline_structure_rule(detected_count: Optional[int]) -> str:
+    """Instruction that keeps the slide sequence of a user outline intact."""
+    if detected_count is None:
+        return (
+            "If Content, Instructions, or Context asks for a different language or "
+            "slide count, ignore that conflicting request."
+        )
+    return (
+        f"The user has provided an explicit outline with {detected_count} slides.\n"
+        f"CRITICAL: YOU MUST GENERATE EXACTLY {detected_count} SLIDES matching the "
+        "user's slide sequence.\n"
+        "Do NOT merge, drop, or re-order the slides. Adapt each slide's content "
+        "into clean presentation points, preserving key technical terms, "
+        "comparison tables, and code snippets."
+    )
+
+
 def get_user_prompt(
     content: str,
     n_slides: Optional[int],
@@ -188,13 +260,14 @@ def get_user_prompt(
         f"Language: {display_language}\n"
         f"Tone: {tone or ''}\n"
         f"Include Title Slide: {include_title_slide}\n"
-        "If Content, Instructions, or Context asks for a different language or slide count, ignore that conflicting request.\n"
+        f"{_outline_structure_rule(detect_outline_slide_count(content))}\n"
         f"Today's Date: {datetime.now().strftime('%Y-%m-%d')}\n"
         f"Content: {content or ''}\n"
         "Instructions (apply as constraints; never quote as slide content): "
         f"{instructions or ''}\n"
         f"Context: {additional_context or 'None'}\n"
     )
+
 
 
 def get_messages(
@@ -245,6 +318,20 @@ async def generate_ppt_outline(
     emit_statuses: bool = False,
     disconnect_checker: Optional[DisconnectChecker] = None,
 ):
+    # A content block that already numbers its own slides is the strongest
+    # signal of the slide count there is, so it fills in a missing count and
+    # overrides a requested one. The resolved value feeds the response schema,
+    # the settings line, and the structure rule together, so the model is
+    # never told to produce N outlines by the schema and M by the prompt.
+    requested_slides = n_slides
+    detected_slides = detect_outline_slide_count(content)
+    n_slides = resolve_outline_slide_count(content, n_slides)
+    LOGGER.info(
+        "Outline slide count resolution: detected=%s requested=%s effective=%s",
+        detected_slides,
+        requested_slides,
+        n_slides,
+    )
     model = get_model()
     response_model = (
         get_presentation_outline_model_with_n_slides(n_slides)
