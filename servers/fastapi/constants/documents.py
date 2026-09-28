@@ -1,5 +1,7 @@
 PDF_EXTENSIONS = [".pdf"]
-TEXT_EXTENSIONS = [".txt"]
+# Markdown is plain text on disk, so it is read with the same UTF-8 loader as
+# .txt instead of going through a document converter.
+TEXT_EXTENSIONS = [".txt", ".md", ".markdown"]
 
 WORD_EXTENSIONS = [".docx", ".docm", ".odt"]
 POWERPOINT_EXTENSIONS = [".pptx", ".pptm", ".odp"]
