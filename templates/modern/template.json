@@ -961,7 +961,7 @@
               },
               "size": {
                 "width": 507.59,
-                "height": 101.27
+                "height": 63
               },
               "font": {
                 "size": 48,
@@ -1131,7 +1131,7 @@
               },
               "size": {
                 "width": 475,
-                "height": 120
+                "height": 63
               },
               "font": {
                 "size": 48,
@@ -1228,7 +1228,7 @@
                   "type": "text",
                   "size": {
                     "width": 514,
-                    "height": 128.25
+                    "height": 110
                   },
                   "font": {
                     "size": 48,
@@ -1267,7 +1267,7 @@
                   "type": "text",
                   "size": {
                     "width": 514,
-                    "height": 292.5
+                    "height": 281
                   },
                   "font": {
                     "size": 18,
@@ -7577,7 +7577,7 @@
               },
               "size": {
                 "width": 507.59,
-                "height": 101.27
+                "height": 63
               },
               "font": {
                 "size": 48,
@@ -8845,7 +8845,7 @@
               },
               "size": {
                 "width": 475,
-                "height": 120
+                "height": 63
               },
               "font": {
                 "size": 48,
@@ -9721,7 +9721,7 @@
                   "type": "text",
                   "size": {
                     "width": 514,
-                    "height": 128.25
+                    "height": 110
                   },
                   "font": {
                     "size": 48,
@@ -9760,7 +9760,7 @@
                   "type": "text",
                   "size": {
                     "width": 514,
-                    "height": 292.5
+                    "height": 281
                   },
                   "font": {
                     "size": 18,
