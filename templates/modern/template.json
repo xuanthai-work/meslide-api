@@ -271,7 +271,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 0.8
+                    "line_height": 1.15
                   },
                   "alignment": {
                     "horizontal": "left",
@@ -285,7 +285,7 @@
                         "family": "Montserrat",
                         "color": "#1E4CD9",
                         "bold": true,
-                        "line_height": 0.8
+                        "line_height": 1.15
                       }
                     }
                   ],
@@ -968,7 +968,7 @@
                 "family": "Montserrat",
                 "color": "#1E4CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -982,7 +982,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -1053,7 +1053,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -1067,7 +1067,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -1138,7 +1138,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -1152,7 +1152,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -1235,7 +1235,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   },
                   "alignment": {
                     "horizontal": "left",
@@ -1249,7 +1249,7 @@
                         "family": "Montserrat",
                         "color": "#1E4CD9",
                         "bold": true,
-                        "line_height": 1
+                        "line_height": 1.15
                       }
                     }
                   ],
@@ -2622,7 +2622,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -2636,7 +2636,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -2671,7 +2671,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -2685,7 +2685,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -2719,7 +2719,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1,
+                "line_height": 1.15,
                 "letter_spacing": -1.44
               },
               "alignment": {
@@ -2734,7 +2734,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1,
+                    "line_height": 1.15,
                     "letter_spacing": -1.44
                   }
                 }
@@ -2770,7 +2770,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -2784,7 +2784,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -4711,7 +4711,7 @@
                 "family": "Montserrat",
                 "color": "#1E4CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -4725,7 +4725,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -7118,7 +7118,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 0.8
+                    "line_height": 1.15
                   },
                   "alignment": {
                     "horizontal": "left",
@@ -7132,7 +7132,7 @@
                         "family": "Montserrat",
                         "color": "#1E4CD9",
                         "bold": true,
-                        "line_height": 0.8
+                        "line_height": 1.15
                       }
                     }
                   ],
@@ -7584,7 +7584,7 @@
                 "family": "Montserrat",
                 "color": "#1E4CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -7598,7 +7598,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -8084,7 +8084,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -8098,7 +8098,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -8852,7 +8852,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -8866,7 +8866,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -9108,7 +9108,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -9122,7 +9122,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -9728,7 +9728,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   },
                   "alignment": {
                     "horizontal": "left",
@@ -9742,7 +9742,7 @@
                         "family": "Montserrat",
                         "color": "#1E4CD9",
                         "bold": true,
-                        "line_height": 1
+                        "line_height": 1.15
                       }
                     }
                   ],
@@ -9862,7 +9862,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -9876,7 +9876,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -10581,7 +10581,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1,
+                "line_height": 1.15,
                 "letter_spacing": -1.44
               },
               "alignment": {
@@ -10596,7 +10596,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1,
+                    "line_height": 1.15,
                     "letter_spacing": -1.44
                   }
                 }
@@ -11044,7 +11044,7 @@
                 "family": "Montserrat",
                 "color": "#1E4CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -11058,7 +11058,7 @@
                     "family": "Montserrat",
                     "color": "#1E4CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -11574,7 +11574,7 @@
                 "family": "Montserrat",
                 "color": "#234CD9",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "left",
@@ -11588,7 +11588,7 @@
                     "family": "Montserrat",
                     "color": "#234CD9",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
