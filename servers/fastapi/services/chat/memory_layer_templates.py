@@ -295,7 +295,11 @@ class PresentationChatTemplateMixin:
                 )
 
                 element["data"] = asset_url
-                _normalize_generated_image_fit(element, asset_url)
+                fit_value = value.get("fit") if isinstance(value, dict) else None
+                if isinstance(fit_value, str) and fit_value in ("contain", "cover", "fill"):
+                    element["fit"] = fit_value
+                else:
+                    _normalize_generated_image_fit(element, asset_url)
                 prompt = template_asset_prompt(
                     value,
                     is_icon=element.get("is_icon") is True,
