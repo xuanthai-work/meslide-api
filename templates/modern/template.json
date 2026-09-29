@@ -556,8 +556,7 @@
                           "x": 0,
                           "y": 0
                         },
-                        "rotation": 0,
-                        "__gslide_manual_position": true
+                        "rotation": 0
                       },
                       {
                         "type": "text",
@@ -594,8 +593,7 @@
                           "x": 0,
                           "y": 24
                         },
-                        "rotation": 0,
-                        "__gslide_manual_position": true
+                        "rotation": 0
                       }
                     ],
                     "name": "card_text_stack",
@@ -1263,8 +1261,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "rotation": 0,
-                  "__gslide_manual_position": true
+                  "rotation": 0
                 },
                 {
                   "type": "text",
@@ -7400,8 +7397,7 @@
                           "x": 0,
                           "y": 0
                         },
-                        "rotation": 0,
-                        "__gslide_manual_position": true
+                        "rotation": 0
                       },
                       {
                         "type": "text",
@@ -7438,8 +7434,7 @@
                           "x": 0,
                           "y": 24
                         },
-                        "rotation": 0,
-                        "__gslide_manual_position": true
+                        "rotation": 0
                       }
                     ],
                     "name": "card_text_stack",
@@ -9759,8 +9754,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "rotation": 0,
-                  "__gslide_manual_position": true
+                  "rotation": 0
                 },
                 {
                   "type": "text",

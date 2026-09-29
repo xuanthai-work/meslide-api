@@ -222,6 +222,7 @@ async def process_slide_and_fetch_assets(
                 normalize_slide_asset_url(PLACEHOLDER_IMAGE_URL),
                 template=template,
             )
+            image_parent["fit"] = "contain"
             set_dict_at_path(slide.content, image_path, image_parent)
             if image_warnings is not None:
                 image_warnings.append(
@@ -280,6 +281,7 @@ async def process_slide_and_fetch_assets(
                         normalize_slide_asset_url(PLACEHOLDER_IMAGE_URL),
                         template=template,
                     )
+                    image_dict["fit"] = "contain"
                     if image_warnings is not None:
                         image_warnings.append(
                             image_search_warning(result.failure_code)
@@ -295,6 +297,7 @@ async def process_slide_and_fetch_assets(
                     normalize_slide_asset_url("/static/images/placeholder.jpg"),
                     template=template,
                 )
+                image_dict["fit"] = "contain"
                 if image_warnings is not None and isinstance(result, Exception):
                     image_warnings.append(image_generation_warning(result))
                 set_dict_at_path(slide.content, asset_path, image_dict)
@@ -433,6 +436,7 @@ async def process_old_and_new_slides_and_fetch_assets(
                 normalize_slide_asset_url(PLACEHOLDER_IMAGE_URL),
                 template=use_template_asset_fields,
             )
+            new_image["fit"] = "contain"
             if image_warnings is not None:
                 image_warnings.append(
                     image_search_warning(IMAGE_SEARCH_NOT_CONFIGURED_CODE)
@@ -484,6 +488,7 @@ async def process_old_and_new_slides_and_fetch_assets(
                 target["fit"] = "contain"
             elif allow_image_fallback:
                 image_url = normalize_slide_asset_url(PLACEHOLDER_IMAGE_URL)
+                target["fit"] = "contain"
                 if image_warnings is not None:
                     image_warnings.append(
                         image_search_warning(fetched_image.failure_code)
@@ -498,6 +503,7 @@ async def process_old_and_new_slides_and_fetch_assets(
             if not allow_image_fallback:
                 raise fetched_image
             image_url = normalize_slide_asset_url("/static/images/placeholder.jpg")
+            target["fit"] = "contain"
             if image_warnings is not None and isinstance(fetched_image, Exception):
                 image_warnings.append(image_generation_warning(fetched_image))
         elif isinstance(fetched_image, ImageAsset):
@@ -547,6 +553,9 @@ def process_slide_add_placeholder_assets(slide: SlideModel):
             normalize_slide_asset_url("/static/images/placeholder.jpg"),
             template=template,
         )
+        # Placeholder images default to "contain" (Vừa khung) so the user sees
+        # the uncropped picture from the first streamed chunk.
+        image_dict["fit"] = "contain"
         set_dict_at_path(slide.content, image_path, image_dict)
 
     for icon_path in icon_paths:

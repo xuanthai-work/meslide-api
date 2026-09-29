@@ -3875,8 +3875,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -3969,8 +3968,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -4063,8 +4061,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -4157,8 +4154,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -7608,8 +7604,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -7648,8 +7643,7 @@
                             "x": 0,
                             "y": 43.36
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -7777,8 +7771,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -7817,8 +7810,7 @@
                             "x": 0,
                             "y": 55.21
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -7946,8 +7938,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -7986,8 +7977,7 @@
                             "x": 0,
                             "y": 43.36
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -8115,7 +8105,6 @@
                             "x": 9.62,
                             "y": 4.13
                           },
-                          "__gslide_manual_position": true,
                           "rotation": 0
                         },
                         {
@@ -8155,7 +8144,6 @@
                             "x": 9.62,
                             "y": 51.08
                           },
-                          "__gslide_manual_position": true,
                           "rotation": 0
                         }
                       ],
@@ -8284,8 +8272,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -8324,8 +8311,7 @@
                             "x": 0,
                             "y": 55.21
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -8453,8 +8439,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -8493,8 +8478,7 @@
                             "x": 0,
                             "y": 41.98
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -15741,8 +15725,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -15835,8 +15818,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -15929,8 +15911,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -16023,8 +16004,7 @@
                         "x": 0,
                         "y": 26.18
                       },
-                      "rotation": 0,
-                      "__gslide_manual_position": true
+                      "rotation": 0
                     }
                   ],
                   "name": "callout_section",
@@ -18728,8 +18708,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -18768,8 +18747,7 @@
                             "x": 0,
                             "y": 43.36
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -18897,8 +18875,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -18937,8 +18914,7 @@
                             "x": 0,
                             "y": 55.21
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -19066,8 +19042,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -19106,8 +19081,7 @@
                             "x": 0,
                             "y": 43.36
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -19235,7 +19209,6 @@
                             "x": 9.62,
                             "y": 4.13
                           },
-                          "__gslide_manual_position": true,
                           "rotation": 0
                         },
                         {
@@ -19275,7 +19248,6 @@
                             "x": 9.62,
                             "y": 51.08
                           },
-                          "__gslide_manual_position": true,
                           "rotation": 0
                         }
                       ],
@@ -19404,8 +19376,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -19444,8 +19415,7 @@
                             "x": 0,
                             "y": 55.21
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",
@@ -19573,8 +19543,7 @@
                             "x": 0,
                             "y": 0
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         },
                         {
                           "type": "text",
@@ -19613,8 +19582,7 @@
                             "x": 0,
                             "y": 41.98
                           },
-                          "rotation": 0,
-                          "__gslide_manual_position": true
+                          "rotation": 0
                         }
                       ],
                       "name": "callout_item",

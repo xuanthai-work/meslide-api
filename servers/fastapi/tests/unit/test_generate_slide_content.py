@@ -875,6 +875,29 @@ def test_safe_fit_text_uses_complete_sentence_not_raw_slice():
     assert result != _COVER_OUTLINE[:19]
 
 
+def test_long_vietnamese_statement_over_small_ceiling_is_not_cut():
+    text = "Triển khai các biện pháp kỹ thuật nhằm ổn định lại hệ thống"
+    assert len(text) == 59
+    schema = {"type": "string", "minLength": 20, "maxLength": 52}
+
+    result = generate_slide_content._apply_safe_fit_fallback(schema, text, [])
+
+    assert result == text
+    assert result.endswith("hệ thống")
+    assert result != "Triển khai các biện pháp kỹ thuật nhằm ổn định lại hệ"
+
+
+def test_vietnamese_heading_within_widened_ceiling_is_not_cut():
+    schema = {"type": "string", "minLength": 2, "maxLength": 20}
+
+    result = generate_slide_content._apply_safe_fit_fallback(
+        schema, "Cách xử lý", []
+    )
+
+    assert result == "Cách xử lý"
+    assert result != "Cách xử"
+
+
 def test_safe_fit_text_does_not_split_combining_marks():
     source = "Cafe\u0301 latte is a tasty drink for the whole table"
     result = generate_slide_content._safe_fit_text(source, 12, [source])

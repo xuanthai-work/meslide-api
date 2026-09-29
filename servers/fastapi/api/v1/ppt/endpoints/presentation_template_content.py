@@ -28,6 +28,25 @@ def _is_template_layout_payload(layout_payload: Any) -> bool:
     )
 
 
+def _apply_default_image_fit(element: Any) -> None:
+    """Force the default "contain" (Vừa khung) fit on image elements.
+
+    Recurses through components/elements/children so the very first SSE chunk
+    (which still carries placeholder assets) already renders images uncropped.
+    Icons, clipped (full-bleed background) images, and SVG assets are left
+    untouched by ``_normalize_generated_image_fit``.
+    """
+    if not isinstance(element, dict):
+        return
+    if element.get("type") == "image":
+        _normalize_generated_image_fit(element, element.get("data"))
+    for key in ("elements", "children"):
+        items = element.get(key)
+        if isinstance(items, list):
+            for child in items:
+                _apply_default_image_fit(child)
+
+
 def _template_slide_ui(
     layout_payload: Any,
     layout_id: str,
@@ -37,7 +56,12 @@ def _template_slide_ui(
 
     for layout in layout_payload["layouts"]:
         if isinstance(layout, dict) and str(layout.get("id")) == str(layout_id):
-            return copy.deepcopy(layout)
+            slide_ui = copy.deepcopy(layout)
+            components = slide_ui.get("components")
+            if isinstance(components, list):
+                for component in components:
+                    _apply_default_image_fit(component)
+            return slide_ui
     return None
 
 

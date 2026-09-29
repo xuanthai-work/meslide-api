@@ -2646,7 +2646,6 @@
                   "name": "list_item",
                   "max_length": 70,
                   "min_length": 5,
-                  "__gslide_manual_position": true,
                   "position": {
                     "x": 0,
                     "y": 0
@@ -14690,7 +14689,6 @@
                   "name": "list_item",
                   "max_length": 70,
                   "min_length": 5,
-                  "__gslide_manual_position": true,
                   "position": {
                     "x": 0,
                     "y": 0

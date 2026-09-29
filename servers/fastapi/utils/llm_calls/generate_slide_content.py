@@ -34,6 +34,12 @@ _VIETNAMESE_EM = 0.72
 _VIETNAMESE_BOLD_MULTIPLIER = 1.16
 _CJK_EM = 1.0
 _FIT_CAPACITY_RATIO = 0.95
+# Short heading fields keep their full ceiling. A Vietnamese compound word such
+# as "Cách xử lý" is longer than its English label, so tightening the schema of
+# a sub-16-character field would force a backend cut instead of letting the
+# frontend auto-fit the font. Fields of 16+ characters keep the established
+# visual tightening (the fit budget is still meaningful at that size).
+_SHORT_HEADING_MAX_LENGTH = 15
 _DISPLAY_FIELD_NAMES = {"title", "heading", "name", "metric", "label"}
 _VIETNAMESE_LETTERS = set(
     "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữ"
@@ -118,6 +124,10 @@ You need to generate structured content json based on the schema.
   longer answer and cut it to the limit. If an idea does not fit, rephrase it
   or omit lower-priority detail; never end with a partial word, partial
   sentence, dangling hyphen, or dangling conjunction.
+- For Vietnamese, headings, titles, and supporting statements must always be
+  complete, natural phrases or compound words (e.g. "Mục đích", "Cách xử lý",
+  "Kết luận"); never shorten them to unnatural single words like "Đích",
+  "Kết", or "Cách Xử".
 - Do not use emojis or $schema fields.
 - Follow the intended outcome of user instructions when they do not conflict with Slide
   Language; do not generalize or expand their scope.
@@ -476,7 +486,7 @@ def _tighten_string_ceilings_for_values(
     minimum = schema.get("minLength")
     if isinstance(maximum, int) and maximum > 0:
         safe_minimum = minimum if isinstance(minimum, int) else 0
-        if safe_minimum < maximum:
+        if safe_minimum < maximum and maximum > _SHORT_HEADING_MAX_LENGTH:
             schema_target = _content_fit_target(maximum, safe_minimum)
             visual_target = schema_target
             for candidate, candidate_path in values:
@@ -846,6 +856,17 @@ def _apply_safe_fit_fallback(
         min_length = minimum if isinstance(minimum, int) else 0
         if len(value) > maximum or _is_incomplete_visible_text(value, sources):
             fitted = _safe_fit_text(value, maximum, sources, min_length)
+            # A complete phrase that only barely overflows the ceiling keeps its
+            # full wording: the frontend canvas shrinks the font (auto-fit)
+            # instead of the backend chopping a Vietnamese compound in half
+            # ("hệ thống" -> "hệ"). Mid-word/incomplete cuts are still repaired.
+            if (
+                fitted
+                and len(value) > maximum
+                and not _is_incomplete_visible_text(value, sources)
+                and len(value) <= maximum * 1.3
+            ):
+                return value
             return fitted if fitted else value
         return value
 

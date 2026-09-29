@@ -964,7 +964,8 @@ def test_chat_template_image_content_stores_prompt():
     )
 
     assert image["data"] == "/app_data/images/dashboard.png"
-    assert image["fit"] == "cover"
+    # Generated photos default to "contain" (Vừa khung), never cropped to cover.
+    assert image["fit"] == "contain"
     assert image["prompt"] == "Analytics dashboard"
 
     contained_image = {
@@ -1003,7 +1004,7 @@ def test_chat_template_image_content_stores_prompt():
     )
 
     assert default_fit_image["data"] == "/app_data/images/customer-success.png"
-    assert default_fit_image["fit"] == "cover"
+    assert default_fit_image["fit"] == "contain"
 
     icon = {
         "type": "image",
@@ -1152,7 +1153,8 @@ def test_apply_template_image_content_avoids_stretching_generated_photos():
         0
     ]["elements"]
     assert hero_image["data"] == "/app_data/images/dashboard.png"
-    assert hero_image["fit"] == "cover"
+    # Content photos default to "contain"; only SVG/clipped assets keep fill.
+    assert hero_image["fit"] == "contain"
     assert contained_image["data"] == "/app_data/images/product.png"
     # Template elements that already declare "contain" keep it.
     assert contained_image["fit"] == "contain"

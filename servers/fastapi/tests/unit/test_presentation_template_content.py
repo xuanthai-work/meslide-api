@@ -72,3 +72,57 @@ def test_template_slide_ui_returns_none_for_unknown_layout():
     layout_payload = {"layouts": [{"id": "other"}]}
 
     assert _template_slide_ui(layout_payload, "layout-id") is None
+
+
+def test_template_slide_ui_defaults_content_images_to_contain():
+    layout_payload = {
+        "layouts": [
+            {
+                "id": "cover",
+                "components": [
+                    {
+                        "id": "hero",
+                        "elements": [
+                            {
+                                "type": "image",
+                                "name": "photo",
+                                "data": "/static/images/placeholder.jpg",
+                                "fit": "cover",
+                            },
+                            {
+                                "type": "image",
+                                "name": "badge",
+                                "data": "/static/icons/badge.svg",
+                                "is_icon": True,
+                            },
+                            {
+                                "type": "image",
+                                "name": "background",
+                                "data": "/static/images/bg.png",
+                                "fit": "fill",
+                                "clip_path": "path('M 0 0 L 1 1 Z')",
+                            },
+                            {
+                                "type": "image",
+                                "name": "diagram",
+                                "data": "/static/images/diagram.svg",
+                                "fit": "fill",
+                            },
+                        ],
+                    }
+                ],
+            }
+        ]
+    }
+
+    ui = _template_slide_ui(layout_payload, "cover")
+    photo, badge, background, diagram = ui["components"][0]["elements"]
+
+    # Content photo (even a previously "cover" one) becomes "contain".
+    assert photo["fit"] == "contain"
+    # Icons, clipped backgrounds, and SVG assets are left untouched.
+    assert "fit" not in badge
+    assert background["fit"] == "fill"
+    assert diagram["fit"] == "fill"
+    # The source payload is not mutated.
+    assert layout_payload["layouts"][0]["components"][0]["elements"][0]["fit"] == "cover"
