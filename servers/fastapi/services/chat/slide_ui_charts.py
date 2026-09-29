@@ -373,13 +373,15 @@ def _normalize_generated_image_fit(
     element: dict[str, Any],
     asset_url: str | None,
 ) -> None:
-    if element.get("is_icon") is True or element.get("fit") in ("cover", "contain"):
+    if element.get("is_icon") is True:
         return
     if _has_image_clip_path(element):
         return
     if _looks_like_svg_asset_reference(asset_url):
         return
-    element["fit"] = "cover"
+    # Default every generated/placeholder image to "contain" (Vừa khung) so the
+    # whole picture stays visible instead of being cropped to fill the frame.
+    element["fit"] = "contain"
 
 
 def _has_image_clip_path(element: dict[str, Any]) -> bool:

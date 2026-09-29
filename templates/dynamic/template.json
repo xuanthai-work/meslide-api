@@ -1404,8 +1404,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "rotation": 0,
-                  "__gslide_manual_position": true
+                  "rotation": 0
                 },
                 {
                   "type": "text",
@@ -1444,8 +1443,7 @@
                     "x": 0,
                     "y": 82.03
                   },
-                  "rotation": 0,
-                  "__gslide_manual_position": true
+                  "rotation": 0
                 }
               ],
               "name": "upper_text_column",
@@ -1629,8 +1627,8 @@
               ],
               "decorative": false,
               "name": "supporting_statement",
-              "max_length": 67,
-              "min_length": 52
+              "max_length": 90,
+              "min_length": 20
             }
           ]
         },
@@ -6861,8 +6859,8 @@
                       ],
                       "decorative": false,
                       "name": "card_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 20,
+                      "min_length": 2
                     },
                     {
                       "type": "text",
@@ -6964,8 +6962,8 @@
                       ],
                       "decorative": false,
                       "name": "card_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 20,
+                      "min_length": 2
                     },
                     {
                       "type": "text",
@@ -7066,8 +7064,8 @@
                       ],
                       "decorative": false,
                       "name": "card_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 20,
+                      "min_length": 2
                     },
                     {
                       "type": "text",
@@ -8908,8 +8906,8 @@
                   ],
                   "decorative": false,
                   "name": "card_heading",
-                  "max_length": 12,
-                  "min_length": 4
+                  "max_length": 20,
+                  "min_length": 2
                 },
                 {
                   "type": "text",
@@ -9036,8 +9034,8 @@
                   ],
                   "decorative": false,
                   "name": "card_heading",
-                  "max_length": 13,
-                  "min_length": 4
+                  "max_length": 20,
+                  "min_length": 2
                 },
                 {
                   "type": "text",
@@ -9164,8 +9162,8 @@
                   ],
                   "decorative": false,
                   "name": "card_heading",
-                  "max_length": 12,
-                  "min_length": 4
+                  "max_length": 20,
+                  "min_length": 2
                 },
                 {
                   "type": "text",
@@ -10824,8 +10822,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "rotation": 0,
-                  "__gslide_manual_position": true
+                  "rotation": 0
                 },
                 {
                   "type": "text",
@@ -10864,8 +10861,7 @@
                     "x": 0,
                     "y": 82.03
                   },
-                  "rotation": 0,
-                  "__gslide_manual_position": true
+                  "rotation": 0
                 }
               ],
               "name": "upper_text_column",
@@ -14699,8 +14695,8 @@
               ],
               "decorative": false,
               "name": "supporting_statement",
-              "max_length": 67,
-              "min_length": 52
+              "max_length": 90,
+              "min_length": 20
             }
           ]
         },
@@ -14786,8 +14782,8 @@
                       ],
                       "decorative": false,
                       "name": "card_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 20,
+                      "min_length": 2
                     },
                     {
                       "type": "text",
@@ -14889,8 +14885,8 @@
                       ],
                       "decorative": false,
                       "name": "card_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 20,
+                      "min_length": 2
                     },
                     {
                       "type": "text",
@@ -14991,8 +14987,8 @@
                       ],
                       "decorative": false,
                       "name": "card_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 20,
+                      "min_length": 2
                     },
                     {
                       "type": "text",
@@ -17968,8 +17964,8 @@
                   ],
                   "decorative": false,
                   "name": "card_heading",
-                  "max_length": 12,
-                  "min_length": 4
+                  "max_length": 20,
+                  "min_length": 2
                 },
                 {
                   "type": "text",
@@ -18096,8 +18092,8 @@
                   ],
                   "decorative": false,
                   "name": "card_heading",
-                  "max_length": 13,
-                  "min_length": 4
+                  "max_length": 20,
+                  "min_length": 2
                 },
                 {
                   "type": "text",
@@ -18224,8 +18220,8 @@
                   ],
                   "decorative": false,
                   "name": "card_heading",
-                  "max_length": 12,
-                  "min_length": 4
+                  "max_length": 20,
+                  "min_length": 2
                 },
                 {
                   "type": "text",

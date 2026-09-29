@@ -479,19 +479,38 @@ async def stream_presentation(
             slide_layout = layout.slides[slide_layout_index]
 
             try:
-                slide_content = await get_slide_content_from_type_and_outline(
-                    slide_layout,
-                    outline.slides[i],
-                    presentation.language,
-                    presentation.tone,
-                    presentation.verbosity,
-                    presentation.instructions,
-                    slide_number=i + 1,
-                    disconnect_checker=(
-                        request.is_disconnected if request is not None else None
-                    ),
-                    web_search=presentation.web_search,
-                )
+                slide_content = None
+                for attempt in range(3):
+                    try:
+                        slide_content = await get_slide_content_from_type_and_outline(
+                            slide_layout,
+                            outline.slides[i],
+                            presentation.language,
+                            presentation.tone,
+                            presentation.verbosity,
+                            presentation.instructions,
+                            slide_number=i + 1,
+                            disconnect_checker=(
+                                request.is_disconnected
+                                if request is not None
+                                else None
+                            ),
+                            web_search=presentation.web_search,
+                        )
+                        break
+                    except asyncio.CancelledError:
+                        raise
+                    except Exception as exc:
+                        logger.warning(
+                            "[presentation.stream] Retry LLM slide generation "
+                            "%s/3 for slide %s: %s",
+                            attempt + 1,
+                            i,
+                            exc,
+                        )
+                        if attempt == 2:
+                            raise exc
+                        await asyncio.sleep(1.0 * (attempt + 1))
             except HTTPException as e:
                 yield SSEErrorResponse(
                     detail=e.detail,

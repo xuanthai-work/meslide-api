@@ -168,7 +168,9 @@ def test_stream_commits_a_finished_slide_before_the_next_llm_call():
 
     chunks = _consume(session, fake_slide_content)
 
-    assert slide_calls == 2
+    # One successful call for slide 0, then the server-side retry policy
+    # re-attempts the failing slide 3 times before propagating the error.
+    assert slide_calls == 4
     assert "LLM died" in "".join(chunks)
     assert any(isinstance(obj, SlideModel) and obj.index == 0 for obj in session.added)
     assert session.commit_count >= 1
@@ -209,7 +211,8 @@ def test_retry_after_llm_failure_only_calls_llm_for_the_missing_slide():
 
     first_chunks = _consume(session, fail_on_second_slide)
     assert "LLM died" in "".join(first_chunks)
-    assert first_attempt_calls == 2
+    # Slide 0 succeeds; slide 1 is retried 3 times before the error propagates.
+    assert first_attempt_calls == 4
 
     persisted_slides = [
         obj for obj in session.added if isinstance(obj, SlideModel)
