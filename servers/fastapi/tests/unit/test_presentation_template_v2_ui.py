@@ -984,7 +984,8 @@ def test_chat_template_image_content_stores_prompt():
     )
 
     assert contained_image["data"] == "/app_data/images/planning.png"
-    assert contained_image["fit"] == "cover"
+    # An explicit "contain" is preserved, never forced back to "cover".
+    assert contained_image["fit"] == "contain"
 
     default_fit_image = {
         "type": "image",
@@ -1023,6 +1024,28 @@ def test_chat_template_image_content_stores_prompt():
     assert icon["data"] == "/icons/check.svg"
     assert icon["fit"] == "fill"
     assert icon["prompt"] == "success check"
+
+
+def test_chat_template_image_content_respects_explicit_fit():
+    image = {
+        "type": "image",
+        "decorative": False,
+        "name": "hero_image",
+        "data": "/old-image.png",
+        "fit": "cover",
+        "is_icon": False,
+    }
+    PresentationChatMemoryLayer._set_template_element_value(
+        image,
+        {
+            "image_prompt": "A wide landscape",
+            "image_url": "/app_data/images/landscape.png",
+            "fit": "contain",
+        },
+    )
+
+    assert image["data"] == "/app_data/images/landscape.png"
+    assert image["fit"] == "contain"
 
 
 def test_chat_template_infographic_content_updates_new_element_type():
@@ -1131,11 +1154,31 @@ def test_apply_template_image_content_avoids_stretching_generated_photos():
     assert hero_image["data"] == "/app_data/images/dashboard.png"
     assert hero_image["fit"] == "cover"
     assert contained_image["data"] == "/app_data/images/product.png"
-    assert contained_image["fit"] == "cover"
+    # Template elements that already declare "contain" keep it.
+    assert contained_image["fit"] == "contain"
     assert vector_image["data"] == "/app_data/images/diagram.svg"
     assert vector_image["fit"] == "fill"
     assert clipped_image["data"] == "/app_data/images/freeform.png"
     assert clipped_image["fit"] == "fill"
+
+
+def test_apply_template_image_content_respects_explicit_fit():
+    element = {
+        "type": "image",
+        "decorative": False,
+        "name": "hero_image",
+        "data": "/static/images/replaceable_template_image.png",
+        "fit": "cover",
+        "is_icon": False,
+    }
+
+    updated = presentation_template_content._apply_template_image_content(
+        element,
+        {"image_url": "/app_data/images/photo.png", "fit": "contain"},
+    )
+
+    assert updated["data"] == "/app_data/images/photo.png"
+    assert updated["fit"] == "contain"
 
 
 def test_apply_template_content_to_ui_uses_raw_schema_icon_query_url():

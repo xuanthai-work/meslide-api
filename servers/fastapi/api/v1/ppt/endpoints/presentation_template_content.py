@@ -371,7 +371,11 @@ def _apply_template_image_content(
 
     updated = copy.deepcopy(element)
     updated["data"] = url
-    _normalize_generated_image_fit(updated, url)
+    fit_value = value.get("fit")
+    if isinstance(fit_value, str) and fit_value in ("contain", "cover", "fill"):
+        updated["fit"] = fit_value
+    else:
+        _normalize_generated_image_fit(updated, url)
     prompt = template_asset_prompt(value, is_icon=element.get("is_icon") is True)
     if prompt:
         updated["prompt"] = prompt

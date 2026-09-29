@@ -197,6 +197,10 @@ async def process_slide_and_fetch_assets(
                 normalize_slide_asset_url(outline_image_urls[image_index]),
                 template=template,
             )
+            if web_search:
+                # Web-search images default to "contain" so the whole picture
+                # is visible instead of being cropped to fill the frame.
+                image_parent["fit"] = "contain"
             set_dict_at_path(slide.content, image_path, image_parent)
             continue
 
@@ -260,6 +264,9 @@ async def process_slide_and_fetch_assets(
                         filesystem_image_path_to_app_data_url(result.asset.path),
                         template=template,
                     )
+                    # SearXNG-sourced photos default to "contain" (Vừa khung)
+                    # so the full image shows without cropping.
+                    image_dict["fit"] = "contain"
                 else:
                     if not allow_image_fallback:
                         raise CodedHTTPException(
@@ -473,6 +480,8 @@ async def process_old_and_new_slides_and_fetch_assets(
                 image_url = filesystem_image_path_to_app_data_url(
                     fetched_image.asset.path
                 )
+                # SearXNG-sourced photos default to "contain" (Vừa khung).
+                target["fit"] = "contain"
             elif allow_image_fallback:
                 image_url = normalize_slide_asset_url(PLACEHOLDER_IMAGE_URL)
                 if image_warnings is not None:

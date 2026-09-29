@@ -176,6 +176,8 @@ def test_search_mode_searches_and_never_generates(monkeypatch):
     assert generation_service.prompts == []
     assert len(assets) == 1
     assert slide.content["hero"]["image_url"] == "/app_data/images/imported.jpeg"
+    # SearXNG-sourced photos default to "contain" so nothing is cropped.
+    assert slide.content["hero"]["fit"] == "contain"
 
 
 def test_search_failure_places_placeholder_and_coded_warning(monkeypatch):
@@ -291,6 +293,8 @@ def test_outline_url_bypasses_search_and_generation(monkeypatch):
     )
 
     assert slide.content["hero"]["image_url"] == "https://source.example.org/photo.jpg"
+    # Web-search outline images also default to "contain".
+    assert slide.content["hero"]["fit"] == "contain"
     assert search_service.queries == []
     assert generation_service.prompts == []
 
@@ -457,6 +461,8 @@ def test_old_and_new_searches_changed_query(monkeypatch):
     assert search_service.queries == ["Hanoi skyline"]
     assert new_content["hero"]["image_url"] == "/app_data/images/imported.jpeg"
     assert len(assets) == 1
+    # Regenerated slides fetch through SearXNG, so they default to "contain".
+    assert new_content["hero"]["fit"] == "contain"
 
 
 def test_old_and_new_unconfigured_warning(monkeypatch):
