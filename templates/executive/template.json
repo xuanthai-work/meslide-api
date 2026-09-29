@@ -6427,7 +6427,7 @@
               },
               "size": {
                 "width": 524.34,
-                "height": 126.92
+                "height": 70
               },
               "rotation": 0,
               "font": {
@@ -7404,7 +7404,7 @@
                         },
                         "size": {
                           "width": 250,
-                          "height": 80.27
+                          "height": 20
                         },
                         "rotation": 0,
                         "font": {
@@ -7542,7 +7542,7 @@
                         "type": "text",
                         "size": {
                           "width": 183,
-                          "height": 92
+                          "height": 19
                         },
                         "font": {
                           "size": 12.5,
@@ -20662,7 +20662,7 @@
                         },
                         "size": {
                           "width": 250,
-                          "height": 80.27
+                          "height": 20
                         },
                         "rotation": 0,
                         "font": {
@@ -21855,7 +21855,7 @@
                         "type": "text",
                         "size": {
                           "width": 183,
-                          "height": 92
+                          "height": 19
                         },
                         "font": {
                           "size": 12.5,
@@ -25888,7 +25888,7 @@
               },
               "size": {
                 "width": 524.34,
-                "height": 126.92
+                "height": 70
               },
               "rotation": 0,
               "font": {

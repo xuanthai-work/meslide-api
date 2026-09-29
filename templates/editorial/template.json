@@ -1406,7 +1406,7 @@
               },
               "size": {
                 "width": 383.31,
-                "height": 118.94
+                "height": 60
               },
               "font": {
                 "size": 47.16,
@@ -3842,7 +3842,7 @@
                       "type": "text",
                       "size": {
                         "width": 261.14,
-                        "height": 68.54
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -3935,7 +3935,7 @@
                       "type": "text",
                       "size": {
                         "width": 259.74,
-                        "height": 69.92
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -4028,7 +4028,7 @@
                       "type": "text",
                       "size": {
                         "width": 261.14,
-                        "height": 72.67
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -4121,7 +4121,7 @@
                       "type": "text",
                       "size": {
                         "width": 259.74,
-                        "height": 71.29
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -7569,7 +7569,7 @@
                           "type": "text",
                           "size": {
                             "width": 278.57,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -7736,7 +7736,7 @@
                           "type": "text",
                           "size": {
                             "width": 276.09,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -7777,7 +7777,7 @@
                           "type": "text",
                           "size": {
                             "width": 273.5,
-                            "height": 61.51
+                            "height": 59
                           },
                           "font": {
                             "size": 15.15,
@@ -7903,7 +7903,7 @@
                           "type": "text",
                           "size": {
                             "width": 268.96,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -8070,7 +8070,7 @@
                           "type": "text",
                           "size": {
                             "width": 295.6,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -8237,7 +8237,7 @@
                           "type": "text",
                           "size": {
                             "width": 262.61,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -15110,7 +15110,7 @@
               },
               "size": {
                 "width": 383.31,
-                "height": 118.94
+                "height": 60
               },
               "font": {
                 "size": 47.16,
@@ -15692,7 +15692,7 @@
                       "type": "text",
                       "size": {
                         "width": 261.14,
-                        "height": 68.54
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -15785,7 +15785,7 @@
                       "type": "text",
                       "size": {
                         "width": 259.74,
-                        "height": 69.92
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -15878,7 +15878,7 @@
                       "type": "text",
                       "size": {
                         "width": 261.14,
-                        "height": 72.67
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -15971,7 +15971,7 @@
                       "type": "text",
                       "size": {
                         "width": 259.74,
-                        "height": 71.29
+                        "height": 57
                       },
                       "font": {
                         "size": 16.04,
@@ -18673,7 +18673,7 @@
                           "type": "text",
                           "size": {
                             "width": 278.57,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -18840,7 +18840,7 @@
                           "type": "text",
                           "size": {
                             "width": 276.09,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -18881,7 +18881,7 @@
                           "type": "text",
                           "size": {
                             "width": 273.5,
-                            "height": 61.51
+                            "height": 59
                           },
                           "font": {
                             "size": 15.15,
@@ -19007,7 +19007,7 @@
                           "type": "text",
                           "size": {
                             "width": 268.96,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -19174,7 +19174,7 @@
                           "type": "text",
                           "size": {
                             "width": 295.6,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,
@@ -19341,7 +19341,7 @@
                           "type": "text",
                           "size": {
                             "width": 262.61,
-                            "height": 41.51
+                            "height": 21
                           },
                           "font": {
                             "size": 17.81,

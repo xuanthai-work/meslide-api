@@ -987,7 +987,7 @@
                   "type": "text",
                   "size": {
                     "width": 530,
-                    "height": 140
+                    "height": 112
                   },
                   "font": {
                     "size": 18,
@@ -16557,7 +16557,7 @@
                   "type": "text",
                   "size": {
                     "width": 530,
-                    "height": 140
+                    "height": 112
                   },
                   "font": {
                     "size": 18,
