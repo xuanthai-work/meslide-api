@@ -1186,11 +1186,11 @@
                 "height": 219.33
               },
               "font": {
-                "size": 106.67,
+                "size": 72,
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "center",
@@ -1200,11 +1200,11 @@
                 {
                   "text": "SMART TASK \nMANAGEMENT PLATFORM",
                   "font": {
-                    "size": 106.67,
+                    "size": 72,
                     "family": "Anton",
                     "color": "#000000",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -1279,7 +1279,7 @@
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 1.03,
+                "line_height": 1.15,
                 "letter_spacing": -0.55
               },
               "alignment": {
@@ -1296,7 +1296,7 @@
                     "bold": true,
                     "italic": false,
                     "underline": false,
-                    "line_height": 1.03,
+                    "line_height": 1.15,
                     "letter_spacing": -0.55,
                     "opacity": 1
                   }
@@ -2409,7 +2409,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 97.78,
+                "size": 72,
                 "family": "Anton",
                 "color": "#000000",
                 "line_height": 1.4
@@ -2422,7 +2422,7 @@
                 {
                   "text": "AGENDA",
                   "font": {
-                    "size": 97.78,
+                    "size": 72,
                     "family": "Anton",
                     "color": "#000000",
                     "line_height": 1.4
@@ -2722,7 +2722,7 @@
                   ],
                   "decorative": true,
                   "name": "footer_label",
-                  "max_length": 8,
+                  "max_length": 25,
                   "min_length": 2
                 },
                 {
@@ -2811,7 +2811,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -2902,7 +2902,7 @@
                   ],
                   "decorative": true,
                   "name": "footer_label",
-                  "max_length": 4,
+                  "max_length": 25,
                   "min_length": 2
                 },
                 {
@@ -2991,7 +2991,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3079,7 +3079,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3167,7 +3167,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3314,7 +3314,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3402,7 +3402,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 8,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3637,7 +3637,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3790,7 +3790,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3878,7 +3878,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -3982,7 +3982,7 @@
               ],
               "decorative": false,
               "name": "pagination_label",
-              "max_length": 7,
+              "max_length": 25,
               "min_length": 3
             }
           ]
@@ -4032,7 +4032,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4186,7 +4186,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4333,7 +4333,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4432,7 +4432,7 @@
                   ],
                   "decorative": true,
                   "name": "footer_label",
-                  "max_length": 4,
+                  "max_length": 25,
                   "min_length": 2
                 },
                 {
@@ -4523,7 +4523,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 8,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4670,7 +4670,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4758,7 +4758,7 @@
               ],
               "decorative": true,
               "name": "footer_label_text",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4846,7 +4846,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -4934,7 +4934,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -5088,7 +5088,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -5361,7 +5361,7 @@
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 0.99,
+                "line_height": 1.15,
                 "letter_spacing": -0.5
               },
               "alignment": {
@@ -5378,7 +5378,7 @@
                     "bold": true,
                     "italic": false,
                     "underline": false,
-                    "line_height": 0.99,
+                    "line_height": 1.15,
                     "letter_spacing": -0.5,
                     "opacity": 1
                   }
@@ -7254,8 +7254,8 @@
                           ],
                           "decorative": false,
                           "name": "card_heading",
-                          "max_length": 9,
-                          "min_length": 5
+                          "max_length": 25,
+                          "min_length": 3
                         },
                         {
                           "type": "text",
@@ -7393,8 +7393,8 @@
                         ],
                         "decorative": false,
                         "name": "card_title",
-                        "max_length": 9,
-                        "min_length": 5
+                        "max_length": 25,
+                        "min_length": 3
                       },
                       {
                         "type": "text",
@@ -7432,8 +7432,8 @@
                         ],
                         "decorative": false,
                         "name": "card_title",
-                        "max_length": 9,
-                        "min_length": 5
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     ],
                     "name": "card_text_stack",
@@ -8102,8 +8102,8 @@
                         ],
                         "decorative": false,
                         "name": "stage_label",
-                        "max_length": 9,
-                        "min_length": 5
+                        "max_length": 25,
+                        "min_length": 3
                       },
                       {
                         "type": "text",
@@ -9039,7 +9039,7 @@
                       ],
                       "decorative": false,
                       "name": "feature_badge_label",
-                      "max_length": 2,
+                      "max_length": 25,
                       "min_length": 1
                     },
                     {
@@ -9968,8 +9968,8 @@
                       ],
                       "decorative": false,
                       "name": "metric_label",
-                      "max_length": 11,
-                      "min_length": 6
+                      "max_length": 28,
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -10590,8 +10590,8 @@
                             ],
                             "decorative": false,
                             "name": "card_title",
-                            "max_length": 9,
-                            "min_length": 5
+                            "max_length": 25,
+                            "min_length": 3
                           },
                           {
                             "type": "text",
@@ -10705,8 +10705,8 @@
                             ],
                             "decorative": false,
                             "name": "card_title",
-                            "max_length": 9,
-                            "min_length": 5
+                            "max_length": 25,
+                            "min_length": 3
                           },
                           {
                             "type": "text",
@@ -11363,8 +11363,8 @@
               ],
               "decorative": false,
               "name": "card_heading",
-              "max_length": 11,
-              "min_length": 6
+              "max_length": 28,
+              "min_length": 3
             },
             {
               "type": "text",
@@ -11510,7 +11510,7 @@
                 "height": 283
               },
               "font": {
-                "size": 207.1,
+                "size": 64,
                 "family": "Montserrat Bold",
                 "color": "#8958F4",
                 "bold": true,
@@ -11525,7 +11525,7 @@
                 {
                   "text": "“",
                   "font": {
-                    "size": 207.1,
+                    "size": 64,
                     "family": "Montserrat Bold",
                     "color": "#8958F4",
                     "bold": true,
@@ -14240,11 +14240,11 @@
                 "height": 219.33
               },
               "font": {
-                "size": 106.67,
+                "size": 72,
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 1
+                "line_height": 1.15
               },
               "alignment": {
                 "horizontal": "center",
@@ -14254,11 +14254,11 @@
                 {
                   "text": "SMART TASK \nMANAGEMENT PLATFORM",
                   "font": {
-                    "size": 106.67,
+                    "size": 72,
                     "family": "Anton",
                     "color": "#000000",
                     "bold": true,
-                    "line_height": 1
+                    "line_height": 1.15
                   }
                 }
               ],
@@ -14591,7 +14591,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 97.78,
+                "size": 72,
                 "family": "Anton",
                 "color": "#000000",
                 "line_height": 1.4
@@ -14604,7 +14604,7 @@
                 {
                   "text": "AGENDA",
                   "font": {
-                    "size": 97.78,
+                    "size": 72,
                     "family": "Anton",
                     "color": "#000000",
                     "line_height": 1.4
@@ -14759,7 +14759,7 @@
                   ],
                   "decorative": true,
                   "name": "footer_label",
-                  "max_length": 8,
+                  "max_length": 25,
                   "min_length": 2
                 },
                 {
@@ -14905,7 +14905,7 @@
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 0.99,
+                "line_height": 1.15,
                 "letter_spacing": -0.5
               },
               "alignment": {
@@ -14922,7 +14922,7 @@
                     "bold": true,
                     "italic": false,
                     "underline": false,
-                    "line_height": 0.99,
+                    "line_height": 1.15,
                     "letter_spacing": -0.5,
                     "opacity": 1
                   }
@@ -15051,7 +15051,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -15414,7 +15414,7 @@
                   ],
                   "decorative": true,
                   "name": "footer_label",
-                  "max_length": 4,
+                  "max_length": 25,
                   "min_length": 2
                 },
                 {
@@ -15777,7 +15777,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -16207,7 +16207,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -16413,7 +16413,7 @@
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 1.03,
+                "line_height": 1.15,
                 "letter_spacing": -0.55
               },
               "alignment": {
@@ -16430,7 +16430,7 @@
                     "bold": true,
                     "italic": false,
                     "underline": false,
-                    "line_height": 1.03,
+                    "line_height": 1.15,
                     "letter_spacing": -0.55,
                     "opacity": 1
                   }
@@ -16958,7 +16958,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -17846,7 +17846,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -18211,7 +18211,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 8,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -19130,8 +19130,8 @@
                       ],
                       "decorative": false,
                       "name": "metric_label",
-                      "max_length": 11,
-                      "min_length": 6
+                      "max_length": 28,
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -19416,8 +19416,8 @@
                           ],
                           "decorative": false,
                           "name": "card_heading",
-                          "max_length": 9,
-                          "min_length": 5
+                          "max_length": 25,
+                          "min_length": 3
                         },
                         {
                           "type": "text",
@@ -19565,7 +19565,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -19911,7 +19911,7 @@
                       ],
                       "decorative": false,
                       "name": "feature_badge_label",
-                      "max_length": 2,
+                      "max_length": 25,
                       "min_length": 1
                     },
                     {
@@ -20328,7 +20328,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -20651,8 +20651,8 @@
                         ],
                         "decorative": false,
                         "name": "card_title",
-                        "max_length": 9,
-                        "min_length": 5
+                        "max_length": 25,
+                        "min_length": 3
                       },
                       {
                         "type": "text",
@@ -20690,8 +20690,8 @@
                         ],
                         "decorative": false,
                         "name": "card_title",
-                        "max_length": 9,
-                        "min_length": 5
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     ],
                     "name": "card_text_stack",
@@ -20751,7 +20751,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -21056,8 +21056,8 @@
                             ],
                             "decorative": false,
                             "name": "card_title",
-                            "max_length": 9,
-                            "min_length": 5
+                            "max_length": 25,
+                            "min_length": 3
                           },
                           {
                             "type": "text",
@@ -21171,8 +21171,8 @@
                             ],
                             "decorative": false,
                             "name": "card_title",
-                            "max_length": 9,
-                            "min_length": 5
+                            "max_length": 25,
+                            "min_length": 3
                           },
                           {
                             "type": "text",
@@ -21337,7 +21337,7 @@
               ],
               "decorative": false,
               "name": "pagination_label",
-              "max_length": 7,
+              "max_length": 25,
               "min_length": 3
             }
           ]
@@ -21718,7 +21718,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -22471,8 +22471,8 @@
               ],
               "decorative": false,
               "name": "card_heading",
-              "max_length": 11,
-              "min_length": 6
+              "max_length": 28,
+              "min_length": 3
             },
             {
               "type": "text",
@@ -22611,7 +22611,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -22727,7 +22727,7 @@
                 "height": 283
               },
               "font": {
-                "size": 207.1,
+                "size": 64,
                 "family": "Montserrat Bold",
                 "color": "#8958F4",
                 "bold": true,
@@ -22742,7 +22742,7 @@
                 {
                   "text": "“",
                   "font": {
-                    "size": 207.1,
+                    "size": 64,
                     "family": "Montserrat Bold",
                     "color": "#8958F4",
                     "bold": true,
@@ -23132,7 +23132,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -23502,7 +23502,7 @@
                   ],
                   "decorative": true,
                   "name": "footer_label",
-                  "max_length": 4,
+                  "max_length": 25,
                   "min_length": 2
                 },
                 {
@@ -24586,7 +24586,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 8,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -25396,8 +25396,8 @@
                         ],
                         "decorative": false,
                         "name": "stage_label",
-                        "max_length": 9,
-                        "min_length": 5
+                        "max_length": 25,
+                        "min_length": 3
                       },
                       {
                         "type": "text",
@@ -25536,7 +25536,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -25796,7 +25796,7 @@
               ],
               "decorative": true,
               "name": "footer_label_text",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -26154,7 +26154,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -26498,7 +26498,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {
@@ -27966,7 +27966,7 @@
               ],
               "decorative": true,
               "name": "footer_label",
-              "max_length": 4,
+              "max_length": 25,
               "min_length": 2
             },
             {

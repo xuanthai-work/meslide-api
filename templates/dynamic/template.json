@@ -2470,12 +2470,12 @@
                             "height": 103.91
                           },
                           "font": {
-                            "size": 97.78,
+                            "size": 72,
                             "family": "Montserrat Semi-Bold",
                             "color": "#FD7536",
                             "bold": true,
-                            "line_height": 1.01,
-                            "letter_spacing": -4.3
+                            "line_height": 1.15,
+                            "letter_spacing": -0.5
                           },
                           "alignment": {
                             "horizontal": "center",
@@ -2485,12 +2485,12 @@
                             {
                               "text": "01",
                               "font": {
-                                "size": 97.78,
+                                "size": 72,
                                 "family": "Montserrat Semi-Bold",
                                 "color": "#FD7536",
                                 "bold": true,
-                                "line_height": 1.01,
-                                "letter_spacing": -4.3
+                                "line_height": 1.15,
+                                "letter_spacing": -0.5
                               }
                             }
                           ],
@@ -4771,7 +4771,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.21
                       },
                       "alignment": {
@@ -4786,15 +4786,15 @@
                             "family": "Montserrat Medium",
                             "color": "#FFFFFF",
                             "bold": true,
-                            "line_height": 1.01,
+                            "line_height": 1.3,
                             "letter_spacing": -0.21
                           }
                         }
                       ],
                       "decorative": false,
                       "name": "item_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 25,
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -4827,8 +4827,8 @@
                       ],
                       "decorative": false,
                       "name": "item_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 25,
+                      "min_length": 3
                     }
                   ],
                   "name": "summary_item_top",
@@ -7197,7 +7197,7 @@
                       ],
                       "decorative": false,
                       "name": "card_value_label",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     },
                     {
@@ -7299,7 +7299,7 @@
                       ],
                       "decorative": false,
                       "name": "card_value_label",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     },
                     {
@@ -7401,7 +7401,7 @@
                       ],
                       "decorative": false,
                       "name": "card_value_label",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     },
                     {
@@ -7928,8 +7928,8 @@
                       ],
                       "decorative": false,
                       "name": "row_heading_text",
-                      "max_length": 12,
-                      "min_length": 4
+                      "max_length": 30,
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -8054,8 +8054,8 @@
                       ],
                       "decorative": false,
                       "name": "item_label",
-                      "max_length": 12,
-                      "min_length": 4
+                      "max_length": 30,
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -8884,7 +8884,7 @@
                     "family": "Montserrat Medium",
                     "color": "#FFFFFF",
                     "bold": true,
-                    "line_height": 1.01,
+                    "line_height": 1.3,
                     "letter_spacing": -0.17
                   },
                   "alignment": {
@@ -8899,7 +8899,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.17
                       }
                     }
@@ -9012,7 +9012,7 @@
                     "family": "Montserrat Medium",
                     "color": "#FFFFFF",
                     "bold": true,
-                    "line_height": 1.01,
+                    "line_height": 1.3,
                     "letter_spacing": -0.17
                   },
                   "alignment": {
@@ -9027,7 +9027,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.17
                       }
                     }
@@ -9140,7 +9140,7 @@
                     "family": "Montserrat Medium",
                     "color": "#FFFFFF",
                     "bold": true,
-                    "line_height": 1.01,
+                    "line_height": 1.3,
                     "letter_spacing": -0.17
                   },
                   "alignment": {
@@ -9155,7 +9155,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.17
                       }
                     }
@@ -9913,7 +9913,7 @@
               ],
               "decorative": false,
               "name": "first_row_title",
-              "max_length": 12,
+              "max_length": 30,
               "min_length": 1
             },
             {
@@ -10073,7 +10073,7 @@
               ],
               "decorative": false,
               "name": "second_row_title",
-              "max_length": 12,
+              "max_length": 30,
               "min_length": 3
             },
             {
@@ -10233,8 +10233,8 @@
               ],
               "decorative": false,
               "name": "third_row_title",
-              "max_length": 12,
-              "min_length": 4
+              "max_length": 30,
+              "min_length": 3
             },
             {
               "type": "text",
@@ -11112,12 +11112,12 @@
                             "height": 103.91
                           },
                           "font": {
-                            "size": 97.78,
+                            "size": 72,
                             "family": "Montserrat Semi-Bold",
                             "color": "#FD7536",
                             "bold": true,
-                            "line_height": 1.01,
-                            "letter_spacing": -4.3
+                            "line_height": 1.15,
+                            "letter_spacing": -0.5
                           },
                           "alignment": {
                             "horizontal": "center",
@@ -11127,12 +11127,12 @@
                             {
                               "text": "01",
                               "font": {
-                                "size": 97.78,
+                                "size": 72,
                                 "family": "Montserrat Semi-Bold",
                                 "color": "#FD7536",
                                 "bold": true,
-                                "line_height": 1.01,
-                                "letter_spacing": -4.3
+                                "line_height": 1.15,
+                                "letter_spacing": -0.5
                               }
                             }
                           ],
@@ -12168,7 +12168,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.21
                       },
                       "alignment": {
@@ -12183,15 +12183,15 @@
                             "family": "Montserrat Medium",
                             "color": "#FFFFFF",
                             "bold": true,
-                            "line_height": 1.01,
+                            "line_height": 1.3,
                             "letter_spacing": -0.21
                           }
                         }
                       ],
                       "decorative": false,
                       "name": "item_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 25,
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -12224,8 +12224,8 @@
                       ],
                       "decorative": false,
                       "name": "item_heading",
-                      "max_length": 7,
-                      "min_length": 4
+                      "max_length": 25,
+                      "min_length": 3
                     }
                   ],
                   "name": "summary_item_top",
@@ -16184,8 +16184,8 @@
                       ],
                       "decorative": false,
                       "name": "row_heading_text",
-                      "max_length": 12,
-                      "min_length": 4
+                      "max_length": 30,
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -16426,8 +16426,8 @@
                       ],
                       "decorative": false,
                       "name": "item_label",
-                      "max_length": 12,
-                      "min_length": 4
+                      "max_length": 30,
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -17942,7 +17942,7 @@
                     "family": "Montserrat Medium",
                     "color": "#FFFFFF",
                     "bold": true,
-                    "line_height": 1.01,
+                    "line_height": 1.3,
                     "letter_spacing": -0.17
                   },
                   "alignment": {
@@ -17957,7 +17957,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.17
                       }
                     }
@@ -18070,7 +18070,7 @@
                     "family": "Montserrat Medium",
                     "color": "#FFFFFF",
                     "bold": true,
-                    "line_height": 1.01,
+                    "line_height": 1.3,
                     "letter_spacing": -0.17
                   },
                   "alignment": {
@@ -18085,7 +18085,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.17
                       }
                     }
@@ -18198,7 +18198,7 @@
                     "family": "Montserrat Medium",
                     "color": "#FFFFFF",
                     "bold": true,
-                    "line_height": 1.01,
+                    "line_height": 1.3,
                     "letter_spacing": -0.17
                   },
                   "alignment": {
@@ -18213,7 +18213,7 @@
                         "family": "Montserrat Medium",
                         "color": "#FFFFFF",
                         "bold": true,
-                        "line_height": 1.01,
+                        "line_height": 1.3,
                         "letter_spacing": -0.17
                       }
                     }
@@ -19003,7 +19003,7 @@
                       ],
                       "decorative": false,
                       "name": "card_value_label",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     },
                     {
@@ -19105,7 +19105,7 @@
                       ],
                       "decorative": false,
                       "name": "card_value_label",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     },
                     {
@@ -19207,7 +19207,7 @@
                       ],
                       "decorative": false,
                       "name": "card_value_label",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     },
                     {
@@ -20213,7 +20213,7 @@
               ],
               "decorative": false,
               "name": "first_row_title",
-              "max_length": 12,
+              "max_length": 30,
               "min_length": 1
             },
             {
@@ -20373,7 +20373,7 @@
               ],
               "decorative": false,
               "name": "second_row_title",
-              "max_length": 12,
+              "max_length": 30,
               "min_length": 3
             },
             {
@@ -20533,8 +20533,8 @@
               ],
               "decorative": false,
               "name": "third_row_title",
-              "max_length": 12,
-              "min_length": 4
+              "max_length": 30,
+              "min_length": 3
             },
             {
               "type": "text",
