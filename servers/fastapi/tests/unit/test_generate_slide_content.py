@@ -244,7 +244,7 @@ def test_content_fit_issues_find_saturated_nested_text_but_ignore_notes():
     ]
 
 
-def test_content_fit_issues_flag_vietnamese_under_max_length():
+def test_content_fit_issues_do_not_flag_natural_vietnamese_under_max_length():
     schema = {
         "type": "object",
         "properties": {
@@ -261,9 +261,9 @@ def test_content_fit_issues_flag_vietnamese_under_max_length():
             "__speaker_note__": "0123456789",
         },
     )
-    assert any("$.title" in issue and "visually" in issue for issue in issues)
-    assert all("$.body" not in issue for issue in issues)
-    assert all("__speaker_note__" not in issue for issue in issues)
+    # Vietnamese packs more width per character, so a natural value below the
+    # Latin character ceiling must not be flagged as a visual overflow.
+    assert issues == []
 
 
 def test_content_fit_issues_ignore_short_english():
@@ -323,7 +323,9 @@ def test_slide_content_generation_repairs_strings_at_max_length(monkeypatch):
                         "title": {
                             "type": "string",
                             "minLength": 5,
-                            "maxLength": 25,
+                            # Vietnamese widens this to 25 in the response
+                            # schema, so a 25-character answer is saturated.
+                            "maxLength": 20,
                         }
                     },
                     "required": ["title"],
@@ -429,18 +431,19 @@ def test_slide_content_generation_does_not_persist_sliced_outline_title(
         )
     )
 
-    assert result["title"] != full_title[:16]
-    assert result["title"] != full_title
-    assert len(result["title"]) <= 16
+    # The Vietnamese ceiling is widened (16 -> 20), so the complete outline
+    # title now fits and is restored instead of persisting the sliced prefix.
+    assert result["title"] != saturated
+    assert result["title"] == full_title
+    assert len(result["title"]) <= 20
     assert result["title"][-1].isalnum()
     assert full_title.startswith(result["title"])
-    assert result["title"] in {"Rèn", "Rèn Luyện", "Rèn Luyện Bản"}
     assert len(captured_schemas) == 1 + generate_slide_content.MAX_FIT_REPAIR_ATTEMPTS
-    assert captured_schemas[0]["properties"]["title"]["maxLength"] == 16
-    assert captured_schemas[1]["properties"]["title"]["maxLength"] == 12
+    assert captured_schemas[0]["properties"]["title"]["maxLength"] == 20
+    assert captured_schemas[1]["properties"]["title"]["maxLength"] == 16
 
 
-def test_schema_with_fit_ceilings_uses_tighter_visual_budget():
+def test_schema_with_fit_ceilings_uses_schema_target_for_vietnamese():
     schema = {
         "type": "object",
         "properties": {
@@ -450,7 +453,8 @@ def test_schema_with_fit_ceilings_uses_tighter_visual_budget():
     content = {"title": "Phủ định của phủ định"}
     tightened = generate_slide_content._schema_with_fit_ceilings(schema, content)
     visual_max = tightened["properties"]["title"]["maxLength"]
-    assert visual_max < 19  # 80% of 24 is 19; visual target must be tighter
+    # Vietnamese is no longer squeezed below the 80% schema target (19).
+    assert visual_max == 19
     assert visual_max >= 4
 
 
@@ -467,11 +471,11 @@ def test_slide_content_generation_repairs_visual_overflow(monkeypatch):
         calls.append(json_schema)
         if len(calls) == 1:
             return {
-                "title": "Phủ định của phủ định",
+                "title": "Overflowing text here!!",
                 "__speaker_note__": "A sufficiently useful speaker note.",
             }
         return {
-            "title": "Phủ định",
+            "title": "Compact title",
             "__speaker_note__": "A sufficiently useful speaker note.",
         }
 
@@ -499,15 +503,15 @@ def test_slide_content_generation_repairs_visual_overflow(monkeypatch):
                     "required": ["title"],
                 },
             ),
-            _outline(),
-            language="Vietnamese",
+            SlideOutlineModel(content="## Visual overflow\nCompact body."),
+            language="English",
         )
     )
 
     assert len(calls) == 2
     assert calls[0]["properties"]["title"]["maxLength"] == 24
-    assert calls[1]["properties"]["title"]["maxLength"] < 19
-    assert result["title"] == "Phủ định"
+    assert calls[1]["properties"]["title"]["maxLength"] == 19
+    assert result["title"] == "Compact title"
 
 
 def test_slide_content_prompt_mentions_latin_width_ceiling():
@@ -531,7 +535,7 @@ def test_schema_with_fit_ceilings_tightens_array_items_once():
 
     tightened = generate_slide_content._schema_with_fit_ceilings(schema, content)
 
-    assert tightened["items"]["maxLength"] == 16
+    assert tightened["items"]["maxLength"] == 19
 
 
 def test_schema_with_fit_ceilings_does_not_visually_squeeze_short_sibling():
@@ -549,7 +553,7 @@ def test_schema_with_fit_ceilings_does_not_visually_squeeze_short_sibling():
 
     tightened = generate_slide_content._schema_with_fit_ceilings(schema, content)
 
-    assert tightened["properties"]["title"]["maxLength"] < 19
+    assert tightened["properties"]["title"]["maxLength"] == 19
     assert tightened["properties"]["body"]["maxLength"] == 64
 
 
@@ -652,7 +656,7 @@ def test_repair_rewrite_that_fits_is_accepted_without_extra_retry(monkeypatch):
             {"title": "Giáo dục AI", "__speaker_note__": _NOTE},
         ],
     )
-    result = _generate(_title_layout(25), _outline())
+    result = _generate(_title_layout(25), _outline(), language="English")
 
     assert result["title"] == "Giáo dục AI"
     assert len(calls) == 2
@@ -693,8 +697,10 @@ def test_overflowing_outline_source_is_not_restored(monkeypatch):
 
     assert result["title"] != full_title
     assert result["title"] != cut
-    assert len(result["title"]) <= 16
-    assert len(full_title) > 16
+    # The Vietnamese ceiling widens 16 -> 20, so the safe fallback may restore a
+    # complete phrase up to 20 characters (never the overflowing full source).
+    assert len(result["title"]) <= 20
+    assert len(full_title) > 20
 
 
 def test_non_prefix_rewrite_is_kept_when_complete_and_within_limit(monkeypatch):
@@ -821,8 +827,9 @@ def test_nested_card_and_agenda_cuts_are_not_persisted(monkeypatch):
     assert not result["agenda"][0].endswith(" lo")
     assert not result["agenda"][1].endswith("biến-đ")
     assert "-" not in result["agenda"][1][-2:]
-    assert len(result["cards"][0]["title"]) <= 24
-    assert len(result["agenda"][0]) <= 36
+    # Vietnamese ceilings widen 24 -> 30 and 36 -> 45.
+    assert len(result["cards"][0]["title"]) <= 30
+    assert len(result["agenda"][0]) <= 45
 
 
 def test_slide_text_issues_flag_repair_schema_saturation():
@@ -908,3 +915,50 @@ def test_safe_fit_text_does_not_split_combining_marks():
         if unicodedata.combining(result[-1]):
             assert not unicodedata.combining(result[-2])
     assert result != source[:12] or not unicodedata.combining(source[12])
+
+
+def test_is_vietnamese_context_detects_language_and_letters():
+    assert generate_slide_content._is_vietnamese_context("Vietnamese") is True
+    assert generate_slide_content._is_vietnamese_context("vi") is True
+    assert generate_slide_content._is_vietnamese_context(None, "Giáo dục") is True
+    assert generate_slide_content._is_vietnamese_context("English", "Hello") is False
+
+
+def test_prepare_response_schema_widens_vietnamese_string_ceilings():
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "minLength": 4, "maxLength": 24},
+            "body": {"type": "string", "minLength": 4, "maxLength": 80},
+            "metrics": {
+                "type": "array",
+                "items": {"type": "string", "maxLength": 20},
+            },
+        },
+    }
+
+    widened = generate_slide_content._prepare_response_schema(
+        schema, language="Vietnamese"
+    )
+    assert widened["properties"]["title"]["maxLength"] == 30
+    assert widened["properties"]["body"]["maxLength"] == 100
+    assert widened["properties"]["metrics"]["items"]["maxLength"] == 25
+    # The speaker note is read aloud, never rendered, and keeps its ceiling.
+    assert widened["properties"]["__speaker_note__"]["maxLength"] == 500
+
+    english = generate_slide_content._prepare_response_schema(
+        schema, language="English"
+    )
+    assert english["properties"]["title"]["maxLength"] == 24
+    assert english["properties"]["body"]["maxLength"] == 80
+
+
+def test_content_fit_issues_do_not_flag_vietnamese_within_widened_budget():
+    schema = {"type": "string", "minLength": 4, "maxLength": 100}
+    paragraph = (
+        "Triển khai các biện pháp kỹ thuật nhằm ổn định hệ thống và bảo đảm "
+        "vận hành liên tục."
+    )
+    assert len(paragraph) < 100
+
+    assert generate_slide_content._content_fit_issues(schema, paragraph) == []

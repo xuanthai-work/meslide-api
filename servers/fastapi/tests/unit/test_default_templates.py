@@ -456,3 +456,122 @@ def test_resolve_default_template_id_maps_public_name_to_json_id():
 
 def test_resolve_default_template_id_rejects_paths(tmp_path):
     assert default_templates.resolve_default_template_id("../general", tmp_path) is None
+
+
+_PROSE_HINTS = (
+    "heading",
+    "headline",
+    "title",
+    "subtitle",
+    "caption",
+    "statement",
+    "label",
+    "topic",
+    "card",
+    "summary",
+    "copy",
+    "body",
+    "description",
+    "paragraph",
+    "content",
+    "text",
+    "name",
+)
+_NUMERIC_HINTS = (
+    "date",
+    "page",
+    "pagination",
+    "folio",
+    "value",
+    "metric",
+    "number",
+    "index",
+    "percent",
+    "pct",
+    "count",
+    "code",
+    "marker",
+    "initial",
+    "quote_mark",
+)
+
+
+def _iter_fields(node: Any):
+    if isinstance(node, dict):
+        if "max_length" in node or "min_length" in node:
+            yield node
+        for child in node.values():
+            yield from _iter_fields(child)
+    elif isinstance(node, list):
+        for child in node:
+            yield from _iter_fields(child)
+
+
+def _is_prose_field(name: Any) -> bool:
+    if not isinstance(name, str):
+        return False
+    lowered = name.lower()
+    if any(hint in lowered for hint in _NUMERIC_HINTS):
+        return False
+    return any(hint in lowered for hint in _PROSE_HINTS)
+
+
+def test_bundled_templates_load_and_have_wide_prose_ceilings():
+    templates_root = Path(__file__).resolve().parents[4] / "templates"
+    template_dirs = [
+        path
+        for path in sorted(templates_root.iterdir())
+        if (path / "template.json").is_file()
+    ]
+    assert len(template_dirs) >= 8
+
+    for template_dir in template_dirs:
+        # Loading validates the raw JSON against the Template V2 Pydantic shapes.
+        template = default_templates._load_default_template(template_dir)
+        assert template.id
+
+        raw = json.loads((template_dir / "template.json").read_text(encoding="utf-8"))
+        for field in _iter_fields(raw):
+            if not _is_prose_field(field.get("name")):
+                continue
+            max_length = field.get("max_length")
+            if isinstance(max_length, int) and not isinstance(max_length, bool):
+                assert max_length > 15, (
+                    f"{template_dir.name}:{field.get('name')} max_length={max_length}"
+                )
+
+
+def test_infographic_data_accepts_newer_types():
+    from templates.v2.models.elements import Infographic
+
+    for infographic_type in (
+        "timeline",
+        "vertical_funnel",
+        "maturity_model",
+        "staircase",
+    ):
+        element = Infographic.model_validate(
+            {
+                "type": "infographic",
+                "decorative": False,
+                "name": f"{infographic_type}_element",
+                "data": {
+                    "type": infographic_type,
+                    "steps": [{"label": "A", "value": 1}],
+                },
+                "colors": ["#111111"],
+            }
+        )
+        # The unknown type is preserved verbatim instead of crashing the loader.
+        assert element.data.type == infographic_type
+        assert element.data.model_extra["steps"] == [{"label": "A", "value": 1}]
+
+    gauge = Infographic.model_validate(
+        {
+            "type": "infographic",
+            "decorative": False,
+            "name": "gauge_element",
+            "data": {"type": "gauge", "min_value": 0, "max_value": 100, "value": 40},
+        }
+    )
+    assert gauge.data.type == "gauge"

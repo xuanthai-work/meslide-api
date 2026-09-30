@@ -14,6 +14,14 @@ def test_default_templates_match_supported_builtin_groups():
         "standard",
         "swift",
         "editorial",
+        "civic",
+        "horizon",
+        "landmark",
+        "mosaic",
+        "nova",
+        "pulse",
+        "signal",
+        "verdant",
     ]
 
 

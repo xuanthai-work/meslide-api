@@ -1399,7 +1399,7 @@
                   "decorative": false,
                   "name": "main_heading",
                   "max_length": 16,
-                  "min_length": 6,
+                  "min_length": 3,
                   "position": {
                     "x": 0,
                     "y": 0
@@ -1438,7 +1438,7 @@
                   "decorative": false,
                   "name": "supporting_copy",
                   "max_length": 163,
-                  "min_length": 61,
+                  "min_length": 3,
                   "position": {
                     "x": 0,
                     "y": 82.03
@@ -1499,7 +1499,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 31,
-              "min_length": 8
+              "min_length": 3
             },
             {
               "type": "text",
@@ -1538,7 +1538,7 @@
               "decorative": false,
               "name": "supporting_summary",
               "max_length": 127,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -1589,7 +1589,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 22,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -1628,7 +1628,7 @@
               "decorative": false,
               "name": "supporting_statement",
               "max_length": 90,
-              "min_length": 20
+              "min_length": 3
             }
           ]
         },
@@ -1681,7 +1681,7 @@
                   "decorative": false,
                   "name": "primary_heading",
                   "max_length": 30,
-                  "min_length": 15
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -1720,7 +1720,7 @@
                   "decorative": false,
                   "name": "supporting_paragraph",
                   "max_length": 230,
-                  "min_length": 116
+                  "min_length": 3
                 }
               ],
               "name": "vertical_text_stack",
@@ -1776,7 +1776,7 @@
               "decorative": false,
               "name": "main_title_text",
               "max_length": 27,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -1815,7 +1815,7 @@
               "decorative": false,
               "name": "main_body_text",
               "max_length": 103,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -1866,7 +1866,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 34,
-              "min_length": 14
+              "min_length": 3
             },
             {
               "type": "text",
@@ -1925,7 +1925,7 @@
               "decorative": false,
               "name": "supporting_copy",
               "max_length": 336,
-              "min_length": 105
+              "min_length": 3
             }
           ]
         },
@@ -1978,7 +1978,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 19,
-              "min_length": 8
+              "min_length": 3
             },
             {
               "type": "text",
@@ -2020,7 +2020,7 @@
               "decorative": false,
               "name": "subtitle_text",
               "max_length": 123,
-              "min_length": 31,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -2072,7 +2072,7 @@
               "decorative": false,
               "name": "primary_headline",
               "max_length": 52,
-              "min_length": 20
+              "min_length": 3
             },
             {
               "type": "text",
@@ -2111,7 +2111,7 @@
               "decorative": false,
               "name": "supporting_paragraph",
               "max_length": 206,
-              "min_length": 116
+              "min_length": 3
             }
           ]
         },
@@ -2161,7 +2161,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 20,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             },
             {
@@ -2200,7 +2200,7 @@
               "decorative": false,
               "name": "heading_support_text",
               "max_length": 151,
-              "min_length": 52,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -2538,7 +2538,7 @@
                           "decorative": false,
                           "name": "column_heading",
                           "max_length": 23,
-                          "min_length": 7
+                          "min_length": 3
                         },
                         {
                           "type": "text",
@@ -2577,7 +2577,7 @@
                           "decorative": false,
                           "name": "column_body",
                           "max_length": 69,
-                          "min_length": 26
+                          "min_length": 3
                         }
                       ],
                       "name": "column_item"
@@ -2664,7 +2664,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 37,
-              "min_length": 16
+              "min_length": 3
             },
             {
               "type": "text",
@@ -2703,7 +2703,7 @@
               "decorative": false,
               "name": "supporting_text",
               "max_length": 118,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -2757,7 +2757,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 30,
-              "min_length": 10
+              "min_length": 3
             },
             {
               "type": "text",
@@ -2796,7 +2796,7 @@
               "decorative": false,
               "name": "subtitle_text",
               "max_length": 95,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -2846,7 +2846,7 @@
               "decorative": false,
               "name": "main_header_text",
               "max_length": 25,
-              "min_length": 10
+              "min_length": 3
             },
             {
               "type": "text",
@@ -2885,7 +2885,7 @@
               "decorative": false,
               "name": "supporting_header_text",
               "max_length": 78,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -2947,7 +2947,7 @@
                   "decorative": false,
                   "name": "headline_text",
                   "max_length": 29,
-                  "min_length": 8
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -2986,7 +2986,7 @@
                   "decorative": false,
                   "name": "supporting_text",
                   "max_length": 216,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "centered_copy_group",
@@ -3282,7 +3282,7 @@
               "decorative": false,
               "name": "large_heading",
               "max_length": 17,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -3321,7 +3321,7 @@
               "decorative": false,
               "name": "supporting_paragraph",
               "max_length": 113,
-              "min_length": 21
+              "min_length": 3
             }
           ]
         },
@@ -3371,7 +3371,7 @@
               "decorative": false,
               "name": "headline_text",
               "max_length": 28,
-              "min_length": 15
+              "min_length": 3
             },
             {
               "type": "text",
@@ -3410,7 +3410,7 @@
               "decorative": false,
               "name": "body_copy_text",
               "max_length": 162,
-              "min_length": 81
+              "min_length": 3
             }
           ]
         }
@@ -3470,7 +3470,7 @@
               "decorative": false,
               "name": "heading_text",
               "max_length": 75,
-              "min_length": 22
+              "min_length": 3
             }
           ]
         },
@@ -3521,7 +3521,7 @@
               "decorative": false,
               "name": "large_title_text",
               "max_length": 27,
-              "min_length": 9
+              "min_length": 3
             }
           ]
         },
@@ -3572,7 +3572,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 60,
-              "min_length": 6
+              "min_length": 3
             }
           ]
         },
@@ -3626,7 +3626,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 56,
-              "min_length": 19
+              "min_length": 3
             }
           ]
         },
@@ -3679,7 +3679,7 @@
               "decorative": false,
               "name": "headline_text",
               "max_length": 27,
-              "min_length": 14
+              "min_length": 3
             }
           ]
         },
@@ -3729,7 +3729,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 24,
-              "min_length": 6,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -3781,7 +3781,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 25,
-              "min_length": 11
+              "min_length": 3
             }
           ]
         }
@@ -3888,7 +3888,7 @@
                       "decorative": false,
                       "name": "body_text",
                       "max_length": 101,
-                      "min_length": 50
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -3927,7 +3927,7 @@
                       "decorative": false,
                       "name": "primary_label",
                       "max_length": 24,
-                      "min_length": 5
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -3966,7 +3966,7 @@
                       "decorative": false,
                       "name": "secondary_label",
                       "max_length": 25,
-                      "min_length": 6
+                      "min_length": 3
                     }
                   ],
                   "name": "card_panel",
@@ -4621,7 +4621,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 24,
-              "min_length": 9
+              "min_length": 3
             }
           ]
         }
@@ -4680,7 +4680,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 211,
-              "min_length": 9
+              "min_length": 3
             }
           ]
         }
@@ -5074,7 +5074,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -5162,7 +5162,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -5250,7 +5250,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -5338,7 +5338,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -5402,7 +5402,7 @@
               "decorative": false,
               "name": "upper_heading",
               "max_length": 25,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -5457,7 +5457,7 @@
               "decorative": false,
               "name": "supporting_heading",
               "max_length": 112,
-              "min_length": 51
+              "min_length": 3
             }
           ]
         }
@@ -5562,7 +5562,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -5603,7 +5603,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "upper_left_callout",
@@ -5677,7 +5677,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -5718,7 +5718,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "lower_left_callout",
@@ -5792,7 +5792,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -5833,7 +5833,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "upper_right_callout",
@@ -5907,7 +5907,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -5948,7 +5948,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "lower_right_callout",
@@ -6110,7 +6110,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 81,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "grid component_individual_group_title_image_summary"
@@ -6211,7 +6211,7 @@
                       "decorative": false,
                       "name": "panel_heading",
                       "max_length": 26,
-                      "min_length": 12
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -6250,7 +6250,7 @@
                       "decorative": false,
                       "name": "panel_caption",
                       "max_length": 158,
-                      "min_length": 52
+                      "min_length": 3
                     }
                   ],
                   "name": "grid_items"
@@ -6414,7 +6414,7 @@
                         "decorative": false,
                         "name": "section_body",
                         "max_length": 102,
-                        "min_length": 55
+                        "min_length": 3
                       }
                     ],
                     "name": "callout_content",
@@ -6507,7 +6507,7 @@
               ],
               "decorative": false,
               "name": "upper_card_title",
-              "max_length": 15,
+              "max_length": 30,
               "min_length": 4
             },
             {
@@ -6546,7 +6546,7 @@
               "decorative": false,
               "name": "upper_card_body",
               "max_length": 82,
-              "min_length": 55
+              "min_length": 3
             },
             {
               "type": "vector",
@@ -6605,7 +6605,7 @@
               ],
               "decorative": false,
               "name": "lower_card_title",
-              "max_length": 15,
+              "max_length": 30,
               "min_length": 4
             },
             {
@@ -6644,7 +6644,7 @@
               "decorative": false,
               "name": "lower_card_body",
               "max_length": 82,
-              "min_length": 55
+              "min_length": 3
             }
           ]
         }
@@ -6899,7 +6899,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 97,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "information_card"
@@ -7001,7 +7001,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 100,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "information_card"
@@ -7103,7 +7103,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 100,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "information_card"
@@ -7236,7 +7236,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 64,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "vertical_card_item"
@@ -7338,7 +7338,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 64,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "vertical_card_item"
@@ -7440,7 +7440,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 64,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "vertical_card_item"
@@ -7634,7 +7634,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 84,
-              "min_length": 9,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -7685,7 +7685,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 44,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -7736,7 +7736,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 80,
-              "min_length": 11,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -7787,7 +7787,7 @@
               "decorative": false,
               "name": "main_title_text",
               "max_length": 62,
-              "min_length": 17
+              "min_length": 3
             }
           ]
         }
@@ -7967,7 +7967,7 @@
                       "decorative": false,
                       "name": "row_body_text",
                       "max_length": 76,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "media_text_row_group"
@@ -8122,7 +8122,7 @@
                       "decorative": false,
                       "name": "item_body",
                       "max_length": 72,
-                      "min_length": 40
+                      "min_length": 3
                     }
                   ],
                   "name": "column_card",
@@ -8285,7 +8285,7 @@
               "decorative": false,
               "name": "callout_body",
               "max_length": 109,
-              "min_length": 55,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -8402,7 +8402,7 @@
               "decorative": false,
               "name": "callout_body",
               "max_length": 109,
-              "min_length": 55,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -8492,7 +8492,7 @@
               "decorative": false,
               "name": "callout_body",
               "max_length": 109,
-              "min_length": 55
+              "min_length": 3
             },
             {
               "type": "vector",
@@ -8631,7 +8631,7 @@
                       "decorative": false,
                       "name": "section_body",
                       "max_length": 103,
-                      "min_length": 55
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -8776,7 +8776,7 @@
                       "decorative": false,
                       "name": "section_body",
                       "max_length": 51,
-                      "min_length": 25
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -8946,7 +8946,7 @@
                   "decorative": false,
                   "name": "card_body",
                   "max_length": 103,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "top_feature_card"
@@ -9074,7 +9074,7 @@
                   "decorative": false,
                   "name": "card_body",
                   "max_length": 103,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "bottom_feature_card"
@@ -9202,7 +9202,7 @@
                   "decorative": false,
                   "name": "card_body",
                   "max_length": 103,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "middle_feature_card"
@@ -9264,7 +9264,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 66,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -9952,7 +9952,7 @@
               "decorative": false,
               "name": "first_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10112,7 +10112,7 @@
               "decorative": false,
               "name": "second_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10272,7 +10272,7 @@
               "decorative": false,
               "name": "third_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10393,8 +10393,8 @@
               ],
               "decorative": false,
               "name": "fourth_row_title",
-              "max_length": 14,
-              "min_length": 5
+              "max_length": 28,
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10432,7 +10432,7 @@
               "decorative": false,
               "name": "fourth_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10817,7 +10817,7 @@
                   "decorative": false,
                   "name": "main_heading",
                   "max_length": 16,
-                  "min_length": 6,
+                  "min_length": 3,
                   "position": {
                     "x": 0,
                     "y": 0
@@ -10856,7 +10856,7 @@
                   "decorative": false,
                   "name": "supporting_copy",
                   "max_length": 163,
-                  "min_length": 61,
+                  "min_length": 3,
                   "position": {
                     "x": 0,
                     "y": 82.03
@@ -11180,7 +11180,7 @@
                           "decorative": false,
                           "name": "column_heading",
                           "max_length": 23,
-                          "min_length": 7
+                          "min_length": 3
                         },
                         {
                           "type": "text",
@@ -11219,7 +11219,7 @@
                           "decorative": false,
                           "name": "column_body",
                           "max_length": 69,
-                          "min_length": 26
+                          "min_length": 3
                         }
                       ],
                       "name": "column_item"
@@ -11332,7 +11332,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 37,
-              "min_length": 16
+              "min_length": 3
             },
             {
               "type": "text",
@@ -11371,7 +11371,7 @@
               "decorative": false,
               "name": "supporting_text",
               "max_length": 118,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -11639,7 +11639,7 @@
               "decorative": false,
               "name": "large_heading",
               "max_length": 17,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -11678,7 +11678,7 @@
               "decorative": false,
               "name": "supporting_paragraph",
               "max_length": 113,
-              "min_length": 21
+              "min_length": 3
             }
           ]
         }
@@ -11764,7 +11764,7 @@
               "decorative": false,
               "name": "heading_text",
               "max_length": 75,
-              "min_length": 22
+              "min_length": 3
             }
           ]
         },
@@ -11865,7 +11865,7 @@
                       "decorative": false,
                       "name": "body_text",
                       "max_length": 101,
-                      "min_length": 50
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11904,7 +11904,7 @@
                       "decorative": false,
                       "name": "primary_label",
                       "max_length": 24,
-                      "min_length": 5
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11943,7 +11943,7 @@
                       "decorative": false,
                       "name": "secondary_label",
                       "max_length": 25,
-                      "min_length": 6
+                      "min_length": 3
                     }
                   ],
                   "name": "card_panel",
@@ -12036,7 +12036,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 24,
-              "min_length": 9
+              "min_length": 3
             }
           ]
         },
@@ -12089,7 +12089,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 211,
-              "min_length": 9
+              "min_length": 3
             }
           ]
         },
@@ -12318,7 +12318,7 @@
               "decorative": false,
               "name": "large_title_text",
               "max_length": 27,
-              "min_length": 9
+              "min_length": 3
             }
           ]
         },
@@ -12548,7 +12548,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -12636,7 +12636,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -12724,7 +12724,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -12812,7 +12812,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 129,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "right_aligned_text_card"
@@ -12930,7 +12930,7 @@
               "decorative": false,
               "name": "upper_heading",
               "max_length": 25,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -12979,7 +12979,7 @@
               "decorative": false,
               "name": "supporting_heading",
               "max_length": 112,
-              "min_length": 51
+              "min_length": 3
             }
           ]
         },
@@ -13072,7 +13072,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -13113,7 +13113,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "upper_left_callout",
@@ -13187,7 +13187,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -13228,7 +13228,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "lower_left_callout",
@@ -13302,7 +13302,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -13343,7 +13343,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "upper_right_callout",
@@ -13417,7 +13417,7 @@
                   "decorative": false,
                   "name": "callout_label",
                   "max_length": 21,
-                  "min_length": 5
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -13458,7 +13458,7 @@
                   "decorative": false,
                   "name": "callout_body",
                   "max_length": 109,
-                  "min_length": 40
+                  "min_length": 3
                 }
               ],
               "name": "lower_right_callout",
@@ -13549,7 +13549,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 30,
-              "min_length": 10
+              "min_length": 3
             },
             {
               "type": "text",
@@ -13588,7 +13588,7 @@
               "decorative": false,
               "name": "subtitle_text",
               "max_length": 95,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -13739,7 +13739,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 81,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "grid component_individual_group_title_image_summary"
@@ -13828,7 +13828,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 60,
-              "min_length": 6
+              "min_length": 3
             }
           ]
         },
@@ -13975,7 +13975,7 @@
                         "decorative": false,
                         "name": "section_body",
                         "max_length": 102,
-                        "min_length": 55
+                        "min_length": 3
                       }
                     ],
                     "name": "callout_content",
@@ -14126,7 +14126,7 @@
                       "decorative": false,
                       "name": "panel_heading",
                       "max_length": 26,
-                      "min_length": 12
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -14165,7 +14165,7 @@
                       "decorative": false,
                       "name": "panel_caption",
                       "max_length": 158,
-                      "min_length": 52
+                      "min_length": 3
                     }
                   ],
                   "name": "grid_items"
@@ -14253,7 +14253,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 31,
-              "min_length": 8
+              "min_length": 3
             },
             {
               "type": "text",
@@ -14292,7 +14292,7 @@
               "decorative": false,
               "name": "supporting_summary",
               "max_length": 127,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -14436,7 +14436,7 @@
               ],
               "decorative": false,
               "name": "upper_card_title",
-              "max_length": 15,
+              "max_length": 30,
               "min_length": 4
             },
             {
@@ -14475,7 +14475,7 @@
               "decorative": false,
               "name": "upper_card_body",
               "max_length": 82,
-              "min_length": 55
+              "min_length": 3
             },
             {
               "type": "vector",
@@ -14534,7 +14534,7 @@
               ],
               "decorative": false,
               "name": "lower_card_title",
-              "max_length": 15,
+              "max_length": 30,
               "min_length": 4
             },
             {
@@ -14573,7 +14573,7 @@
               "decorative": false,
               "name": "lower_card_body",
               "max_length": 82,
-              "min_length": 55
+              "min_length": 3
             }
           ]
         }
@@ -14657,7 +14657,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 22,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -14696,7 +14696,7 @@
               "decorative": false,
               "name": "supporting_statement",
               "max_length": 90,
-              "min_length": 20
+              "min_length": 3
             }
           ]
         },
@@ -14822,7 +14822,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 97,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "information_card"
@@ -14924,7 +14924,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 100,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "information_card"
@@ -15026,7 +15026,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 100,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "information_card"
@@ -15243,7 +15243,7 @@
                   "decorative": false,
                   "name": "primary_heading",
                   "max_length": 30,
-                  "min_length": 15
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -15282,7 +15282,7 @@
                   "decorative": false,
                   "name": "supporting_paragraph",
                   "max_length": 230,
-                  "min_length": 116
+                  "min_length": 3
                 }
               ],
               "name": "vertical_text_stack",
@@ -15381,7 +15381,7 @@
               "decorative": false,
               "name": "headline_text",
               "max_length": 28,
-              "min_length": 15
+              "min_length": 3
             },
             {
               "type": "text",
@@ -15420,7 +15420,7 @@
               "decorative": false,
               "name": "body_copy_text",
               "max_length": 162,
-              "min_length": 81
+              "min_length": 3
             }
           ]
         },
@@ -15558,7 +15558,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 84,
-              "min_length": 9,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -15883,7 +15883,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 56,
-              "min_length": 19
+              "min_length": 3
             }
           ]
         },
@@ -16046,7 +16046,7 @@
               "decorative": false,
               "name": "main_title_text",
               "max_length": 27,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -16085,7 +16085,7 @@
               "decorative": false,
               "name": "main_body_text",
               "max_length": 103,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -16223,7 +16223,7 @@
                       "decorative": false,
                       "name": "row_body_text",
                       "max_length": 76,
-                      "min_length": 55
+                      "min_length": 3
                     }
                   ],
                   "name": "media_text_row_group"
@@ -16352,7 +16352,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 44,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -16494,7 +16494,7 @@
                       "decorative": false,
                       "name": "item_body",
                       "max_length": 72,
-                      "min_length": 40
+                      "min_length": 3
                     }
                   ],
                   "name": "column_card",
@@ -16677,7 +16677,7 @@
               "decorative": false,
               "name": "callout_body",
               "max_length": 109,
-              "min_length": 55,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -16794,7 +16794,7 @@
               "decorative": false,
               "name": "callout_body",
               "max_length": 109,
-              "min_length": 55,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -16884,7 +16884,7 @@
               "decorative": false,
               "name": "callout_body",
               "max_length": 109,
-              "min_length": 55
+              "min_length": 3
             },
             {
               "type": "vector",
@@ -16993,7 +16993,7 @@
               "decorative": false,
               "name": "main_header_text",
               "max_length": 25,
-              "min_length": 10
+              "min_length": 3
             },
             {
               "type": "text",
@@ -17032,7 +17032,7 @@
               "decorative": false,
               "name": "supporting_header_text",
               "max_length": 78,
-              "min_length": 52
+              "min_length": 3
             }
           ]
         },
@@ -17343,7 +17343,7 @@
               "decorative": false,
               "name": "primary_title",
               "max_length": 34,
-              "min_length": 14
+              "min_length": 3
             },
             {
               "type": "text",
@@ -17402,7 +17402,7 @@
               "decorative": false,
               "name": "supporting_copy",
               "max_length": 336,
-              "min_length": 105
+              "min_length": 3
             }
           ]
         },
@@ -17508,7 +17508,7 @@
                       "decorative": false,
                       "name": "section_body",
                       "max_length": 103,
-                      "min_length": 55
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -17658,7 +17658,7 @@
                   "decorative": false,
                   "name": "headline_text",
                   "max_length": 29,
-                  "min_length": 8
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -17697,7 +17697,7 @@
                   "decorative": false,
                   "name": "supporting_text",
                   "max_length": 216,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "centered_copy_group",
@@ -17826,7 +17826,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 19,
-              "min_length": 8
+              "min_length": 3
             },
             {
               "type": "text",
@@ -17868,7 +17868,7 @@
               "decorative": false,
               "name": "subtitle_text",
               "max_length": 123,
-              "min_length": 31,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -18004,7 +18004,7 @@
                   "decorative": false,
                   "name": "card_body",
                   "max_length": 103,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "top_feature_card"
@@ -18132,7 +18132,7 @@
                   "decorative": false,
                   "name": "card_body",
                   "max_length": 103,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "bottom_feature_card"
@@ -18260,7 +18260,7 @@
                   "decorative": false,
                   "name": "card_body",
                   "max_length": 103,
-                  "min_length": 52
+                  "min_length": 3
                 }
               ],
               "name": "middle_feature_card"
@@ -18423,7 +18423,7 @@
               "decorative": false,
               "name": "primary_headline",
               "max_length": 52,
-              "min_length": 20
+              "min_length": 3
             },
             {
               "type": "text",
@@ -18462,7 +18462,7 @@
               "decorative": false,
               "name": "supporting_paragraph",
               "max_length": 206,
-              "min_length": 116
+              "min_length": 3
             }
           ]
         }
@@ -18574,7 +18574,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 66,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -18877,7 +18877,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 20,
-              "min_length": 8,
+              "min_length": 3,
               "rotation": 0
             },
             {
@@ -18916,7 +18916,7 @@
               "decorative": false,
               "name": "heading_support_text",
               "max_length": 151,
-              "min_length": 52,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -19042,7 +19042,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 64,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "vertical_card_item"
@@ -19144,7 +19144,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 64,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "vertical_card_item"
@@ -19246,7 +19246,7 @@
                       "decorative": false,
                       "name": "card_body_text",
                       "max_length": 64,
-                      "min_length": 32
+                      "min_length": 3
                     }
                   ],
                   "name": "vertical_card_item"
@@ -19378,7 +19378,7 @@
               "decorative": false,
               "name": "headline_text",
               "max_length": 27,
-              "min_length": 14
+              "min_length": 3
             }
           ]
         },
@@ -19637,7 +19637,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 80,
-              "min_length": 11,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -19906,7 +19906,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 24,
-              "min_length": 6,
+              "min_length": 3,
               "rotation": 0
             }
           ]
@@ -20252,7 +20252,7 @@
               "decorative": false,
               "name": "first_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -20412,7 +20412,7 @@
               "decorative": false,
               "name": "second_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -20572,7 +20572,7 @@
               "decorative": false,
               "name": "third_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -20693,8 +20693,8 @@
               ],
               "decorative": false,
               "name": "fourth_row_title",
-              "max_length": 14,
-              "min_length": 5
+              "max_length": 28,
+              "min_length": 3
             },
             {
               "type": "text",
@@ -20732,7 +20732,7 @@
               "decorative": false,
               "name": "fourth_row_description",
               "max_length": 32,
-              "min_length": 7
+              "min_length": 3
             },
             {
               "type": "text",
@@ -20924,7 +20924,7 @@
               "decorative": false,
               "name": "main_title_text",
               "max_length": 62,
-              "min_length": 17
+              "min_length": 3
             }
           ]
         },
@@ -21167,7 +21167,7 @@
               "decorative": false,
               "name": "main_title",
               "max_length": 25,
-              "min_length": 11
+              "min_length": 3
             }
           ]
         },
@@ -21367,7 +21367,7 @@
                       "decorative": false,
                       "name": "section_body",
                       "max_length": 51,
-                      "min_length": 25
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
