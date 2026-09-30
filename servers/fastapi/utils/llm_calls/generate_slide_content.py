@@ -843,9 +843,17 @@ def _window_ends_mid_word(window: str, candidate: str) -> bool:
     if window[-1].isspace() or window[-1] in _SENTENCE_TERMINATORS + ",:;":
         return False
     next_ch = candidate[len(window)]
-    if unicodedata.combining(next_ch):
+    # Kết hợp combining marks và các category Mn/Mc/L để nhận diện đúng ký tự
+    # tiếng Việt có dấu (kể cả precomposed như "ệ") — không bao giờ ngắt ngang
+    # giữa chừng một từ (ví dụ "Dữ Li" thay vì "Dữ Liệu").
+    category = unicodedata.category(next_ch)
+    if (
+        unicodedata.combining(next_ch)
+        or category in {"Mn", "Mc"}
+        or category.startswith("L")
+    ):
         return True
-    return next_ch.isalnum() or unicodedata.category(next_ch).startswith("L")
+    return next_ch.isalnum()
 
 
 def _drop_from_first_dangling(text: str) -> Optional[str]:
@@ -927,18 +935,17 @@ def _apply_safe_fit_fallback(
         minimum = schema.get("minLength")
         min_length = minimum if isinstance(minimum, int) else 0
         if len(value) > maximum or _is_incomplete_visible_text(value, sources):
-            fitted = _safe_fit_text(value, maximum, sources, min_length)
-            # A complete phrase that only barely overflows the ceiling keeps its
-            # full wording: the frontend canvas shrinks the font (auto-fit)
-            # instead of the backend chopping a Vietnamese compound in half
-            # ("hệ thống" -> "hệ"). Mid-word/incomplete cuts are still repaired.
+            # Nếu chuỗi là câu hoàn chỉnh và chỉ vượt nhẹ dung lượng khung ban đầu
+            # (dưới ~145% hoặc dưới 12 ký tự), giữ nguyên toàn vẹn câu chữ; việc
+            # co chữ hiển thị do thuật toán font sizing ở Frontend đảm nhận thay
+            # vì chém cụt từ tiếng Việt.
             if (
-                fitted
-                and len(value) > maximum
+                len(value) > maximum
                 and not _is_incomplete_visible_text(value, sources)
-                and len(value) <= maximum * 1.3
+                and len(value) <= max(int(maximum * 1.45), maximum + 12)
             ):
                 return value
+            fitted = _safe_fit_text(value, maximum, sources, min_length)
             return fitted if fitted else value
         return value
 

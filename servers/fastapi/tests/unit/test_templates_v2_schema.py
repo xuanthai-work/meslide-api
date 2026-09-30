@@ -96,8 +96,8 @@ def test_extract_slide_schema_from_layout_extracts_editable_content():
     assert extract_slide_schema_from_layout(layout) == {
         "type": "object",
         "properties": {
-            "title": {"type": "string", "minLength": 4, "maxLength": 8},
-            "formula": {"type": "string", "minLength": 3, "maxLength": 120},
+            "title": {"type": "string", "minLength": 4, "maxLength": 20},
+            "formula": {"type": "string", "minLength": 3, "maxLength": 144},
             "hero_image": {
                 "type": "object",
                 "properties": {
@@ -113,7 +113,7 @@ def test_extract_slide_schema_from_layout_extracts_editable_content():
                 "required": ["image_prompt"],
                 "additionalProperties": False,
             },
-            "caption": {"type": "string", "minLength": 2, "maxLength": 4},
+            "caption": {"type": "string", "minLength": 2, "maxLength": 16},
             "details": {
                 "type": "object",
                 "properties": {
@@ -260,7 +260,7 @@ def test_extract_slide_schema_from_layout_collapses_repeated_children_to_array()
                         "title": {
                             "type": "string",
                             "minLength": 3,
-                            "maxLength": 6,
+                            "maxLength": 18,
                         },
                         "icon": {
                             "type": "object",
