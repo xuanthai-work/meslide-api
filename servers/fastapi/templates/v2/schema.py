@@ -196,11 +196,23 @@ def _content_schema_for_element(element: dict[str, Any]) -> dict[str, Any]:
     element_type = element["type"]
 
     if element_type == "text":
+        raw_min = element.get("min_length")
+        raw_max = element.get("max_length")
+        adjusted_max = raw_max
+        if isinstance(raw_max, int) and raw_max > 0:
+            # Cung cấp dung sai từ ngữ đa âm tiết cho tiếng Việt và quốc tế:
+            if raw_max < 30:
+                adjusted_max = max(int(raw_max * 1.45), raw_max + 12)
+            elif raw_max < 60:
+                adjusted_max = max(int(raw_max * 1.3), raw_max + 15)
+            else:
+                adjusted_max = int(raw_max * 1.2)
+
         return _compact(
             {
                 "type": "string",
-                "minLength": element.get("min_length"),
-                "maxLength": element.get("max_length"),
+                "minLength": raw_min,
+                "maxLength": adjusted_max,
             }
         )
 
