@@ -11,6 +11,15 @@ _PREFERRED_TEMPLATE_ORDER = [
     "modern",
     "standard",
     "swift",
+    "editorial",
+    "civic",
+    "horizon",
+    "landmark",
+    "mosaic",
+    "nova",
+    "pulse",
+    "signal",
+    "verdant",
 ]
 
 

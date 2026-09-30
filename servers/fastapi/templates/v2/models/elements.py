@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Annotated, Literal, Optional, TypeAlias, Union, List
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 def _validate_min_max(
@@ -388,14 +388,27 @@ class GaugeInfographicData(BaseModel):
     value: float
 
 
+class GenericInfographicData(BaseModel):
+    """Fallback for newer infographic layouts (timeline, funnel, staircase, ...).
+
+    Keeps template loading forward-compatible: an unknown infographic ``type``
+    is preserved verbatim instead of failing validation and crashing the API.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    type: str
+
+
 class Infographic(BaseModel):
     type: Literal["infographic"]
     position: Optional[Position] = None
     size: Optional[Size] = None
     rotation: Optional[float] = None
-    data: Annotated[
-        Union[ProgressBarInfographicData, GaugeInfographicData],
-        Field(discriminator="type"),
+    data: Union[
+        ProgressBarInfographicData,
+        GaugeInfographicData,
+        GenericInfographicData,
     ]
 
     # Design

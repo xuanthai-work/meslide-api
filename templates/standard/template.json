@@ -496,7 +496,7 @@
                   "decorative": false,
                   "name": "primary_heading",
                   "max_length": 26,
-                  "min_length": 13
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -528,7 +528,7 @@
                   "decorative": false,
                   "name": "supporting_paragraph",
                   "max_length": 190,
-                  "min_length": 95
+                  "min_length": 3
                 }
               ],
               "name": "intro_text_column",
@@ -581,7 +581,7 @@
               "decorative": false,
               "name": "large_heading_text",
               "max_length": 20,
-              "min_length": 10
+              "min_length": 3
             },
             {
               "type": "text",
@@ -617,7 +617,7 @@
               "decorative": false,
               "name": "supporting_paragraph_text",
               "max_length": 123,
-              "min_length": 62
+              "min_length": 3
             }
           ]
         },
@@ -665,7 +665,7 @@
               "decorative": false,
               "name": "large_heading",
               "max_length": 22,
-              "min_length": 11
+              "min_length": 3
             },
             {
               "type": "container",
@@ -788,7 +788,7 @@
                   "decorative": false,
                   "name": "large_heading",
                   "max_length": 20,
-                  "min_length": 6
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -820,7 +820,7 @@
                   "decorative": false,
                   "name": "supporting_paragraph",
                   "max_length": 110,
-                  "min_length": 55
+                  "min_length": 3
                 }
               ],
               "name": "copy_stack",
@@ -932,7 +932,7 @@
                       ],
                       "decorative": false,
                       "name": "square_mark_text",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     }
                   },
@@ -976,8 +976,8 @@
                         ],
                         "decorative": false,
                         "name": "card_primary_label",
-                        "max_length": 15,
-                        "min_length": 8
+                        "max_length": 30,
+                        "min_length": 3
                       },
                       {
                         "type": "text",
@@ -1009,7 +1009,7 @@
                         "decorative": false,
                         "name": "card_secondary_label",
                         "max_length": 17,
-                        "min_length": 9
+                        "min_length": 3
                       }
                     ],
                     "name": "card_text_column",
@@ -1149,7 +1149,7 @@
               "decorative": false,
               "name": "card_heading",
               "max_length": 30,
-              "min_length": 15
+              "min_length": 3
             },
             {
               "type": "text",
@@ -1185,7 +1185,7 @@
               "decorative": false,
               "name": "card_body",
               "max_length": 231,
-              "min_length": 116
+              "min_length": 3
             }
           ]
         }
@@ -1297,7 +1297,7 @@
               "decorative": false,
               "name": "large_heading",
               "max_length": 26,
-              "min_length": 13
+              "min_length": 3
             },
             {
               "type": "group",
@@ -1833,7 +1833,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 23,
-              "min_length": 12
+              "min_length": 3
             }
           ]
         }
@@ -1958,8 +1958,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -1992,7 +1992,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -2055,8 +2055,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -2089,7 +2089,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -2152,8 +2152,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -2186,7 +2186,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -2249,8 +2249,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -2283,7 +2283,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -2357,7 +2357,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -2389,7 +2389,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -2421,7 +2421,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -2453,7 +2453,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 }
               ],
               "name": "vertical_label_stack",
@@ -2547,7 +2547,7 @@
               "decorative": false,
               "name": "headline_first_line",
               "max_length": 23,
-              "min_length": 12
+              "min_length": 3
             },
             {
               "type": "text",
@@ -2582,7 +2582,7 @@
               ],
               "decorative": false,
               "name": "headline_second_line",
-              "max_length": 7,
+              "max_length": 25,
               "min_length": 4
             }
           ]
@@ -2656,7 +2656,7 @@
               "decorative": false,
               "name": "centered_heading",
               "max_length": 21,
-              "min_length": 11
+              "min_length": 3
             }
           ]
         }
@@ -2873,7 +2873,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 53,
-                      "min_length": 27
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -3055,7 +3055,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 53,
-                      "min_length": 27
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -3237,7 +3237,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 53,
-                      "min_length": 27
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -3392,7 +3392,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 28,
-              "min_length": 14
+              "min_length": 3
             },
             {
               "type": "text",
@@ -3428,7 +3428,7 @@
               "decorative": false,
               "name": "supporting_subtitle",
               "max_length": 115,
-              "min_length": 58
+              "min_length": 3
             }
           ]
         },
@@ -3509,7 +3509,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 24,
-              "min_length": 6
+              "min_length": 3
             },
             {
               "type": "text",
@@ -3545,7 +3545,7 @@
               "decorative": false,
               "name": "supporting_caption",
               "max_length": 80,
-              "min_length": 16
+              "min_length": 3
             }
           ]
         },
@@ -3628,7 +3628,7 @@
               "decorative": false,
               "name": "main_headline",
               "max_length": 38,
-              "min_length": 19
+              "min_length": 3
             },
             {
               "type": "text",
@@ -3664,7 +3664,7 @@
               "decorative": false,
               "name": "supporting_paragraph",
               "max_length": 174,
-              "min_length": 87
+              "min_length": 3
             }
           ]
         }
@@ -3846,7 +3846,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -3882,7 +3882,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -4034,7 +4034,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -4070,7 +4070,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -4222,7 +4222,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -4258,7 +4258,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -4410,7 +4410,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -4446,7 +4446,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -4598,7 +4598,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -4634,7 +4634,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -4786,7 +4786,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -4822,7 +4822,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -5094,7 +5094,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -5334,7 +5334,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -5574,7 +5574,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -5814,7 +5814,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -5900,7 +5900,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -6004,7 +6004,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -6108,7 +6108,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -6212,7 +6212,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -7954,7 +7954,7 @@
                   "decorative": false,
                   "name": "primary_heading",
                   "max_length": 26,
-                  "min_length": 13
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -7986,7 +7986,7 @@
                   "decorative": false,
                   "name": "supporting_paragraph",
                   "max_length": 190,
-                  "min_length": 95
+                  "min_length": 3
                 }
               ],
               "name": "intro_text_column",
@@ -8092,7 +8092,7 @@
                       ],
                       "decorative": false,
                       "name": "square_mark_text",
-                      "max_length": 3,
+                      "max_length": 25,
                       "min_length": 2
                     }
                   },
@@ -8136,8 +8136,8 @@
                         ],
                         "decorative": false,
                         "name": "card_primary_label",
-                        "max_length": 15,
-                        "min_length": 8
+                        "max_length": 30,
+                        "min_length": 3
                       },
                       {
                         "type": "text",
@@ -8169,7 +8169,7 @@
                         "decorative": false,
                         "name": "card_secondary_label",
                         "max_length": 17,
-                        "min_length": 9
+                        "min_length": 3
                       }
                     ],
                     "name": "card_text_column",
@@ -8324,7 +8324,7 @@
               "decorative": false,
               "name": "large_heading_text",
               "max_length": 20,
-              "min_length": 10
+              "min_length": 3
             },
             {
               "type": "text",
@@ -8360,7 +8360,7 @@
               "decorative": false,
               "name": "supporting_paragraph_text",
               "max_length": 123,
-              "min_length": 62
+              "min_length": 3
             }
           ]
         }
@@ -8477,7 +8477,7 @@
               "decorative": false,
               "name": "large_heading",
               "max_length": 26,
-              "min_length": 13
+              "min_length": 3
             },
             {
               "type": "group",
@@ -8927,7 +8927,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 23,
-              "min_length": 12
+              "min_length": 3
             }
           ]
         },
@@ -9046,8 +9046,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -9080,7 +9080,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -9143,8 +9143,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -9177,7 +9177,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -9240,8 +9240,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -9274,7 +9274,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -9337,8 +9337,8 @@
                         ],
                         "decorative": false,
                         "name": "item_label",
-                        "max_length": 11,
-                        "min_length": 6
+                        "max_length": 25,
+                        "min_length": 3
                       }
                     },
                     {
@@ -9371,7 +9371,7 @@
                       "decorative": false,
                       "name": "item_description",
                       "max_length": 78,
-                      "min_length": 39
+                      "min_length": 3
                     }
                   ],
                   "name": "column_item",
@@ -9519,7 +9519,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -9551,7 +9551,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -9583,7 +9583,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -9615,7 +9615,7 @@
                   "decorative": false,
                   "name": "stacked_label",
                   "max_length": 27,
-                  "min_length": 10
+                  "min_length": 3
                 }
               ],
               "name": "vertical_label_stack",
@@ -9668,7 +9668,7 @@
               "decorative": false,
               "name": "large_heading",
               "max_length": 22,
-              "min_length": 11
+              "min_length": 3
             },
             {
               "type": "container",
@@ -9857,7 +9857,7 @@
               "decorative": false,
               "name": "headline_first_line",
               "max_length": 23,
-              "min_length": 12
+              "min_length": 3
             },
             {
               "type": "text",
@@ -9892,7 +9892,7 @@
               ],
               "decorative": false,
               "name": "headline_second_line",
-              "max_length": 7,
+              "max_length": 25,
               "min_length": 4
             }
           ]
@@ -10081,7 +10081,7 @@
               "decorative": false,
               "name": "card_heading",
               "max_length": 30,
-              "min_length": 15
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10117,7 +10117,7 @@
               "decorative": false,
               "name": "card_body",
               "max_length": 231,
-              "min_length": 116
+              "min_length": 3
             }
           ]
         }
@@ -10233,7 +10233,7 @@
               "decorative": false,
               "name": "centered_heading",
               "max_length": 21,
-              "min_length": 11
+              "min_length": 3
             }
           ]
         },
@@ -10379,7 +10379,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 53,
-                      "min_length": 27
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -10561,7 +10561,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 53,
-                      "min_length": 27
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -10743,7 +10743,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 53,
-                      "min_length": 27
+                      "min_length": 3
                     },
                     {
                       "type": "vector",
@@ -10935,7 +10935,7 @@
               "decorative": false,
               "name": "primary_heading",
               "max_length": 28,
-              "min_length": 14
+              "min_length": 3
             },
             {
               "type": "text",
@@ -10971,7 +10971,7 @@
               "decorative": false,
               "name": "supporting_subtitle",
               "max_length": 115,
-              "min_length": 58
+              "min_length": 3
             }
           ]
         },
@@ -11147,7 +11147,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11183,7 +11183,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -11335,7 +11335,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11371,7 +11371,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -11523,7 +11523,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11559,7 +11559,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -11711,7 +11711,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11747,7 +11747,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -11899,7 +11899,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -11935,7 +11935,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -12087,7 +12087,7 @@
                       "decorative": false,
                       "name": "card_heading",
                       "max_length": 21,
-                      "min_length": 7
+                      "min_length": 3
                     },
                     {
                       "type": "text",
@@ -12123,7 +12123,7 @@
                       "decorative": false,
                       "name": "card_body",
                       "max_length": 95,
-                      "min_length": 44
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -12283,7 +12283,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -12387,7 +12387,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -12491,7 +12491,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -12595,7 +12595,7 @@
                       "decorative": false,
                       "name": "timeline_label",
                       "max_length": 30,
-                      "min_length": 10
+                      "min_length": 3
                     },
                     {
                       "type": "container",
@@ -12746,7 +12746,7 @@
                   "decorative": false,
                   "name": "large_heading",
                   "max_length": 20,
-                  "min_length": 6
+                  "min_length": 3
                 },
                 {
                   "type": "text",
@@ -12778,7 +12778,7 @@
                   "decorative": false,
                   "name": "supporting_paragraph",
                   "max_length": 110,
-                  "min_length": 55
+                  "min_length": 3
                 }
               ],
               "name": "copy_stack",
@@ -12907,7 +12907,7 @@
               "decorative": false,
               "name": "main_heading",
               "max_length": 24,
-              "min_length": 6
+              "min_length": 3
             },
             {
               "type": "text",
@@ -12943,7 +12943,7 @@
               "decorative": false,
               "name": "supporting_caption",
               "max_length": 80,
-              "min_length": 16
+              "min_length": 3
             }
           ]
         },
@@ -14581,7 +14581,7 @@
               "decorative": false,
               "name": "main_headline",
               "max_length": 38,
-              "min_length": 19
+              "min_length": 3
             },
             {
               "type": "text",
@@ -14617,7 +14617,7 @@
               "decorative": false,
               "name": "supporting_paragraph",
               "max_length": 174,
-              "min_length": 87
+              "min_length": 3
             }
           ]
         },
@@ -14881,7 +14881,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -15121,7 +15121,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -15361,7 +15361,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"
@@ -15601,7 +15601,7 @@
                       "decorative": false,
                       "name": "card_caption",
                       "max_length": 39,
-                      "min_length": 20
+                      "min_length": 3
                     }
                   ],
                   "name": "metric_card"

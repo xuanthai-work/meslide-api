@@ -34,6 +34,13 @@ _VIETNAMESE_EM = 0.72
 _VIETNAMESE_BOLD_MULTIPLIER = 1.16
 _CJK_EM = 1.0
 _FIT_CAPACITY_RATIO = 0.95
+# The frontend canvas can shrink a slightly-too-long line before it wraps, so a
+# Vietnamese value may use more width than the Latin `maxLength` implies before
+# it is genuinely at risk of overflowing the box.
+_VIETNAMESE_SHRINK_TOLERANCE = 1.15
+# Vietnamese needs ~20-40% more characters than English for the same message.
+# Widening the schema ceiling keeps generated copy natural instead of cut short.
+VIETNAMESE_LENGTH_FACTOR = 1.25
 # Short heading fields keep their full ceiling. A Vietnamese compound word such
 # as "Cách xử lý" is longer than its English label, so tightening the schema of
 # a sub-16-character field would force a backend cut instead of letting the
@@ -316,7 +323,10 @@ def _schema_has_content_fields(response_schema: Optional[dict]) -> bool:
     return isinstance(properties, dict) and bool(properties)
 
 
-def _prepare_response_schema(json_schema: Optional[dict]) -> Optional[dict]:
+def _prepare_response_schema(
+    json_schema: Optional[dict],
+    language: Optional[str] = None,
+) -> Optional[dict]:
     if not isinstance(json_schema, dict):
         return None
 
@@ -340,8 +350,66 @@ def _prepare_response_schema(json_schema: Optional[dict]) -> Optional[dict]:
         True,
     )
     response_schema = ensure_array_schemas_have_items(response_schema)
+    if _is_vietnamese_context(language):
+        _widens_vietnamese_string_ceilings(response_schema)
     validate_response_schema_definition(response_schema)
     return response_schema
+
+
+def _is_vietnamese_text(text: str) -> bool:
+    return any(ch in _VIETNAMESE_LETTERS for ch in text)
+
+
+def _is_vietnamese_context(language: Optional[str], text: str = "") -> bool:
+    if isinstance(language, str):
+        normalized = language.strip().lower()
+        if normalized in {
+            "vietnamese",
+            "vi",
+            "vi-vn",
+            "vi_vn",
+            "vn",
+            "tiếng việt",
+            "tieng viet",
+        }:
+            return True
+    return _is_vietnamese_text(text)
+
+
+def _widens_vietnamese_string_ceilings(schema: object) -> None:
+    """Give Vietnamese string fields 25% more characters than the Latin ceiling.
+
+    Vietnamese expresses the same message in more characters; keeping the English
+    ``maxLength`` makes the model drop information to satisfy the schema.
+    """
+
+    if not isinstance(schema, dict):
+        return
+    if schema.get("type") == "string":
+        maximum = schema.get("maxLength")
+        if isinstance(maximum, int) and maximum > 0:
+            schema["maxLength"] = max(
+                maximum,
+                int(round(maximum * VIETNAMESE_LENGTH_FACTOR)),
+            )
+        return
+
+    properties = schema.get("properties")
+    if isinstance(properties, dict):
+        for key, nested in properties.items():
+            if key == "__speaker_note__":
+                continue
+            _widens_vietnamese_string_ceilings(nested)
+
+    items = schema.get("items")
+    if isinstance(items, dict):
+        _widens_vietnamese_string_ceilings(items)
+
+    for keyword in ("anyOf", "oneOf", "allOf"):
+        branches = schema.get(keyword)
+        if isinstance(branches, list):
+            for branch in branches:
+                _widens_vietnamese_string_ceilings(branch)
 
 
 def _character_unit(ch: str, bold: bool = False) -> float:
@@ -418,7 +486,11 @@ def _content_fit_issues(
         ):
             bold = _field_is_display_bold(path, schema)
             text_units = _text_units(value, bold)
-            capacity_units = maximum * _LATIN_EM
+            is_vietnamese = _is_vietnamese_text(value)
+            base_em = _VIETNAMESE_EM if is_vietnamese else _LATIN_EM
+            capacity_units = maximum * base_em * (
+                _VIETNAMESE_SHRINK_TOLERANCE if is_vietnamese else 1.0
+            )
             if text_units > _FIT_CAPACITY_RATIO * capacity_units:
                 unit_per_char = text_units / max(len(value), 1)
                 target = max(
@@ -1009,7 +1081,10 @@ async def get_slide_content_from_type_and_outline(
     disconnect_checker: Optional[DisconnectChecker] = None,
     web_search: bool = False,
 ):
-    response_schema = _prepare_response_schema(slide_layout.json_schema)
+    response_schema = _prepare_response_schema(
+        slide_layout.json_schema,
+        language=language,
+    )
     if response_schema is None:
         return {}
 
