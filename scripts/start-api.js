@@ -331,6 +331,10 @@ const main = async () => {
   process.once("SIGINT", () => shutdown(0));
   process.once("SIGTERM", () => shutdown(0));
 
+  const pythonPath = process.env.PYTHONPATH
+    ? `${fastapiDir}:${process.env.PYTHONPATH}`
+    : fastapiDir;
+
   fastApiProcess = spawn(
     "python",
     [
@@ -345,7 +349,10 @@ const main = async () => {
     {
       cwd: fastapiDir,
       stdio: "inherit",
-      env: process.env,
+      env: {
+        ...process.env,
+        PYTHONPATH: pythonPath,
+      },
     }
   );
 

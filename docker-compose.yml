@@ -2,6 +2,7 @@ x-api-environment: &api-environment
   - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
   - APP_DATA_DIRECTORY=/app_data
   - TEMP_DIRECTORY=/tmp/gslide
+  - PYTHONPATH=/app/servers/fastapi
   - USER_CONFIG_PATH=/app_data/userConfig.json
   - GSLIDE_HOST_HTTP_PORT=${GSLIDE_WEB_HOST_PORT:-${GSLIDE_HTTP_HOST_PORT:-${PRESENTON_HTTP_HOST_PORT:-3000}}}
   - GSLIDE_HTTP_HOST_PORT=${GSLIDE_WEB_HOST_PORT:-${GSLIDE_HTTP_HOST_PORT:-${PRESENTON_HTTP_HOST_PORT:-3000}}}
