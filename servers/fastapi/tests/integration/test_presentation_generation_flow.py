@@ -1002,7 +1002,7 @@ def test_stream_presentation_uses_template_schema_for_content_generation():
             "headline": {
                 "type": "string",
                 "minLength": 2,
-                "maxLength": 32,
+                "maxLength": 47,
             }
         },
         "required": ["headline"],

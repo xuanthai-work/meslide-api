@@ -8552,8 +8552,8 @@
                           "name": "card_details",
                           "max_items": 2,
                           "min_items": 2,
-                          "max_item_length": 27,
-                          "min_item_length": 23
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "card_copy",
@@ -8766,8 +8766,8 @@
                           "name": "card_details",
                           "max_items": 2,
                           "min_items": 2,
-                          "max_item_length": 27,
-                          "min_item_length": 23
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "card_copy"
@@ -8980,8 +8980,8 @@
                           "name": "card_details",
                           "max_items": 2,
                           "min_items": 2,
-                          "max_item_length": 27,
-                          "min_item_length": 23
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "card_copy",
@@ -13159,8 +13159,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13209,8 +13209,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13259,8 +13259,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13309,8 +13309,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13359,8 +13359,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13409,8 +13409,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             }
                           ],
                           "name": "comparison_card_points"
@@ -13597,8 +13597,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13647,8 +13647,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13687,8 +13687,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13737,8 +13737,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13787,8 +13787,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -13837,8 +13837,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             }
                           ],
                           "name": "comparison_card_points"
@@ -13854,7 +13854,7 @@
               ],
               "name": "comparison_cards",
               "max_children": 2,
-              "min_children": 1
+              "min_children": 2
             }
           ]
         }
@@ -33242,8 +33242,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33292,8 +33292,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33342,8 +33342,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33392,8 +33392,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33442,8 +33442,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33492,8 +33492,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             }
                           ],
                           "name": "comparison_card_points"
@@ -33680,8 +33680,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33730,8 +33730,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33770,8 +33770,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33820,8 +33820,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33870,8 +33870,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             },
                             {
                               "type": "text-list",
@@ -33920,8 +33920,8 @@
                               "name": "card_point",
                               "max_items": 1,
                               "min_items": 1,
-                              "max_item_length": 40,
-                              "min_item_length": 40
+                              "max_item_length": 60,
+                              "min_item_length": 10
                             }
                           ],
                           "name": "comparison_card_points"
@@ -33937,7 +33937,7 @@
               ],
               "name": "comparison_cards",
               "max_children": 2,
-              "min_children": 1
+              "min_children": 2
             }
           ]
         },
@@ -35620,8 +35620,8 @@
                           "name": "card_details",
                           "max_items": 2,
                           "min_items": 2,
-                          "max_item_length": 27,
-                          "min_item_length": 23
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "card_copy",
@@ -35834,8 +35834,8 @@
                           "name": "card_details",
                           "max_items": 2,
                           "min_items": 2,
-                          "max_item_length": 27,
-                          "min_item_length": 23
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "card_copy"
@@ -36048,8 +36048,8 @@
                           "name": "card_details",
                           "max_items": 2,
                           "min_items": 2,
-                          "max_item_length": 27,
-                          "min_item_length": 23
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "card_copy",

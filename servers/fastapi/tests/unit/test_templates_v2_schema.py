@@ -124,7 +124,7 @@ def test_extract_slide_schema_from_layout_extracts_editable_content():
                         "items": {
                             "type": "string",
                             "minLength": 5,
-                            "maxLength": 10,
+                            "maxLength": 25,
                         },
                     },
                     "chart": {
@@ -328,7 +328,7 @@ def test_get_component_schema_extracts_generated_component_content():
             "headline": {
                 "type": "string",
                 "minLength": 4,
-                "maxLength": 12,
+                "maxLength": 24,
                 "title": "Headline",
                 "x-element-type": "text",
                 "x-element-path": "elements.0",
@@ -530,7 +530,7 @@ def test_get_component_schema_collapses_repeated_component_children_to_array():
                 "title": {
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 8,
+                    "maxLength": 20,
                     "title": "Title",
                     "x-element-type": "text",
                 }
@@ -583,7 +583,7 @@ def test_get_component_schema_uses_single_flex_child_as_repeated_array_item():
                 "title": {
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 8,
+                    "maxLength": 20,
                     "title": "Title",
                     "x-element-type": "text",
                 }
@@ -635,7 +635,7 @@ def test_get_component_schema_collapses_group_items_to_bounded_array():
                 "heading": {
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 12,
+                    "maxLength": 24,
                     "title": "Heading",
                     "x-element-type": "text",
                 }
@@ -682,7 +682,7 @@ def test_get_component_schema_collapses_repeated_top_level_groups_to_array():
                 "label": {
                     "type": "string",
                     "minLength": 2,
-                    "maxLength": 8,
+                    "maxLength": 20,
                     "title": "Label",
                     "x-element-type": "text",
                 }
@@ -799,3 +799,90 @@ def test_get_template_schema_numbers_duplicate_component_fields_from_zero():
     assert list(schema["properties"]) == ["metric_card_0", "metric_card_1"]
     assert schema["required"] == ["metric_card_0", "metric_card_1"]
     assert schema["properties"]["metric_card_0"] == schema["properties"]["metric_card_1"]
+
+
+def test_extract_slide_schema_widens_text_list_item_tolerance():
+    layout = RawSlideLayout.model_validate(
+        {
+            "id": "bullet_slide",
+            "description": "Slide with a Vietnamese-friendly bullet list.",
+            "elements": [
+                {
+                    "type": "text-list",
+                    "decorative": False,
+                    "name": "bullets",
+                    "min_items": 1,
+                    "max_items": 3,
+                    "min_item_length": 5,
+                    "max_item_length": 10,
+                    "items": [[{"text": "First bullet"}]],
+                }
+            ],
+        }
+    )
+
+    schema = extract_slide_schema_from_layout(layout)
+    item_schema = schema["properties"]["bullets"]["items"]
+
+    assert item_schema["minLength"] == 5
+    assert item_schema["maxLength"] == 25
+
+
+def test_extract_slide_schema_relaxes_equal_text_list_item_bounds():
+    layout = RawSlideLayout.model_validate(
+        {
+            "id": "paired_slide",
+            "description": "Slide with fixed-length card points.",
+            "elements": [
+                {
+                    "type": "text-list",
+                    "decorative": False,
+                    "name": "card_point",
+                    "min_items": 1,
+                    "max_items": 1,
+                    "min_item_length": 40,
+                    "max_item_length": 40,
+                    "items": [[{"text": "Fixed length bullet"}]],
+                }
+            ],
+        }
+    )
+
+    schema = extract_slide_schema_from_layout(layout)
+    item_schema = schema["properties"]["card_point"]["items"]
+
+    assert item_schema["minLength"] <= 10
+    assert item_schema["maxLength"] >= 54
+    assert item_schema["minLength"] < item_schema["maxLength"]
+
+
+def test_get_component_schema_applies_tolerance_to_text_and_text_list_fields():
+    component = {
+        "id": "comparison_card",
+        "description": "Comparison card component.",
+        "elements": [
+            {
+                "type": "text",
+                "decorative": False,
+                "name": "card_heading",
+                "min_length": 3,
+                "max_length": 31,
+            },
+            {
+                "type": "text-list",
+                "decorative": False,
+                "name": "card_point",
+                "min_items": 1,
+                "max_items": 1,
+                "min_item_length": 40,
+                "max_item_length": 40,
+            },
+        ],
+    }
+
+    schema = get_component_schema(component)
+    properties = schema["properties"]
+
+    assert properties["card_heading"]["maxLength"] == 46
+    assert properties["card_point"]["items"]["minLength"] == 10
+    assert properties["card_point"]["items"]["maxLength"] == 60
