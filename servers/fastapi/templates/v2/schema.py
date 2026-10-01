@@ -192,27 +192,46 @@ def _node_for_element(element: dict[str, Any]) -> tuple[str, dict[str, Any]] | N
     return name, _content_schema_for_element(element)
 
 
+def _adjusted_text_max_length(raw_max: Any) -> Any:
+    if not (isinstance(raw_max, int) and raw_max > 0):
+        return raw_max
+    # Cung cấp dung sai từ ngữ đa âm tiết cho tiếng Việt và quốc tế:
+    if raw_max < 30:
+        return max(int(raw_max * 1.45), raw_max + 12)
+    if raw_max < 60:
+        return max(int(raw_max * 1.3), raw_max + 15)
+    return int(raw_max * 1.2)
+
+
+def _adjusted_text_list_bounds(raw_min: Any, raw_max: Any) -> tuple[Any, Any]:
+    adjusted_max = raw_max
+    if isinstance(raw_max, int) and raw_max > 0:
+        if raw_max < 30:
+            adjusted_max = max(int(raw_max * 1.5), raw_max + 15)
+        elif raw_max < 60:
+            adjusted_max = max(int(raw_max * 1.35), raw_max + 20)
+        else:
+            adjusted_max = int(raw_max * 1.25)
+
+    adjusted_min = raw_min
+    if isinstance(raw_min, int) and raw_min > 0:
+        if isinstance(raw_max, int) and raw_min >= raw_max:
+            adjusted_min = max(1, min(raw_min // 4, 10))
+        elif raw_min > 10:
+            adjusted_min = min(raw_min, 10)
+
+    return adjusted_min, adjusted_max
+
+
 def _content_schema_for_element(element: dict[str, Any]) -> dict[str, Any]:
     element_type = element["type"]
 
     if element_type == "text":
-        raw_min = element.get("min_length")
-        raw_max = element.get("max_length")
-        adjusted_max = raw_max
-        if isinstance(raw_max, int) and raw_max > 0:
-            # Cung cấp dung sai từ ngữ đa âm tiết cho tiếng Việt và quốc tế:
-            if raw_max < 30:
-                adjusted_max = max(int(raw_max * 1.45), raw_max + 12)
-            elif raw_max < 60:
-                adjusted_max = max(int(raw_max * 1.3), raw_max + 15)
-            else:
-                adjusted_max = int(raw_max * 1.2)
-
         return _compact(
             {
                 "type": "string",
-                "minLength": raw_min,
-                "maxLength": adjusted_max,
+                "minLength": element.get("min_length"),
+                "maxLength": _adjusted_text_max_length(element.get("max_length")),
             }
         )
 
@@ -236,6 +255,10 @@ def _content_schema_for_element(element: dict[str, Any]) -> dict[str, Any]:
         )
 
     if element_type == "text-list":
+        adjusted_min, adjusted_max = _adjusted_text_list_bounds(
+            element.get("min_item_length"),
+            element.get("max_item_length"),
+        )
         return _compact(
             {
                 "type": "array",
@@ -244,8 +267,8 @@ def _content_schema_for_element(element: dict[str, Any]) -> dict[str, Any]:
                 "items": _compact(
                     {
                         "type": "string",
-                        "minLength": element.get("min_item_length"),
-                        "maxLength": element.get("max_item_length"),
+                        "minLength": adjusted_min,
+                        "maxLength": adjusted_max,
                     }
                 ),
             }
@@ -975,7 +998,7 @@ def _component_content_field_schema(field: dict[str, Any]) -> dict[str, Any]:
         schema = {
             "type": "string",
             "minLength": element.get("min_length"),
-            "maxLength": element.get("max_length"),
+            "maxLength": _adjusted_text_max_length(element.get("max_length")),
         }
     elif element_type == "image":
         prompt_key = _component_image_prompt_key(element)
@@ -1002,12 +1025,16 @@ def _component_content_field_schema(field: dict[str, Any]) -> dict[str, Any]:
             "required": required,
         }
     elif element_type == "text-list":
+        adjusted_min, adjusted_max = _adjusted_text_list_bounds(
+            element.get("min_item_length"),
+            element.get("max_item_length"),
+        )
         schema = {
             "type": "array",
             "items": {
                 "type": "string",
-                "minLength": element.get("min_item_length"),
-                "maxLength": element.get("max_item_length"),
+                "minLength": adjusted_min,
+                "maxLength": adjusted_max,
             },
             "minItems": element.get("min_items"),
             "maxItems": element.get("max_items"),

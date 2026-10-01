@@ -4977,8 +4977,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -5017,8 +5017,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -5057,8 +5057,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -5097,8 +5097,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -5137,8 +5137,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -5177,8 +5177,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -5217,8 +5217,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "feature_list_items"
@@ -34528,8 +34528,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -34568,8 +34568,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -34608,8 +34608,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -34648,8 +34648,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -34688,8 +34688,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -34728,8 +34728,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         },
                         {
                           "type": "text-list",
@@ -34768,8 +34768,8 @@
                           "name": "feature_list_item",
                           "max_items": 1,
                           "min_items": 1,
-                          "max_item_length": 20,
-                          "min_item_length": 20
+                          "max_item_length": 45,
+                          "min_item_length": 5
                         }
                       ],
                       "name": "feature_list_items"

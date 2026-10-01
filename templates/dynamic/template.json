@@ -7165,11 +7165,11 @@
                     {
                       "type": "text",
                       "position": {
-                        "x": 89.57,
+                        "x": 24,
                         "y": 25.92
                       },
                       "size": {
-                        "width": 117.45,
+                        "width": 248.58,
                         "height": 66.71
                       },
                       "font": {
@@ -7267,11 +7267,11 @@
                     {
                       "type": "text",
                       "position": {
-                        "x": 89.56,
+                        "x": 24,
                         "y": 51.57
                       },
                       "size": {
-                        "width": 117.45,
+                        "width": 248.58,
                         "height": 66.71
                       },
                       "font": {
@@ -7369,11 +7369,11 @@
                     {
                       "type": "text",
                       "position": {
-                        "x": 89.57,
+                        "x": 24,
                         "y": 19.5
                       },
                       "size": {
-                        "width": 117.45,
+                        "width": 248.58,
                         "height": 66.71
                       },
                       "font": {
@@ -18971,11 +18971,11 @@
                     {
                       "type": "text",
                       "position": {
-                        "x": 89.57,
+                        "x": 24,
                         "y": 25.92
                       },
                       "size": {
-                        "width": 117.45,
+                        "width": 248.58,
                         "height": 66.71
                       },
                       "font": {
@@ -19073,11 +19073,11 @@
                     {
                       "type": "text",
                       "position": {
-                        "x": 89.56,
+                        "x": 24,
                         "y": 51.57
                       },
                       "size": {
-                        "width": 117.45,
+                        "width": 248.58,
                         "height": 66.71
                       },
                       "font": {
@@ -19175,11 +19175,11 @@
                     {
                       "type": "text",
                       "position": {
-                        "x": 89.57,
+                        "x": 24,
                         "y": 19.5
                       },
                       "size": {
-                        "width": 117.45,
+                        "width": 248.58,
                         "height": 66.71
                       },
                       "font": {
