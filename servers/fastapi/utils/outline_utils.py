@@ -47,13 +47,38 @@ def get_presentation_title_from_presentation_outline(
             count=1,
         )
 
-    return (
-        first_content[:100]
+    lines = [line.strip() for line in first_content.splitlines() if line.strip()]
+    if not lines:
+        return "Untitled Presentation"
+
+    # Ưu tiên lấy dòng tiêu đề markdown đầu tiên (# Title)
+    title_line = ""
+    for line in lines:
+        heading_match = re.match(r"^#{1,6}\s*(.+)$", line)
+        if heading_match:
+            title_line = heading_match.group(1).strip()
+            break
+
+    if not title_line:
+        title_line = lines[0]
+
+    # Loại bỏ các đoạn metadata nếu dính vào dòng tiêu đề
+    title_line = re.sub(
+        r"\s*(Người trình bày|Tác giả|Author|Presenter|Ngày|Date)\s*:.*$",
+        "",
+        title_line,
+        flags=re.IGNORECASE,
+    ).strip()
+
+    clean_title = (
+        title_line
         .replace("#", "")
-        .replace("/", "")
-        .replace("\\", "")
-        .replace("\n", " ")
+        .replace("/", "-")
+        .replace("\\", "-")
+        .strip()
     )
+
+    return clean_title[:60] if clean_title else "Untitled Presentation"
 
 
 def _fold_outline_title(value: str) -> str:

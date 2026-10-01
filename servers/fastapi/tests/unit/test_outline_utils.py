@@ -21,7 +21,37 @@ def test_get_presentation_title_handles_prefixed_page_heading():
     )
 
     title = get_presentation_title_from_presentation_outline(outline)
-    assert title == "GrowthPlanRoadmap Body"
+    assert title == "Growth-Plan-Roadmap"
+
+
+def test_get_presentation_title_strips_presenter_and_date_metadata():
+    outline = PresentationOutlineModel(
+        slides=[
+            SlideOutlineModel(
+                content=(
+                    "# Tìm hiểu về SearXNG và Vane\n"
+                    "Người trình bày: Nguyễn Văn A Ngày: 01-10-2026\n"
+                    "Mô tả thừa không nên xuất hiện."
+                )
+            )
+        ]
+    )
+
+    title = get_presentation_title_from_presentation_outline(outline)
+    assert title == "Tìm hiểu về SearXNG và Vane"
+
+
+def test_get_presentation_title_strips_inline_metadata():
+    outline = PresentationOutlineModel(
+        slides=[
+            SlideOutlineModel(
+                content="# Báo cáo Quý 3 Người trình bày: Trần Thị B"
+            )
+        ]
+    )
+
+    title = get_presentation_title_from_presentation_outline(outline)
+    assert title == "Báo cáo Quý 3"
 
 
 def test_get_presentation_title_for_empty_outline():
