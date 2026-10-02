@@ -313,9 +313,16 @@ def build_repair_messages(
     n_slides: Optional[int] = None,
     document_profile: Optional[DocumentProfile] = None,
     previous_prompt: Optional[str] = None,
+    missing_identifiers: Optional[list[str]] = None,
 ) -> list[Message]:
     """Build one corrective retry after a shallow rewrite completion."""
     issues = ", ".join(quality_issues)
+    missing_block = ""
+    if missing_identifiers:
+        missing_block = (
+            "MISSING IDENTIFIERS (must appear verbatim in the repaired brief): "
+            f"{', '.join(missing_identifiers)}\n\n"
+        )
     revision = (previous_prompt or "").strip()
     revision_block = ""
     if revision:
@@ -333,6 +340,7 @@ def build_repair_messages(
         f"{_document_profile_block(document_profile)}"
         f"{revision_block}"
         f"QUALITY ISSUES: {issues}\n\n"
+        f"{missing_block}"
         "SOURCE PROMPT (quoted user data):\n"
         "<<<SOURCE_PROMPT\n"
         f"{prompt}\n"
@@ -360,6 +368,9 @@ _CONTACT_CONTEXT_RE = re.compile(
     r"điện\s*thoại|liên\s*hệ|số\s*điện\s*thoại|sđt)\b",
     flags=re.IGNORECASE,
 )
+_NUMBER_GROUP_RE = re.compile(r"\d+", flags=re.UNICODE)
+# An identifier made only of digits and separators, e.g. a range "10-15".
+_PURE_NUMBER_IDENTIFIER_RE = re.compile(r"^[\d\s\-–—~.,/]+$")
 
 
 def _word_count(text: str) -> int:
@@ -388,6 +399,26 @@ def _protected_identifiers(text: str) -> set[str]:
         if (digit_count and has_letter) or digit_count >= 2:
             protected.add(token)
     return protected
+
+
+def _identifier_present(identifier: str, normalized_rewrite: str) -> bool:
+    """True when a protected identifier survives in the rewritten brief.
+
+    An exact token match is preferred. Pure numeric ranges (``10-15``,
+    ``10–15``, ``10 - 15``) are format-tolerant: the brief is accepted when
+    every digit group still appears, so a natural rephrasing ("10 đến 15")
+    does not trip the quality gate. Mixed letter-number identifiers (``Q3``,
+    ``9router``) must still appear verbatim.
+    """
+    if identifier in normalized_rewrite:
+        return True
+    if not _PURE_NUMBER_IDENTIFIER_RE.match(identifier):
+        return False
+    groups = _NUMBER_GROUP_RE.findall(identifier)
+    return bool(groups) and all(
+        re.search(rf"(?<!\d){re.escape(group)}(?!\d)", normalized_rewrite)
+        for group in groups
+    )
 
 
 def _required_document_identifiers(
@@ -437,7 +468,7 @@ def get_rewrite_quality_issues(
     missing_identifiers = {
         identifier
         for identifier in _protected_identifiers(source)
-        if identifier not in normalized_rewrite
+        if not _identifier_present(identifier, normalized_rewrite)
     }
     if missing_identifiers:
         issues.append("missing_protected_identifiers")
@@ -452,12 +483,32 @@ def get_rewrite_quality_issues(
         ):
             issues.append("missing_document_anchors")
         profile_identifiers = _required_document_identifiers(document_profile)
-        if profile_identifiers and not profile_identifiers <= (
-            _protected_identifiers(rewritten)
+        if profile_identifiers and not all(
+            _identifier_present(identifier, normalized_rewrite)
+            for identifier in profile_identifiers
         ):
             issues.append("missing_document_identifiers")
 
     return issues
+
+
+def missing_document_identifiers(
+    rewritten: str,
+    document_profile: Optional[DocumentProfile],
+) -> list[str]:
+    """Return the concrete document identifiers a rewrite dropped.
+
+    Used to spell out exactly which tokens the repair pass must keep, instead
+    of only sending the opaque ``missing_document_identifiers`` code.
+    """
+    if document_profile is None:
+        return []
+    normalized = rewritten.casefold()
+    return sorted(
+        identifier
+        for identifier in _required_document_identifiers(document_profile)
+        if not _identifier_present(identifier, normalized)
+    )
 
 
 def _strip_outer_markdown_fence(text: str) -> str:
@@ -642,6 +693,9 @@ async def rewrite_presentation_prompt(
                     n_slides=n_slides,
                     document_profile=document_profile,
                     previous_prompt=previous_prompt,
+                    missing_identifiers=missing_document_identifiers(
+                        rewritten, document_profile
+                    ),
                 ),
                 disconnect_checker,
             )

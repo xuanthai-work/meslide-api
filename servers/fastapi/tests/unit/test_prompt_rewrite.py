@@ -28,6 +28,7 @@ from utils.llm_calls.rewrite_presentation_prompt import (
     clean_rewritten_prompt,
     format_document_profile,
     get_rewrite_quality_issues,
+    missing_document_identifiers,
     rewrite_presentation_prompt,
 )
 
@@ -1250,6 +1251,95 @@ def test_quality_gate_does_not_require_contact_metadata_from_document():
 
     assert "0905516651" not in rendered_profile
     assert "missing_document_identifiers" not in issues
+
+
+def _profile_with_numbers(numbers):
+    return DocumentProfile(
+        **{**DOCUMENT_PROFILE_PAYLOAD, "numbers_and_dates": numbers}
+    )
+
+
+def test_quality_gate_accepts_rephrased_numeric_ranges():
+    profile = _profile_with_numbers(
+        [
+            {"value": "10-15 trang", "context": "Deck length", "source_name": "Document 1"},
+            {"value": "16 bộ template", "context": "Template count", "source_name": "Document 1"},
+            {"value": "2026", "context": "Document year", "source_name": "Document 1"},
+        ]
+    )
+
+    for rendered in ("10 đến 15", "10–15", "10 - 15"):
+        brief = (
+            "Create a focused presentation grounded in the OrbitDB report for "
+            f"2026, covering the {rendered} page deck and the 16 templates, "
+            "with the business implications and uncertainty made explicit."
+        )
+        issues = get_rewrite_quality_issues(SOURCE_PROMPT, brief, profile)
+        assert "missing_document_identifiers" not in issues, rendered
+
+
+def test_quality_gate_still_requires_absent_document_number():
+    profile = _profile_with_numbers(
+        [{"value": "2026", "context": "Document year", "source_name": "Document 1"}]
+    )
+    brief = (
+        "Create a focused presentation grounded in the OrbitDB report, "
+        "covering the business implications and required evidence."
+    )
+
+    issues = get_rewrite_quality_issues(SOURCE_PROMPT, brief, profile)
+
+    assert "missing_document_identifiers" in issues
+
+
+def test_quality_gate_keeps_mixed_identifiers_strict():
+    profile = _profile_with_numbers(
+        [{"value": "Q3 2026", "context": "Reported quarter", "source_name": "Document 1"}]
+    )
+    # The plain year survives but the mixed "q3" token is dropped.
+    brief = "Create a focused presentation grounded in the OrbitDB report for 2026."
+
+    issues = get_rewrite_quality_issues(SOURCE_PROMPT, brief, profile)
+
+    assert "missing_document_identifiers" in issues
+
+
+def test_missing_document_identifiers_reports_concrete_tokens():
+    profile = _profile_with_numbers(
+        [
+            {"value": "10-15 trang", "context": "Deck length", "source_name": "Document 1"},
+            {"value": "2026", "context": "Document year", "source_name": "Document 1"},
+        ]
+    )
+    brief = (
+        "Create a focused presentation grounded in the OrbitDB report "
+        "covering the business implications and required evidence."
+    )
+
+    assert missing_document_identifiers(brief, profile) == ["10-15", "2026"]
+    assert missing_document_identifiers(brief, None) == []
+
+
+def test_repair_prompt_lists_missing_identifiers():
+    content = build_repair_messages(
+        SOURCE_PROMPT,
+        "A shallow rewrite.",
+        ["missing_document_identifiers"],
+        missing_identifiers=["10-15", "16"],
+    )[1].content
+
+    assert "MISSING IDENTIFIERS" in content
+    assert "10-15, 16" in content
+
+
+def test_repair_prompt_omits_missing_block_when_none():
+    content = build_repair_messages(
+        SOURCE_PROMPT,
+        "A shallow rewrite.",
+        ["missing_document_anchors"],
+    )[1].content
+
+    assert "MISSING IDENTIFIERS" not in content
 
 
 def _patch_profile_service(monkeypatch, profile=None, error=None):
