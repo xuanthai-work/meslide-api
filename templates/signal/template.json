@@ -34978,47 +34978,6 @@
               "type": "text",
               "position": {
                 "x": 0,
-                "y": 0
-              },
-              "size": {
-                "width": 48.12,
-                "height": 13.33
-              },
-              "rotation": 0,
-              "font": {
-                "size": 10.67,
-                "family": "Inter 1 Semi-Bold",
-                "color": "#F4C9D6",
-                "bold": false,
-                "line_height": 1.2,
-                "letter_spacing": 0.07
-              },
-              "alignment": {
-                "horizontal": "left",
-                "vertical": "top"
-              },
-              "runs": [
-                {
-                  "text": "PAGE 08",
-                  "font": {
-                    "size": 10.67,
-                    "family": "Inter 1 Semi-Bold",
-                    "color": "#F4C9D6",
-                    "bold": false,
-                    "line_height": 1.2,
-                    "letter_spacing": 0.07
-                  }
-                }
-              ],
-              "decorative": false,
-              "name": "page_number",
-              "max_length": 7,
-              "min_length": 3
-            },
-            {
-              "type": "text",
-              "position": {
-                "x": 0,
                 "y": 1.3400000000000318
               },
               "size": {

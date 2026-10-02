@@ -15914,15 +15914,15 @@
               },
               "size": {
                 "width": 583.26,
-                "height": 8
+                "height": 110
               },
               "rotation": 0,
               "font": {
-                "size": 55.99,
+                "size": 42,
                 "family": "Anton",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 1.05,
+                "line_height": 1.15,
                 "letter_spacing": -0.55
               },
               "alignment": {
@@ -15933,13 +15933,13 @@
                 {
                   "text": "Our Solution Smart Task Management Platform",
                   "font": {
-                    "size": 55.99,
+                    "size": 42,
                     "family": "Anton",
                     "color": "#000000",
                     "bold": true,
                     "italic": false,
                     "underline": false,
-                    "line_height": 1.05,
+                    "line_height": 1.15,
                     "letter_spacing": -0.55,
                     "opacity": 1
                   }
@@ -15957,7 +15957,7 @@
           "description": "Ungrouped component element",
           "position": {
             "x": 53.33,
-            "y": 199.39999999999998
+            "y": 210
           },
           "elements": [
             {
@@ -21349,240 +21349,11 @@
       "description": "A presentation layout with prominent heading text, a large chart region on the left, and metric cards arranged in a right-side grid.",
       "components": [
         {
-          "id": "title_and_summary_part_1",
-          "description": "Ungrouped component element",
+          "id": "title_and_summary",
+          "description": "Left header block containing slide title and supporting summary",
           "position": {
             "x": 53,
             "y": 52
-          },
-          "elements": [
-            {
-              "type": "text",
-              "position": {
-                "x": 0,
-                "y": 0
-              },
-              "size": {
-                "width": 647.0000000000001,
-                "height": 101
-              },
-              "font": {
-                "size": 48,
-                "family": "Anton",
-                "color": "#000000",
-                "line_height": 1.05,
-                "letter_spacing": -0.4
-              },
-              "alignment": {
-                "horizontal": "left",
-                "vertical": "top"
-              },
-              "runs": [
-                {
-                  "text": "The chart steady ",
-                  "font": {
-                    "size": 48,
-                    "family": "Anton",
-                    "color": "#000000",
-                    "bold": false,
-                    "italic": false,
-                    "underline": false,
-                    "line_height": 1.05,
-                    "letter_spacing": -0.4,
-                    "opacity": 1
-                  }
-                },
-                {
-                  "text": "increase in \nthe number of",
-                  "font": {
-                    "size": 48,
-                    "family": "Anton",
-                    "color": "5F4F9B",
-                    "bold": false,
-                    "italic": false,
-                    "underline": false,
-                    "line_height": 1.05,
-                    "letter_spacing": -0.4,
-                    "opacity": 1
-                  }
-                },
-                {
-                  "text": " tasks",
-                  "font": {
-                    "size": 48,
-                    "family": "Anton",
-                    "color": "#000000",
-                    "bold": false,
-                    "italic": false,
-                    "underline": false,
-                    "line_height": 1.05,
-                    "letter_spacing": -0.4,
-                    "opacity": 1
-                  }
-                }
-              ],
-              "decorative": false,
-              "name": "headline_leading_text",
-              "max_length": 19,
-              "min_length": 3
-            }
-          ]
-        },
-        {
-          "id": "title_and_summary_part_2",
-          "description": "Ungrouped component element",
-          "position": {
-            "x": 435,
-            "y": 52
-          },
-          "elements": [
-            {
-              "type": "text",
-              "position": {
-                "x": 0,
-                "y": 0
-              },
-              "size": {
-                "width": 260,
-                "height": 51
-              },
-              "font": {
-                "size": 48,
-                "family": "Anton",
-                "color": "#5F4F9B",
-                "line_height": 1.05,
-                "letter_spacing": -0.4
-              },
-              "alignment": {
-                "horizontal": "left",
-                "vertical": "top"
-              },
-              "runs": [
-                {
-                  "text": " ",
-                  "font": {
-                    "size": 48,
-                    "family": "Anton",
-                    "color": "#5F4F9B",
-                    "line_height": 1.05,
-                    "letter_spacing": -0.4
-                  }
-                }
-              ],
-              "decorative": false,
-              "name": "headline_emphasis_text",
-              "max_length": 25,
-              "min_length": 3
-            }
-          ]
-        },
-        {
-          "id": "title_and_summary_part_3",
-          "description": "Ungrouped component element",
-          "position": {
-            "x": 53,
-            "y": 113
-          },
-          "elements": [
-            {
-              "type": "text",
-              "position": {
-                "x": 0,
-                "y": 0
-              },
-              "size": {
-                "width": 330,
-                "height": 112
-              },
-              "font": {
-                "size": 48,
-                "family": "Anton",
-                "color": "#5F4F9B",
-                "line_height": 1.05,
-                "letter_spacing": -0.4
-              },
-              "alignment": {
-                "horizontal": "left",
-                "vertical": "top"
-              },
-              "runs": [
-                {
-                  "text": " ",
-                  "font": {
-                    "size": 48,
-                    "family": "Anton",
-                    "color": "#5F4F9B",
-                    "line_height": 1.05,
-                    "letter_spacing": -0.4
-                  }
-                }
-              ],
-              "decorative": false,
-              "name": "headline_secondary_text",
-              "max_length": 30,
-              "min_length": 3
-            }
-          ]
-        },
-        {
-          "id": "title_and_summary_part_4",
-          "description": "Ungrouped component element",
-          "position": {
-            "x": 375,
-            "y": 113
-          },
-          "elements": [
-            {
-              "type": "text",
-              "position": {
-                "x": 0,
-                "y": 0
-              },
-              "size": {
-                "width": 297.78,
-                "height": 112
-              },
-              "rotation": 0,
-              "font": {
-                "size": 48,
-                "family": "Anton",
-                "color": "#000000",
-                "line_height": 1.05,
-                "letter_spacing": -0.4
-              },
-              "alignment": {
-                "horizontal": "left",
-                "vertical": "top"
-              },
-              "runs": [
-                {
-                  "text": " ",
-                  "font": {
-                    "size": 48,
-                    "family": "Anton",
-                    "color": "#000000",
-                    "bold": false,
-                    "italic": false,
-                    "underline": false,
-                    "line_height": 1.05,
-                    "letter_spacing": -0.4,
-                    "opacity": 1
-                  }
-                }
-              ],
-              "decorative": false,
-              "name": "headline_closing_text",
-              "max_length": 30,
-              "min_length": 3
-            }
-          ]
-        },
-        {
-          "id": "title_and_summary_part_5",
-          "description": "Ungrouped component element",
-          "position": {
-            "x": 53,
-            "y": 179
           },
           "elements": [
             {
@@ -21593,11 +21364,50 @@
               },
               "size": {
                 "width": 632,
-                "height": 126.98
+                "height": 95
               },
-              "rotation": 0,
               "font": {
-                "size": 18,
+                "size": 42,
+                "family": "Anton",
+                "color": "#000000",
+                "bold": true,
+                "line_height": 1.15,
+                "letter_spacing": -0.4
+              },
+              "alignment": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "runs": [
+                {
+                  "text": "The chart steady increase in tasks",
+                  "font": {
+                    "size": 42,
+                    "family": "Anton",
+                    "color": "#000000",
+                    "bold": true,
+                    "line_height": 1.15,
+                    "letter_spacing": -0.4
+                  }
+                }
+              ],
+              "decorative": false,
+              "name": "headline_text",
+              "max_length": 60,
+              "min_length": 3
+            },
+            {
+              "type": "text",
+              "position": {
+                "x": 0,
+                "y": 115
+              },
+              "size": {
+                "width": 632,
+                "height": 125
+              },
+              "font": {
+                "size": 17,
                 "family": "Montserrat Medium",
                 "color": "#000000",
                 "bold": true,
@@ -21612,7 +21422,7 @@
                 {
                   "text": "The consistent growth also reflects the positive impact of task assignment, real-time progress tracking, and timely notifications.",
                   "font": {
-                    "size": 18,
+                    "size": 17,
                     "family": "Montserrat Medium",
                     "color": "#000000",
                     "bold": true,

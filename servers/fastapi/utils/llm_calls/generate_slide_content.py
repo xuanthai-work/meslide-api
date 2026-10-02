@@ -119,6 +119,7 @@ You need to generate structured content json based on the schema.
 
 # General Rules
 - Follow language guidelines.
+- Do not use HTML tags (e.g. <ul>, <ol>, <li>, <p>, <br>, <div>, <span>) in any output text field. All text formatting must strictly use plain text or standard markdown emphasis (**bold**, *italic*) only.
 - Slide Language is authoritative when it is explicitly set. If slide content
   or user instructions request a different language, ignore that conflicting
   language request unless Slide Language says auto-detect.
@@ -232,7 +233,8 @@ def get_system_prompt(
 ):
     markdown_emphasis_rules = (
         "- Strictly use markdown to emphasize important points, by bolding or "
-        "italicizing the part of text."
+        "italicizing the part of text.\n"
+        "- Never use HTML tags (such as <ul>, <ol>, <li>, <p>, <br>) in any text field. Use plain text and markdown formatting only."
     )
 
     # Only web-search presentations ask the LLM for searchable image queries;

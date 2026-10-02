@@ -1,22 +1,19 @@
 import json
 import logging
 import re
-from typing import Any, Awaitable, Callable, Literal
+from typing import Any, Awaitable, Callable
 
 import dirtyjson  # type: ignore[import-untyped]
 from utils.llm_messages import AssistantToolCall, Tool
 
-from constants.presentation import MAX_NUMBER_OF_SLIDES, MAX_OUTLINE_CONTENT_WORDS
 from services.chat.schemas import (
     AddElementInput,
     AddNewSlideInput,
     AddNewSlideLayoutInput,
-    AddOutlineInput,
     AddSlideComponentInput,
     DeleteSlideComponentInput,
     DeleteSlideElementInput,
     DeleteSlideInput,
-    DeleteOutlineInput,
     GenerateAssetsInput,
     GetAvailableBlocksInput,
     GetContentSchemaFromLayoutIdInput,
@@ -29,7 +26,6 @@ from services.chat.schemas import (
     UpdateComponentInput,
     UpdateSlideInput,
     UpdateSlideComponentInput,
-    UpdateOutlineInput,
     UpdateSlideElementInput,
 )
 from services.chat.presentation_context_store import PresentationContextStore
@@ -42,7 +38,6 @@ from services.chat.tools_repair import (
 LOGGER = logging.getLogger(__name__)
 
 ToolHandler = Callable[[dict[str, Any]], Awaitable[dict[str, Any]]]
-ChatToolMode = Literal["presentation", "outline"]
 BLOCK_PRIORITIZED_INSERT_TYPES = {"chart", "table"}
 MAX_TOOL_REPAIR_RETRIES = 1
 
@@ -64,16 +59,11 @@ class ChatTools(ChatToolsRepairMixin):
     def __init__(
         self,
         memory: PresentationContextStore,
-        mode: ChatToolMode = "presentation",
     ):
         self._memory = memory
-        self._mode = mode
         self._turn_user_message = ""
         self._generated_assets: list[dict[str, Any]] = []
         self._tool_handlers: dict[str, ToolHandler] = {
-            "addOutline": self._add_outline,
-            "updateOutline": self._update_outline,
-            "deleteOutline": self._delete_outline,
             "addNewSlide": self._add_new_slide,
             "addNewSlideLayout": self._add_new_slide_layout,
             "getTemplateSummary": self._get_template_summary,
@@ -104,36 +94,6 @@ class ChatTools(ChatToolsRepairMixin):
 
     def get_tool_definitions(self) -> list[Tool]:
         return [
-            Tool(
-                name="addOutline",
-                description=(
-                    "Insert a new markdown outline item into the outline draft. "
-                    "This edits presentation.outlines only and does not require a layout. "
-                    f"Do not exceed {MAX_NUMBER_OF_SLIDES} outline slides or "
-                    f"{MAX_OUTLINE_CONTENT_WORDS} words in this outline item."
-                ),
-                schema=AddOutlineInput,
-                strict=False,
-            ),
-            Tool(
-                name="updateOutline",
-                description=(
-                    "Replace the markdown content of one outline item by zero-based index. "
-                    "This edits presentation.outlines only and does not require a layout. "
-                    f"Keep this outline item within {MAX_OUTLINE_CONTENT_WORDS} words."
-                ),
-                schema=UpdateOutlineInput,
-                strict=False,
-            ),
-            Tool(
-                name="deleteOutline",
-                description=(
-                    "Delete one outline item by zero-based index. This edits "
-                    "presentation.outlines only and does not require a layout."
-                ),
-                schema=DeleteOutlineInput,
-                strict=False,
-            ),
             Tool(
                 name="addNewSlide",
                 description=(
@@ -519,27 +479,6 @@ class ChatTools(ChatToolsRepairMixin):
             "found": True,
             "slide": slide,
         }
-
-    async def _get_outline_draft(self, _: dict[str, Any]) -> dict[str, Any]:
-        return await self._memory.get_outline_draft()
-
-    async def _add_outline(self, args: dict[str, Any]) -> dict[str, Any]:
-        payload = AddOutlineInput(**args)
-        return await self._memory.add_outline(
-            content=payload.content,
-            index=payload.index,
-        )
-
-    async def _update_outline(self, args: dict[str, Any]) -> dict[str, Any]:
-        payload = UpdateOutlineInput(**args)
-        return await self._memory.update_outline(
-            index=payload.index,
-            content=payload.content,
-        )
-
-    async def _delete_outline(self, args: dict[str, Any]) -> dict[str, Any]:
-        payload = DeleteOutlineInput(**args)
-        return await self._memory.delete_outline(index=payload.index)
 
     async def _add_new_slide(self, args: dict[str, Any]) -> dict[str, Any]:
         payload = AddNewSlideInput(**args)

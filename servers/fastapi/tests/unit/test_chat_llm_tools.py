@@ -79,9 +79,6 @@ def test_chat_tool_parse_args_repairs_fenced_jsonish_payload():
 
 def test_chat_tools_expose_only_v2_tool_names():
     assert [tool.name for tool in ChatTools(Mock()).get_tool_definitions()] == [
-        "addOutline",
-        "updateOutline",
-        "deleteOutline",
         "addNewSlide",
         "addNewSlideLayout",
         "getAvailableLayouts",
