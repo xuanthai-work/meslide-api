@@ -17,7 +17,7 @@ from services.chat.conversation_store import ChatConversationStore
 from services.chat.presentation_context_store import PresentationContextStore
 from services.chat.prompts import build_system_prompt
 from services.chat.llm_tools import build_chat_llm_tools
-from services.chat.tools import ChatToolMode, ChatTools
+from services.chat.tools import ChatTools
 from services.documents_loader import DocumentsLoader
 from services.mem0_presentation_memory_service import MEM0_PRESENTATION_MEMORY_SERVICE
 from services.temp_file_service import TEMP_FILE_SERVICE
@@ -60,9 +60,6 @@ DIRECT_FILE_PLACEMENT_PATTERN = re.compile(
 # The message text stays verbatim for legacy clients; the code lets
 # localized clients map the trace without matching English prose.
 TOOL_START_TRACES: dict[str, tuple[str, str]] = {
-    "addOutline": ("Adding an outline slide", "chat.trace.adding_outline_slide"),
-    "updateOutline": ("Updating the outline slide", "chat.trace.updating_outline_slide"),
-    "deleteOutline": ("Deleting the outline slide", "chat.trace.deleting_outline_slide"),
     "addNewSlide": ("Adding a blank slide", "chat.trace.adding_blank_slide"),
     "addNewSlideLayout": ("Adding slide from layout", "chat.trace.adding_slide_from_layout"),
     "getTemplateSummary": ("Reading template summary", "chat.trace.reading_template_summary"),
@@ -128,7 +125,6 @@ class PresentationChatService:
         sql_session: AsyncSession,
         presentation_id: uuid.UUID,
         conversation_id: uuid.UUID | None,
-        chat_mode: ChatToolMode = "presentation",
     ):
         self._sql_session = sql_session
         self._presentation_id = presentation_id
@@ -138,7 +134,7 @@ class PresentationChatService:
             sql_session,
             presentation_id,
         )
-        self._tools = ChatTools(self._memory, mode=chat_mode)
+        self._tools = ChatTools(self._memory)
 
     async def generate_reply(
         self,

@@ -15,9 +15,6 @@ from services.chat.service import ChatStreamStatus, ChatTurnResult, Presentation
 
 # The complete reconciled registry: tool -> (legacy message, trace code).
 EXPECTED_TOOL_START_TRACES = {
-    "addOutline": ("Adding an outline slide", "chat.trace.adding_outline_slide"),
-    "updateOutline": ("Updating the outline slide", "chat.trace.updating_outline_slide"),
-    "deleteOutline": ("Deleting the outline slide", "chat.trace.deleting_outline_slide"),
     "addNewSlide": ("Adding a blank slide", "chat.trace.adding_blank_slide"),
     "addNewSlideLayout": ("Adding slide from layout", "chat.trace.adding_slide_from_layout"),
     "getTemplateSummary": ("Reading template summary", "chat.trace.reading_template_summary"),

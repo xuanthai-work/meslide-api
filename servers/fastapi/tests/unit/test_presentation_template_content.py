@@ -11,8 +11,37 @@ endpoint re-export).
 from api.v1.ppt.endpoints.presentation_template_content import (
     _apply_template_content_to_ui,
     _parse_template_markdown_text,
+    _sanitize_template_markdown_text,
     _template_slide_ui,
+    _template_text_runs_from_markdown,
 )
+
+
+def test_sanitize_template_markdown_text_converts_html_lists_to_bullets():
+    raw = "<ul><li>Triệu chứng: Khát nước</li><li>Nguyên nhân: Kháng insulin</li><ul>"
+
+    cleaned = _sanitize_template_markdown_text(raw)
+
+    assert cleaned == "• Triệu chứng: Khát nước\n• Nguyên nhân: Kháng insulin"
+    assert "<" not in cleaned
+    assert ">" not in cleaned
+
+
+def test_template_text_runs_from_markdown_strips_html_and_keeps_bullets():
+    runs = _template_text_runs_from_markdown(
+        "<p>Triệu chứng</p><ul><li>Khát nước</li></ul>",
+        {"font": {"family": "Inter"}},
+    )
+
+    assert runs == [
+        {"text": "Triệu chứng\n• Khát nước", "font": {"family": "Inter"}},
+    ]
+
+
+def test_sanitize_template_markdown_text_preserves_latex_tags():
+    raw = r"Area is <latex>\pi r^2</latex>."
+
+    assert _sanitize_template_markdown_text(raw) == raw
 
 
 def test_parse_template_markdown_text_splits_bold_run():

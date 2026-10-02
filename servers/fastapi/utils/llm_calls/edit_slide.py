@@ -59,6 +59,7 @@ def get_system_prompt(
     - Do not change **Image prompts** and **Icon queries** if not asked for in prompt.
     - Generate **Image prompts** and **Icon queries** if asked to generate or change in prompt.
     - Make sure to follow language guidelines.
+    - Never generate HTML tags (such as <ul>, <ol>, <li>, <p>, <br>). Use plain text and markdown emphasis only.
     - Speaker note should be normal text, not markdown.
     - Speaker note should be simple, clear, concise and to the point.
     {memory_block}

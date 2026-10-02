@@ -8,6 +8,7 @@ test suite that exercises them through the endpoint re-export.
 """
 
 import copy
+import re
 from typing import Any, Optional
 from services.chat.slide_ui_charts import _normalize_generated_image_fit
 from utils.dict_utils import to_plain_data
@@ -556,12 +557,41 @@ def _first_template_text_run(runs: Any) -> dict[str, Any]:
     return {}
 
 
+_HTML_TAG_PATTERN = re.compile(r"</?(?!latex\b)[a-zA-Z][^>]*>", re.IGNORECASE)
+
+
+def _sanitize_template_markdown_text(text: str) -> str:
+    """Strip raw HTML from generated slide text while preserving LaTeX tags.
+
+    LLMs occasionally wrap slide copy in HTML (``<ul><li>...</li></ul>``).
+    Structural tags are converted to plain text/markdown first, then every
+    remaining tag is dropped. ``<latex>`` tags are kept because they are
+    parsed into math runs later in the pipeline.
+    """
+    if not text or not isinstance(text, str):
+        return text
+
+    # Break/paragraph tags become real newlines.
+    s = re.sub(r"(?i)<br\s*/?>", "\n", text)
+    s = re.sub(r"(?i)</p>|</div>", "\n", s)
+    # List items become bullet points.
+    s = re.sub(r"(?i)<li\b[^>]*>", "\n• ", s)
+    # Strip every remaining HTML tag except <latex> math tags.
+    s = _HTML_TAG_PATTERN.sub("", s)
+
+    # Collapse redundant whitespace and blank lines.
+    lines = [line.strip() for line in s.split("\n")]
+    cleaned = "\n".join(line for line in lines if line)
+    return cleaned if cleaned else s.strip()
+
+
 def _template_text_runs_from_markdown(
     text: str,
     first_run: Any,
     *,
     fallback_font: Any = None,
 ) -> list[dict[str, Any]]:
+    text = _sanitize_template_markdown_text(text)
     if parse_latex_tags(text) is not None or (
         isinstance(first_run, dict) and first_run.get("type") == "latex"
     ):
