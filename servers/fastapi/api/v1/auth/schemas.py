@@ -33,3 +33,12 @@ class LoginCredentialsRequest(BaseModel):
     # The pre-multi-user release allowed six-character passwords. Login keeps
     # that compatibility while all newly-created passwords require eight.
     password: str = Field(min_length=6, max_length=128)
+
+
+class RegisterCredentialsRequest(BaseModel):
+    username: str = Field(
+        min_length=3,
+        max_length=128,
+        pattern=USERNAME_PATTERN,
+    )
+    password: str = Field(min_length=6, max_length=128)
