@@ -10,7 +10,10 @@ from api.v1.auth.config import (
     session_cookie_kwargs,
 )
 from api.v1.auth.principal import resolve_request_principal
-from api.v1.auth.schemas import LoginCredentialsRequest
+from api.v1.auth.schemas import (
+    LoginCredentialsRequest,
+    RegisterCredentialsRequest,
+)
 from api.v1.auth.users import (
     PASSWORD_HELPER,
     UsernameUserDatabase,
@@ -116,6 +119,37 @@ async def login(
         await session.refresh(user)
     token = await get_jwt_strategy().write_token(user)
     response = JSONResponse(serialize_user(user))
+    response.set_cookie(value=token, **session_cookie_kwargs(request))
+    return response
+
+
+@API_V1_AUTH_ROUTER.post("/register", status_code=201)
+async def register(
+    credentials: RegisterCredentialsRequest,
+    request: Request,
+    session: AsyncSession = Depends(get_async_session),
+):
+    user_db = UsernameUserDatabase(session)
+    existing = await user_db.get_by_email(credentials.username)
+    if existing is not None:
+        raise HTTPException(
+            status_code=400,
+            detail="Tên đăng nhập đã tồn tại",
+        )
+
+    user = User(
+        username=credentials.username.strip(),
+        hashed_password=PASSWORD_HELPER.hash(credentials.password),
+        is_active=True,
+        is_verified=True,
+        auth_version=1,
+    )
+    session.add(user)
+    await session.commit()
+    await session.refresh(user)
+
+    token = await get_jwt_strategy().write_token(user)
+    response = JSONResponse(serialize_user(user), status_code=201)
     response.set_cookie(value=token, **session_cookie_kwargs(request))
     return response
 
