@@ -21762,7 +21762,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35,
@@ -21776,7 +21776,7 @@
                             {
                               "text": "Many businesses do not appear in search results or reach enough customers online.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35,
@@ -21933,7 +21933,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35,
@@ -21947,7 +21947,7 @@
                             {
                               "text": "Many businesses do not appear in search results or reach enough customers online.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35,
@@ -22104,7 +22104,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35,
@@ -22118,7 +22118,7 @@
                             {
                               "text": "Many businesses do not appear in search results or reach enough customers online.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35,
@@ -22447,7 +22447,7 @@
               },
               "size": {
                 "width": 572.0799999999999,
-                "height": 515.66
+                "height": 538.72
               },
               "direction": "column",
               "justify_content": "center",
@@ -22457,7 +22457,7 @@
                   "type": "group",
                   "size": {
                     "width": 572.0799999999999,
-                    "height": 100.1
+                    "height": 106.78
                   },
                   "children": [
                     {
@@ -22468,7 +22468,7 @@
                       },
                       "size": {
                         "width": 572.08,
-                        "height": 100.1
+                        "height": 106.78
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -22555,7 +22555,7 @@
                       },
                       "size": {
                         "width": 454.4200000000001,
-                        "height": 74.44
+                        "height": 94.95
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -22600,11 +22600,11 @@
                           "type": "text",
                           "size": {
                             "width": 454.42,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.35,
@@ -22618,7 +22618,7 @@
                             {
                               "text": "The first step is to understand the target audience, market trends, customer behavior, and competitors. Businesses collect and analyze data to identify customer needs, market opportunities, and potential challenges.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.35,
@@ -22643,7 +22643,7 @@
                   "type": "group",
                   "size": {
                     "width": 572.0799999999999,
-                    "height": 100.1
+                    "height": 105.56
                   },
                   "children": [
                     {
@@ -22654,7 +22654,7 @@
                       },
                       "size": {
                         "width": 572.08,
-                        "height": 100.1
+                        "height": 105.56
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -22741,7 +22741,7 @@
                       },
                       "size": {
                         "width": 454.4200000000001,
-                        "height": 72
+                        "height": 92.51
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -22786,11 +22786,11 @@
                           "type": "text",
                           "size": {
                             "width": 454.42,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.35,
@@ -22804,7 +22804,7 @@
                             {
                               "text": "Based on the research, businesses develop the clear marketing strategy by defining objectives, identifying the target the as audience, selecting the most suitable digital channels, and creating a content and advertising plan.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.35,
@@ -22829,7 +22829,7 @@
                   "type": "group",
                   "size": {
                     "width": 572.0799999999999,
-                    "height": 100.1
+                    "height": 105.56
                   },
                   "children": [
                     {
@@ -22840,7 +22840,7 @@
                       },
                       "size": {
                         "width": 572.08,
-                        "height": 100.1
+                        "height": 105.56
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -22927,7 +22927,7 @@
                       },
                       "size": {
                         "width": 454.4200000000001,
-                        "height": 72
+                        "height": 92.51
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -22972,11 +22972,11 @@
                           "type": "text",
                           "size": {
                             "width": 454.42,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.35,
@@ -22990,7 +22990,7 @@
                             {
                               "text": "At this stage, the planned marketing activities ill are implemented. Businesses publish engaging content, optimize websites for search engines (SEO), run social media campaigns, launch paid advertisements.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.35,
@@ -23015,7 +23015,7 @@
                   "type": "group",
                   "size": {
                     "width": 572.0799999999999,
-                    "height": 100.1
+                    "height": 105.56
                   },
                   "children": [
                     {
@@ -23026,7 +23026,7 @@
                       },
                       "size": {
                         "width": 572.08,
-                        "height": 100.1
+                        "height": 105.56
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -23113,7 +23113,7 @@
                       },
                       "size": {
                         "width": 454.4200000000001,
-                        "height": 72
+                        "height": 92.51
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -23158,11 +23158,11 @@
                           "type": "text",
                           "size": {
                             "width": 454.42,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.35,
@@ -23176,7 +23176,7 @@
                             {
                               "text": "Digital marketing is an ongoing process that are the requires continuous improvement. Based on the performance analysis, the businesses refine their strategies, improve content, adjust advertising budgets, and optimize.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.35,
@@ -23882,7 +23882,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#E1BB80",
                             "line_height": 1.35
@@ -23895,7 +23895,7 @@
                             {
                               "text": "Make the brand more visible and recognizable to potential customers across digital platforms.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#E1BB80",
                                 "line_height": 1.35
@@ -24088,7 +24088,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#E1BB80",
                             "line_height": 1.35
@@ -24101,7 +24101,7 @@
                             {
                               "text": "Attract potential customers who are genuinely interested in the products or services.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#E1BB80",
                                 "line_height": 1.35
@@ -24283,11 +24283,11 @@
                           "type": "text",
                           "size": {
                             "width": 184,
-                            "height": 84
+                            "height": 104.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#E1BB80",
                             "line_height": 1.35
@@ -24300,7 +24300,7 @@
                             {
                               "text": "Build stronger relationships by interacting with customers through social media, email, and valuable content.\n",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#E1BB80",
                                 "line_height": 1.35
@@ -24488,7 +24488,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#E1BB80",
                             "line_height": 1.35
@@ -24501,7 +24501,7 @@
                             {
                               "text": "Drive more visitors to the website using SEO, content marketing, and paid advertising.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#E1BB80",
                                 "line_height": 1.35
@@ -24685,11 +24685,11 @@
                           "type": "text",
                           "size": {
                             "width": 184,
-                            "height": 84
+                            "height": 87.48
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#E1BB80",
                             "line_height": 1.35
@@ -24702,7 +24702,7 @@
                             {
                               "text": "Increase conversions, improve revenue, and achieve the highest possible return on marketing investment.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#E1BB80",
                                 "line_height": 1.35
@@ -25013,7 +25013,7 @@
                   "type": "group",
                   "size": {
                     "width": 283.73,
-                    "height": 98.77
+                    "height": 108.62
                   },
                   "children": [
                     {
@@ -25024,7 +25024,7 @@
                       },
                       "size": {
                         "width": 283.73,
-                        "height": 98.77
+                        "height": 108.62
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -25060,7 +25060,7 @@
                       },
                       "size": {
                         "width": 257.18000000000006,
-                        "height": 81.39
+                        "height": 101.9
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -25105,11 +25105,11 @@
                           "type": "text",
                           "size": {
                             "width": 257.18,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35
@@ -25122,7 +25122,7 @@
                             {
                               "text": "Digital marketing is more digital affordable than traditional way of marketing, allowing businesses to reach larger audiences.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -25146,7 +25146,7 @@
                   "type": "group",
                   "size": {
                     "width": 283.73,
-                    "height": 98.77
+                    "height": 108.62
                   },
                   "children": [
                     {
@@ -25157,7 +25157,7 @@
                       },
                       "size": {
                         "width": 283.73,
-                        "height": 98.77
+                        "height": 108.62
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -25193,7 +25193,7 @@
                       },
                       "size": {
                         "width": 258.48000000000013,
-                        "height": 81.39
+                        "height": 101.9
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -25238,11 +25238,11 @@
                           "type": "text",
                           "size": {
                             "width": 258.48,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35
@@ -25255,7 +25255,7 @@
                             {
                               "text": "Digital marketing is more affordable than traditional marketing, allowing businesses to reach larger audiences with lower budgets.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -25279,7 +25279,7 @@
                   "type": "group",
                   "size": {
                     "width": 283.73,
-                    "height": 98.77
+                    "height": 108.62
                   },
                   "children": [
                     {
@@ -25290,7 +25290,7 @@
                       },
                       "size": {
                         "width": 283.73,
-                        "height": 98.77
+                        "height": 108.62
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -25326,7 +25326,7 @@
                       },
                       "size": {
                         "width": 251.43000000000006,
-                        "height": 81.39
+                        "height": 101.9
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -25371,11 +25371,11 @@
                           "type": "text",
                           "size": {
                             "width": 251.43,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35
@@ -25388,7 +25388,7 @@
                             {
                               "text": "Businesses can target specific audiences based on age, location, interests, behavior, and demographics, improving campaign.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -25412,7 +25412,7 @@
                   "type": "group",
                   "size": {
                     "width": 283.73,
-                    "height": 98.77
+                    "height": 108.62
                   },
                   "children": [
                     {
@@ -25423,7 +25423,7 @@
                       },
                       "size": {
                         "width": 283.73,
-                        "height": 98.77
+                        "height": 108.62
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -25459,7 +25459,7 @@
                       },
                       "size": {
                         "width": 258.48000000000013,
-                        "height": 81.39
+                        "height": 101.9
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -25504,11 +25504,11 @@
                           "type": "text",
                           "size": {
                             "width": 258.48,
-                            "height": 49.47
+                            "height": 69.98
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35
@@ -25521,7 +25521,7 @@
                             {
                               "text": "Performance can be monitored instantly analytics tools, helping businesses track traffic, engagement, conversions, and ROI.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -31961,7 +31961,7 @@
                               "type": "text",
                               "size": {
                                 "width": 227.49,
-                                "height": 38
+                                "height": 52.0
                               },
                               "rotation": 0,
                               "font": {
@@ -32136,7 +32136,7 @@
                               "type": "text",
                               "size": {
                                 "width": 227.49,
-                                "height": 38
+                                "height": 52.0
                               },
                               "rotation": 0,
                               "font": {
@@ -32311,7 +32311,7 @@
                               "type": "text",
                               "size": {
                                 "width": 227.49,
-                                "height": 38
+                                "height": 52.0
                               },
                               "rotation": 0,
                               "font": {
@@ -33474,11 +33474,11 @@
                       "type": "text",
                       "size": {
                         "width": 318.89,
-                        "height": 151
+                        "height": 192.46
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#1D1311",
                         "line_height": 1.35,
@@ -33492,7 +33492,7 @@
                         {
                           "text": "A local bakery with low online visibility implemented a comprehensive digital marketing strategy. The business created a professional website, optimized its Google Business Profile for local searches, launched targeted Facebook and Instagram advertising campaigns, and consistently shared high-quality content, special offers, and customer testimonials. These efforts helped increase brand awareness, attract new customers, and strengthen customer engagement.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#1D1311",
                             "line_height": 1.35,
@@ -33670,11 +33670,11 @@
                       "type": "text",
                       "size": {
                         "width": 318.89,
-                        "height": 151
+                        "height": 174.96
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#E1BB80",
                         "line_height": 1.35,
@@ -33688,7 +33688,7 @@
                         {
                           "text": "Within just three months, the bakery achieved significant improvements in its business performance. Website traffic increased by 180%, online orders grew by 120%, social media followers increased by 250%, and overall revenue rose by 40%. This case study demonstrates how a well-planned digital marketing strategy can improve online visibility, increase customer engagement, and drive sustainable business growth.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#E1BB80",
                             "line_height": 1.35,
@@ -34304,7 +34304,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -34317,7 +34317,7 @@
                                 {
                                   "text": "Conduct market research, perform a website audit, analyze competitors, identify the target audience, and develop a comprehensive digital marketing strategy.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -34466,7 +34466,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -34479,7 +34479,7 @@
                                 {
                                   "text": "Implement SEO improvements, optimize website performance, create high-quality content, and establish social media profiles to strengthen online presence.\n",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -34628,7 +34628,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -34641,7 +34641,7 @@
                                 {
                                   "text": "Launch Google Ads and social media advertising campaigns, start email marketing, and configure analytics tools to monitor website traffic and campaign performance.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -34790,7 +34790,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -34803,7 +34803,7 @@
                                 {
                                   "text": "Analyze campaign results, optimize SEO and advertising strategies, scale successful campaigns, and prepare regular performance reports to support continuous business growth.\n",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -37346,7 +37346,7 @@
                           },
                           "size": {
                             "width": 274.64,
-                            "height": 109.16
+                            "height": 113.72
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -37391,11 +37391,11 @@
                               "type": "text",
                               "size": {
                                 "width": 217.94,
-                                "height": 67
+                                "height": 87.48
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -37408,7 +37408,7 @@
                                 {
                                   "text": "Define business goals, analyze the current marketing performance, and identify the target audience to create an effective strategy.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -37570,11 +37570,11 @@
                               "type": "text",
                               "size": {
                                 "width": 215.23,
-                                "height": 66.26
+                                "height": 69.98
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -37587,7 +37587,7 @@
                                 {
                                   "text": "Launch SEO, social media marketing, content creation, email marketing, and paid advertising campaigns.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -37751,11 +37751,11 @@
                               "type": "text",
                               "size": {
                                 "width": 195.56,
-                                "height": 67
+                                "height": 87.48
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -37768,7 +37768,7 @@
                                 {
                                   "text": "Track key performance indicators (KPIs) such as website traffic, the leads, conversions, and ROI using analytics tools.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35
@@ -37932,11 +37932,11 @@
                               "type": "text",
                               "size": {
                                 "width": 217.94,
-                                "height": 67
+                                "height": 87.48
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#1D1311",
                                 "line_height": 1.35
@@ -37949,7 +37949,7 @@
                                 {
                                   "text": "Refine marketing strategies based on performance data, improve campaign effectiveness, and scale successful campaigns for long-term business.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#1D1311",
                                     "line_height": 1.35

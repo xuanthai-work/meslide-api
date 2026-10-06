@@ -25693,7 +25693,7 @@
               },
               "size": {
                 "width": 844.13,
-                "height": 471.88
+                "height": 472.49
               },
               "children": [
                 {
@@ -25704,7 +25704,7 @@
                   },
                   "size": {
                     "width": 174.07000000000005,
-                    "height": 361.23
+                    "height": 361.84
                   },
                   "children": [
                     {
@@ -25850,7 +25850,7 @@
                       },
                       "size": {
                         "width": 146.98000000000002,
-                        "height": 65.52
+                        "height": 67.94
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -25895,11 +25895,11 @@
                           "type": "text",
                           "size": {
                             "width": 146.98,
-                            "height": 29.46
+                            "height": 31.88
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -25912,7 +25912,7 @@
                             {
                               "text": "Behavioral approaches in government",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -26086,7 +26086,7 @@
                       },
                       "size": {
                         "width": 125.21999999999998,
-                        "height": 61.33
+                        "height": 63.58
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -26131,11 +26131,11 @@
                           "type": "text",
                           "size": {
                             "width": 125.22,
-                            "height": 29.63
+                            "height": 31.88
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -26148,7 +26148,7 @@
                             {
                               "text": "Understanding Behavioral Public ",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -26322,7 +26322,7 @@
                       },
                       "size": {
                         "width": 125.21999999999997,
-                        "height": 61.33
+                        "height": 63.75
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -26367,11 +26367,11 @@
                           "type": "text",
                           "size": {
                             "width": 125.22,
-                            "height": 29.46
+                            "height": 31.88
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -26384,7 +26384,7 @@
                             {
                               "text": "Behavioral Tools for Government",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -26425,7 +26425,7 @@
               },
               "size": {
                 "width": 1023.4300000000001,
-                "height": 358.64
+                "height": 362.33
               },
               "children": [
                 {
@@ -26436,7 +26436,7 @@
                   },
                   "size": {
                     "width": 151.89000000000004,
-                    "height": 247.99
+                    "height": 251.68
                   },
                   "children": [
                     {
@@ -26519,7 +26519,7 @@
                       },
                       "size": {
                         "width": 125.22000000000003,
-                        "height": 77
+                        "height": 80.69
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -26564,11 +26564,11 @@
                           "type": "text",
                           "size": {
                             "width": 125.22,
-                            "height": 31
+                            "height": 47.82
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -26581,7 +26581,7 @@
                             {
                               "text": "Behavioral Challenges in Public Policy",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -26609,7 +26609,7 @@
                   },
                   "size": {
                     "width": 155.04000000000008,
-                    "height": 247.99
+                    "height": 250.41
                   },
                   "children": [
                     {
@@ -26692,7 +26692,7 @@
                       },
                       "size": {
                         "width": 125.22000000000003,
-                        "height": 64.32
+                        "height": 66.74
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -26737,11 +26737,11 @@
                           "type": "text",
                           "size": {
                             "width": 125.22,
-                            "height": 29.46
+                            "height": 31.88
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -26754,7 +26754,7 @@
                             {
                               "text": "Application to Public Services",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -26865,7 +26865,7 @@
                       },
                       "size": {
                         "width": 125.22000000000003,
-                        "height": 46.66
+                        "height": 47.81
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -26910,11 +26910,11 @@
                           "type": "text",
                           "size": {
                             "width": 125.22,
-                            "height": 14.79
+                            "height": 15.94
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -26927,7 +26927,7 @@
                             {
                               "text": "Recommendations",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -26960,7 +26960,7 @@
                   },
                   "size": {
                     "width": 152,
-                    "height": 247.99
+                    "height": 249.14
                   },
                   "children": [
                     {
@@ -27043,7 +27043,7 @@
                       },
                       "size": {
                         "width": 125.22000000000003,
-                        "height": 45.72
+                        "height": 46.87
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -27088,11 +27088,11 @@
                           "type": "text",
                           "size": {
                             "width": 125.22,
-                            "height": 14.79
+                            "height": 15.94
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -27105,7 +27105,7 @@
                             {
                               "text": "Measuring Impact",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -27755,11 +27755,11 @@
                           "type": "text",
                           "size": {
                             "width": 126.5,
-                            "height": 39
+                            "height": 95.64
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -27772,7 +27772,7 @@
                             {
                               "text": "I",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -27781,7 +27781,7 @@
                             {
                               "text": "t recognizes that citizens may not always behave in completely rational or predictable ways.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "underline": false,
@@ -27885,11 +27885,11 @@
                           "type": "text",
                           "size": {
                             "width": 126.5,
-                            "height": 39
+                            "height": 95.64
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -27902,7 +27902,7 @@
                             {
                               "text": "Fac",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -27911,7 +27911,7 @@
                             {
                               "text": "tors such as limited attention, complex procedures, habits, social influence.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "underline": false,
@@ -28015,11 +28015,11 @@
                           "type": "text",
                           "size": {
                             "width": 126.5,
-                            "height": 39
+                            "height": 79.7
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -28032,7 +28032,7 @@
                             {
                               "text": "The",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -28041,7 +28041,7 @@
                             {
                               "text": "se include simplifying procedures, providing timely reminders",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "underline": false,
@@ -28145,11 +28145,11 @@
                           "type": "text",
                           "size": {
                             "width": 126.5,
-                            "height": 39
+                            "height": 95.64
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -28162,7 +28162,7 @@
                             {
                               "text": "Gove",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -28171,7 +28171,7 @@
                             {
                               "text": "rnments can measure indicators such as participation rates, completion rates, compliance.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "underline": false,
@@ -28486,7 +28486,7 @@
                       },
                       "size": {
                         "width": 439.2399999999999,
-                        "height": 83.44
+                        "height": 87.13
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -28542,11 +28542,11 @@
                           "type": "text",
                           "size": {
                             "width": 439.24,
-                            "height": 31
+                            "height": 47.82
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -28559,7 +28559,7 @@
                             {
                               "text": "Behavioral",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -28568,7 +28568,7 @@
                             {
                               "text": " public administration applies insights from psychology, behavioral economics, sociology, and public administration to understand how people actually make decisions.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -28695,7 +28695,7 @@
                       },
                       "size": {
                         "width": 248.40999999999997,
-                        "height": 112.77
+                        "height": 134.95
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -28751,11 +28751,11 @@
                           "type": "text",
                           "size": {
                             "width": 248.41,
-                            "height": 61
+                            "height": 95.64
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -28768,7 +28768,7 @@
                             {
                               "text": "Instead of ass",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -28777,7 +28777,7 @@
                             {
                               "text": "uming that citizens to the always act of co rationally, policymakers consider factors sucha as as attention, habits, emotions, social influence, and limited information.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -28876,7 +28876,7 @@
                       },
                       "size": {
                         "width": 237.67999999999995,
-                        "height": 100.38
+                        "height": 121.29
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -28932,11 +28932,11 @@
                           "type": "text",
                           "size": {
                             "width": 214.22,
-                            "height": 58.79
+                            "height": 79.7
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -28949,7 +28949,7 @@
                             {
                               "text": "Behavioral",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -28958,7 +28958,7 @@
                             {
                               "text": "ly informed policies can make public services easier to access, increase participation, improve compliance.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -29500,11 +29500,11 @@
                       "type": "text",
                       "size": {
                         "width": 241.07,
-                        "height": 46
+                        "height": 47.82
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -29517,7 +29517,7 @@
                         {
                           "text": "Assumes ci",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -29526,7 +29526,7 @@
                         {
                           "text": "tizens have enough information to make appropriate decisions.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -29647,11 +29647,11 @@
                       "type": "text",
                       "size": {
                         "width": 241.4,
-                        "height": 46
+                        "height": 47.82
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -29664,7 +29664,7 @@
                         {
                           "text": "R",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -29673,7 +29673,7 @@
                         {
                           "text": "ecognizes that citizens may not notice, remember, or process all available information.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -29710,7 +29710,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -29723,7 +29723,7 @@
                         {
                           "text": "As",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -29732,7 +29732,7 @@
                         {
                           "text": "sumes citizens carefully compare alternatives before making decisions.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -29869,7 +29869,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -29882,7 +29882,7 @@
                         {
                           "text": "Recognize",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -29891,7 +29891,7 @@
                         {
                           "text": "s that people often use simple rules or shortcuts when making everyday decisions.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -29921,11 +29921,11 @@
                       "type": "text",
                       "size": {
                         "width": 241.07,
-                        "height": 46
+                        "height": 47.82
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -29938,7 +29938,7 @@
                         {
                           "text": "Assum",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -29947,7 +29947,7 @@
                         {
                           "text": "es citizens understand government rules, forms, and procedures.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -30068,11 +30068,11 @@
                       "type": "text",
                       "size": {
                         "width": 241.4,
-                        "height": 46
+                        "height": 47.82
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -30085,7 +30085,7 @@
                         {
                           "text": "R",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -30094,7 +30094,7 @@
                         {
                           "text": "ecognizes that complicated language and too much information can create confusion.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -30131,7 +30131,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -30144,7 +30144,7 @@
                         {
                           "text": "Assum",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -30153,7 +30153,7 @@
                         {
                           "text": "es citizens have the time and ability to complete administrative requirements.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -30290,7 +30290,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -30303,7 +30303,7 @@
                         {
                           "text": "R",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -30312,7 +30312,7 @@
                         {
                           "text": "ecognizes that people may delay tasks or follow established habits",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -30346,7 +30346,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -30359,7 +30359,7 @@
                         {
                           "text": "Foc",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -30368,7 +30368,7 @@
                         {
                           "text": "uses mainly on individual decisions.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -30493,7 +30493,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -30506,7 +30506,7 @@
                         {
                           "text": "R",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -30515,7 +30515,7 @@
                         {
                           "text": "ecognizes that people's behavior can be affected by social norms",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -31201,7 +31201,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -31214,7 +31214,7 @@
                         {
                           "text": "Governmen",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -31223,7 +31223,7 @@
                         {
                           "text": "t services often involve complicated forms, multiple procedures, technical language, or several administrative steps.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -31305,7 +31305,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -31318,7 +31318,7 @@
                         {
                           "text": "C",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -31327,7 +31327,7 @@
                         {
                           "text": "itizens have limited time and attention and may not notice or remember all the information provided by government. ",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -31409,7 +31409,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -31422,7 +31422,7 @@
                         {
                           "text": "People often",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -31431,7 +31431,7 @@
                         {
                           "text": " give greater importance to immediate costs or inconvenience than to benefits they may receive in the future.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -31513,7 +31513,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -31526,7 +31526,7 @@
                         {
                           "text": "Und",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -31535,7 +31535,7 @@
                         {
                           "text": "erstanding social norms can therefore help governments design more effective communication and interventions.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "underline": false,
@@ -32273,7 +32273,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -32286,7 +32286,7 @@
                                 {
                                   "text": "Governmen",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -32295,7 +32295,7 @@
                                 {
                                   "text": "t procedures themselves can create barriers to desired behavior. ",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -32483,7 +32483,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -32496,7 +32496,7 @@
                                 {
                                   "text": "People have limited time, atten",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -32505,7 +32505,7 @@
                                 {
                                   "text": "tion, information, and mental capacity. Their decisions can also be influenced by habits, emotions, personal beliefs, and cognitive biases.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -32657,7 +32657,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -32670,7 +32670,7 @@
                                 {
                                   "text": "People are influen",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -32679,7 +32679,7 @@
                                 {
                                   "text": "ced by the behavior, expectations, and opinions of others.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -32831,7 +32831,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -32844,7 +32844,7 @@
                                 {
                                   "text": "The choice environment includes defaults, ",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -32853,7 +32853,7 @@
                                 {
                                   "text": "timing, wording, layout, and how easily different options can be accessed.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -34509,10 +34509,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Montserrat",
                 "color": "#000000",
-                "line_height": 1.23
+                "line_height": 1.35
               },
               "alignment": {
                 "horizontal": "left",
@@ -34522,10 +34522,10 @@
                 {
                   "text": "Public policies are often designed around expected citizen behavior, but actual behavior can be influenced by many psychological, social, and practical factors. Citizens may understand what a policy asks them to do but still fail to act because of limited information, complicated procedures, lack of attention, habits, social influence, or immediate costs.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Montserrat",
                     "color": "#000000",
-                    "line_height": 1.23
+                    "line_height": 1.35
                   }
                 }
               ],
@@ -34907,11 +34907,11 @@
                               "type": "text",
                               "size": {
                                 "width": 202.63,
-                                "height": 61
+                                "height": 63.76
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -34924,7 +34924,7 @@
                                 {
                                   "text": "Th",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -34933,7 +34933,7 @@
                                 {
                                   "text": "e focus should be on the actual outcome rather than simply assuming that citizens are unwilling to cooperate.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -35073,11 +35073,11 @@
                               "type": "text",
                               "size": {
                                 "width": 202.63,
-                                "height": 61
+                                "height": 95.64
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -35090,7 +35090,7 @@
                                 {
                                   "text": "This c",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -35099,7 +35099,7 @@
                                 {
                                   "text": "ould involve simplifying a process, changing communication, providing reminders, redesigning choices, or adjusting incentives.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -35243,7 +35243,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -35256,7 +35256,7 @@
                                 {
                                   "text": "Diffe",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -35265,7 +35265,7 @@
                                 {
                                   "text": "rent approaches can be tested and compared using measurable evidence.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -36575,11 +36575,11 @@
                           "type": "text",
                           "size": {
                             "width": 222.09,
-                            "height": 39
+                            "height": 47.82
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -36592,7 +36592,7 @@
                             {
                               "text": "A higher completion rate can indicate that the service is easier to understand and use.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -36792,11 +36792,11 @@
                           "type": "text",
                           "size": {
                             "width": 222.09,
-                            "height": 39
+                            "height": 47.82
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -36809,7 +36809,7 @@
                             {
                               "text": "high drop-off rate may indicate confusion, complexity, or inconvenience.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -36977,11 +36977,11 @@
                           "type": "text",
                           "size": {
                             "width": 222.09,
-                            "height": 39
+                            "height": 63.76
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -36994,7 +36994,7 @@
                             {
                               "text": "Measures how citizens perceive the quality, convenience, clarity, and overall experience of a government service.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -37214,11 +37214,11 @@
                           "type": "text",
                           "size": {
                             "width": 222.09,
-                            "height": 39
+                            "height": 47.82
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -37231,7 +37231,7 @@
                             {
                               "text": "Clear communication and timely reminders can potentially improve compliance.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -37780,7 +37780,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -37793,7 +37793,7 @@
                             {
                               "text": "The UK is an important early example of government using behavioral insights systematically.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -37922,7 +37922,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -37935,7 +37935,7 @@
                             {
                               "text": "Behavioral research has been used to explore ways of encouraging energy savings and improving safety.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -38064,7 +38064,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -38077,7 +38077,7 @@
                             {
                               "text": "Behavioral insights have been applied to tax administration, including efforts to improve.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -38837,7 +38837,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "underline": false,
@@ -38851,7 +38851,7 @@
                                 {
                                   "text": "Senior government leaders need to recognize the value of behavioral insights .",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -39096,7 +39096,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -39109,7 +39109,7 @@
                                 {
                                   "text": "Governm",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -39118,7 +39118,7 @@
                                 {
                                   "text": "ent institutions need people with skills in behavioral science.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -39357,11 +39357,11 @@
                               "type": "text",
                               "size": {
                                 "width": 201.36,
-                                "height": 52
+                                "height": 63.76
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -39374,7 +39374,7 @@
                                 {
                                   "text": "Before chang",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -39383,7 +39383,7 @@
                                 {
                                   "text": "ing a policy, officials should understand the actual problem and identify",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -39635,7 +39635,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -39648,7 +39648,7 @@
                                 {
                                   "text": "Th",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.23
@@ -39657,7 +39657,7 @@
                                 {
                                   "text": "e intervention should be tested to determine whether it produces better results.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "underline": false,
@@ -39866,7 +39866,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -39879,7 +39879,7 @@
                         {
                           "text": "For behavioral approaches to have a lasting impact, governments need leadership support, skilled personnel.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -40010,7 +40010,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -40023,7 +40023,7 @@
                         {
                           "text": "For behavioral approaches to have a lasting impact, governments need leadership support, skilled personnel, evidence-based methods.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -40164,7 +40164,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -40177,7 +40177,7 @@
                         {
                           "text": "For behavioral approaches to have a lasting impact, governments need leadership support, skilled personnel.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -41444,10 +41444,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Montserrat",
                 "color": "#000000",
-                "line_height": 1.23
+                "line_height": 1.35
               },
               "alignment": {
                 "horizontal": "left",
@@ -41457,10 +41457,10 @@
                 {
                   "text": "Better public administration does not simply ask citizens to change—it examines whether government can change the service environment to make the desired behavior easier. Behavioral public administration can identify the reasons behind citizen behavior and redesign a government service accordingly.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Montserrat",
                     "color": "#000000",
-                    "line_height": 1.23
+                    "line_height": 1.35
                   }
                 }
               ],
@@ -41552,7 +41552,7 @@
               },
               "size": {
                 "width": 1271.47,
-                "height": 500.1
+                "height": 502.04
               },
               "children": [
                 {
@@ -41787,7 +41787,7 @@
                           },
                           "size": {
                             "width": 189.22999999999996,
-                            "height": 76.47
+                            "height": 105.85
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -41832,11 +41832,11 @@
                               "type": "text",
                               "size": {
                                 "width": 182.14,
-                                "height": 43.2
+                                "height": 72.58
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat Medium",
                                 "color": "#000000",
                                 "bold": false,
@@ -41850,7 +41850,7 @@
                                 {
                                   "text": "Government identifies a public problem and establishes a desired outcome.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat Medium",
                                     "color": "#000000",
                                     "bold": false,
@@ -41882,7 +41882,7 @@
                   },
                   "size": {
                     "width": 493.13,
-                    "height": 291.12
+                    "height": 293.06
                   },
                   "children": [
                     {
@@ -42087,7 +42087,7 @@
                       },
                       "size": {
                         "width": 214.27000000000004,
-                        "height": 137.09
+                        "height": 139.03
                       },
                       "children": [
                         {
@@ -42134,7 +42134,7 @@
                           },
                           "size": {
                             "width": 182.14,
-                            "height": 91.14
+                            "height": 123.99
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -42179,11 +42179,11 @@
                               "type": "text",
                               "size": {
                                 "width": 182.14,
-                                "height": 45
+                                "height": 90.72
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat Medium",
                                 "color": "#000000",
                                 "bold": false,
@@ -42197,7 +42197,7 @@
                                 {
                                   "text": "Government develops rules, programs, services, incentives, or communication to achieve the objective.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat Medium",
                                     "color": "#000000",
                                     "bold": false,
@@ -42453,7 +42453,7 @@
                           },
                           "size": {
                             "width": 182.14,
-                            "height": 76.47
+                            "height": 105.85
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -42498,11 +42498,11 @@
                               "type": "text",
                               "size": {
                                 "width": 182.14,
-                                "height": 43.2
+                                "height": 72.58
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat Medium",
                                 "color": "#000000",
                                 "bold": false,
@@ -42516,7 +42516,7 @@
                                 {
                                   "text": "Citizens interact with the policy through forms, websites, offices, information.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat Medium",
                                     "color": "#000000",
                                     "bold": false,
@@ -42800,7 +42800,7 @@
                           },
                           "size": {
                             "width": 182.14,
-                            "height": 76.47
+                            "height": 105.85
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -42845,11 +42845,11 @@
                               "type": "text",
                               "size": {
                                 "width": 182.14,
-                                "height": 43.2
+                                "height": 72.58
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat Medium",
                                 "color": "#000000",
                                 "bold": false,
@@ -42863,7 +42863,7 @@
                                 {
                                   "text": "Citizens decide whether and how to respond based on their understanding, circumstances.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat Medium",
                                     "color": "#000000",
                                     "bold": false,
@@ -43142,7 +43142,7 @@
                           },
                           "size": {
                             "width": 182.1400000000001,
-                            "height": 76.48
+                            "height": 105.86
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -43187,11 +43187,11 @@
                               "type": "text",
                               "size": {
                                 "width": 182.14,
-                                "height": 43.2
+                                "height": 72.58
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat Medium",
                                 "color": "#000000",
                                 "bold": false,
@@ -43205,7 +43205,7 @@
                                 {
                                   "text": "Individual behaviors combine to produce broader results for society and government.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Montserrat Medium",
                                     "color": "#000000",
                                     "bold": false,
@@ -43589,11 +43589,11 @@
                           "type": "text",
                           "size": {
                             "width": 296.64,
-                            "height": 39
+                            "height": 47.82
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -43606,7 +43606,7 @@
                             {
                               "text": "Effectiveness asks whether the intervention actually achieved its intended objective and changed the desired behavior.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.23
@@ -43796,11 +43796,11 @@
                           "type": "text",
                           "size": {
                             "width": 296.64,
-                            "height": 39
+                            "height": 63.76
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -43813,7 +43813,7 @@
                             {
                               "text": "Efficiency considers whether the desired results were achieved without unnecessary use of public resources such as money, staff time, technology.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -43970,11 +43970,11 @@
                           "type": "text",
                           "size": {
                             "width": 296.64,
-                            "height": 39
+                            "height": 63.76
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.23
@@ -43987,7 +43987,7 @@
                             {
                               "text": "Equity asks whether the intervention benefits different groups fairly and whether it creates additional barriers for people who may already have difficulty.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.23
@@ -45750,11 +45750,11 @@
                       "type": "text",
                       "size": {
                         "width": 379.69,
-                        "height": 52
+                        "height": 79.7
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -45767,7 +45767,7 @@
                         {
                           "text": "Governments can test different approaches on a small scale before introducing them more widely. Comparing different versions of a service, message, or intervention helps identify which approach produces better results.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -45884,11 +45884,11 @@
                       "type": "text",
                       "size": {
                         "width": 379.69,
-                        "height": 52
+                        "height": 63.76
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -45901,7 +45901,7 @@
                         {
                           "text": "Measurable data provides evidence about whether an intervention actually changed behavior. Governments can track indicators such as participation, completion, compliance",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -45990,7 +45990,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.23
@@ -46003,7 +46003,7 @@
                         {
                           "text": "Evaluation should not be treated as the final step of a policy. Results should be used to improve the intervention and inform future policies.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.23
@@ -48661,10 +48661,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Montserrat",
                 "color": "#000000",
-                "line_height": 1.23
+                "line_height": 1.35
               },
               "alignment": {
                 "horizontal": "left",
@@ -48674,10 +48674,10 @@
                 {
                   "text": "To make this approach sustainable, public institutions should build behavioral capacity, simplify citizen experiences, use evidence in decision-making, and ensure that interventions remain fair, transparent, and respectful of citizen choice.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Montserrat",
                     "color": "#000000",
-                    "line_height": 1.23
+                    "line_height": 1.35
                   }
                 }
               ],
@@ -49224,7 +49224,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Montserrat Medium",
                             "color": "#000000",
                             "bold": false,
@@ -49239,7 +49239,7 @@
                             {
                               "text": "Human mistakes remain a major cause of security incidents.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Montserrat Medium",
                                 "color": "#000000",
                                 "bold": false,

@@ -28858,7 +28858,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -28871,7 +28871,7 @@
                             {
                               "text": "Understand the project vision, property type, unit mix.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -28983,11 +28983,11 @@
                           "type": "text",
                           "size": {
                             "width": 245.69,
-                            "height": 45
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -29000,7 +29000,7 @@
                             {
                               "text": "Review the strategic location, surrounding infrastructure, accessibility, nearby.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -29112,11 +29112,11 @@
                           "type": "text",
                           "size": {
                             "width": 245.69,
-                            "height": 45
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -29129,7 +29129,7 @@
                             {
                               "text": "Analyze Kathmandu’s luxury residential market, including price trends",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -29245,7 +29245,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -29258,7 +29258,7 @@
                             {
                               "text": "Examine projected rental income, operating expenses.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -29374,7 +29374,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -29387,7 +29387,7 @@
                             {
                               "text": "rack current project progress, approvals, construction milestones.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -29503,7 +29503,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -29516,7 +29516,7 @@
                             {
                               "text": "Review the proposed investment terms, participation structure.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -30011,11 +30011,11 @@
                           "type": "text",
                           "size": {
                             "width": 226.95,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -30028,7 +30028,7 @@
                             {
                               "text": "Competitive entry price for premium luxury apartments in a prime Kathmandu location.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -30178,11 +30178,11 @@
                           "type": "text",
                           "size": {
                             "width": 226.95,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -30195,7 +30195,7 @@
                             {
                               "text": "Scheduled project delivery with phased construction and quality-controlled execution.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -30343,11 +30343,11 @@
                           "type": "text",
                           "size": {
                             "width": 226.95,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -30360,7 +30360,7 @@
                             {
                               "text": "High-end residential units designed for modern urban living and long-term.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -30510,11 +30510,11 @@
                           "type": "text",
                           "size": {
                             "width": 226.95,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -30527,7 +30527,7 @@
                             {
                               "text": "Flexible apartment configurations suitable for families, professionals.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -30675,11 +30675,11 @@
                           "type": "text",
                           "size": {
                             "width": 226.95,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -30692,7 +30692,7 @@
                             {
                               "text": "Spacious master-planned development with residential, recreational.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -30842,11 +30842,11 @@
                           "type": "text",
                           "size": {
                             "width": 226.95,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -30859,7 +30859,7 @@
                             {
                               "text": "Secure full ownership rights with long-term property transfer and investment protection.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -32795,7 +32795,7 @@
                           },
                           "size": {
                             "width": 238.49999999999997,
-                            "height": 69.97
+                            "height": 80.26
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -32840,11 +32840,11 @@
                               "type": "text",
                               "size": {
                                 "width": 238.5,
-                                "height": 30
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -32857,7 +32857,7 @@
                                 {
                                   "text": "Panoramic rooftop swimming pool offering relaxation, leisure, and stunning city views.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -32966,7 +32966,7 @@
                           },
                           "size": {
                             "width": 238.82000000000005,
-                            "height": 69.96
+                            "height": 80.25
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -33011,11 +33011,11 @@
                               "type": "text",
                               "size": {
                                 "width": 238.5,
-                                "height": 30
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -33028,7 +33028,7 @@
                                 {
                                   "text": "Modern fitness center with cardio, strength-training, and wellness facilities for residents.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -33182,11 +33182,11 @@
                               "type": "text",
                               "size": {
                                 "width": 238.5,
-                                "height": 30
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -33199,7 +33199,7 @@
                                 {
                                   "text": "Exclusive social and recreational space for meetings, events, and community gatherings.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -33308,7 +33308,7 @@
                           },
                           "size": {
                             "width": 238.5000000000001,
-                            "height": 69.97
+                            "height": 80.26
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -33353,11 +33353,11 @@
                               "type": "text",
                               "size": {
                                 "width": 238.5,
-                                "height": 30
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -33370,7 +33370,7 @@
                                 {
                                   "text": "Safe and engaging indoor and outdoor play zones designed for children and families",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -33777,11 +33777,11 @@
                           "type": "text",
                           "size": {
                             "width": 232.42,
-                            "height": 45
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -33794,7 +33794,7 @@
                             {
                               "text": "Refined material finishes that reflect the luxury positioning of Horizon Heights Residences.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -33918,7 +33918,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 10.67,
+                    "size": 14.0,
                     "family": "Poppins",
                     "color": "#321A00",
                     "line_height": 1.4
@@ -33931,7 +33931,7 @@
                     {
                       "text": "The proposed transformation introduces a high-rise premium residential development featuring a landscaped podium, integrated basement parking, and modern lifestyle amenities, creating a significantly higher-quality urban living environment.",
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#321A00",
                         "line_height": 1.4
@@ -34314,7 +34314,7 @@
                   },
                   "size": {
                     "width": 357.8799999999999,
-                    "height": 135.27
+                    "height": 139.23
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -34359,11 +34359,11 @@
                       "type": "text",
                       "size": {
                         "width": 356.57,
-                        "height": 70
+                        "height": 90.72
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.4
@@ -34376,7 +34376,7 @@
                         {
                           "text": "Type B – 3 Bedroom offers a spacious and well-balanced layout with 1,850 sq ft of super built-up area, including three bathrooms, a 180 sq ft balcony, and south-east orientation for excellent daylight and ventilation. ",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -35009,11 +35009,11 @@
                           "type": "text",
                           "size": {
                             "width": 302.93,
-                            "height": 70
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -35026,7 +35026,7 @@
                             {
                               "text": "Compact and efficient layout ideal for young professionals, couples, and first-time buyers seeking a premium urban residence at an accessible price point.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -35163,11 +35163,11 @@
                           "type": "text",
                           "size": {
                             "width": 302.93,
-                            "height": 70
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -35180,7 +35180,7 @@
                             {
                               "text": "Well-balanced family apartment offering spacious living areas, three bedrooms, and strong rental demand, making it suitable for both owner-occupiers and investors.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -35317,11 +35317,11 @@
                           "type": "text",
                           "size": {
                             "width": 302.93,
-                            "height": 70
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -35334,7 +35334,7 @@
                             {
                               "text": "Large luxury residence designed for bigger families and high-end buyers who require additional space, privacy, and an expansive balcony experience.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -35780,7 +35780,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.4
@@ -35793,7 +35793,7 @@
                         {
                           "text": "Significant landscaped open space promoting recreation, natural light, and a healthier living environment.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -35890,7 +35890,7 @@
                       },
                       "size": {
                         "width": 312.2,
-                        "height": 127.92
+                        "height": 138.21
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -35970,11 +35970,11 @@
                           "type": "text",
                           "size": {
                             "width": 312.2,
-                            "height": 30
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -35987,7 +35987,7 @@
                             {
                               "text": "Well-planned parking system designed to accommodate residents and visitors efficiently and securely.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -36140,11 +36140,11 @@
                           "type": "text",
                           "size": {
                             "width": 312.2,
-                            "height": 30
+                            "height": 36.29
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -36157,7 +36157,7 @@
                             {
                               "text": "Large master-planned residential development with dedicated amenity and circulation zones.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -36741,11 +36741,11 @@
                               "type": "text",
                               "size": {
                                 "width": 308.54,
-                                "height": 30
+                                "height": 36.29
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -36758,7 +36758,7 @@
                                 {
                                   "text": "Convenient access for domestic and international travel.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -36906,11 +36906,11 @@
                               "type": "text",
                               "size": {
                                 "width": 303.51,
-                                "height": 30
+                                "height": 36.29
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -36923,7 +36923,7 @@
                                 {
                                   "text": "Close proximity to one of Kathmandu’s leading healthcare institutions.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -37060,11 +37060,11 @@
                               "type": "text",
                               "size": {
                                 "width": 308.54,
-                                "height": 30
+                                "height": 36.29
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -37077,7 +37077,7 @@
                                 {
                                   "text": "Easy access to a reputed international education provider.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -37225,11 +37225,11 @@
                               "type": "text",
                               "size": {
                                 "width": 308.54,
-                                "height": 30
+                                "height": 36.29
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -37242,7 +37242,7 @@
                                 {
                                   "text": "Near Kathmandu’s premium commercial, retail, and hospitality district.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -37518,7 +37518,7 @@
                       },
                       "size": {
                         "width": 227.87,
-                        "height": 142.64
+                        "height": 144.95
                       },
                       "direction": "column",
                       "align_items": "center",
@@ -37579,11 +37579,11 @@
                           "type": "text",
                           "size": {
                             "width": 227.87,
-                            "height": 52
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -37596,7 +37596,7 @@
                             {
                               "text": "Enjoy premium cafés, fine-dining venues, iterior with and international restaurants located.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -37714,11 +37714,11 @@
                           "type": "text",
                           "size": {
                             "width": 227.87,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -37731,7 +37731,7 @@
                             {
                               "text": "Benefit from nearby parks, fitness centers, wellness clubs, and rooftop leisure destinations.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -37849,11 +37849,11 @@
                           "type": "text",
                           "size": {
                             "width": 227.87,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -37866,7 +37866,7 @@
                             {
                               "text": "Gain convenient access to leading schools, colleges, universities, and international education.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -37984,11 +37984,11 @@
                           "type": "text",
                           "size": {
                             "width": 232.69,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "underline": false,
@@ -38002,7 +38002,7 @@
                             {
                               "text": "Live in an established high-income residential neighborhood known for its strong with there security.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -38436,7 +38436,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.4
@@ -38449,7 +38449,7 @@
                         {
                           "text": "Positioned in Baluwatar, Kathmandu, the development offers excellent access to major destinations across the city, reducing daily travel time and enhancing convenience for residents and investors.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -38487,7 +38487,7 @@
               },
               "size": {
                 "width": 508.0799999999999,
-                "height": 419.94
+                "height": 430.73
               },
               "children": [
                 {
@@ -38607,11 +38607,11 @@
                           "type": "text",
                           "size": {
                             "width": 196.02,
-                            "height": 45
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -38624,7 +38624,7 @@
                             {
                               "text": "Convenient connection to Kathmandu’s premium business, retail, dining.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -38652,7 +38652,7 @@
                   },
                   "size": {
                     "width": 233.49,
-                    "height": 206.37
+                    "height": 210.7
                   },
                   "children": [
                     {
@@ -38663,7 +38663,7 @@
                       },
                       "size": {
                         "width": 233.49,
-                        "height": 206.37
+                        "height": 210.7
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -38681,7 +38681,7 @@
                       },
                       "size": {
                         "width": 196.95000000000005,
-                        "height": 158.51
+                        "height": 172.28
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -38761,11 +38761,11 @@
                           "type": "text",
                           "size": {
                             "width": 196.02,
-                            "height": 45
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -38778,7 +38778,7 @@
                             {
                               "text": "Quick access to Tribhuvan International Airport for domestic and international travel.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -38806,7 +38806,7 @@
                   },
                   "size": {
                     "width": 279.2599999999999,
-                    "height": 130.59
+                    "height": 141.38
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -38886,11 +38886,11 @@
                       "type": "text",
                       "size": {
                         "width": 279.26,
-                        "height": 30
+                        "height": 54.43
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#321A00",
                         "line_height": 1.4
@@ -38903,7 +38903,7 @@
                         {
                           "text": "Close proximity to major hospitals, specialty clinics, and healthcare facilities.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#321A00",
                             "line_height": 1.4
@@ -39789,7 +39789,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 12.44,
+                "size": 14.0,
                 "family": "Poppins",
                 "color": "#321A00",
                 "line_height": 1.4
@@ -39802,7 +39802,7 @@
                 {
                   "text": "Use a line chart showing the gradual increase in average luxury apartment prices over the last five years to visually demonstrate market growth and investment momentum.",
                   "font": {
-                    "size": 12.44,
+                    "size": 14.0,
                     "family": "Poppins",
                     "color": "#321A00",
                     "line_height": 1.4
@@ -41406,7 +41406,7 @@
               },
               "size": {
                 "width": 1181.12,
-                "height": 348.67
+                "height": 354.57
               },
               "direction": "row",
               "justify_content": "center",
@@ -41416,7 +41416,7 @@
                   "type": "group",
                   "size": {
                     "width": 372.67,
-                    "height": 346.72
+                    "height": 352.62
                   },
                   "children": [
                     {
@@ -41427,7 +41427,7 @@
                       },
                       "size": {
                         "width": 372.67,
-                        "height": 346.72
+                        "height": 352.62
                       },
                       "children": [
                         {
@@ -41464,7 +41464,7 @@
                       },
                       "size": {
                         "width": 286,
-                        "height": 316.67
+                        "height": 328.57
                       },
                       "direction": "column",
                       "align_items": "center",
@@ -41518,11 +41518,11 @@
                           "type": "text",
                           "size": {
                             "width": 241.84,
-                            "height": 30
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -41535,7 +41535,7 @@
                             {
                               "text": "N",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -41544,7 +41544,7 @@
                             {
                               "text": "ew premium housing supply increased in 2025 but moderated in 2026.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -41569,7 +41569,7 @@
                   "type": "group",
                   "size": {
                     "width": 374.29,
-                    "height": 348.67
+                    "height": 354.57
                   },
                   "children": [
                     {
@@ -41580,7 +41580,7 @@
                       },
                       "size": {
                         "width": 374.29,
-                        "height": 348.67
+                        "height": 354.57
                       },
                       "children": [
                         {
@@ -41617,7 +41617,7 @@
                       },
                       "size": {
                         "width": 280,
-                        "height": 316.67
+                        "height": 328.57
                       },
                       "direction": "column",
                       "align_items": "center",
@@ -41670,11 +41670,11 @@
                           "type": "text",
                           "size": {
                             "width": 241.84,
-                            "height": 30
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -41687,7 +41687,7 @@
                             {
                               "text": "Buy",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -41696,7 +41696,7 @@
                             {
                               "text": "er absorption has grown consistently over the three-year period",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -41721,7 +41721,7 @@
                   "type": "group",
                   "size": {
                     "width": 372.3799999999999,
-                    "height": 346.72
+                    "height": 352.62
                   },
                   "children": [
                     {
@@ -41732,7 +41732,7 @@
                       },
                       "size": {
                         "width": 372.3799999999999,
-                        "height": 346.72
+                        "height": 352.62
                       },
                       "children": [
                         {
@@ -41769,7 +41769,7 @@
                       },
                       "size": {
                         "width": 244,
-                        "height": 316.67
+                        "height": 328.57
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -41822,11 +41822,11 @@
                           "type": "text",
                           "size": {
                             "width": 241.84,
-                            "height": 30
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -41839,7 +41839,7 @@
                             {
                               "text": "D",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -41848,7 +41848,7 @@
                             {
                               "text": "emand surpassed supply by 100 units, suggesting increasing pressure.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -42245,7 +42245,7 @@
               },
               "size": {
                 "width": 854.13,
-                "height": 506.11
+                "height": 510.44
               },
               "children": [
                 {
@@ -42285,7 +42285,7 @@
                       },
                       "size": {
                         "width": 177.45000000000005,
-                        "height": 143.57
+                        "height": 154.13
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -42365,11 +42365,11 @@
                           "type": "text",
                           "size": {
                             "width": 177.45,
-                            "height": 30
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -42382,7 +42382,7 @@
                             {
                               "text": "Total estimated project acquisition and development value.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -42439,7 +42439,7 @@
                       },
                       "size": {
                         "width": 180.32999999999993,
-                        "height": 144.23
+                        "height": 153.78
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -42519,11 +42519,11 @@
                           "type": "text",
                           "size": {
                             "width": 180.33,
-                            "height": 30
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -42536,7 +42536,7 @@
                             {
                               "text": "Projected yearly rental revenue generated from residential units and associated income sources.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -42564,7 +42564,7 @@
                   },
                   "size": {
                     "width": 233.49,
-                    "height": 206.37
+                    "height": 210.7
                   },
                   "children": [
                     {
@@ -42575,7 +42575,7 @@
                       },
                       "size": {
                         "width": 233.49,
-                        "height": 206.37
+                        "height": 210.7
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -42593,7 +42593,7 @@
                       },
                       "size": {
                         "width": 201.21000000000004,
-                        "height": 143.57
+                        "height": 172.28
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -42673,11 +42673,11 @@
                           "type": "text",
                           "size": {
                             "width": 201.21,
-                            "height": 30
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -42690,7 +42690,7 @@
                             {
                               "text": "Expected income remaining after operating expenses, reflecting the property’s core earning performance.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -42718,7 +42718,7 @@
                   },
                   "size": {
                     "width": 233.49,
-                    "height": 206.37
+                    "height": 210.7
                   },
                   "children": [
                     {
@@ -42729,7 +42729,7 @@
                       },
                       "size": {
                         "width": 233.49,
-                        "height": 206.37
+                        "height": 210.7
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -42747,7 +42747,7 @@
                       },
                       "size": {
                         "width": 188.97000000000003,
-                        "height": 143.57
+                        "height": 172.28
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -42827,11 +42827,11 @@
                           "type": "text",
                           "size": {
                             "width": 188.97,
-                            "height": 30
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -42844,7 +42844,7 @@
                             {
                               "text": "Estimated annual costs for maintenance, security, utilities, and property management operations.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -42885,7 +42885,7 @@
               },
               "size": {
                 "width": 242,
-                "height": 406.22
+                "height": 409.95
               },
               "children": [
                 {
@@ -42896,7 +42896,7 @@
                   },
                   "size": {
                     "width": 242,
-                    "height": 406.22
+                    "height": 409.95
                   },
                   "rotation": 0,
                   "flip_h": false,
@@ -42914,7 +42914,7 @@
                   },
                   "size": {
                     "width": 192,
-                    "height": 323.18
+                    "height": 351.3
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -42994,11 +42994,11 @@
                       "type": "text",
                       "size": {
                         "width": 192,
-                        "height": 58.53
+                        "height": 90.72
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.4
@@ -43011,7 +43011,7 @@
                         {
                           "text": "Estimated period required for investors to recover their initial equity investment through project cash flows.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -43091,7 +43091,7 @@
               },
               "size": {
                 "width": 1448.48,
-                "height": 546.38
+                "height": 550.49
               },
               "children": [
                 {
@@ -43102,7 +43102,7 @@
                   },
                   "size": {
                     "width": 652.87,
-                    "height": 242.63
+                    "height": 246.75
                   },
                   "children": [
                     {
@@ -43113,7 +43113,7 @@
                       },
                       "size": {
                         "width": 652.87,
-                        "height": 242.63
+                        "height": 246.75
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -43208,7 +43208,7 @@
                       },
                       "size": {
                         "width": 201.65,
-                        "height": 201.93
+                        "height": 219.68
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -43336,11 +43336,11 @@
                           "type": "text",
                           "size": {
                             "width": 192.15,
-                            "height": 60
+                            "height": 90.72
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -43353,7 +43353,7 @@
                             {
                               "text": "Additional income from parking, club facilities, and ancillary services provides a stable and diversified revenue stream.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -43381,7 +43381,7 @@
                   },
                   "size": {
                     "width": 795.6100000000001,
-                    "height": 242.63
+                    "height": 246.74
                   },
                   "children": [
                     {
@@ -43392,7 +43392,7 @@
                       },
                       "size": {
                         "width": 795.61,
-                        "height": 242.63
+                        "height": 246.74
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -43488,7 +43488,7 @@
                       },
                       "size": {
                         "width": 307.81999999999994,
-                        "height": 201.93
+                        "height": 219.68
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -43616,11 +43616,11 @@
                           "type": "text",
                           "size": {
                             "width": 307.82,
-                            "height": 45
+                            "height": 90.72
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -43633,7 +43633,7 @@
                             {
                               "text": "Total operating expenses are estimated at NPR 32 million annually, covering facility management, security, utilities, maintenance reserves, and insurance and administrative costs.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -43833,10 +43833,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 18.0,
                 "family": "Poppins",
                 "color": "#321A00",
-                "line_height": 1.4
+                "line_height": 1.35
               },
               "alignment": {
                 "horizontal": "justify",
@@ -43846,10 +43846,10 @@
                 {
                   "text": "The income structure is heavily supported by stable residential rental revenue, while the expense profile remains efficiently controlled through planned facility management and maintenance reserves.",
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#321A00",
-                    "line_height": 1.4
+                    "line_height": 1.35
                   }
                 }
               ],
@@ -46502,7 +46502,7 @@
                               },
                               "size": {
                                 "width": 157.35,
-                                "height": 98.18
+                                "height": 108.47
                               },
                               "direction": "column",
                               "align_items": "flex-start",
@@ -46558,11 +46558,11 @@
                                   "type": "text",
                                   "size": {
                                     "width": 157.35,
-                                    "height": 30
+                                    "height": 54.43
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -46575,7 +46575,7 @@
                                     {
                                       "text": "L",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "line_height": 1.4
@@ -46584,7 +46584,7 @@
                                     {
                                       "text": "and acquisition was completed and the design.",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "underline": false,
@@ -46832,7 +46832,7 @@
                               },
                               "size": {
                                 "width": 168.12,
-                                "height": 98.18
+                                "height": 108.47
                               },
                               "direction": "column",
                               "align_items": "flex-start",
@@ -46888,11 +46888,11 @@
                                   "type": "text",
                                   "size": {
                                     "width": 168.12,
-                                    "height": 30
+                                    "height": 54.43
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -46905,7 +46905,7 @@
                                     {
                                       "text": "The",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "line_height": 1.4
@@ -46914,7 +46914,7 @@
                                     {
                                       "text": " project progressed detailed architectural planning.",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "underline": false,
@@ -47162,7 +47162,7 @@
                               },
                               "size": {
                                 "width": 157.35000000000002,
-                                "height": 98.18
+                                "height": 108.47
                               },
                               "direction": "column",
                               "align_items": "flex-start",
@@ -47209,11 +47209,11 @@
                                   "type": "text",
                                   "size": {
                                     "width": 157.35,
-                                    "height": 30
+                                    "height": 54.43
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -47226,7 +47226,7 @@
                                     {
                                       "text": "M",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "line_height": 1.4
@@ -47235,7 +47235,7 @@
                                     {
                                       "text": "unicipal approvals were secured, mobilization began.",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "underline": false,
@@ -47454,7 +47454,7 @@
                           },
                           "size": {
                             "width": 190.88,
-                            "height": 170.11
+                            "height": 172.77
                           },
                           "children": [
                             {
@@ -47465,7 +47465,7 @@
                               },
                               "size": {
                                 "width": 190.88,
-                                "height": 170.11
+                                "height": 172.77
                               },
                               "rotation": 0,
                               "flip_h": false,
@@ -47483,7 +47483,7 @@
                               },
                               "size": {
                                 "width": 157.35000000000002,
-                                "height": 112.85
+                                "height": 126.62
                               },
                               "direction": "column",
                               "align_items": "flex-start",
@@ -47539,11 +47539,11 @@
                                   "type": "text",
                                   "size": {
                                     "width": 157.35,
-                                    "height": 30
+                                    "height": 72.58
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -47556,7 +47556,7 @@
                                     {
                                       "text": "The",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "line_height": 1.4
@@ -47565,7 +47565,7 @@
                                     {
                                       "text": " core development phase includes structural construction.",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "underline": false,
@@ -47813,7 +47813,7 @@
                               },
                               "size": {
                                 "width": 157.3499999999999,
-                                "height": 98.18
+                                "height": 108.47
                               },
                               "direction": "column",
                               "align_items": "flex-start",
@@ -47869,11 +47869,11 @@
                                   "type": "text",
                                   "size": {
                                     "width": 157.35,
-                                    "height": 30
+                                    "height": 54.43
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4
@@ -47886,7 +47886,7 @@
                                     {
                                       "text": "The",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "line_height": 1.4
@@ -47895,7 +47895,7 @@
                                     {
                                       "text": " project is for handover and resident occupancy.",
                                       "font": {
-                                        "size": 10.67,
+                                        "size": 14.0,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "underline": false,
@@ -48377,7 +48377,7 @@
                           },
                           "size": {
                             "width": 199.11000000000004,
-                            "height": 65.94
+                            "height": 66.72
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -48433,11 +48433,11 @@
                               "type": "text",
                               "size": {
                                 "width": 199.11,
-                                "height": 35
+                                "height": 36.29
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -48450,7 +48450,7 @@
                                 {
                                   "text": "Architectural ",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -48459,7 +48459,7 @@
                                 {
                                   "text": "and engineering design fully completed.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "underline": false,
@@ -48488,7 +48488,7 @@
                       },
                       "size": {
                         "width": 196.64,
-                        "height": 355.87
+                        "height": 374.79
                       },
                       "children": [
                         {
@@ -48713,7 +48713,7 @@
                           },
                           "size": {
                             "width": 196.64,
-                            "height": 65.79
+                            "height": 84.71
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -48769,11 +48769,11 @@
                               "type": "text",
                               "size": {
                                 "width": 196.64,
-                                "height": 35
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -48786,7 +48786,7 @@
                                 {
                                   "text": "M",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -48795,7 +48795,7 @@
                                 {
                                   "text": "ost regulatory and municipal approvals have been secured.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "underline": false,
@@ -49049,7 +49049,7 @@
                           },
                           "size": {
                             "width": 209.10000000000002,
-                            "height": 65.94
+                            "height": 84.86
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -49105,11 +49105,11 @@
                               "type": "text",
                               "size": {
                                 "width": 209.1,
-                                "height": 35
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -49122,7 +49122,7 @@
                                 {
                                   "text": "Major materials, equipment, and contractor",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -49131,7 +49131,7 @@
                                 {
                                   "text": " are largely finalized.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "underline": false,
@@ -49160,7 +49160,7 @@
                       },
                       "size": {
                         "width": 212,
-                        "height": 373.86
+                        "height": 375.45
                       },
                       "children": [
                         {
@@ -49385,7 +49385,7 @@
                           },
                           "size": {
                             "width": 212,
-                            "height": 83.12
+                            "height": 84.71
                           },
                           "direction": "column",
                           "align_items": "flex-start",
@@ -49441,11 +49441,11 @@
                               "type": "text",
                               "size": {
                                 "width": 212,
-                                "height": 35
+                                "height": 54.43
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -49458,7 +49458,7 @@
                                 {
                                   "text": "Structural and",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -49467,7 +49467,7 @@
                                 {
                                   "text": " core construction activities are actively progressing on site.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "underline": false,
@@ -49721,7 +49721,7 @@
                           },
                           "size": {
                             "width": 205.42000000000007,
-                            "height": 65.94
+                            "height": 66.72
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -49777,11 +49777,11 @@
                               "type": "text",
                               "size": {
                                 "width": 205.42,
-                                "height": 35
+                                "height": 36.29
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#321A00",
                                 "line_height": 1.4
@@ -49794,7 +49794,7 @@
                                 {
                                   "text": "Expenditur",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "line_height": 1.4
@@ -49803,7 +49803,7 @@
                                 {
                                   "text": "e remains within the approved project budget.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#321A00",
                                     "underline": false,
@@ -50200,11 +50200,11 @@
                           "type": "text",
                           "size": {
                             "width": 375.08,
-                            "height": 30
+                            "height": 36.29
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -50217,7 +50217,7 @@
                             {
                               "text": "Confirm confidentiality and begin the investment review process.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -50342,11 +50342,11 @@
                           "type": "text",
                           "size": {
                             "width": 421.17,
-                            "height": 30
+                            "height": 36.29
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -50359,7 +50359,7 @@
                             {
                               "text": "Obtain full project assumptions, cash-flow projections, and return analysis.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -50484,11 +50484,11 @@
                           "type": "text",
                           "size": {
                             "width": 436.31,
-                            "height": 30
+                            "height": 36.29
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -50501,7 +50501,7 @@
                             {
                               "text": "Review the location, construction progress, and surrounding market conditions.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -50626,11 +50626,11 @@
                           "type": "text",
                           "size": {
                             "width": 375.08,
-                            "height": 30
+                            "height": 36.29
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -50643,7 +50643,7 @@
                             {
                               "text": "Conduct financial, technical, regulatory, and legal verification.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4
@@ -50768,11 +50768,11 @@
                           "type": "text",
                           "size": {
                             "width": 375.08,
-                            "height": 30
+                            "height": 36.29
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -50785,7 +50785,7 @@
                             {
                               "text": "Finalize participation and proceed with capital commitment.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4

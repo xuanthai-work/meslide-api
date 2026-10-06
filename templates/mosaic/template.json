@@ -27423,7 +27423,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -27437,7 +27437,7 @@
                         {
                           "text": "An overview of the campaign goals, target audience, key messaging.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#1A1919",
                             "line_height": 1.3,
@@ -27543,7 +27543,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -27557,7 +27557,7 @@
                         {
                           "text": "A breakdown of campaign performance, key metrics, channel results,",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#1A1919",
                             "line_height": 1.3,
@@ -27663,7 +27663,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -27677,7 +27677,7 @@
                         {
                           "text": "nsights into audience segments, behaviors, preferences.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#1A1919",
                             "line_height": 1.3,
@@ -27783,7 +27783,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -27797,7 +27797,7 @@
                         {
                           "text": "An analysis of the creative formats, content themes, and assets.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#1A1919",
                             "line_height": 1.3,
@@ -27842,7 +27842,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 13.33,
+                "size": 14.0,
                 "family": "Montserrat",
                 "color": "#1A1919",
                 "line_height": 1.3,
@@ -27856,7 +27856,7 @@
                 {
                   "text": "An overview of the campaign objectives, strategic direction, target audience, key messaging, and overall marketing approach.",
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -28011,7 +28011,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 13.33,
+                "size": 14.0,
                 "family": "Montserrat",
                 "color": "#1A1919",
                 "line_height": 1.3,
@@ -28025,7 +28025,7 @@
                 {
                   "text": "A visually driven section divider that introduces the performance section using a strong campaign visual alongside concise report information.",
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -28779,7 +28779,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -28793,7 +28793,7 @@
                     {
                       "text": "A quick look at the key areas covered in this report.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -28943,7 +28943,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#1A1919",
                                 "line_height": 1.3,
@@ -28957,7 +28957,7 @@
                                 {
                                   "text": "Defines the key marketing goals, business priorities, and desired outcomes that guide the overall strategy.",
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#1A1919",
                                     "line_height": 1.3,
@@ -29053,7 +29053,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#1A1919",
                                 "line_height": 1.3,
@@ -29067,7 +29067,7 @@
                                 {
                                   "text": "Provides an overview of the audiences being targeted, including their characteristics, behaviors.",
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#1A1919",
                                     "line_height": 1.3,
@@ -29163,7 +29163,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#1A1919",
                                 "line_height": 1.3,
@@ -29177,7 +29177,7 @@
                                 {
                                   "text": "Highlights the marketing channels and customer touchpoints used to reach, engage, and communicate.",
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#1A1919",
                                     "line_height": 1.3,
@@ -29273,7 +29273,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#1A1919",
                                 "line_height": 1.3,
@@ -29287,7 +29287,7 @@
                                 {
                                   "text": "Identifies important patterns, successful activities, challenges, and opportunities revealed through the performance data.",
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#1A1919",
                                     "line_height": 1.3,
@@ -29438,7 +29438,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 13.33,
+                "size": 14.0,
                 "family": "Montserrat",
                 "color": "#1A1919",
                 "line_height": 1.3,
@@ -29452,7 +29452,7 @@
                 {
                   "text": "A structured overview of the marketing process, highlighting how objectives are defined, audiences are understood, channels are selected, performance is measured, insights are identified, and future opportunities are developed.\n",
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -29577,7 +29577,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#1A1919",
                             "line_height": 1.3,
@@ -29591,7 +29591,7 @@
                             {
                               "text": "Conversions increased from 2,320 to 3,200, representing a 38% improvement",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#1A1919",
                                 "line_height": 1.3,
@@ -29691,7 +29691,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#1A1919",
                                 "line_height": 1.3,
@@ -29705,7 +29705,7 @@
                                 {
                                   "text": "Total engagement grew from 108,000 to 138,000 interactions.",
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#1A1919",
                                     "line_height": 1.3,
@@ -30084,7 +30084,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -30098,7 +30098,7 @@
                     {
                       "text": "The campaign generated stronger audience reach, engagement, website traffic, and conversions, indicating positive movement across the primary marketing objectives.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -30230,7 +30230,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -30244,7 +30244,7 @@
                             {
                               "text": "Growth was strongest in conversion performance, while increased reach and engagement. ",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -30350,7 +30350,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.3,
@@ -30364,7 +30364,7 @@
                             {
                               "text": "Conversions increased from 2,320 to 3,200, representing a 38% improvement compared.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.3,
@@ -30864,10 +30864,10 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 18.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
-                    "line_height": 1.3,
+                    "line_height": 1.35,
                     "letter_spacing": 0.13
                   },
                   "alignment": {
@@ -30878,10 +30878,10 @@
                     {
                       "text": "The reporting period delivered stronger reach, engagement, and conversion results, supported by improved channel performance and more effective audience targeting.",
                       "font": {
-                        "size": 13.33,
+                        "size": 18.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
-                        "line_height": 1.3,
+                        "line_height": 1.35,
                         "letter_spacing": 0.13
                       }
                     }
@@ -31910,10 +31910,10 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 18.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
-                    "line_height": 1.3,
+                    "line_height": 1.35,
                     "letter_spacing": 0.13
                   },
                   "alignment": {
@@ -31924,10 +31924,10 @@
                     {
                       "text": "A snapshot of the strongest trends, results, and opportunities identified during the reporting period.",
                       "font": {
-                        "size": 13.33,
+                        "size": 18.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
-                        "line_height": 1.3,
+                        "line_height": 1.35,
                         "letter_spacing": 0.13
                       }
                     }
@@ -32474,7 +32474,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 11.4,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#FFFFFF",
                         "line_height": 1.3,
@@ -32488,7 +32488,7 @@
                         {
                           "text": "Impressions increased by 24%, expanding campaign exposure.",
                           "font": {
-                            "size": 11.4,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.3,
@@ -32580,7 +32580,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 11.4,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.3,
@@ -32594,7 +32594,7 @@
                         {
                           "text": "Link clicks grew by 19%, indicating increased audience interest.",
                           "font": {
-                            "size": 11.4,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -32686,7 +32686,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 13.33,
+                "size": 14.0,
                 "family": "Montserrat",
                 "color": "#1A1919",
                 "line_height": 1.3,
@@ -32700,7 +32700,7 @@
                 {
                   "text": "An overview of the campaign’s reach, audience response, lead generation, and return, highlighting the areas that contributed most to overall performance.",
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -33253,7 +33253,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -33267,7 +33267,7 @@
                     {
                       "text": "A comparison of the key marketing objectives and the measurable results achieved during the reporting period.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -33423,7 +33423,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#FFFFFF",
                         "line_height": 1.3,
@@ -33437,7 +33437,7 @@
                         {
                           "text": "A clear view of campaign objectives, target outcomes, and progress achieved during the reporting period.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.3,
@@ -33519,7 +33519,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat Bold",
                         "color": "#FFFFFF",
                         "bold": false,
@@ -33534,7 +33534,7 @@
                         {
                           "text": "Increase Reach\n",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -33545,7 +33545,7 @@
                         {
                           "text": "Expand Campaign Visibility",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.3,
@@ -33702,7 +33702,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat Bold",
                         "color": "#000000",
                         "bold": false,
@@ -33717,7 +33717,7 @@
                         {
                           "text": "Generate Leads\n",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat Bold",
                             "color": "#000000",
                             "bold": false,
@@ -33728,7 +33728,7 @@
                         {
                           "text": "Increase qualified prospects.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -33885,7 +33885,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat Bold",
                         "color": "#000000",
                         "bold": false,
@@ -33900,7 +33900,7 @@
                         {
                           "text": "Increase Reach\n",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat Bold",
                             "color": "#000000",
                             "bold": false,
@@ -33911,7 +33911,7 @@
                         {
                           "text": "Expand Campaign Visibility",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -34971,7 +34971,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -34985,7 +34985,7 @@
                     {
                       "text": "A quick overview of the metrics that matter most during the reporting period.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -35708,7 +35708,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -35722,7 +35722,7 @@
                     {
                       "text": "Key performance metrics alongside the trend that shaped results throughout the reporting period.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -35813,7 +35813,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -35827,7 +35827,7 @@
                     {
                       "text": "A comparison of channel activity and the contribution of each channel to overall campaign results.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -37192,7 +37192,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -37206,7 +37206,7 @@
                     {
                       "text": "A consolidated view of key results, channel performance, and conversion activity.\n",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -38706,7 +38706,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -38720,7 +38720,7 @@
                     {
                       "text": "Campaign results increased consistently throughout the reporting period, with momentum building toward the final month.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -39123,7 +39123,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#FFFFFF",
                         "line_height": 1.3,
@@ -39137,7 +39137,7 @@
                         {
                           "text": "Marketing performance strengthened throughout the reporting period, with reach increasing by 33% and conversions growing by 14%. Paid channels remained a major contributor.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.3,
@@ -39330,7 +39330,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -39344,7 +39344,7 @@
                     {
                       "text": "Monthly results show how campaign performance changed throughout the reporting period.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -39541,7 +39541,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#FBFBFB",
                         "line_height": 1.4
@@ -39554,7 +39554,7 @@
                         {
                           "text": "Growth from January to June",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FBFBFB",
                             "line_height": 1.4
@@ -39694,7 +39694,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.3,
@@ -39708,7 +39708,7 @@
                         {
                           "text": "Consistent growth in conversions indicates stronger campaign momentum and improved audience response over time.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -42500,7 +42500,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -42514,7 +42514,7 @@
                     {
                       "text": "A visual overview of channel contribution, growth, and performance.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -43757,7 +43757,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FFFFFF",
                             "line_height": 1.3,
@@ -43771,7 +43771,7 @@
                             {
                               "text": "A significant portion of the budget was allocated to paid campaigns to increase audience reach, attract targeted users, and generate new leads.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#FFFFFF",
                                 "line_height": 1.3,
@@ -43957,7 +43957,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -43971,7 +43971,7 @@
                             {
                               "text": "Investment focused on creating valuable and engaging content to strengthen brand awareness, connect with the audience, and support campaign performance.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -45102,7 +45102,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -45116,7 +45116,7 @@
                             {
                               "text": "Build initial awareness through targeted campaigns and relevant content.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -45396,7 +45396,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -45410,7 +45410,7 @@
                             {
                               "text": "Engage interested audiences with useful information and clear value.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -45690,7 +45690,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -45704,7 +45704,7 @@
                             {
                               "text": "Guide high-intent users toward purchase with relevant offers and a smooth experience.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -45984,7 +45984,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -45998,7 +45998,7 @@
                             {
                               "text": "Keep customers connected through personalized communication",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -46278,7 +46278,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -46292,7 +46292,7 @@
                             {
                               "text": "Turn satisfied customers into active promoters through reviews, referrals, and sharing.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -47227,7 +47227,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -47241,7 +47241,7 @@
                     {
                       "text": "Our audience values convenience, quality, and relevant experiences. They actively research options online and engage with brands that offer clear value and personalized communication.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,
@@ -47691,7 +47691,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -47704,7 +47704,7 @@
                                 {
                                   "text": "Primarily engages through mobile channels",
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -47852,7 +47852,7 @@
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -47865,7 +47865,7 @@
                                     {
                                       "text": "Compares products before making a decision",
                                       "font": {
-                                        "size": 13.33,
+                                        "size": 14.0,
                                         "family": "Montserrat",
                                         "color": "#000000",
                                         "line_height": 1.4
@@ -48027,7 +48027,7 @@
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 13.33,
+                                    "size": 14.0,
                                     "family": "Montserrat",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -48040,7 +48040,7 @@
                                     {
                                       "text": "Personalized content performs better",
                                       "font": {
-                                        "size": 13.33,
+                                        "size": 14.0,
                                         "family": "Montserrat",
                                         "color": "#000000",
                                         "line_height": 1.4
@@ -48167,7 +48167,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#FBFBFB",
                         "line_height": 1.4
@@ -48180,7 +48180,7 @@
                         {
                           "text": "Digital-first consumers looking for convenient, reliable, and relevant solutions.",
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#FBFBFB",
                             "line_height": 1.4
@@ -48306,7 +48306,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.4
@@ -48319,7 +48319,7 @@
                             {
                               "text": "• Compare options and pricing\n• Respond to offers",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -48389,7 +48389,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.4
@@ -48402,7 +48402,7 @@
                             {
                               "text": "• Repeat purchases\n• Strong brand familiarity",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -48472,7 +48472,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.4
@@ -48485,7 +48485,7 @@
                             {
                               "text": "• Personalize communication\n• Prioritize high-value segments\n• Optimize channel mix",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -49225,7 +49225,7 @@
               },
               "rotation": 0,
               "font": {
-                "size": 13.33,
+                "size": 14.0,
                 "family": "Montserrat Bold",
                 "color": "#1A1919",
                 "bold": false,
@@ -49240,7 +49240,7 @@
                 {
                   "text": "Top-performing creative\n\n",
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat Bold",
                     "color": "#1A1919",
                     "bold": false,
@@ -49251,7 +49251,7 @@
                 {
                   "text": "The strongest visual focused on a clear message and simple call-to-action, generating higher audience engagement.\n",
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -50440,7 +50440,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -50454,7 +50454,7 @@
                             {
                               "text": "Focus on top-performing channels.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -50579,7 +50579,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -50593,7 +50593,7 @@
                             {
                               "text": "Develop stronger\n content.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -50718,7 +50718,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -50732,7 +50732,7 @@
                             {
                               "text": "Improve key conversion points.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -50857,7 +50857,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -50871,7 +50871,7 @@
                             {
                               "text": "Refine campaigns and messaging.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -50996,7 +50996,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -51010,7 +51010,7 @@
                             {
                               "text": "Expand proven strategies.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -51135,7 +51135,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 13.33,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.3,
@@ -51149,7 +51149,7 @@
                             {
                               "text": "Drive sustainable\ngrowth.",
                               "font": {
-                                "size": 13.33,
+                                "size": 14.0,
                                 "family": "Montserrat",
                                 "color": "#000000",
                                 "line_height": 1.3,
@@ -51678,7 +51678,7 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 13.33,
+                    "size": 14.0,
                     "family": "Montserrat",
                     "color": "#1A1919",
                     "line_height": 1.3,
@@ -51692,7 +51692,7 @@
                     {
                       "text": "Insights that inform smarter decisions, stronger campaigns, and sustainable growth.",
                       "font": {
-                        "size": 13.33,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#1A1919",
                         "line_height": 1.3,

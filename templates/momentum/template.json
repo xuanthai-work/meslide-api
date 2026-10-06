@@ -18123,7 +18123,7 @@
                       },
                       "size": {
                         "width": 205,
-                        "height": 74
+                        "height": 82.0
                       },
                       "font": {
                         "size": 14.22,
@@ -18290,7 +18290,7 @@
                       },
                       "size": {
                         "width": 205,
-                        "height": 74
+                        "height": 82.0
                       },
                       "font": {
                         "size": 14.22,
@@ -18457,7 +18457,7 @@
                       },
                       "size": {
                         "width": 205,
-                        "height": 74
+                        "height": 82.0
                       },
                       "font": {
                         "size": 14.22,
@@ -18624,7 +18624,7 @@
                       },
                       "size": {
                         "width": 205,
-                        "height": 74
+                        "height": 82.0
                       },
                       "font": {
                         "size": 14.22,
@@ -23863,10 +23863,10 @@
               },
               "size": {
                 "width": 352.88,
-                "height": 32.88
+                "height": 50.16
               },
               "font": {
-                "size": 12.44,
+                "size": 14.0,
                 "family": "Lato",
                 "color": "#FFFFFF",
                 "line_height": 1.29,
@@ -23880,7 +23880,7 @@
                 {
                   "text": "Enhanced customer relationships and timely follow-ups increased repeat purchases and long-term customer loyalty.",
                   "font": {
-                    "size": 12.44,
+                    "size": 14.0,
                     "family": "Lato",
                     "color": "#FFFFFF",
                     "line_height": 1.29,
@@ -26336,7 +26336,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Lato",
                         "color": "#FFFFFF",
                         "line_height": 1.29,
@@ -26350,7 +26350,7 @@
                         {
                           "text": "For individual users and small businesses.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Lato",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -28836,7 +28836,7 @@
               },
               "size": {
                 "width": 403.68,
-                "height": 136.19
+                "height": 143.75
               },
               "children": [
                 {
@@ -28847,7 +28847,7 @@
                   },
                   "size": {
                     "width": 403.68,
-                    "height": 136.19
+                    "height": 143.75
                   },
                   "fill": {
                     "color": "#244CCB",
@@ -28946,10 +28946,10 @@
                   },
                   "size": {
                     "width": 352.88,
-                    "height": 32.88
+                    "height": 50.16
                   },
                   "font": {
-                    "size": 12.44,
+                    "size": 14.0,
                     "family": "Lato",
                     "color": "#FFFFFF",
                     "line_height": 1.29,
@@ -28963,7 +28963,7 @@
                     {
                       "text": "Enhanced customer relationships and timely follow-ups increased repeat purchases and long-term customer loyalty.",
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Lato",
                         "color": "#FFFFFF",
                         "line_height": 1.29,

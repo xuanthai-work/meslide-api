@@ -17109,7 +17109,7 @@
                 "family": "Montserrat Medium",
                 "color": "#000000",
                 "bold": true,
-                "line_height": 1.4,
+                "line_height": 1.35,
                 "letter_spacing": 0.11
               },
               "alignment": {
@@ -17124,7 +17124,7 @@
                     "family": "Montserrat Medium",
                     "color": "#000000",
                     "bold": true,
-                    "line_height": 1.4,
+                    "line_height": 1.35,
                     "letter_spacing": 0.11
                   }
                 }
@@ -20119,7 +20119,7 @@
               },
               "size": {
                 "width": 1172,
-                "height": 410
+                "height": 413.58
               },
               "direction": "row",
               "gap": 12,
@@ -20131,7 +20131,7 @@
                   "type": "group",
                   "size": {
                     "width": 506,
-                    "height": 410
+                    "height": 413.58
                   },
                   "children": [
                     {
@@ -20142,7 +20142,7 @@
                       },
                       "size": {
                         "width": 506,
-                        "height": 410
+                        "height": 413.58
                       },
                       "fill": {
                         "color": "#F8F7FB",
@@ -20242,10 +20242,10 @@
                       },
                       "size": {
                         "width": 408,
-                        "height": 54
+                        "height": 72.58
                       },
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.4,
@@ -20259,7 +20259,7 @@
                         {
                           "text": "Without proper is a analytics and reporting tools, educators cannot easily identify are learning trends, measure outcomes. Lorem Ipsum is dummy typesetting industry.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.4,
@@ -26120,7 +26120,7 @@
               },
               "size": {
                 "width": 1073.62,
-                "height": 245.66
+                "height": 249.21
               },
               "direction": "row",
               "gap": 12,
@@ -26136,7 +26136,7 @@
                   },
                   "size": {
                     "width": 242.93,
-                    "height": 245.66
+                    "height": 249.21
                   },
                   "children": [
                     {
@@ -26226,10 +26226,10 @@
                       },
                       "size": {
                         "width": 229.52,
-                        "height": 54.77
+                        "height": 58.32
                       },
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Montserrat",
                         "color": "#000000",
                         "line_height": 1.5,
@@ -26243,7 +26243,7 @@
                         {
                           "text": "Users log in, create or join a project, define project details and deadlines, and assign roles .",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Montserrat",
                             "color": "#000000",
                             "line_height": 1.5,
