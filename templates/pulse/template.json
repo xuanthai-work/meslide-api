@@ -34518,7 +34518,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -34532,7 +34532,7 @@
                                 {
                                   "text": "Space organization and zoning",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -34786,7 +34786,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -34800,7 +34800,7 @@
                                 {
                                   "text": "Movement from entry to discharge",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -35066,7 +35066,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -35080,7 +35080,7 @@
                                 {
                                   "text": "Movement of staff, equipment, and information",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -35334,7 +35334,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -35348,7 +35348,7 @@
                                 {
                                   "text": "Emergency access and infection prevention",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -35614,7 +35614,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -35628,7 +35628,7 @@
                                 {
                                   "text": "Privacy, accessibility, and wayfinding",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -35882,7 +35882,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -35896,7 +35896,7 @@
                                 {
                                   "text": "Improving efficiency and flexibility",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -36268,7 +36268,7 @@
               },
               "size": {
                 "width": 1161.37,
-                "height": 365
+                "height": 380.51
               },
               "children": [
                 {
@@ -36279,7 +36279,7 @@
                   },
                   "size": {
                     "width": 168.56,
-                    "height": 295.68
+                    "height": 298.28
                   },
                   "children": [
                     {
@@ -36360,7 +36360,7 @@
                       },
                       "size": {
                         "width": 103.95,
-                        "height": 104.8
+                        "height": 107.4
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -36407,11 +36407,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.95,
-                            "height": 29
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -36425,7 +36425,7 @@
                             {
                               "text": "Understanding medical facility layou",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -36435,7 +36435,7 @@
                             {
                               "text": "t",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -36465,7 +36465,7 @@
                   },
                   "size": {
                     "width": 168.55999999999995,
-                    "height": 295.67
+                    "height": 311.19
                   },
                   "children": [
                     {
@@ -36546,7 +36546,7 @@
                       },
                       "size": {
                         "width": 103.94999999999999,
-                        "height": 103.71
+                        "height": 120.31
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -36593,11 +36593,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.95,
-                            "height": 29
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -36611,7 +36611,7 @@
                             {
                               "text": "Mapping the patient's journey",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -36645,7 +36645,7 @@
                   },
                   "size": {
                     "width": 168.56,
-                    "height": 295.68
+                    "height": 298.28
                   },
                   "children": [
                     {
@@ -36726,7 +36726,7 @@
                       },
                       "size": {
                         "width": 103.95000000000005,
-                        "height": 104.8
+                        "height": 107.4
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -36773,11 +36773,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.95,
-                            "height": 29
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -36791,7 +36791,7 @@
                             {
                               "text": "Understanding relationships and adjacencies",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -36820,7 +36820,7 @@
                   },
                   "size": {
                     "width": 168.56000000000006,
-                    "height": 295.68
+                    "height": 298.28
                   },
                   "children": [
                     {
@@ -36901,7 +36901,7 @@
                       },
                       "size": {
                         "width": 103.95000000000005,
-                        "height": 104.8
+                        "height": 107.4
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -36948,11 +36948,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.95,
-                            "height": 29
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -36966,7 +36966,7 @@
                             {
                               "text": "Accessibility, infection prevention",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -36995,7 +36995,7 @@
                   },
                   "size": {
                     "width": 168.56000000000006,
-                    "height": 295.68
+                    "height": 313.31
                   },
                   "children": [
                     {
@@ -37076,7 +37076,7 @@
                       },
                       "size": {
                         "width": 103.95000000000005,
-                        "height": 104.8
+                        "height": 122.43
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -37123,11 +37123,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.95,
-                            "height": 29
+                            "height": 60.13
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -37141,7 +37141,7 @@
                             {
                               "text": "Strategies for improving facility performance",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -37170,7 +37170,7 @@
                   },
                   "size": {
                     "width": 168.55999999999995,
-                    "height": 295.68
+                    "height": 298.28
                   },
                   "children": [
                     {
@@ -37251,7 +37251,7 @@
                       },
                       "size": {
                         "width": 103.95000000000005,
-                        "height": 104.8
+                        "height": 107.4
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -37298,11 +37298,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.95,
-                            "height": 29
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -37316,7 +37316,7 @@
                             {
                               "text": "Flexible and adaptable healthcare",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -37909,7 +37909,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -37923,7 +37923,7 @@
                                 {
                                   "text": "Th",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -37933,7 +37933,7 @@
                                 {
                                   "text": "e patient enters the healthcare facility through a clearly identified and accessible entrance. ",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "underline": false,
@@ -38104,7 +38104,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -38118,7 +38118,7 @@
                                 {
                                   "text": "At r",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -38128,7 +38128,7 @@
                                 {
                                   "text": "egistration, the patient's personal and appointment information is confirmed. ",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "underline": false,
@@ -38299,7 +38299,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -38313,7 +38313,7 @@
                                 {
                                   "text": "The patient ",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -38323,7 +38323,7 @@
                                 {
                                   "text": "undergoes an initial assessment or triage to understand their condition and determine",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "underline": false,
@@ -38494,7 +38494,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -38508,7 +38508,7 @@
                                 {
                                   "text": "T",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -38518,7 +38518,7 @@
                                 {
                                   "text": "he patient may proceed to consultation, laboratory testing, imaging, or other diagnostic services.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "underline": false,
@@ -38689,7 +38689,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -38703,7 +38703,7 @@
                                 {
                                   "text": "Bas",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -38713,7 +38713,7 @@
                                 {
                                   "text": "ed on the assessment and diagnosis, the patient receives the appropriate medical treatment",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "underline": false,
@@ -38874,7 +38874,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -38888,7 +38888,7 @@
                                 {
                                   "text": "Th",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "line_height": 1.16,
@@ -38898,7 +38898,7 @@
                                 {
                                   "text": "e patient completes the care process through discharge, medication, follow-up instructions.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 1",
                                     "color": "#18324A",
                                     "underline": false,
@@ -39558,7 +39558,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -39572,7 +39572,7 @@
                         {
                           "text": "A clear and accessible layout helps patients find their destination easily, move comfortably between services.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -39605,7 +39605,7 @@
               },
               "size": {
                 "width": 271.6700000000001,
-                "height": 402.87
+                "height": 411.57
               },
               "children": [
                 {
@@ -39747,7 +39747,7 @@
                   },
                   "size": {
                     "width": 218.69,
-                    "height": 93.1
+                    "height": 94.01
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -39794,11 +39794,11 @@
                       "type": "text",
                       "size": {
                         "width": 214.06,
-                        "height": 62
+                        "height": 75.17
                       },
                       "rotation": 7.37,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#FFFFFF",
                         "line_height": 1.16,
@@ -39812,7 +39812,7 @@
                         {
                           "text": "Logical relationships between consultation rooms, treatment areas, nursing stations, diagnostic services, and support spaces can help healthcar.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.16,
@@ -39958,7 +39958,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -39972,7 +39972,7 @@
                         {
                           "text": "Well-organized circulation routes, appropriate separation of activities, accessible exits, and suitable.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -40122,7 +40122,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -40136,7 +40136,7 @@
                         {
                           "text": "Reducing unnecessary movement, improving department relationships, and making effective use of available.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -40800,11 +40800,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 87
+                        "height": 90.2
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -40818,7 +40818,7 @@
                         {
                           "text": "The location and connection of entrances, reception, waiting areas, consultation rooms, diagnostic.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -40928,11 +40928,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 87
+                        "height": 105.24
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -40946,7 +40946,7 @@
                         {
                           "text": "Healthcare professionals frequently move between clinical rooms, nursing stations, diagnostic departments. ",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -41056,11 +41056,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 87
+                        "height": 105.24
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -41074,7 +41074,7 @@
                         {
                           "text": "Well-planned circulation routes can support safe patient movement, emergency access, appropriate separation.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -41184,11 +41184,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 87
+                        "height": 90.2
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -41202,7 +41202,7 @@
                         {
                           "text": "The physical environment influences how patients feel and navigate the facility. ",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -41650,7 +41650,7 @@
               },
               "size": {
                 "width": 554.67,
-                "height": 287.5
+                "height": 332.31
               },
               "direction": "row",
               "justify_content": "center",
@@ -41660,7 +41660,7 @@
                   "type": "flex",
                   "size": {
                     "width": 155.26,
-                    "height": 287.5
+                    "height": 332.31
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -41744,11 +41744,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 50
+                        "height": 105.24
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -41762,7 +41762,7 @@
                         {
                           "text": "Functionality ensures that every space has a clear purpose and logical relationship with other areas of the facility.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -41798,7 +41798,7 @@
                   "type": "flex",
                   "size": {
                     "width": 155.26,
-                    "height": 287.5
+                    "height": 314.24
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -41882,11 +41882,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 48.43
+                        "height": 75.17
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -41900,7 +41900,7 @@
                         {
                           "text": "Safety focuses on reducing risks and supporting secure movement and the facility.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -41936,7 +41936,7 @@
                   "type": "flex",
                   "size": {
                     "width": 155.26,
-                    "height": 287.5
+                    "height": 329.27
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -42020,11 +42020,11 @@
                       "type": "text",
                       "size": {
                         "width": 133.7,
-                        "height": 48.43
+                        "height": 90.2
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -42038,7 +42038,7 @@
                         {
                           "text": "Human-centered design places the needs, comfort, dignity, and experience of patients and staff",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -44723,7 +44723,7 @@
               },
               "size": {
                 "width": 1166.6599999999999,
-                "height": 380.83
+                "height": 381.37
               },
               "children": [
                 {
@@ -44781,7 +44781,7 @@
                       },
                       "size": {
                         "width": 145.27000000000004,
-                        "height": 84.9
+                        "height": 105.57
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -44865,11 +44865,11 @@
                           "type": "text",
                           "size": {
                             "width": 145.27,
-                            "height": 24.43
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -44883,7 +44883,7 @@
                             {
                               "text": "Organizing spaces according to function and access.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -44959,7 +44959,7 @@
                       },
                       "size": {
                         "width": 145.27000000000004,
-                        "height": 96.89
+                        "height": 120.58
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -45043,11 +45043,11 @@
                           "type": "text",
                           "size": {
                             "width": 145.27,
-                            "height": 25
+                            "height": 60.13
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -45061,7 +45061,7 @@
                             {
                               "text": "Planning movement routes for patients, staff, equipment, and services.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -45137,7 +45137,7 @@
                       },
                       "size": {
                         "width": 145.27000000000004,
-                        "height": 96.9
+                        "height": 120.6
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -45221,11 +45221,11 @@
                           "type": "text",
                           "size": {
                             "width": 145.27,
-                            "height": 25
+                            "height": 60.13
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -45239,7 +45239,7 @@
                             {
                               "text": "Positioning departments according to their functional relationships.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -45268,7 +45268,7 @@
                   },
                   "size": {
                     "width": 172.22000000000003,
-                    "height": 317.43
+                    "height": 317.97
                   },
                   "children": [
                     {
@@ -45315,7 +45315,7 @@
                       },
                       "size": {
                         "width": 145.26999999999998,
-                        "height": 96.89
+                        "height": 135.62
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -45399,11 +45399,11 @@
                           "type": "text",
                           "size": {
                             "width": 145.27,
-                            "height": 25
+                            "height": 75.17
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -45417,7 +45417,7 @@
                             {
                               "text": "Considering separation, hygiene, ventilation, and appropriate workflows.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -45493,7 +45493,7 @@
                       },
                       "size": {
                         "width": 145.26999999999998,
-                        "height": 96.89
+                        "height": 105.55
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -45577,11 +45577,11 @@
                           "type": "text",
                           "size": {
                             "width": 145.27,
-                            "height": 25
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -45595,7 +45595,7 @@
                             {
                               "text": "Supporting emergency response and safe movement.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -45755,11 +45755,11 @@
                           "type": "text",
                           "size": {
                             "width": 145.27,
-                            "height": 25
+                            "height": 60.13
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -45773,7 +45773,7 @@
                             {
                               "text": "Allowing spaces to adapt to changing healthcare requirements.\n\n",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -46680,7 +46680,7 @@
                       },
                       "size": {
                         "width": 203.55000000000007,
-                        "height": 60.23
+                        "height": 68.52
                       },
                       "direction": "column",
                       "align_items": "center",
@@ -46727,11 +46727,11 @@
                           "type": "text",
                           "size": {
                             "width": 203.55,
-                            "height": 25
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.16,
@@ -46745,7 +46745,7 @@
                             {
                               "text": "Healthcare environments should support respectful and patient-centered care.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.16,
@@ -46895,7 +46895,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -46909,7 +46909,7 @@
                             {
                               "text": "Patient ",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -46919,7 +46919,7 @@
                             {
                               "text": "comfort satisfaction\n",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -47019,7 +47019,7 @@
                       },
                       "size": {
                         "width": 214.05999999999995,
-                        "height": 67.98
+                        "height": 79.3
                       },
                       "direction": "column",
                       "align_items": "center",
@@ -47078,11 +47078,11 @@
                           "type": "text",
                           "size": {
                             "width": 214.06,
-                            "height": 25
+                            "height": 60.13
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.16,
@@ -47096,7 +47096,7 @@
                             {
                               "text": "Health",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.16,
@@ -47106,7 +47106,7 @@
                             {
                               "text": "care facilities should accommodate people with different physical abilities and mobility requirements.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -47206,7 +47206,7 @@
                       },
                       "size": {
                         "width": 187.99,
-                        "height": 55.95
+                        "height": 64.24
                       },
                       "direction": "column",
                       "align_items": "center",
@@ -47253,11 +47253,11 @@
                           "type": "text",
                           "size": {
                             "width": 187.99,
-                            "height": 25
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -47271,7 +47271,7 @@
                             {
                               "text": "Privacy is an essential part of patient-centered healthcare design.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -47370,7 +47370,7 @@
                       },
                       "size": {
                         "width": 103.56999999999994,
-                        "height": 53.82
+                        "height": 62.11
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -47429,11 +47429,11 @@
                           "type": "text",
                           "size": {
                             "width": 103.57,
-                            "height": 36.81
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.16,
@@ -47447,7 +47447,7 @@
                             {
                               "text": "Patients re",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.16,
@@ -47457,7 +47457,7 @@
                             {
                               "text": "aching destination.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "underline": false,
@@ -47981,7 +47981,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -47994,7 +47994,7 @@
                                 {
                                   "text": "The entry area should provide easy access, visible information, and a smooth transition into the healthcare environment.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 2",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -48234,7 +48234,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -48247,7 +48247,7 @@
                                 {
                                   "text": "The patient provides or confirms necessary information and is directed to the appropriate service.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 2",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -48483,11 +48483,11 @@
                               "type": "text",
                               "size": {
                                 "width": 243.41,
-                                "height": 90
+                                "height": 90.72
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -48500,7 +48500,7 @@
                                 {
                                   "text": "Waiting areas should provide adequate seating, comfort, accessibility, and clear information about the next stage of care.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 2",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -48740,7 +48740,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -48753,7 +48753,7 @@
                                 {
                                   "text": "Consultation spaces should support privacy, clear communication, and appropriate access to clinical services.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 2",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -48993,7 +48993,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -49006,7 +49006,7 @@
                                 {
                                   "text": "Treatment areas should support safe clinical procedures, staff workflow, equipment access, and patient comfort.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Inter 2",
                                     "color": "#000000",
                                     "line_height": 1.4
@@ -51101,7 +51101,7 @@
               },
               "size": {
                 "width": 273,
-                "height": 615.26
+                "height": 616.77
               },
               "direction": "column",
               "justify_content": "center",
@@ -51111,7 +51111,7 @@
                   "type": "group",
                   "size": {
                     "width": 273,
-                    "height": 294.96
+                    "height": 295.72
                   },
                   "children": [
                     {
@@ -51122,7 +51122,7 @@
                       },
                       "size": {
                         "width": 273,
-                        "height": 294.96
+                        "height": 295.72
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -51233,7 +51233,7 @@
                       },
                       "size": {
                         "width": 225.73000000000002,
-                        "height": 92.9
+                        "height": 107.26
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -51280,11 +51280,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.18,
-                            "height": 60.81
+                            "height": 75.17
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -51298,7 +51298,7 @@
                             {
                               "text": "The traditional layout is primarily organized around individual departments, with each service functioning within its own",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -51308,7 +51308,7 @@
                             {
                               "text": " designated area.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -51334,7 +51334,7 @@
                   "type": "group",
                   "size": {
                     "width": 273,
-                    "height": 294.96
+                    "height": 295.71
                   },
                   "children": [
                     {
@@ -51345,7 +51345,7 @@
                       },
                       "size": {
                         "width": 273,
-                        "height": 294.96
+                        "height": 295.71
                       },
                       "rotation": 0,
                       "flip_h": false,
@@ -51456,7 +51456,7 @@
                       },
                       "size": {
                         "width": 225.73000000000002,
-                        "height": 92.9
+                        "height": 107.26
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -51503,11 +51503,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.18,
-                            "height": 60.81
+                            "height": 75.17
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -51521,7 +51521,7 @@
                             {
                               "text": "The integrated layout focuses on creating stronger functional connections between departments and services that frequently",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -51531,7 +51531,7 @@
                             {
                               "text": " interact.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -51765,11 +51765,11 @@
                       "type": "text",
                       "size": {
                         "width": 221.18,
-                        "height": 50
+                        "height": 60.13
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#FFFFFF",
                         "line_height": 1.16,
@@ -51783,7 +51783,7 @@
                         {
                           "text": "A flexible layout is designed to accommodate changing healthcare technologies, patient needs, and service models",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.16,
@@ -51793,7 +51793,7 @@
                         {
                           "text": " over time.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "underline": false,
@@ -52231,7 +52231,7 @@
                   },
                   "size": {
                     "width": 360.5,
-                    "height": 421
+                    "height": 422.22
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -52348,11 +52348,11 @@
                       "type": "text",
                       "size": {
                         "width": 329.95,
-                        "height": 13.8
+                        "height": 15.03
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 11.56,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "underline": false,
@@ -52367,7 +52367,7 @@
                         {
                           "text": "Monthly revenue performance",
                           "font": {
-                            "size": 11.56,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "underline": false,
@@ -52485,7 +52485,7 @@
                       },
                       "size": {
                         "width": 280.87,
-                        "height": 228.06
+                        "height": 234.94
                       },
                       "direction": "column",
                       "align_items": "stretch",
@@ -52604,11 +52604,11 @@
                           "type": "text",
                           "size": {
                             "width": 280.87,
-                            "height": 38
+                            "height": 46.66
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.2,
@@ -52622,7 +52622,7 @@
                             {
                               "text": "Use clear signs, visual cues, and identifiable landmarks to help patients navigate independently.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#FFFFFF",
                                 "line_height": 1.2,
@@ -52749,7 +52749,7 @@
                       },
                       "size": {
                         "width": 280.93000000000006,
-                        "height": 228.38
+                        "height": 235.24
                       },
                       "direction": "column",
                       "align_items": "stretch",
@@ -52868,11 +52868,11 @@
                           "type": "text",
                           "size": {
                             "width": 280.87,
-                            "height": 38
+                            "height": 46.66
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.2,
@@ -52886,7 +52886,7 @@
                             {
                               "text": "Poor department positioning can require patients or staff to travel unnecessarily long distances.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.2,
@@ -53430,7 +53430,7 @@
                   },
                   "size": {
                     "width": 221.18000000000006,
-                    "height": 121.76
+                    "height": 130.05
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -53518,11 +53518,11 @@
                       "type": "text",
                       "size": {
                         "width": 221.18,
-                        "height": 36.81
+                        "height": 45.1
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#FFFFFF",
                         "line_height": 1.16,
@@ -53536,7 +53536,7 @@
                         {
                           "text": "Ability of patients and visitors with different mobility requirements",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.16,
@@ -53546,7 +53546,7 @@
                         {
                           "text": " to use the facility.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "underline": false,
@@ -53946,11 +53946,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.18,
-                            "height": 37
+                            "height": 60.13
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -53964,7 +53964,7 @@
                             {
                               "text": "Average time patients spend waiting for registration, consultation, diagnosis, or",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -53974,7 +53974,7 @@
                             {
                               "text": " treatment.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -54029,7 +54029,7 @@
                       },
                       "size": {
                         "width": 224.28000000000003,
-                        "height": 121.76
+                        "height": 130.05
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -54115,11 +54115,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.18,
-                            "height": 36.81
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -54133,7 +54133,7 @@
                             {
                               "text": "Distance staff travel between clinical, diagnostic, and suppor",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -54143,7 +54143,7 @@
                             {
                               "text": "t areas.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -54198,7 +54198,7 @@
                       },
                       "size": {
                         "width": 224.2800000000001,
-                        "height": 121.76
+                        "height": 130.05
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -54284,11 +54284,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.18,
-                            "height": 36.81
+                            "height": 45.1
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -54302,7 +54302,7 @@
                             {
                               "text": "Percentage of time clinical or treatment rooms",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.16,
@@ -54312,7 +54312,7 @@
                             {
                               "text": " are actively used.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "underline": false,
@@ -55481,7 +55481,7 @@
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#FFFFFF",
                         "line_height": 1.4
@@ -55494,7 +55494,7 @@
                         {
                           "text": "Key Performance Indicators help measure how effectively a medical facility layout supports patient care, space efficiency, and overall user experience. ",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#FFFFFF",
                             "line_height": 1.4
@@ -57640,11 +57640,11 @@
                           "type": "text",
                           "size": {
                             "width": 293.56,
-                            "height": 52
+                            "height": 54.43
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.4
@@ -57657,7 +57657,7 @@
                             {
                               "text": "Departments have relatively limited direct interaction and generally do not require close physical proximity.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.4
@@ -57858,11 +57858,11 @@
                           "type": "text",
                           "size": {
                             "width": 267.14,
-                            "height": 70
+                            "height": 72.58
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.4
@@ -57875,7 +57875,7 @@
                             {
                               "text": "Departments interact regularly but may not require immediate adjacency. Efficient circulation and communication can provide the necessary connection.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.4
@@ -58080,7 +58080,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.4
@@ -58093,7 +58093,7 @@
                             {
                               "text": "Departments may benefit from close proximity or highly efficient direct connections.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Inter 1",
                                 "color": "#18324A",
                                 "line_height": 1.4
@@ -58796,7 +58796,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 2",
                             "color": "#000000",
                             "line_height": 1.4
@@ -58809,7 +58809,7 @@
                             {
                               "text": "The patient meets with a healthcare professional for clinical evaluation, discussion, and examination.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "line_height": 1.4
@@ -59061,7 +59061,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 2",
                             "color": "#000000",
                             "underline": false,
@@ -59075,7 +59075,7 @@
                             {
                               "text": "When required, the patient proceeds to laboratory, imaging, or other diagnostic services.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "underline": false,
@@ -59330,7 +59330,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 2",
                             "color": "#000000",
                             "underline": false,
@@ -59344,7 +59344,7 @@
                             {
                               "text": "Information from the assessment and diagnostic process supports the healthcare professional.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "underline": false,
@@ -59599,7 +59599,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 2",
                             "color": "#000000",
                             "underline": false,
@@ -59613,7 +59613,7 @@
                             {
                               "text": "Treatment is provided in an appropriate clinical environment with access to staff, equipment, supplies",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "underline": false,
@@ -59866,7 +59866,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 2",
                             "color": "#000000",
                             "underline": false,
@@ -59880,7 +59880,7 @@
                             {
                               "text": "The patient completes the care journey and receives appropriate instructions, follow-up.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Inter 2",
                                 "color": "#000000",
                                 "underline": false,
@@ -60245,7 +60245,7 @@
               },
               "size": {
                 "width": 690.8799999999999,
-                "height": 231.39
+                "height": 260.78
               },
               "direction": "row",
               "justify_content": "center",
@@ -60255,7 +60255,7 @@
                   "type": "flex",
                   "size": {
                     "width": 147.09999999999997,
-                    "height": 231.39
+                    "height": 260.78
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -60339,11 +60339,11 @@
                       "type": "text",
                       "size": {
                         "width": 146,
-                        "height": 37
+                        "height": 90.2
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -60357,7 +60357,7 @@
                         {
                           "text": "Reduced confusion, the most unnecessary travel, and want delays, resulting in a clearer and more efficient.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -60393,7 +60393,7 @@
                   "type": "flex",
                   "size": {
                     "width": 156.36,
-                    "height": 231.39
+                    "height": 242.71
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -60477,11 +60477,11 @@
                       "type": "text",
                       "size": {
                         "width": 146,
-                        "height": 37
+                        "height": 60.13
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -60495,7 +60495,7 @@
                         {
                           "text": "Shorter movement routes, improved staff workflow, faster communication",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -60531,7 +60531,7 @@
                   "type": "flex",
                   "size": {
                     "width": 174.07000000000005,
-                    "height": 231.39
+                    "height": 242.71
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -60615,11 +60615,11 @@
                       "type": "text",
                       "size": {
                         "width": 146,
-                        "height": 37
+                        "height": 60.13
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -60633,7 +60633,7 @@
                         {
                           "text": "Patients and visitors can find departments more easily, reducing confusion.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,
@@ -60669,7 +60669,7 @@
                   "type": "flex",
                   "size": {
                     "width": 147.0999999999999,
-                    "height": 231.39
+                    "height": 257.75
                   },
                   "direction": "column",
                   "align_items": "flex-start",
@@ -60753,11 +60753,11 @@
                       "type": "text",
                       "size": {
                         "width": 146,
-                        "height": 37
+                        "height": 75.17
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 10.67,
+                        "size": 14.0,
                         "family": "Inter 1",
                         "color": "#18324A",
                         "line_height": 1.16,
@@ -60771,7 +60771,7 @@
                         {
                           "text": "A safer and more controlled healthcare environment with improved emergency access.",
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Inter 1",
                             "color": "#18324A",
                             "line_height": 1.16,

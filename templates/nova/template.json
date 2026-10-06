@@ -28041,7 +28041,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -28055,7 +28055,7 @@
                             {
                               "text": "Automation and AI are replacing repetitive jobs, creating uncertainty for many workers.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -28217,7 +28217,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -28231,7 +28231,7 @@
                             {
                               "text": "Many employees lack the digital and technical skills required for future industries.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -28393,7 +28393,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -28407,7 +28407,7 @@
                             {
                               "text": "Limited internet access and digital infrastructure prevent many communities from participating in the digital economy.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -28500,10 +28500,10 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   },
                   "alignment": {
@@ -28514,10 +28514,10 @@
                     {
                       "text": "Despite remarkable technological progress, the global economy continues to face complex structural and social challenges that limit inclusive and sustainable growth. While innovations such as artificial intelligence, automation, and digital technologies have increased productivity and created new business opportunities, they have also disrupted traditional industries and transformed labor markets.",
                       "font": {
-                        "size": 14.22,
+                        "size": 20.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
-                        "line_height": 1.29,
+                        "line_height": 1.35,
                         "letter_spacing": 0.17
                       }
                     }
@@ -28724,10 +28724,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -28738,10 +28738,10 @@
                 {
                   "text": "A successful future economy is built on continuous investment in advanced technologies, workforce development, sustainable infrastructure, and digital inclusion. Artificial intelligence, automation, and digital transformation can increase efficiency and support smarter decision-making, while renewable energy and green technologies help reduce environmental .",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -29146,11 +29146,11 @@
                           "type": "text",
                           "size": {
                             "width": 260.93,
-                            "height": 41
+                            "height": 66.87
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -29164,7 +29164,7 @@
                             {
                               "text": "Leverage artificial intelligence and automation to improve productivity, innovation, and operational efficiency.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -29289,11 +29289,11 @@
                           "type": "text",
                           "size": {
                             "width": 260.93,
-                            "height": 41
+                            "height": 66.87
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -29307,7 +29307,7 @@
                             {
                               "text": "Modernize businesses and public services through cloud computing, data analytics, and digital platforms.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -29432,11 +29432,11 @@
                           "type": "text",
                           "size": {
                             "width": 263.99,
-                            "height": 41
+                            "height": 66.87
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -29450,7 +29450,7 @@
                             {
                               "text": "Expand the use of renewable energy sources to support sustainable economic growth reduce carbon emissions.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -29575,11 +29575,11 @@
                           "type": "text",
                           "size": {
                             "width": 260.93,
-                            "height": 41
+                            "height": 50.16
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -29593,7 +29593,7 @@
                             {
                               "text": "Develop intelligent transportation, communication, and urban systems that improve connectivity and efficiency.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -29684,10 +29684,10 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   },
                   "alignment": {
@@ -29698,10 +29698,10 @@
                     {
                       "text": "The solution to the challenges of the future economy lies in creating a balanced approach that combines technological innovation with sustainability, human development, and inclusive economic policies. Rather than viewing technology as a replacement for human potential, the future economy emphasizes using digital innovations to improve productivity, create new employment opportunities, and enhance the overall quality of life. ",
                       "font": {
-                        "size": 14.22,
+                        "size": 20.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
-                        "line_height": 1.29,
+                        "line_height": 1.35,
                         "letter_spacing": 0.17
                       }
                     }
@@ -29996,7 +29996,7 @@
                       },
                       "size": {
                         "width": 221.85000000000002,
-                        "height": 139.24
+                        "height": 160.0
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -30006,11 +30006,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 21
+                            "height": 26.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 16,
+                            "size": 18.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -30025,7 +30025,7 @@
                             {
                               "text": "Adopt Emerging Technologies",
                               "font": {
-                                "size": 16,
+                                "size": 18.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -30043,11 +30043,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 55
+                            "height": 115.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -30061,7 +30061,7 @@
                             {
                               "text": "Introduce AI, cloud computing, automation, blockchain, data analytics, and smart infrastructure solutions to improve efficiency and competitiveness.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -30270,11 +30270,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 21
+                            "height": 26.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 16,
+                            "size": 18.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -30289,7 +30289,7 @@
                             {
                               "text": "Identify Economic Challenges",
                               "font": {
-                                "size": 16,
+                                "size": 18.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -30307,11 +30307,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 55
+                            "height": 108.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -30325,7 +30325,7 @@
                             {
                               "text": "Analyze unemployment, productivity gaps, digital access, infrastructure limitations, and environmental risks to determine the most urgent economic priorities.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -30498,7 +30498,7 @@
                       },
                       "size": {
                         "width": 221.85000000000002,
-                        "height": 139.24
+                        "height": 160.0
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -30508,11 +30508,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 21
+                            "height": 26.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 16,
+                            "size": 18.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -30527,7 +30527,7 @@
                             {
                               "text": "Train and Upskill the Workforce",
                               "font": {
-                                "size": 16,
+                                "size": 18.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -30545,11 +30545,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 55
+                            "height": 115.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -30563,7 +30563,7 @@
                             {
                               "text": "Provide continuous education in digital skills, AI literacy, cybersecurity, leadership, and entrepreneurship so workers can adapt to future job markets.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -30772,11 +30772,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 21
+                            "height": 26.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 16,
+                            "size": 18.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -30791,7 +30791,7 @@
                             {
                               "text": "Build Sustainable Industries",
                               "font": {
-                                "size": 16,
+                                "size": 18.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -30809,11 +30809,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 55
+                            "height": 108.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -30827,7 +30827,7 @@
                             {
                               "text": "Promote renewable energy, circular economy practices, smart manufacturing, and environmentally responsible production systems that balance profit with sustainability.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -31010,11 +31010,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 21
+                            "height": 26.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 16,
+                            "size": 18.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -31029,7 +31029,7 @@
                             {
                               "text": "Scale Successful Solutions",
                               "font": {
-                                "size": 16,
+                                "size": 18.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -31047,11 +31047,11 @@
                           "type": "text",
                           "size": {
                             "width": 221.85,
-                            "height": 55
+                            "height": 108.0
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -31065,7 +31065,7 @@
                             {
                               "text": "Expand proven programs, technologies, and policies across industries, regions, and national economies to maximize long-term economic and social benefits.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -31160,10 +31160,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -31174,10 +31174,10 @@
                 {
                   "text": "A successful future economy requires a systemati and continuous process rather than a one-time transformation. Governments, businesses, and institutions must follow a structured approach that identifies existing economic challenges, applies innovative solutions, develops human capital, and continuously measures results. This process ensures that technological progress leads to sustainable growth, higher productivity.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -31363,7 +31363,7 @@
                           },
                           "size": {
                             "width": 193.77999999999997,
-                            "height": 277.01
+                            "height": 339.73
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -31389,11 +31389,11 @@
                               "type": "text",
                               "size": {
                                 "width": 193.78,
-                                "height": 23.73
+                                "height": 28.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 17.77,
+                                "size": 20.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -31408,7 +31408,7 @@
                                 {
                                   "text": "Higher Productivity",
                                   "font": {
-                                    "size": 17.77,
+                                    "size": 20.0,
                                     "family": "Poppins Bold",
                                     "color": "#FFFFFF",
                                     "bold": false,
@@ -31426,11 +31426,11 @@
                               "type": "text",
                               "size": {
                                 "width": 191.51,
-                                "height": 80
+                                "height": 140.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.5,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -31444,7 +31444,7 @@
                                 {
                                   "text": "Increase output through the i automation, digital transfer a transformation, innovation, a and more efficient business processes.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.5,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.29,
@@ -31533,11 +31533,11 @@
                               },
                               "size": {
                                 "width": 193.78,
-                                "height": 23.73
+                                "height": 28.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 17.77,
+                                "size": 20.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -31552,7 +31552,7 @@
                                 {
                                   "text": "Better Employment",
                                   "font": {
-                                    "size": 17.77,
+                                    "size": 20.0,
                                     "family": "Poppins Bold",
                                     "color": "#FFFFFF",
                                     "bold": false,
@@ -31570,11 +31570,11 @@
                               "type": "group",
                               "position": {
                                 "x": 1.1299999999999955,
-                                "y": 195.45999999999998
+                                "y": 137.01
                               },
                               "size": {
                                 "width": 363.40999999999997,
-                                "height": 81.55000000000001
+                                "height": 140.0
                               },
                               "children": [
                                 {
@@ -31585,11 +31585,11 @@
                                   },
                                   "size": {
                                     "width": 191.51,
-                                    "height": 81.55
+                                    "height": 140.0
                                   },
                                   "rotation": 0,
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.5,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.29,
@@ -31603,7 +31603,7 @@
                                     {
                                       "text": "Create high-quality, future-ready jobs that offer fair whis wages, career growth, with a flexibility, and opportunities for continuous learning.",
                                       "font": {
-                                        "size": 12.44,
+                                        "size": 14.5,
                                         "family": "Poppins",
                                         "color": "#FFFFFF",
                                         "line_height": 1.29,
@@ -31662,7 +31662,7 @@
                           },
                           "size": {
                             "width": 193.77999999999997,
-                            "height": 293.01
+                            "height": 317.05
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -31688,11 +31688,11 @@
                               "type": "text",
                               "size": {
                                 "width": 193.78,
-                                "height": 23
+                                "height": 28.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 17.77,
+                                "size": 20.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -31707,7 +31707,7 @@
                                 {
                                   "text": "Reduced Carbon Emissions",
                                   "font": {
-                                    "size": 17.77,
+                                    "size": 20.0,
                                     "family": "Poppins Bold",
                                     "color": "#FFFFFF",
                                     "bold": false,
@@ -31725,11 +31725,11 @@
                               "type": "text",
                               "size": {
                                 "width": 191.51,
-                                "height": 80
+                                "height": 140.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.5,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -31743,7 +31743,7 @@
                                 {
                                   "text": "Accelerate the transition to th renewable energy, energyas-efficient industries, where the sustainable transportation, as and low-carbon infrastructure.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.5,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.29,
@@ -31801,7 +31801,7 @@
                           },
                           "size": {
                             "width": 193.77999999999997,
-                            "height": 293.01
+                            "height": 317.05
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -31827,11 +31827,11 @@
                               "type": "text",
                               "size": {
                                 "width": 193.78,
-                                "height": 23
+                                "height": 28.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 17.77,
+                                "size": 20.0,
                                 "family": "Poppins Bold",
                                 "color": "#FFFFFF",
                                 "bold": false,
@@ -31846,7 +31846,7 @@
                                 {
                                   "text": "Improved Living Standards",
                                   "font": {
-                                    "size": 17.77,
+                                    "size": 20.0,
                                     "family": "Poppins Bold",
                                     "color": "#FFFFFF",
                                     "bold": false,
@@ -31864,11 +31864,11 @@
                               "type": "text",
                               "size": {
                                 "width": 191.51,
-                                "height": 80
+                                "height": 140.0
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 12.44,
+                                "size": 14.5,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -31882,7 +31882,7 @@
                                 {
                                   "text": "Raise household income, whe expand access to healthcare and education, improve the a public services, and support healthier, safer, and more tha prosperous communities.",
                                   "font": {
-                                    "size": 12.44,
+                                    "size": 14.5,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.29,
@@ -31976,10 +31976,10 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   },
                   "alignment": {
@@ -31990,10 +31990,10 @@
                     {
                       "text": "The primary goal of the Future Economy is to build an economic system that combines technological advancement with sustainability, inclusion, and long-term resilience. In a rapidly changing global environment, economic success can no longer be measured only by GDP growth; it must also reflect the ability of societies to create opportunities, protect the environment, adapt to disruptions, and improve the overall well-being of their citizens.",
                       "font": {
-                        "size": 14.22,
+                        "size": 20.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
-                        "line_height": 1.29,
+                        "line_height": 1.35,
                         "letter_spacing": 0.17
                       }
                     }
@@ -33484,10 +33484,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 18.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -33498,10 +33498,10 @@
                 {
                   "text": "The global economy is undergoing one of the most significant transformations in modern history. Rapid advancements in artificial intelligence (AI), automation, cloud computing, digital finance, renewable energy, biotechnology, and advanced connectivity are fundamentally reshaping industries, labor markets, and consumer behavior.",
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -33689,10 +33689,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 18.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -33703,10 +33703,10 @@
                 {
                   "text": "Economic growth in the coming decade will be driven by technology-enabled industries that increase productivity, create new markets, and solve global challenges related to sustainability, healthcare, finance, and security.",
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -33919,7 +33919,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -33933,7 +33933,7 @@
                             {
                               "text": "AI is expected to become one of the largest contributors to global productivity growth by 2030.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -34065,7 +34065,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -34079,7 +34079,7 @@
                             {
                               "text": "Supports smart cities, predictive maintenance, energy management.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -34211,7 +34211,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -34225,7 +34225,7 @@
                             {
                               "text": "Cybersecurity is becoming a critical national and business priority.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -34731,10 +34731,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -34745,10 +34745,10 @@
                 {
                   "text": "This illustrative growth chart demonstrates how the Future Economy can achieve steady and sustainable expansion through continuous digital transformation. The economic index rises from 90 in 2025 to 240 in 2030, reflecting the combined impact of artificial intelligence, automation, cloud computing, green technology, and innovation-driven industries.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -34903,7 +34903,7 @@
                           },
                           "size": {
                             "width": 412.32,
-                            "height": 121.44
+                            "height": 123.79
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -34950,11 +34950,11 @@
                               "type": "text",
                               "size": {
                                 "width": 398.09,
-                                "height": 55
+                                "height": 83.59
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -34968,7 +34968,7 @@
                                 {
                                   "text": "The future economy will be powered by a new resour generation of the growth drivers: artificial intelligence, a green technology, digital finance, robotics, dynamic biotechnology, cloud computing, the Internet of thin Things, and cybersecurity.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.29,
@@ -35113,7 +35113,7 @@
                           },
                           "size": {
                             "width": 412.31999999999994,
-                            "height": 121.43
+                            "height": 123.78
                           },
                           "direction": "column",
                           "align_items": "center",
@@ -35160,11 +35160,11 @@
                               "type": "text",
                               "size": {
                                 "width": 398.09,
-                                "height": 55
+                                "height": 83.59
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -35178,7 +35178,7 @@
                                 {
                                   "text": "The future economy will be powered by a new resour generation of the growth drivers: artificial intelligence, a green technology, digital finance, robotics, dynamic biotechnology, cloud computing, the Internet of thin Things, and cybersecurity.",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.29,
@@ -35381,10 +35381,10 @@
                   },
                   "rotation": 0,
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   },
                   "alignment": {
@@ -35395,10 +35395,10 @@
                     {
                       "text": "Countries and organizations that invest early in these growth drivers will be better positioned to achieve higher productivity, stronger competitiveness, and long-term economic resilience.",
                       "font": {
-                        "size": 14.22,
+                        "size": 18.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
-                        "line_height": 1.29,
+                        "line_height": 1.35,
                         "letter_spacing": 0.17
                       }
                     }
@@ -35620,7 +35620,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -35634,7 +35634,7 @@
                             {
                               "text": "Cloud platforms provide scalable computing power, data storage, software services",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -35766,7 +35766,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -35780,7 +35780,7 @@
                             {
                               "text": "Industrial robots, autonomous vehicles, drones, and service robots increase efficiency.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -35912,7 +35912,7 @@
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -35926,7 +35926,7 @@
                             {
                               "text": "Mobile banking, digital wallets, blockchain-based payments, embedded finance.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -36982,10 +36982,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -36996,10 +36996,10 @@
                 {
                   "text": "This illustrative growth chart demonstrates how the Future Economy can achieve steady and sustainable expansion through continuous digital transformation. The economic index rises from 90 in 2025 to 240 in 2030, reflecting the combined impact of artificial intelligence, automation, cloud computing, green technology, and innovation-driven industries.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -38393,10 +38393,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 20.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -38407,10 +38407,10 @@
                 {
                   "text": "This distribution ensures that the organization not only adopts advanced digital solutions but also builds the human and operational capabilities required for long-term sustainability and growth.",
                   "font": {
-                    "size": 14.22,
+                    "size": 20.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -43504,7 +43504,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4,
@@ -43518,7 +43518,7 @@
                                 {
                                   "text": "Revenue Increase",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4,
@@ -43700,7 +43700,7 @@
                               },
                               "rotation": 0,
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.4,
@@ -43714,7 +43714,7 @@
                                 {
                                   "text": "Customer Growth",
                                   "font": {
-                                    "size": 10.67,
+                                    "size": 14.0,
                                     "family": "Poppins",
                                     "color": "#FFFFFF",
                                     "line_height": 1.4,
@@ -46210,10 +46210,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 18.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -46224,10 +46224,10 @@
                 {
                   "text": "The Future Economy presents one of the largest market opportunities in modern history. Rapid advances in digital technology, clean energy, urban infrastructure, online services are creating entirely new industries while transforming existing ones.",
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -47157,11 +47157,11 @@
                       "type": "text",
                       "size": {
                         "width": 284.95,
-                        "height": 23.73
+                        "height": 28.0
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 17.77,
+                        "size": 20.0,
                         "family": "Poppins Bold",
                         "color": "#FFFFFF",
                         "bold": false,
@@ -47176,7 +47176,7 @@
                         {
                           "text": "E-commerce",
                           "font": {
-                            "size": 17.77,
+                            "size": 20.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -47194,11 +47194,11 @@
                       "type": "text",
                       "size": {
                         "width": 280.71,
-                        "height": 96
+                        "height": 125.0
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.29,
@@ -47212,7 +47212,7 @@
                         {
                           "text": "Online marketplaces, digital logistics, social commerce, and cross-border e-commerce continue to expand consumer access to global products and services.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -47244,11 +47244,11 @@
                       "type": "text",
                       "size": {
                         "width": 284.95,
-                        "height": 23.73
+                        "height": 28.0
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 17.77,
+                        "size": 20.0,
                         "family": "Poppins Bold",
                         "color": "#FFFFFF",
                         "bold": false,
@@ -47263,7 +47263,7 @@
                         {
                           "text": "Health Technology",
                           "font": {
-                            "size": 17.77,
+                            "size": 20.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -47281,11 +47281,11 @@
                       "type": "text",
                       "size": {
                         "width": 280.71,
-                        "height": 96
+                        "height": 140.0
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.29,
@@ -47299,7 +47299,7 @@
                         {
                           "text": "Telemedicine, AI diagnostics, wearable devices, digital health records, and precision medicine are improving healthcare accessibility, efficiency, and patient outcomes.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -47331,11 +47331,11 @@
                       "type": "text",
                       "size": {
                         "width": 284.95,
-                        "height": 23.73
+                        "height": 28.0
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 17.77,
+                        "size": 20.0,
                         "family": "Poppins Bold",
                         "color": "#FFFFFF",
                         "bold": false,
@@ -47350,7 +47350,7 @@
                         {
                           "text": "Digital Education",
                           "font": {
-                            "size": 17.77,
+                            "size": 20.0,
                             "family": "Poppins Bold",
                             "color": "#FFFFFF",
                             "bold": false,
@@ -47368,11 +47368,11 @@
                       "type": "text",
                       "size": {
                         "width": 280.71,
-                        "height": 96
+                        "height": 140.0
                       },
                       "rotation": 0,
                       "font": {
-                        "size": 12.44,
+                        "size": 14.0,
                         "family": "Poppins",
                         "color": "#FFFFFF",
                         "line_height": 1.29,
@@ -47386,7 +47386,7 @@
                         {
                           "text": "Online learning platforms, virtual classrooms, AI tutors, and professional upskilling programs are expanding access to education and lifelong learning opportunities.",
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -47653,11 +47653,11 @@
                           "type": "text",
                           "size": {
                             "width": 280.71,
-                            "height": 48
+                            "height": 66.87
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -47671,7 +47671,7 @@
                             {
                               "text": "AI is transforming manufacturing, healthcare, finance, retail, transportation, and government services through automation.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -47794,11 +47794,11 @@
                           "type": "text",
                           "size": {
                             "width": 280.71,
-                            "height": 48
+                            "height": 66.87
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -47812,7 +47812,7 @@
                             {
                               "text": "AI is transforming manufacturing, healthcare, finance, retail, transportation, and government services through automation.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -47935,11 +47935,11 @@
                           "type": "text",
                           "size": {
                             "width": 280.71,
-                            "height": 48
+                            "height": 66.87
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -47953,7 +47953,7 @@
                             {
                               "text": "AI is transforming manufacturing, healthcare, finance, retail, transportation, and government services through automation.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -48076,11 +48076,11 @@
                           "type": "text",
                           "size": {
                             "width": 280.71,
-                            "height": 48
+                            "height": 50.16
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 12.44,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -48094,7 +48094,7 @@
                             {
                               "text": "olar, wind, hydro, battery storage, and green hydrogen technologies are expanding rapidly as countries pursue.",
                               "font": {
-                                "size": 12.44,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -48421,10 +48421,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 18.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -48435,10 +48435,10 @@
                 {
                   "text": "The future economy represents a massive global market opportunity driven by artificial intelligence, renewable energy, fintech, electric vehicles, smart cities, cloud computing, health technology, e-commerce, digital education, and cybersecurity.",
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
@@ -49799,7 +49799,7 @@
               },
               "size": {
                 "width": 1157.55,
-                "height": 422.18
+                "height": 472.16
               },
               "children": [
                 {
@@ -49810,7 +49810,7 @@
                   },
                   "size": {
                     "width": 320.47,
-                    "height": 288
+                    "height": 337.98
                   },
                   "children": [
                     {
@@ -49873,7 +49873,7 @@
                       },
                       "size": {
                         "width": 201.86,
-                        "height": 134
+                        "height": 183.98
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -49957,11 +49957,11 @@
                           "type": "text",
                           "size": {
                             "width": 201.86,
-                            "height": 67.04
+                            "height": 117.03
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -49975,7 +49975,7 @@
                             {
                               "text": "Introduce AI, cloud computing, automation, blockchain, data analytics, and smart infrastructure solutions to improve efficiency and competitiveness.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -50067,7 +50067,7 @@
                       },
                       "size": {
                         "width": 201.86,
-                        "height": 134
+                        "height": 183.98
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -50151,11 +50151,11 @@
                           "type": "text",
                           "size": {
                             "width": 201.86,
-                            "height": 67.04
+                            "height": 117.03
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -50169,7 +50169,7 @@
                             {
                               "text": "Introduce AI, cloud computing, automation, blockchain, data analytics, and smart infrastructure solutions to improve efficiency and competitiveness.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -50198,7 +50198,7 @@
                   },
                   "size": {
                     "width": 320.47,
-                    "height": 288
+                    "height": 337.98
                   },
                   "children": [
                     {
@@ -50261,7 +50261,7 @@
                       },
                       "size": {
                         "width": 201.86,
-                        "height": 134
+                        "height": 183.98
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -50345,11 +50345,11 @@
                           "type": "text",
                           "size": {
                             "width": 201.86,
-                            "height": 67.04
+                            "height": 117.03
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -50363,7 +50363,7 @@
                             {
                               "text": "Introduce AI, cloud computing, automation, blockchain, data analytics, and smart infrastructure solutions to improve efficiency and competitiveness.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -50455,7 +50455,7 @@
                       },
                       "size": {
                         "width": 201.8599999999999,
-                        "height": 134
+                        "height": 183.98
                       },
                       "direction": "column",
                       "align_items": "flex-start",
@@ -50539,11 +50539,11 @@
                           "type": "text",
                           "size": {
                             "width": 201.86,
-                            "height": 67.04
+                            "height": 117.03
                           },
                           "rotation": 0,
                           "font": {
-                            "size": 10.67,
+                            "size": 14.0,
                             "family": "Poppins",
                             "color": "#FFFFFF",
                             "line_height": 1.29,
@@ -50557,7 +50557,7 @@
                             {
                               "text": "Introduce AI, cloud computing, automation, blockchain, data analytics, and smart infrastructure solutions to improve efficiency and competitiveness.",
                               "font": {
-                                "size": 10.67,
+                                "size": 14.0,
                                 "family": "Poppins",
                                 "color": "#FFFFFF",
                                 "line_height": 1.29,
@@ -50603,10 +50603,10 @@
               },
               "rotation": 0,
               "font": {
-                "size": 14.22,
+                "size": 18.0,
                 "family": "Poppins",
                 "color": "#FFFFFF",
-                "line_height": 1.29,
+                "line_height": 1.35,
                 "letter_spacing": 0.17
               },
               "alignment": {
@@ -50617,10 +50617,10 @@
                 {
                   "text": "The future economy represents a massive global market opportunity driven by artificial intelligence, renewable energy, fintech, electric vehicles, smart cities, cloud computing, health technology.",
                   "font": {
-                    "size": 14.22,
+                    "size": 18.0,
                     "family": "Poppins",
                     "color": "#FFFFFF",
-                    "line_height": 1.29,
+                    "line_height": 1.35,
                     "letter_spacing": 0.17
                   }
                 }
