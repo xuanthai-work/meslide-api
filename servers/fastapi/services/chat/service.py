@@ -40,6 +40,8 @@ from utils.llm_utils import (
 
 LOGGER = logging.getLogger(__name__)
 MAX_TOOL_ROUNDS = 40
+MAX_IDENTICAL_POSITION_CALLS = 3
+POSITION_MUTATION_TOOLS = {"updateComponent", "updateElement"}
 MAX_CHAT_ATTACHMENT_CONTEXT_CHARS = 6000
 MAX_CHAT_ATTACHMENT_FILE_CHARS = 3000
 DOCUMENT_CONTENT_INTENT_PATTERN = re.compile(
@@ -176,6 +178,7 @@ class PresentationChatService:
         called_tools: list[str] = []
         last_tool_results: list[dict[str, Any]] = []
         response_text: str | None = None
+        recent_position_signatures: list[str] = []
 
         for round_index in range(MAX_TOOL_ROUNDS):
             completion_chunk: Any | None = None
@@ -290,6 +293,30 @@ class PresentationChatService:
                             content=[TextContentPart(text=tool_response_content)],
                         )
                     )
+                if self._record_position_calls(
+                    completion_tool_calls, recent_position_signatures
+                ):
+                    LOGGER.warning(
+                        "Repeated position tool call detected; stopping early"
+                    )
+                    yield "trace", {
+                        "kind": "limit",
+                        "message": (
+                            "Stopped a repeated position update to avoid a loop."
+                        ),
+                        "code": "chat.trace.tool_loop_guard",
+                    }
+                    response_text = await self._try_final_response_without_tools(
+                        client=client,
+                        model=model,
+                        messages=messages,
+                    )
+                    if not response_text:
+                        response_text = self._build_tool_limit_fallback(
+                            last_tool_results
+                        )
+                    yield "chunk", response_text
+                    break
                 continue
 
             response_text = "".join(round_content_chunks)
@@ -439,6 +466,7 @@ class PresentationChatService:
 
         called_tools: list[str] = []
         last_tool_results: list[dict[str, Any]] = []
+        recent_position_signatures: list[str] = []
 
         for _ in range(MAX_TOOL_ROUNDS):
             completion: Any | None = None
@@ -484,6 +512,17 @@ class PresentationChatService:
                         content=[TextContentPart(text=tool_response_content)],
                     )
                 )
+
+            if self._record_position_calls(tool_calls, recent_position_signatures):
+                LOGGER.warning("Repeated position tool call detected; stopping early")
+                final_response = await self._try_final_response_without_tools(
+                    client=client,
+                    model=model,
+                    messages=messages,
+                )
+                if final_response:
+                    return final_response, called_tools
+                return self._build_tool_limit_fallback(last_tool_results), called_tools
 
         LOGGER.warning("Max tool rounds reached in chat flow")
         final_response = await self._try_final_response_without_tools(
@@ -873,9 +912,56 @@ class PresentationChatService:
                 return message.strip()
 
         return (
-            "I completed several tool operations but could not finalize the response "
-            "within the tool limit. Please ask a follow-up and I will continue."
+            "Tôi đã thực hiện các bước căn chỉnh cần thiết nhưng cần thêm thông tin "
+            "để hoàn thiện tối ưu. Bạn hãy kiểm tra lại bố cục hiện tại trên slide "
+            "và cho tôi biết có cần tinh chỉnh thêm phần nào không nhé."
         )
+
+    @staticmethod
+    def _position_call_signature(tool_call: AssistantToolCall) -> str | None:
+        if tool_call.name not in POSITION_MUTATION_TOOLS:
+            return None
+        try:
+            arguments = json.loads(tool_call.arguments or "{}")
+        except (TypeError, ValueError):
+            return None
+        if not isinstance(arguments, dict):
+            return None
+        if arguments.get("position") is None and arguments.get("size") is None:
+            return None
+        target = arguments.get("componentId") or arguments.get("elementPath") or ""
+        payload = json.dumps(
+            {
+                "position": arguments.get("position"),
+                "size": arguments.get("size"),
+                "action": arguments.get("action"),
+            },
+            sort_keys=True,
+            default=str,
+        )
+        return f"{tool_call.name}|{arguments.get('index')}|{target}|{payload}"
+
+    @classmethod
+    def _record_position_calls(
+        cls,
+        tool_calls: list[AssistantToolCall],
+        recent_signatures: list[str],
+    ) -> bool:
+        """Return True when the same position mutation repeats too many times."""
+        signatures = [
+            signature
+            for tool_call in tool_calls
+            if (signature := cls._position_call_signature(tool_call)) is not None
+        ]
+        if not signatures:
+            recent_signatures.clear()
+            return False
+        recent_signatures.extend(signatures)
+        if len(recent_signatures) > MAX_IDENTICAL_POSITION_CALLS:
+            del recent_signatures[:-MAX_IDENTICAL_POSITION_CALLS]
+        if len(recent_signatures) < MAX_IDENTICAL_POSITION_CALLS:
+            return False
+        return len(set(recent_signatures)) == 1
 
     @staticmethod
     def _tool_result_trace(

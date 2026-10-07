@@ -501,6 +501,8 @@ def _compact_components(layout_dict: dict[str, Any]) -> list[dict[str, Any]]:
             {
                 "component_id": component.get("id"),
                 "description": component.get("description"),
+                "position": component.get("position"),
+                "size": component.get("size"),
                 "element_count": len(component.get("elements", []))
                 if isinstance(component.get("elements"), list)
                 else 0,
@@ -512,3 +514,75 @@ def _compact_components(layout_dict: dict[str, Any]) -> list[dict[str, Any]]:
             }
         )
     return components
+
+
+SPATIAL_ROW_Y_TOLERANCE = 25.0
+
+
+def _detect_spatial_layout_summary(layout_dict: dict[str, Any]) -> dict[str, Any]:
+    """Detect horizontal rows of peer components for alignment reasoning.
+
+    Components whose ``position.y`` values are within ``SPATIAL_ROW_Y_TOLERANCE``
+    are treated as peers in the same row. For each row the summary exposes the
+    baseline Y, the ordered columns along X, and the horizontal gaps between
+    adjacent columns so the assistant can align a target to its peers.
+    """
+    components = layout_dict.get("components")
+    if not isinstance(components, list):
+        return {"row_count": 0, "rows": []}
+
+    entries: list[dict[str, Any]] = []
+    for component in components:
+        if not isinstance(component, dict):
+            continue
+        position = component.get("position")
+        if not isinstance(position, dict):
+            continue
+        x = _finite_number(position.get("x"))
+        y = _finite_number(position.get("y"))
+        if x is None or y is None:
+            continue
+        entries.append(
+            {
+                "component_id": component.get("id"),
+                "x": x,
+                "y": y,
+            }
+        )
+
+    rows: list[dict[str, Any]] = []
+    for entry in sorted(entries, key=lambda item: (item["y"], item["x"])):
+        for row in rows:
+            if abs(row["baseline_y"] - entry["y"]) <= SPATIAL_ROW_Y_TOLERANCE:
+                row["members"].append(entry)
+                row["baseline_y"] = min(row["baseline_y"], entry["y"])
+                break
+        else:
+            rows.append({"baseline_y": entry["y"], "members": [entry]})
+
+    summary_rows: list[dict[str, Any]] = []
+    for row in rows:
+        members = sorted(row["members"], key=lambda item: item["x"])
+        if len(members) < 2:
+            continue
+        summary_rows.append(
+            {
+                "baseline_y": round(min(member["y"] for member in members), 2),
+                "column_count": len(members),
+                "component_ids": [member["component_id"] for member in members],
+                "columns": [
+                    {
+                        "component_id": member["component_id"],
+                        "x": round(member["x"], 2),
+                        "y": round(member["y"], 2),
+                    }
+                    for member in members
+                ],
+                "x_gaps": [
+                    round(members[index + 1]["x"] - members[index]["x"], 2)
+                    for index in range(len(members) - 1)
+                ],
+            }
+        )
+
+    return {"row_count": len(summary_rows), "rows": summary_rows}

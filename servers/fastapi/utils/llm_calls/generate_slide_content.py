@@ -149,6 +149,17 @@ You need to generate structured content json based on the schema.
   populate the requested labels, series, and values rather than text such as "create a
   bar chart" or "show this data as a graph".
 
+# Layout and Whitespace Budget Rules:
+- Maintain at least 20% whitespace buffer on every slide to keep slides airy and readable.
+- Word count budgets per field type:
+  - Title / Main Heading: Maximum 10 words.
+  - Subtitle / Summary: Maximum 15 words.
+  - Card items / Body points / List bullets: Maximum 25 words per item.
+- Never write long paragraphs into compact card or multi-column layouts. Keep ideas punchy, concise, and scannable.
+- Multi-column and Parallel Card Layouts:
+  - Column headers and Card titles must be concise (<= 6 words) and strictly act as subheadings, never oversized main titles.
+  - Ensure column widths and horizontal offsets leave ample margin inside the 1280px slide boundary.
+
 # Math Expression Rules
 - Wrap every LaTeX expression in `<latex>` and `</latex>` inside the generated string.
 - Put only valid LaTeX inside the tags and do not include `$`, `$$`, `\(`, or `\[` delimiters.

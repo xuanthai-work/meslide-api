@@ -1274,6 +1274,7 @@ class PresentationChatMemoryLayer(PresentationChatTemplateMixin):
         from services.chat.slide_ui_helpers import (
             _collect_editable_elements,
             _compact_components,
+            _detect_spatial_layout_summary,
         )
 
         slide = await self._get_slide_by_index(index)
@@ -1305,6 +1306,7 @@ class PresentationChatMemoryLayer(PresentationChatTemplateMixin):
             "description": ui.get("description"),
             "component_count": len(ui.get("components", [])),
             "components": _compact_components(ui),
+            "spatial_layout": _detect_spatial_layout_summary(ui),
             "editable_count": len(editable),
             "elements": editable,
             "message": (

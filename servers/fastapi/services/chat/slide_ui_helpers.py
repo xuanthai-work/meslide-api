@@ -64,6 +64,7 @@ _padding = _slide_ui_layout._padding
 _normalize_component_id = _slide_ui_layout._normalize_component_id
 _unique_component_id = _slide_ui_layout._unique_component_id
 _compact_components = _slide_ui_layout._compact_components
+_detect_spatial_layout_summary = _slide_ui_layout._detect_spatial_layout_summary
 
 
 
@@ -109,6 +110,23 @@ def _collect_editable_elements(
     return editable
 
 
+def _element_frame(
+    element: dict[str, Any],
+) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
+    raw_position = element.get("position")
+    raw_size = element.get("size")
+    position = raw_position if isinstance(raw_position, dict) else None
+    size = raw_size if isinstance(raw_size, dict) else None
+    if position is None or size is None:
+        vector_box = _vector_box(element)
+        if vector_box is not None:
+            if position is None:
+                position = {"x": vector_box["x"], "y": vector_box["y"]}
+            if size is None:
+                size = {"width": vector_box["width"], "height": vector_box["height"]}
+    return position, size
+
+
 def _visit_editable_element(
     *,
     element: dict[str, Any],
@@ -122,6 +140,7 @@ def _visit_editable_element(
     if is_content_editable or (
         include_visual_elements and element_type in VISIBLE_ELEMENT_TYPES
     ):
+        position, size = _element_frame(element)
         editable.append(
             {
                 "path": path,
@@ -131,6 +150,8 @@ def _visit_editable_element(
                 "decorative": element.get("decorative"),
                 "content_editable": is_content_editable,
                 "geometry_editable": True,
+                "position": position,
+                "size": size,
                 "content": _element_content(element),
                 "style": _element_style(element),
                 "limits": _element_limits(element),
