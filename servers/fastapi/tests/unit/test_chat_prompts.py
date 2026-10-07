@@ -56,3 +56,22 @@ def test_system_prompt_uses_current_vector_and_infographic_models():
     assert "Vector points determine the actual geometry" in system_prompt
     assert "Use the current infographic model only" in system_prompt
     assert "Do not use removed infographic_type" in system_prompt
+
+
+def test_system_prompt_enforces_word_and_whitespace_budget():
+    system_prompt = build_system_prompt("", "")
+
+    assert "Layout and Whitespace Budget Rules" in system_prompt
+    assert "at least 20% whitespace buffer" in system_prompt
+    assert "Title / Main Heading: Maximum 10 words" in system_prompt
+    assert "Subtitle / Summary: Maximum 15 words" in system_prompt
+    assert "Maximum 25 words per item" in system_prompt
+
+
+def test_system_prompt_guides_multi_column_layouts():
+    system_prompt = build_system_prompt("", "")
+
+    assert "Multi-column and Parallel Card Layouts" in system_prompt
+    assert "Column headers and Card titles must be concise" in system_prompt
+    assert "never oversized main titles" in system_prompt
+    assert "leave ample margin inside the 1280px slide boundary" in system_prompt

@@ -181,6 +181,128 @@ def test_get_slide_elements_reports_editable_layout():
     assert title["style"] == {"font": {"size": 20, "family": "Inter"}}
 
 
+def test_ui_summary_includes_position_and_size():
+    slide = _slide()
+    slide.ui["components"][0]["size"] = {"width": 100, "height": 40}
+    tools, _ = _tools(slide)
+
+    result = _call(tools, "getSlideAtIndex", {"index": 0, "includeFullContent": True})
+
+    assert result["ok"] is True
+    payload = result["result"]["slide"]["ui_summary"]
+    hero = next(
+        component
+        for component in payload["components"]
+        if component["component_id"] == "hero"
+    )
+    assert hero["position"] == {"x": 0, "y": 0}
+    assert hero["size"] == {"width": 100, "height": 40}
+
+    title = next(
+        element
+        for element in payload["elements"]
+        if element["path"] == "components[0].elements[0]"
+    )
+    assert title["position"] == {"x": 0, "y": 0}
+    assert title["size"] == {"width": 100, "height": 40}
+
+
+def test_ui_summary_includes_spatial_layout_rows():
+    slide = _slide()
+    slide.ui["components"] = [
+        {
+            "id": "col_a",
+            "description": "Left column.",
+            "position": {"x": 100, "y": 320},
+            "elements": [{"type": "text", "name": "A", "runs": [{"text": "A"}]}],
+        },
+        {
+            "id": "col_b",
+            "description": "Middle column.",
+            "position": {"x": 440, "y": 328},
+            "elements": [{"type": "text", "name": "B", "runs": [{"text": "B"}]}],
+        },
+        {
+            "id": "col_c",
+            "description": "Right column.",
+            "position": {"x": 800, "y": 320},
+            "elements": [{"type": "text", "name": "C", "runs": [{"text": "C"}]}],
+        },
+    ]
+    tools, _ = _tools(slide)
+
+    result = _call(tools, "getSlideAtIndex", {"index": 0, "includeFullContent": True})
+
+    assert result["ok"] is True
+    spatial = result["result"]["slide"]["ui_summary"]["spatial_layout"]
+    assert spatial["row_count"] == 1
+    row = spatial["rows"][0]
+    assert row["baseline_y"] == 320.0
+    assert row["component_ids"] == ["col_a", "col_b", "col_c"]
+    assert row["x_gaps"] == [340.0, 360.0]
+
+
+def test_align_ungrouped_component_uses_component_position():
+    slide = _slide()
+    slide.ui["components"] = [
+        {
+            "id": "stack",
+            "description": "Vertical text stack.",
+            "position": {"x": 100, "y": 200},
+            "elements": [
+                {
+                    "type": "text",
+                    "name": "Top",
+                    "position": {"x": 0, "y": 0},
+                    "size": {"width": 200, "height": 40},
+                    "runs": [{"text": "Top"}],
+                },
+                {
+                    "type": "text",
+                    "name": "Bottom",
+                    "position": {"x": 0, "y": 80},
+                    "size": {"width": 200, "height": 40},
+                    "runs": [{"text": "Bottom"}],
+                },
+            ],
+        }
+    ]
+    tools, _ = _tools(slide)
+
+    ungrouped = _call(
+        tools,
+        "updateComponent",
+        {"index": 0, "componentId": "stack", "action": "ungroup"},
+    )
+
+    assert ungrouped["ok"] is True
+    assert ungrouped["result"]["created_component_ids"] == [
+        "stack_part_1",
+        "stack_part_2",
+    ]
+    assert slide.ui["components"][0]["position"] == {"x": 100.0, "y": 200.0}
+    assert slide.ui["components"][1]["position"] == {"x": 100.0, "y": 280.0}
+
+    result = _call(
+        tools,
+        "updateComponent",
+        {
+            "index": 0,
+            "componentId": "stack_part_1",
+            "position": {"x": 100, "y": 280},
+        },
+    )
+
+    assert result["ok"] is True
+    assert result["result"]["position"] == {"x": 100.0, "y": 280.0}
+    part = slide.ui["components"][0]
+    assert part["position"] == {"x": 100.0, "y": 280.0}
+    assert slide.ui["components"][1]["position"] == {"x": 100.0, "y": 280.0}
+    assert part["elements"][0]["position"] == {"x": 0, "y": 0}
+    assert part["elements"][0]["size"] == {"width": 200.0, "height": 40.0}
+
+
+
 def test_get_available_blocks_returns_matching_block_summary_only():
     slide = _slide()
     tools, session = _tools(slide)

@@ -962,3 +962,16 @@ def test_content_fit_issues_do_not_flag_vietnamese_within_widened_budget():
     assert len(paragraph) < 100
 
     assert generate_slide_content._content_fit_issues(schema, paragraph) == []
+
+
+def test_slide_content_prompt_enforces_word_and_whitespace_budget():
+    prompt = generate_slide_content.get_system_prompt()
+
+    assert "Layout and Whitespace Budget Rules" in prompt
+    assert "at least 20% whitespace buffer" in prompt
+    assert "Title / Main Heading: Maximum 10 words" in prompt
+    assert "Subtitle / Summary: Maximum 15 words" in prompt
+    assert "Maximum 25 words per item" in prompt
+    assert "Multi-column and Parallel Card Layouts" in prompt
+    assert "Column headers and Card titles must be concise" in prompt
+    assert "leave ample margin inside the 1280px slide boundary" in prompt
