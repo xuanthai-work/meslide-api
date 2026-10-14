@@ -1,6 +1,9 @@
 import asyncio
 import uuid
 
+import pytest
+from pydantic import ValidationError
+
 from utils.llm_messages import AssistantMessage, AssistantToolCall, SystemMessage, UserMessage
 
 from models.chat import ChatAttachment, ChatMessageRequest
@@ -53,6 +56,26 @@ def test_chat_request_accepts_document_attachments():
     assert payload.presentation_id == presentation_id
     assert payload.attachments[0].type == "document"
     assert payload.attachments[0].name == "brief.pdf"
+
+
+def test_chat_message_request_max_length_16000():
+    presentation_id = uuid.uuid4()
+
+    at_limit = ChatMessageRequest(
+        presentation_id=presentation_id,
+        message="a" * 16000,
+    )
+    assert len(at_limit.message) == 16000
+
+    with pytest.raises(ValidationError) as excinfo:
+        ChatMessageRequest(
+            presentation_id=presentation_id,
+            message="a" * 16001,
+        )
+
+    errors = excinfo.value.errors()
+    assert errors[0]["loc"] == ("message",)
+    assert errors[0]["type"] == "string_too_long"
 
 
 def test_chat_attachment_intent_parses_document_content_requests():

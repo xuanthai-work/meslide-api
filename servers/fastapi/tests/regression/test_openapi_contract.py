@@ -15,5 +15,5 @@ def test_runtime_openapi_matches_recorded_contract():
         for method in methods
         if method in {"get", "post", "put", "patch", "delete"}
     }
-    assert len(operations) == 79
-    assert len(recorded["components"]["schemas"]) == 121
+    assert len(operations) == 80
+    assert len(recorded["components"]["schemas"]) == 123

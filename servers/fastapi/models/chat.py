@@ -15,7 +15,7 @@ class ChatAttachment(BaseModel):
 
 class ChatMessageRequest(BaseModel):
     presentation_id: uuid.UUID
-    message: str = Field(min_length=1, max_length=8000)
+    message: str = Field(min_length=1, max_length=16000)
     conversation_id: Optional[uuid.UUID] = None
     attachments: list[ChatAttachment] = Field(default_factory=list, max_length=8)
 
