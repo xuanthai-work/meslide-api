@@ -43,6 +43,40 @@ def test_browser_asset_paths_are_owner_scoped_and_traversal_safe():
     )
 
 
+def test_legacy_image_is_authorized_only_while_the_file_exists(
+    monkeypatch, tmp_path
+):
+    app_data = tmp_path / "app_data"
+    images_dir = app_data / "images"
+    images_dir.mkdir(parents=True)
+    (images_dir / "legacy.png").write_bytes(b"image")
+    monkeypatch.setenv("APP_DATA_DIRECTORY", str(app_data))
+    owner_id = uuid.uuid4()
+
+    assert is_app_data_path_authorized(
+        "/app_data/images/legacy.png",
+        user_id=owner_id,
+    )
+    assert not is_app_data_path_authorized(
+        "/app_data/images/missing.png",
+        user_id=owner_id,
+    )
+
+
+def test_legacy_non_image_roots_stay_denied(monkeypatch, tmp_path):
+    app_data = tmp_path / "app_data"
+    legacy_upload = app_data / "uploads" / "template-previews" / "x.png"
+    legacy_upload.parent.mkdir(parents=True)
+    legacy_upload.write_bytes(b"image")
+    monkeypatch.setenv("APP_DATA_DIRECTORY", str(app_data))
+    owner_id = uuid.uuid4()
+
+    assert not is_app_data_path_authorized(
+        "/app_data/uploads/template-previews/x.png",
+        user_id=owner_id,
+    )
+
+
 def test_server_side_file_resolution_rejects_other_users_and_symlink_escape(
     monkeypatch, tmp_path
 ):

@@ -14,6 +14,7 @@ from utils.asset_directory_utils import (
     filesystem_image_path_to_app_data_url,
     get_images_directory,
     normalize_slide_asset_url,
+    resolve_app_path_to_filesystem,
 )
 from utils.file_utils import get_file_name_with_random_uuid
 import os
@@ -119,6 +120,31 @@ def _image_asset_api_dict(asset: ImageAsset) -> dict:
     }
 
 
+def _image_asset_file_is_available(asset: ImageAsset) -> bool:
+    """True when the asset still has a fetchable source.
+
+    Remote/data URLs are always served by their own origin. Local paths must
+    resolve to a real file on disk (and be authorized for the current owner),
+    so stale rows whose file was wiped by a redeploy never render as broken
+    images in the picker.
+    """
+    path = asset.path
+    if not isinstance(path, str) or not path.strip():
+        return False
+    stripped = path.strip()
+    if stripped.startswith(("http://", "https://", "data:", "blob:")):
+        return True
+    return resolve_app_path_to_filesystem(stripped) is not None
+
+
+def _available_image_asset_dicts(assets) -> list[dict]:
+    return [
+        _image_asset_api_dict(asset)
+        for asset in assets
+        if _image_asset_file_is_available(asset)
+    ]
+
+
 @IMAGES_ROUTER.get("/generated")
 async def get_generated_images(sql_session: AsyncSession = Depends(get_async_session)):
     try:
@@ -127,7 +153,7 @@ async def get_generated_images(sql_session: AsyncSession = Depends(get_async_ses
             .where(ImageAsset.is_uploaded == False)
             .order_by(ImageAsset.created_at.desc())
         )
-        return [_image_asset_api_dict(a) for a in images_result]
+        return _available_image_asset_dicts(images_result)
     except Exception as e:
         raise CodedHTTPException(
             status_code=500,
@@ -178,7 +204,7 @@ async def get_uploaded_images(sql_session: AsyncSession = Depends(get_async_sess
             .where(ImageAsset.is_uploaded == True)
             .order_by(ImageAsset.created_at.desc())
         )
-        return [_image_asset_api_dict(a) for a in images_result]
+        return _available_image_asset_dicts(images_result)
     except Exception as e:
         raise CodedHTTPException(
             status_code=500,
