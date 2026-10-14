@@ -1,3 +1,4 @@
+import os
 from urllib.parse import unquote, urlsplit
 import uuid
 
@@ -10,6 +11,28 @@ PRIVATE_APP_DATA_ROOTS = {
     "pptx-to-json",
 }
 SHARED_APP_DATA_ROOTS = {"fonts", "templates"}
+
+
+def _legacy_private_root_file_exists(parts: tuple[str, ...]) -> bool:
+    """True when a pre-multi-user asset still exists on disk under app_data.
+
+    Legacy assets live directly under the private root (e.g.
+    ``images/<file>.png``) without a ``users/<user_id>`` namespace. They were
+    never claimed by a signed-in user, so we only serve them while the file is
+    still present -- a dead DB row must never surface as a 404 in the picker.
+    """
+    app_data = os.environ.get("APP_DATA_DIRECTORY")
+    if not app_data:
+        return False
+    candidate = os.path.join(app_data, *parts)
+    try:
+        resolved_candidate = os.path.realpath(candidate)
+        resolved_root = os.path.realpath(app_data)
+        if os.path.commonpath([resolved_candidate, resolved_root]) != resolved_root:
+            return False
+    except (OSError, ValueError):
+        return False
+    return os.path.isfile(resolved_candidate)
 
 
 def normalized_app_data_parts(path_or_uri: str) -> tuple[str, ...] | None:
@@ -66,6 +89,10 @@ def is_app_data_path_authorized(
             and relative_parts[1] == str(user_id)
         )
 
-    # Pre-multi-user assets remain in the legacy root and are no longer
-    # accessible to anyone — they were never claimed by a signed-in user.
+    # Pre-multi-user assets remain directly under the private root. Serve them
+    # to authenticated users only while the physical file still exists, so old
+    # slides keep working without ever exposing a dead 404 URL.
+    if root == "images":
+        return _legacy_private_root_file_exists(parts)
+
     return False
