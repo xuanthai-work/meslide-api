@@ -49,7 +49,9 @@ from services.image_search.constants import (
     limits,
 )
 from services.image_search.models import ImageCandidateImporter, ImageSearchCandidate
-from utils.asset_directory_utils import get_images_directory
+from services.object_storage import get_object_storage, get_object_storage_backend
+from services.object_storage.factory import OBJECT_STORAGE_S3_BACKEND
+from utils.asset_directory_utils import build_image_storage_key, get_images_directory
 
 LOGGER = logging.getLogger(__name__)
 
@@ -249,7 +251,7 @@ class SsrSafeImageImporter(ImageCandidateImporter):
         async with self._get_semaphore():
             data, content_type = await self._download(candidate.image_url)
         encoded, width, height = validate_and_reencode(data, content_type)
-        final_path = self._write_atomically(encoded)
+        final_path = await self._store(encoded, owner_id)
         LOGGER.info(
             "Image import succeeded: engine=%s width=%d height=%d bytes=%d",
             candidate.engine,
@@ -325,6 +327,25 @@ class SsrSafeImageImporter(ImageCandidateImporter):
                         raise ImageImportError("streamed body exceeded byte cap", reason=IMPORT_FAILURE_REJECTED)
                 return bytes(body), content_type
         raise ImageImportError("too many redirects", reason=IMPORT_FAILURE_DOWNLOAD)
+
+    async def _store(self, encoded: bytes, owner_id) -> str:
+        """Persist validated image bytes and return the asset path/key.
+
+        S3 deployments store the object directly; the local backend keeps the
+        historical owner-scoped file on disk.
+        """
+        if get_object_storage_backend() == OBJECT_STORAGE_S3_BACKEND:
+            key = build_image_storage_key(
+                f"{uuid.uuid4()}.{APPROVED_RASTER_FORMAT}",
+                owner_id=owner_id,
+            )
+            await get_object_storage().put_bytes(
+                key,
+                encoded,
+                content_type=f"image/{APPROVED_RASTER_FORMAT}",
+            )
+            return key
+        return self._write_atomically(encoded)
 
     def _write_atomically(self, encoded: bytes) -> str:
         images_directory = self._images_directory or get_images_directory()

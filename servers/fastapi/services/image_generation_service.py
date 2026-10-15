@@ -1,5 +1,6 @@
 import asyncio
 import base64
+import mimetypes
 import os
 import uuid
 from weakref import WeakKeyDictionary
@@ -9,8 +10,11 @@ from fastapi import HTTPException
 from google import genai
 from google.genai import types
 from openai import NOT_GIVEN, AsyncOpenAI
+from api.v1.auth.context import get_current_owner_id
 from models.image_prompt import ImagePrompt
 from models.sql.image_asset import ImageAsset
+from services.object_storage import get_object_storage, get_object_storage_backend
+from services.object_storage.factory import OBJECT_STORAGE_S3_BACKEND
 from utils.get_env import (
     get_gpt_image_1_5_quality_env,
     get_openai_compat_image_base_url_env,
@@ -25,7 +29,7 @@ from utils.image_provider import (
     is_nanobanana_pro_selected,
     is_openai_compatible_selected,
 )
-from utils.asset_directory_utils import absolute_fastapi_asset_url
+from utils.asset_directory_utils import absolute_fastapi_asset_url, build_image_storage_key
 from utils.image_generation_error import normalize_image_generation_error
 
 
@@ -91,13 +95,36 @@ class ImageGenerationService:
                 if image_path.startswith("http"):
                     return image_path
                 elif os.path.exists(image_path):
+                    extras = {
+                        "prompt": prompt.prompt,
+                        "theme_prompt": prompt.theme_prompt,
+                    }
+                    if get_object_storage_backend() == OBJECT_STORAGE_S3_BACKEND:
+                        key = build_image_storage_key(
+                            os.path.basename(image_path),
+                            owner_id=get_current_owner_id(),
+                        )
+                        with open(image_path, "rb") as image_file:
+                            image_bytes = image_file.read()
+                        await get_object_storage().put_bytes(
+                            key,
+                            image_bytes,
+                            content_type=mimetypes.guess_type(image_path)[0]
+                            or "image/png",
+                        )
+                        try:
+                            os.remove(image_path)
+                        except OSError:
+                            pass
+                        return ImageAsset(
+                            path=key,
+                            is_uploaded=False,
+                            extras=extras,
+                        )
                     return ImageAsset(
                         path=image_path,
                         is_uploaded=False,
-                        extras={
-                            "prompt": prompt.prompt,
-                            "theme_prompt": prompt.theme_prompt,
-                        },
+                        extras=extras,
                     )
                 elif image_path.startswith("/app_data/") or image_path.startswith(
                     "/static/"

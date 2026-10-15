@@ -1,4 +1,5 @@
 import os
+import uuid
 from typing import Optional
 from urllib.parse import urlparse, unquote
 
@@ -45,6 +46,29 @@ def absolute_fastapi_asset_url(path: str) -> str:
     return p
 
 
+def build_image_storage_key(
+    filename: str,
+    owner_id: uuid.UUID | str | None = None,
+) -> str:
+    """Canonical object-storage key for an image asset.
+
+    ``images/users/{owner_id}/{filename}`` for an owner-scoped asset, or
+    ``images/{filename}`` when no owner is known (legacy / auth-disabled).
+    """
+    safe_name = os.path.basename((filename or "").strip()) or f"{uuid.uuid4()}.png"
+    if owner_id is not None and str(owner_id).strip():
+        return f"images/users/{owner_id}/{safe_name}"
+    return f"images/{safe_name}"
+
+
+def is_image_storage_key(path_or_url: str) -> bool:
+    """True when a path is an object-storage key (not an absolute local path)."""
+    if not isinstance(path_or_url, str):
+        return False
+    stripped = path_or_url.strip()
+    return stripped.startswith("images/") and not os.path.isabs(stripped)
+
+
 def font_path_to_url(path: str) -> str:
     app_data = get_app_data_directory_env() or default_gslide_directory()
     try:
@@ -88,6 +112,10 @@ def filesystem_image_path_to_app_data_url(path_or_url: str) -> str:
         return stripped
     if stripped.startswith(("/app_data/", "/static/")):
         return absolute_fastapi_asset_url(stripped)
+    # Object-storage keys (S3 / local object-storage) are already in the
+    # canonical ``images/...`` shape; serve them through the app_data route.
+    if is_image_storage_key(stripped):
+        return absolute_fastapi_asset_url("/app_data/" + stripped.replace(os.sep, "/"))
     app_data = get_app_data_directory_env()
     if not app_data:
         return stripped

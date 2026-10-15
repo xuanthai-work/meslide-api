@@ -11,12 +11,19 @@ from services.image_generation_service import ImageGenerationService
 from services.image_search.metrics import hash_query_for_log
 from utils.coded_exception import CodedHTTPException
 from utils.asset_directory_utils import (
+    build_image_storage_key,
     filesystem_image_path_to_app_data_url,
     get_images_directory,
+    is_image_storage_key,
     normalize_slide_asset_url,
     resolve_app_path_to_filesystem,
 )
 from utils.file_utils import get_file_name_with_random_uuid
+from services.object_storage import get_object_storage, get_object_storage_backend
+from services.object_storage.errors import ObjectStorageError
+from services.object_storage.factory import OBJECT_STORAGE_S3_BACKEND
+from api.v1.auth.context import get_current_owner_id
+import mimetypes
 import os
 import uuid
 
@@ -120,13 +127,13 @@ def _image_asset_api_dict(asset: ImageAsset) -> dict:
     }
 
 
-def _image_asset_file_is_available(asset: ImageAsset) -> bool:
+async def _image_asset_file_is_available(asset: ImageAsset) -> bool:
     """True when the asset still has a fetchable source.
 
-    Remote/data URLs are always served by their own origin. Local paths must
-    resolve to a real file on disk (and be authorized for the current owner),
-    so stale rows whose file was wiped by a redeploy never render as broken
-    images in the picker.
+    Remote/data URLs are always served by their own origin. Object-storage keys
+    are probed through the configured backend. Local paths must resolve to a
+    real file on disk (and be authorized for the current owner), so stale rows
+    whose file was wiped by a redeploy never render as broken images.
     """
     path = asset.path
     if not isinstance(path, str) or not path.strip():
@@ -134,15 +141,20 @@ def _image_asset_file_is_available(asset: ImageAsset) -> bool:
     stripped = path.strip()
     if stripped.startswith(("http://", "https://", "data:", "blob:")):
         return True
+    if is_image_storage_key(stripped):
+        try:
+            return await get_object_storage().exists(stripped)
+        except ObjectStorageError:
+            return False
     return resolve_app_path_to_filesystem(stripped) is not None
 
 
-def _available_image_asset_dicts(assets) -> list[dict]:
-    return [
-        _image_asset_api_dict(asset)
-        for asset in assets
-        if _image_asset_file_is_available(asset)
-    ]
+async def _available_image_asset_dicts(assets) -> list[dict]:
+    available: list[dict] = []
+    for asset in assets:
+        if await _image_asset_file_is_available(asset):
+            available.append(_image_asset_api_dict(asset))
+    return available
 
 
 @IMAGES_ROUTER.get("/generated")
@@ -153,7 +165,7 @@ async def get_generated_images(sql_session: AsyncSession = Depends(get_async_ses
             .where(ImageAsset.is_uploaded == False)
             .order_by(ImageAsset.created_at.desc())
         )
-        return _available_image_asset_dicts(images_result)
+        return await _available_image_asset_dicts(images_result)
     except Exception as e:
         raise CodedHTTPException(
             status_code=500,
@@ -170,14 +182,28 @@ async def upload_image(
     try:
         content = await _read_validated_image_upload(file)
         new_filename = get_file_name_with_random_uuid(file)
-        image_path = os.path.join(
-            get_images_directory(), os.path.basename(new_filename)
-        )
+        if get_object_storage_backend() == OBJECT_STORAGE_S3_BACKEND:
+            key = build_image_storage_key(
+                os.path.basename(new_filename),
+                owner_id=get_current_owner_id(),
+            )
+            await get_object_storage().put_bytes(
+                key,
+                content,
+                content_type=file.content_type
+                or mimetypes.guess_type(new_filename)[0]
+                or "image/png",
+            )
+            image_asset = ImageAsset(path=key, is_uploaded=True)
+        else:
+            image_path = os.path.join(
+                get_images_directory(), os.path.basename(new_filename)
+            )
 
-        with open(image_path, "wb") as f:
-            f.write(content)
+            with open(image_path, "wb") as f:
+                f.write(content)
 
-        image_asset = ImageAsset(path=image_path, is_uploaded=True)
+            image_asset = ImageAsset(path=image_path, is_uploaded=True)
 
         sql_session.add(image_asset)
         await sql_session.commit()
@@ -204,7 +230,7 @@ async def get_uploaded_images(sql_session: AsyncSession = Depends(get_async_sess
             .where(ImageAsset.is_uploaded == True)
             .order_by(ImageAsset.created_at.desc())
         )
-        return _available_image_asset_dicts(images_result)
+        return await _available_image_asset_dicts(images_result)
     except Exception as e:
         raise CodedHTTPException(
             status_code=500,
@@ -226,7 +252,12 @@ async def delete_uploaded_image_by_id(
                 status_code=404, detail="Image not found", error_code="error.image.not_found"
             )
 
-        os.remove(image.path)
+        if get_object_storage_backend() == OBJECT_STORAGE_S3_BACKEND or is_image_storage_key(
+            image.path
+        ):
+            await get_object_storage().delete(image.path)
+        elif os.path.exists(image.path):
+            os.remove(image.path)
 
         await sql_session.delete(image)
         await sql_session.commit()
