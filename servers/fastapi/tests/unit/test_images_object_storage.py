@@ -56,6 +56,25 @@ def _build_client(fake_async_session):
     return TestClient(app)
 
 
+def test_create_s3_client_disables_streaming_checksums():
+    from services.object_storage.s3 import create_s3_client
+
+    client = create_s3_client(
+        endpoint_url="http://minio:9000",
+        access_key="key",
+        secret_key="secret",
+        region="us-east-1",
+        force_path_style=True,
+        connect_timeout_seconds=5.0,
+        read_timeout_seconds=30.0,
+    )
+
+    config = client.meta.config
+    assert config.request_checksum_calculation == "when_required"
+    assert config.response_checksum_validation == "when_required"
+    assert config.s3 == {"addressing_style": "path"}
+
+
 def _patch_s3(monkeypatch, storage, module=images_module):
     monkeypatch.setattr(module, "get_object_storage_backend", lambda: "s3")
     monkeypatch.setattr(module, "get_object_storage", lambda: storage)
