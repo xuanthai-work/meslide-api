@@ -86,6 +86,12 @@ def create_s3_client(
         "connect_timeout": connect_timeout_seconds,
         "read_timeout": read_timeout_seconds,
         "retries": {"max_attempts": 2, "mode": "standard"},
+        # botocore 1.35+ defaults to streaming ``aws-chunked`` trailing
+        # checksums on PutObject. Several S3-compatible backends (ZetaBy S3,
+        # Ceph) reject those with ``XAmzContentSHA256Mismatch``. Only compute
+        # checksums when the operation actually requires them.
+        "request_checksum_calculation": "when_required",
+        "response_checksum_validation": "when_required",
     }
     if force_path_style:
         config_kwargs["s3"] = {"addressing_style": "path"}
