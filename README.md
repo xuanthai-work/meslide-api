@@ -1,8 +1,8 @@
-# gslide-api
+# meslide-api
 
-Runtime FastAPI của GSlide: sinh và quản lý bài thuyết trình, xử lý tài liệu, gọi LLM, và xuất PPTX/PDF qua Chromium.
+Runtime FastAPI của MeSlide: sinh và quản lý bài thuyết trình, xử lý tài liệu, gọi LLM, và xuất PPTX/PDF qua Chromium.
 
-Repo này không chứa Next.js hay reverse proxy. Giao diện chạy ở [`gslide-web`](../gslide-web).
+Repo này không chứa Next.js hay reverse proxy. Giao diện chạy ở [`meslide-web`](../meslide-web).
 
 ## Chạy local
 
@@ -19,7 +19,7 @@ Hot-reload khi phát triển:
 docker compose up --build api-dev
 ```
 
-API lắng nghe `http://localhost:8000`. UI chạy từ `gslide-web` trên cùng Docker network `gslide` tại [http://localhost:3000](http://localhost:3000). Trình duyệt không gọi thẳng cổng 8000; web chuyển tiếp `/api/v1` tới service `api`.
+API lắng nghe `http://localhost:8000`. UI chạy từ `meslide-web` trên cùng Docker network `meslide` tại [http://localhost:3000](http://localhost:3000). Trình duyệt không gọi thẳng cổng 8000; web chuyển tiếp `/api/v1` tới service `api`.
 
 ## Health
 

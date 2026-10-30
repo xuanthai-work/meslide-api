@@ -1,17 +1,17 @@
-# GSlide API Kubernetes manifests
+# MeSlide API Kubernetes manifests
 
 FastAPI + Chromium Deployment + ClusterIP Service, plus the shared
 `/app_data` PVC and secret template. **No Ingress, no HPA, no SearXNG.**
 
-Apply this repo **before** gslide-web: web mounts PVC `gslide-app-data`
+Apply this repo **before** meslide-web: web mounts PVC `meslide-app-data`
 read-only and expects Service `api:8000`.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
-| `00-namespace.yaml` | `gslide` namespace (optional — drop if platform-managed). |
-| `01-configmap.yaml` | Non-sensitive API URLs and feature switches (`gslide-api-config`). |
+| `00-namespace.yaml` | `meslide` namespace (optional — drop if platform-managed). |
+| `01-configmap.yaml` | Non-sensitive API URLs and feature switches (`meslide-api-config`). |
 | `02-secret.example.yaml` | **Template only.** Bind real credentials via external secrets. |
 | `03-pvc.yaml` | `10Gi` `/app_data` PVC (ReadWriteOnce). |
 | `20-api.yaml` | FastAPI + Chromium Deployment + ClusterIP Service. |
@@ -21,13 +21,13 @@ read-only and expects Service `api:8000`.
 ```bash
 kubectl apply -f 00-namespace.yaml
 kubectl apply -f 01-configmap.yaml
-# create gslide-secrets via your external-secrets solution, NOT from the template
+# create meslide-secrets via your external-secrets solution, NOT from the template
 kubectl apply -f 03-pvc.yaml
 kubectl apply -f 20-api.yaml
 ```
 
-Replace `ghcr.io/<org>/gslide-api:latest` in `20-api.yaml` with the image
-this GitLab repo builds.
+Replace `ghcr.io/<org>/meslide-api:latest` in `20-api.yaml` with the image
+this repository builds.
 
 Chromium renders exports at `EXPORT_PAGE_BASE_URL=http://web:3000`. The web
 Service must exist before export works; generation without export can start
